@@ -30,33 +30,14 @@
       <span style="top:90px;left:88%;animation-delay:.9s;"></span>
       <span style="top:110px;left:55%;animation-delay:2s;"></span>
     </div>
+    <span class="tag tag-fun">✨ Qiziqarli test</span>
     <h1>Siz sevib qoldingizmi? Muhabbatingiz bilan birga sizni qanday kelajak kutayotganini bilmoqchimisiz?</h1>
     <p>Ruhshunos.Fun — o'zingiz haqingizda qiziqarli, qisqa va chuqur haqiqatlarni ochib beruvchi testlar to'plami.</p>
     <a class="cta-link" href="zodiac.html">⭐ Yulduzingiz yulduziga mosligini tekshiring</a>
   </div>
 
   <div class="section-label">Sizni kutayotgan boshqa testlar</div>
-  <div class="teasers">
-    <a class="teaser" href="life-path.html">
-      <span class="badge-flag">🔥 Eng ko'p tanlangan</span>
-      <div class="icon">🔢</div>
-      <h3>Hayot soningiz nimadan darak beradi?</h3>
-      <p>Tug'ilgan sanangiz asosida numerologik shaxsiyat tahlilini bilib oling.</p>
-      <span class="go">Testni boshlash →</span>
-    </a>
-    <a class="teaser" href="love-language.html">
-      <div class="icon">💞</div>
-      <h3>Qanday mehr tilida sevasiz?</h3>
-      <p>5 sevgi tilidan qaysi biri sizga xosligini aniqlang.</p>
-      <span class="go">Testni boshlash →</span>
-    </a>
-    <a class="teaser" href="eq.html">
-      <div class="icon">🧩</div>
-      <h3>Hissiyotlaringizni his qila olasizmi?</h3>
-      <p>Hissiy intellekt darajangizni aniqlang.</p>
-      <span class="go">Testni boshlash →</span>
-    </a>
-  </div>
+  <div class="teasers" id="teasers"></div>
 
   <div class="disclaimer">
     <strong>⚠️ Muhim eslatma:</strong> Bu testlar ko'ngilochar maqsadlarda taqdim etilgan.
@@ -69,5 +50,40 @@
 <footer class="site-footer">
   Ruhshunos.Fun — ko'ngilochar testlar platformasi
 </footer>
+
+<script>
+  // Teaser pool — har safar sahifa ochilganda 3 tasi tasodifiy tanlanadi va
+  // tasodifiy tartibda ko'rsatiladi, shunda bitta test doim birinchi bo'lib
+  // ko'proq bosilib qolish ("rich get richer") holati oldini olinadi.
+  const TEASER_POOL = [
+    { href: "life-path.html", icon: "🔢", title: "Hayot soningiz nimadan darak beradi?", desc: "Tug'ilgan sanangiz asosida numerologik shaxsiyat tahlilini bilib oling.", tag: "fun" },
+    { href: "love-language.html", icon: "💞", title: "Qanday mehr tilida sevasiz?", desc: "5 sevgi tilidan qaysi biri sizga xosligini aniqlang.", tag: "sci" },
+    { href: "eq.html", icon: "🧩", title: "Hissiyotlaringizni his qila olasizmi?", desc: "Hissiy intellekt darajangizni aniqlang.", tag: "sci", badge: "🆕 Yangi" },
+    { href: "temperament.html", icon: "🎭", title: "Xarakteringiz sizni qayerga yetaklaydi?", desc: "Temperament turingizni kashf eting.", tag: "fun" },
+    { href: "stress.html", icon: "🌀", title: "Stress darajangiz qanday?", desc: "So'nggi kunlardagi holatingiz asosida bilib oling.", tag: "sci", badge: "🆕 Yangi" },
+  ];
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  const chosen = shuffle(TEASER_POOL).slice(0, 3);
+  const tagLabel = { sci: "🔬 Ilmiy", fun: "✨ Qiziqarli" };
+  document.getElementById("teasers").innerHTML = chosen.map((t) => `
+    <a class="teaser" href="${t.href}">
+      ${t.badge ? `<span class="badge-flag">${t.badge}</span>` : ""}
+      <div class="icon">${t.icon}</div>
+      <h3>${t.title}</h3>
+      <p>${t.desc}</p>
+      <span class="tag tag-${t.tag}">${tagLabel[t.tag]}</span>
+      <span class="go" style="display:block; margin-top:8px;">Testni boshlash →</span>
+    </a>
+  `).join("");
+</script>
 </body>
 </html>
