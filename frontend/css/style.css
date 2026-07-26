@@ -917,6 +917,12 @@ button.retake {
   transform: translateY(-2px);
 }
 
+.contact-pill.disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
 .fields {
   margin-left: 34px;
   display: flex;
