@@ -1,20 +1,29 @@
-# Ruhshunos Fun — sayt versiyasi (MVP)
+# Ruhshunos — sayt versiyasi (MVP)
 
 Asl `@Ruhshunos_Fun loyihasi.docx` hujjatida Telegram bot sifatida rejalashtirilgan
-ko'ngilochar testlarning veb-sayt versiyasi. 6 ta test tayyor:
+testlarning veb-sayt versiyasi. Nom "Ruhshunos" — sayt nafaqat ko'ngilochar, balki
+odamning ruhiy holatiga aniqlik kiritishga ham xizmat qilishini ta'kidlaydi.
 
+6 ta test tayyor, ikkiga ajratilgan:
+
+**🔬 Ilmiy asoslangan:**
+- 🧩 Hissiy intellekt (EQ)
+- 🌀 Stress darajasi
+
+**✨ Qiziqarli (ko'ngilochar, ilmiy tasdiqlanmagan):**
 - ♈ Munajjimlar bashorati (zodiak belgisi + juftlik mosligi)
 - 🔢 Hayot soni (Pythagorean numerologiya)
 - 💞 Sevgi tilingiz (5 Love Languages, Gary Chapman)
 - 🧠 Temperamentingiz (Gippokrat 4 temperamenti)
-- 🧩 Hissiy intellekt (EQ)
-- 🌀 Stress darajasi
 
 To'lov va foydalanuvchi tarixi keyingi bosqichlarda qo'shiladi.
 
 `ruhshunos-fun.html` — shu testlarning avvalgi, to'liq mustaqil (backend'siz,
 bitta HTML faylga qamalgan) prototipi; hozirgi `backend/` + `frontend/`
 versiyasi ushbu prototipdan portlangan va u bilan almashtirilgan.
+
+`files/*.html` — saytning joriy vizual dizayni (pergament/oltin/teal, Fraunces +
+Manrope shriftlari, 4 bo'limli navigatsiya) asos qilib olingan dastlabki maketlar.
 
 ## Ishga tushirish
 
@@ -41,11 +50,17 @@ backend/
     eq.py                # hissiy intellekt testi
     stress.py            # stress darajasi testi
 frontend/
-  index.html, zodiac.html, life-path.html,
-  love-language.html, temperament.html, eq.html, stress.html
+  index.html            # Home — bosh sahifa
+  testlar.html          # Testlar — ilmiy/qiziqarli guruhlangan ro'yxat
+  yaratuvchi.html        # Yaratuvchi — loyiha muallifi haqida
+  yordam.html            # Yordam — kontakt va hamkorlik
+  zodiac.html, life-path.html, love-language.html,
+  temperament.html, eq.html, stress.html
   css/style.css
-  js/zodiac.js, js/life-path.js, js/quiz.js (umumiy test mexanizmi),
-  js/love-language.js, js/temperament.js, js/eq.js, js/stress.js
+  js/quiz.js             # umumiy savol-javob (stepper) mexanizmi
+  js/zodiac.js, js/life-path.js, js/love-language.js,
+  js/temperament.js, js/eq.js, js/stress.js
+  img/yaratuvchi.jpg     # muallif profil rasmi
 ```
 
 ## API
@@ -62,3 +77,10 @@ frontend/
 | `/api/eq` | POST | EQ natijasi |
 | `/api/stress/questions` | GET | Stress savollari |
 | `/api/stress` | POST | Stress natijasi |
+
+## Deploy
+
+`render.yaml` orqali Render.com'da Blueprint sifatida deploy qilingan.
+Jonli sayt: https://ruhshunos-fun.onrender.com (GitHub repo va manzil nomi
+tarixiy sabablarga ko'ra `ruhshunos-fun`, saytdagi ko'rinadigan nom esa
+"Ruhshunos").

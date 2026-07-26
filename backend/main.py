@@ -13,7 +13,7 @@ from logic import zodiac, life_path, love_language, temperament, eq, stress
 BASE_DIR = Path(__file__).resolve().parent
 FRONTEND_DIR = BASE_DIR.parent / "frontend"
 
-app = FastAPI(title="Ruhshunos Fun")
+app = FastAPI(title="Ruhshunos")
 
 
 class ZodiacRequest(BaseModel):
