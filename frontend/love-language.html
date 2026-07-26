@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sevgi tilingiz — Ruhshunos Fun</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main class="container">
+  <a class="back-link" href="index.html">← Bosh sahifa</a>
+
+  <header class="site-header" style="padding-top:0">
+    <p class="brand" style="font-size:1.6rem">💞 Sevgi tilingiz</p>
+    <p class="tagline">Gary Chapman'ning 5 sevgi tili nazariyasi asosidagi test</p>
+  </header>
+
+  <section class="panel" id="intro">
+    <h2>Test haqida</h2>
+    <p>25 ta savolga har birida sizga yaqinroq bo'lgan variantni tanlab javob bering. Test oxirida sizning asosiy va ikkinchi darajali sevgi tilingiz aniqlanadi.</p>
+    <button type="button" class="primary" id="start-btn">Testni boshlash</button>
+  </section>
+
+  <section id="quiz" class="hidden"></section>
+  <div id="error" class="error-box hidden"></div>
+  <section id="result" class="hidden"></section>
+
+  <div class="disclaimer">
+    <strong>⚠️ Muhim eslatma:</strong> Bu test ko'ngilochar maqsadlarda taqdim etilgan.
+    Natijalar ilmiy asoslangan emas va ular sizning hayotiy qarorlaringizga asos bo'lmasligi kerak.
+    Agar sizda ruhiy salomatlik bo'yicha jiddiy savollar bo'lsa, professional psixolog yoki
+    psixiatrga murojaat qiling. 📞 Ishonch telefoni: 1086
+  </div>
+</main>
+
+<script src="js/quiz.js"></script>
+<script src="js/love-language.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hayot soni — Ruhshunos Fun</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main class="container">
+  <a class="back-link" href="index.html">← Bosh sahifa</a>
+
+  <header class="site-header" style="padding-top:0">
+    <p class="brand" style="font-size:1.6rem">🔢 Hayot soni</p>
+    <p class="tagline">Pythagorean numerologiya asosida shaxsiyat tahlili</p>
+  </header>
+
+  <section class="panel">
+    <h2>Tug'ilgan kuningizni kiriting</h2>
+    <form id="life-path-form">
+      <label for="birth_date">Tug'ilgan kun</label>
+      <input type="date" id="birth_date" name="birth_date" required>
+      <button type="submit" class="primary">Hayot sonimni bilish</button>
+    </form>
+    <div id="error" class="error-box hidden"></div>
+  </section>
+
+  <section id="result" class="hidden"></section>
+
+  <div class="disclaimer">
+    <strong>⚠️ Muhim eslatma:</strong> Bu test ko'ngilochar maqsadlarda taqdim etilgan.
+    Natijalar ilmiy asoslangan emas va ular sizning hayotiy qarorlaringizga asos bo'lmasligi kerak.
+    Agar sizda ruhiy salomatlik bo'yicha jiddiy savollar bo'lsa, professional psixolog yoki
+    psixiatrga murojaat qiling. 📞 Ishonch telefoni: 1086
+  </div>
+</main>
+
+<script src="js/life-path.js"></script>
+</body>
+</html>

@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruhshunos Fun — Koʻngilochar testlar</title>
+<style>
+  :root {
+    --bg: #0a0d1a;
+    --bg-1: #0d1120;
+    --card: #131829;
+    --card-hover: #171d33;
+    --border: #262c47;
+    --text: #e9e7f1;
+    --text-muted: #8d90ab;
+    --accent: #c9a24d;
+    --accent-soft: rgba(201, 162, 77, 0.14);
+    --accent-2: #a8527a;
+    --accent-2-soft: rgba(168, 82, 122, 0.14);
+    --success: #6fae82;
+    --warning: #d68a4c;
+    --danger: #d9707a;
+    --danger-soft: rgba(217, 112, 122, 0.12);
+    --star: 233, 231, 241;
+    --star-op: 0.9;
+    --accent-rgb: 201, 162, 77;
+    --accent-2-rgb: 168, 82, 122;
+    --shadow-rgb: 0, 0, 0;
+    --radius: 18px;
+    --radius-sm: 11px;
+    --font-display: Georgia, "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    color-scheme: dark;
+  }
+
+  :root[data-theme="light"] {
+    --bg: #f6f2e7;
+    --bg-1: #f1ecdd;
+    --card: #fffdf7;
+    --card-hover: #fbf6e9;
+    --border: #e1d8bd;
+    --text: #241f1a;
+    --text-muted: #6c6455;
+    --accent: #9c6f24;
+    --accent-soft: rgba(156, 111, 36, 0.12);
+    --accent-2: #8a3f61;
+    --accent-2-soft: rgba(138, 63, 97, 0.1);
+    --success: #3f7a55;
+    --warning: #a05f22;
+    --danger: #a3404a;
+    --danger-soft: rgba(163, 64, 74, 0.1);
+    --star: 120, 100, 60;
+    --star-op: 0.35;
+    --accent-rgb: 156, 111, 36;
+    --accent-2-rgb: 138, 63, 97;
+    --shadow-rgb: 40, 30, 15;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f6f2e7;
+      --bg-1: #f1ecdd;
+      --card: #fffdf7;
+      --card-hover: #fbf6e9;
+      --border: #e1d8bd;
+      --text: #241f1a;
+      --text-muted: #6c6455;
+      --accent: #9c6f24;
+      --accent-soft: rgba(156, 111, 36, 0.12);
+      --accent-2: #8a3f61;
+      --accent-2-soft: rgba(138, 63, 97, 0.1);
+      --success: #3f7a55;
+      --warning: #a05f22;
+      --danger: #a3404a;
+      --danger-soft: rgba(163, 64, 74, 0.1);
+      --star: 120, 100, 60;
+      --star-op: 0.35;
+      --accent-rgb: 156, 111, 36;
+      --accent-2-rgb: 138, 63, 97;
+      --shadow-rgb: 40, 30, 15;
+      color-scheme: light;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  #starfield {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  a { color: var(--accent); }
+
+  .skip-link:focus {
+    position: fixed; top: 8px; left: 8px; z-index: 50;
+    background: var(--card); color: var(--text);
+    padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border);
+  }
+  .skip-link { position: absolute; left: -9999px; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  nav.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 24px;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .wordmark {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    color: var(--text);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  .wordmark .mark { color: var(--accent); font-size: 1rem; }
+
+  .navlinks { display: flex; gap: 4px; flex-wrap: wrap; }
+  .navlinks button {
+    font-family: var(--font-body);
+    font-size: 0.86rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .navlinks button:hover { color: var(--text); }
+  .navlinks button[aria-current="page"] {
+    color: var(--accent);
+    border-color: var(--border);
+    background: var(--accent-soft);
+  }
+
+  main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+  }
+
+  .view { display: none; animation: rise 0.5s ease both; }
+  .view.active { display: block; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .view { animation: none; }
+  }
+
+  .eyebrow {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin: 0 0 10px;
+  }
+
+  h1.hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.08;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+
+  .hero-lede {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 46ch;
+    margin: 0 0 40px;
+  }
+
+  .hero-wrap { position: relative; }
+  .hero-wrap > * { position: relative; z-index: 1; }
+  #hero-wheel {
+    position: absolute;
+    z-index: 0;
+    top: -60px;
+    left: 50%;
+    width: 560px;
+    height: 560px;
+    margin-left: -280px;
+    pointer-events: none;
+    animation: hero-spin 220s linear infinite;
+  }
+  @keyframes hero-spin { to { transform: rotate(360deg); } }
+  @media (max-width: 640px) {
+    #hero-wheel { width: 360px; height: 360px; margin-left: -180px; top: -30px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #hero-wheel { animation: none; }
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .test-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    box-shadow: 0 1px 2px rgba(var(--shadow-rgb), 0.28);
+    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .test-card::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(120px 80px at 90% -10%, var(--accent-soft), transparent 70%);
+    opacity: 0; transition: opacity 0.2s ease;
+  }
+  .test-card:not(.disabled):hover {
+    background: var(--card-hover);
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+    box-shadow: 0 16px 32px -16px rgba(var(--shadow-rgb), 0.5), 0 0 0 1px rgba(var(--accent-rgb), 0.16);
+  }
+  .test-card:not(.disabled):hover::before { opacity: 1; }
+
+  .test-card.disabled { opacity: 0.5; cursor: default; box-shadow: none; }
+
+  .glyph {
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    color: var(--accent);
+    line-height: 1;
+    text-shadow: 0 0 22px rgba(var(--accent-rgb), 0.4);
+  }
+
+  .test-card h3 { margin: 0; font-size: 1.12rem; font-weight: 700; }
+  .test-card p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  .tag.soon { background: transparent; color: var(--text-muted); border-color: var(--border); }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 28px;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  .view-header { margin-bottom: 28px; }
+  .view-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  .view-sub { color: var(--text-muted); margin: 0; max-width: 50ch; }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(var(--shadow-rgb), 0.22), 0 16px 36px -22px rgba(var(--shadow-rgb), 0.4);
+  }
+  .panel h2 { margin-top: 0; font-family: var(--font-display); font-size: 1.2rem; }
+
+  form label {
+    display: block;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin: 18px 0 7px;
+  }
+  form label:first-of-type { margin-top: 0; }
+
+  input[type="date"], select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg-1);
+    color: var(--text);
+    font-size: 1rem;
+    font-family: var(--font-body);
+  }
+  input[type="date"]:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  fieldset {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-top: 22px;
+    padding: 4px 16px 16px;
+  }
+  legend {
+    color: var(--text-muted);
+    padding: 0 8px;
+    font-size: 0.86rem;
+  }
+
+  button.primary {
+    margin-top: 26px;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-body);
+    cursor: pointer;
+    box-shadow: 0 10px 24px -10px rgba(var(--accent-rgb), 0.55);
+    transition: filter 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  }
+  button.primary:hover { filter: brightness(1.1); box-shadow: 0 14px 30px -10px rgba(var(--accent-rgb), 0.65); }
+  button.primary:active { transform: scale(0.99); }
+
+  .hidden { display: none !important; }
+
+  .error-box {
+    background: var(--danger-soft);
+    border: 1px solid color-mix(in srgb, var(--danger) 45%, transparent);
+    color: var(--danger);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-size: 0.92rem;
+  }
+
+  .result-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .result-sub { color: var(--text-muted); margin-bottom: 18px; font-size: 0.92rem; }
+
+  .wheel-wrap { display: flex; justify-content: center; margin: 4px 0 22px; }
+  #zodiac-wheel { display: block; }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 4px 0 8px;
+  }
+  .stat-row strong:last-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+  .progress {
+    background: var(--bg-1);
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+    margin: 0 0 18px;
+    border: 1px solid var(--border);
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .breakdown-item { margin-bottom: 12px; }
+  .breakdown-item .label-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.82rem; color: var(--text-muted); margin-bottom: 5px;
+  }
+  .breakdown-item .label-row span:last-child {
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  }
+
+  ul.plain { padding-left: 20px; margin: 6px 0; }
+  ul.plain li { margin-bottom: 4px; }
+
+  .calc-box {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 13px 16px;
+    font-family: var(--font-mono);
+    font-size: 0.87rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .number-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff9ec;
+    flex-shrink: 0;
+  }
+
+  .field-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .meaning-list { margin: 4px 0 0; padding: 0; list-style: none; }
+  .meaning-list li {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 12px;
+    padding: 9px 0;
+    border-top: 1px solid var(--border);
+    font-size: 0.94rem;
+  }
+  .meaning-list li:first-child { border-top: none; }
+  .meaning-list .k {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    padding-top: 2px;
+  }
+  @media (max-width: 480px) {
+    .meaning-list li { grid-template-columns: 1fr; gap: 3px; }
+  }
+
+  .master-badge {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--accent-2-soft);
+    color: var(--accent-2);
+    border: 1px solid color-mix(in srgb, var(--accent-2) 40%, transparent);
+  }
+
+  .disclaimer {
+    margin-top: 28px;
+    background: color-mix(in srgb, var(--warning) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--warning) 35%, transparent);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    font-size: 0.86rem;
+    color: var(--text-muted);
+  }
+  .disclaimer strong { color: var(--warning); }
+
+  footer.site-footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    padding: 30px 16px 10px;
+  }
+
+  /* ---- quiz engine ---- */
+  .quiz-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .quiz-progress .progress { flex: 1; margin: 0; height: 6px; }
+  .quiz-step-label {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .quiz-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: 0 1px 3px rgba(var(--shadow-rgb), 0.22), 0 16px 36px -22px rgba(var(--shadow-rgb), 0.4);
+    animation: rise 0.35s ease both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .quiz-card { animation: none; }
+  }
+
+  .quiz-prompt {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 13px 16px;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .quiz-option:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg-1));
+  }
+  .quiz-option .dot {
+    flex-shrink: 0;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    border: 1.5px solid var(--text-muted);
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .quiz-option[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.25);
+  }
+  .quiz-option[aria-pressed="true"] .dot {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+  }
+  .quiz-back {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    cursor: pointer;
+    padding: 6px 0;
+  }
+  .quiz-back:hover:not(:disabled) { color: var(--accent); }
+  .quiz-back:disabled { opacity: 0.35; cursor: default; }
+
+  .retake {
+    margin-top: 18px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .retake:hover { color: var(--accent); border-color: var(--accent); }
+
+  .profile-label {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .trait-section { margin: 18px 0; }
+  .trait-section .k {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .trait-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .trait-chip {
+    font-size: 0.82rem;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .trait-chip.positive { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); color: var(--accent); }
+  .trait-chip.caution { border-color: color-mix(in srgb, var(--danger) 35%, var(--border)); color: var(--danger); }
+  .trait-section p { margin: 0; }
+
+  /* ---- bar charts ---- */
+  .bar-chart-h { display: flex; flex-direction: column; gap: 10px; }
+  .bar-row-h { display: flex; align-items: center; gap: 10px; }
+  .bar-row-h .bar-label { width: 62px; flex-shrink: 0; font-size: 0.82rem; color: var(--text-muted); }
+  .bar-row-h .bar-track {
+    flex: 1; height: 14px;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-row-h .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 0 4px 4px 0;
+    transition: width 0.6s cubic-bezier(.2,.8,.2,1);
+  }
+  .bar-row-h .bar-value {
+    width: 38px; text-align: right; flex-shrink: 0;
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+    font-size: 0.82rem; color: var(--text-muted);
+  }
+
+  .digit-chart { display: flex; gap: 6px; }
+  .digit-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+  .digit-value {
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+    font-size: 0.7rem; color: var(--text-muted); height: 14px;
+  }
+  .digit-bar-track {
+    height: 72px; width: 100%;
+    display: flex; align-items: flex-end; justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .digit-bar {
+    width: 60%; max-width: 22px;
+    background: var(--accent);
+    border-radius: 4px 4px 0 0;
+    min-height: 2px;
+    transition: height 0.6s cubic-bezier(.2,.8,.2,1);
+  }
+  .digit-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
+
+  /* ---- level meter (stress / EQ overall score) ---- */
+  .level-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .level-chip .level-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .meter-row { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .meter-track {
+    flex: 1; height: 16px;
+    border-radius: 999px;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(.2,.8,.2,1);
+  }
+  .meter-score {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    width: 56px;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+
+<a class="skip-link" href="#main">Asosiy matnga o'tish</a>
+<canvas id="starfield" aria-hidden="true"></canvas>
+
+<nav class="topbar">
+  <button class="wordmark" data-nav="home"><span class="mark">✦</span> Ruhshunos Fun</button>
+  <div class="navlinks" role="navigation" aria-label="Asosiy menyu">
+    <button data-nav="home">Bosh sahifa</button>
+    <button data-nav="zodiac">Munajjimlar bashorati</button>
+    <button data-nav="lifepath">Hayot soni</button>
+    <button data-nav="lovelang">Sevgi tili</button>
+    <button data-nav="temperament">Temperament</button>
+    <button data-nav="eq">EQ</button>
+    <button data-nav="stress">Stress</button>
+  </div>
+</nav>
+
+<main id="main">
+
+  <section class="view" id="view-home" data-view="home">
+    <div class="hero-wrap">
+      <canvas id="hero-wheel" aria-hidden="true"></canvas>
+      <p class="eyebrow">Ko'ngilochar testlar</p>
+      <h1 class="hero-title">O'zingiz va yaqinlaringiz haqida yulduzlar hamda raqamlar tilida bilib oling.</h1>
+      <p class="hero-lede">Oltita test tayyor: zodiak tahlili, hayot soni, sevgi tili profili, temperament, hissiy intellekt (EQ) va stress darajasi.</p>
+    </div>
+
+    <div class="card-grid">
+      <button class="test-card" data-nav="zodiac">
+        <span class="glyph">♈</span>
+        <h3>Munajjimlar bashorati</h3>
+        <p>Zodiak belgingizni va sherigingiz bilan mosligingizni bilib oling.</p>
+        <span class="tag">Boshlash →</span>
+      </button>
+
+      <button class="test-card" data-nav="lifepath">
+        <span class="glyph">Ⅸ</span>
+        <h3>Hayot soni</h3>
+        <p>Tug'ilgan sanangiz asosida numerologik shaxsiyat tahlili.</p>
+        <span class="tag">Boshlash →</span>
+      </button>
+
+      <button class="test-card" data-nav="lovelang">
+        <span class="glyph">♡</span>
+        <h3>Sevgi tilingiz</h3>
+        <p>25 savol asosida sevgi profilingizni — 5 tilning nisbiy ulushini — bilib oling.</p>
+        <span class="tag">Boshlash →</span>
+      </button>
+
+      <button class="test-card" data-nav="temperament">
+        <span class="glyph">◐</span>
+        <h3>Temperamentingiz</h3>
+        <p>Hippokrat 4 temperamenti asosidagi shaxsiyat profilingizni aniqlang.</p>
+        <span class="tag">Boshlash →</span>
+      </button>
+
+      <button class="test-card" data-nav="eq">
+        <span class="glyph">☍</span>
+        <h3>Hissiy intellekt (EQ)</h3>
+        <p>O'z-o'zini anglash, o'zini boshqarish, empatiya va ijtimoiy ko'nikmalar bo'yicha profilingiz.</p>
+        <span class="tag">Boshlash →</span>
+      </button>
+
+      <button class="test-card" data-nav="stress">
+        <span class="glyph">≋</span>
+        <h3>Stress darajasi</h3>
+        <p>Hozirgi stress darajangizni bilib oling va unga mos amaliy tavsiyalarni ko'ring.</p>
+        <span class="tag">Boshlash →</span>
+      </button>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Muhim eslatma.</strong> Bu testlar ko'ngilochar maqsadlarda taqdim etilgan. Natijalar ilmiy asoslangan emas va ular sizning hayotiy qarorlaringizga asos bo'lmasligi kerak. Agar sizda ruhiy salomatlik bo'yicha jiddiy savollar bo'lsa, professional psixolog yoki psixiatrga murojaat qiling. Ishonch telefoni: 1086.
+    </div>
+  </section>
+
+  <section class="view" id="view-zodiac" data-view="zodiac">
+    <button class="back-link" data-nav="home">← Bosh sahifa</button>
+    <div class="view-header">
+      <p class="view-title">♈ Munajjimlar bashorati</p>
+      <p class="view-sub">Zodiak belgingizni aniqlang va istasangiz sherigingiz bilan mosligingizni bilib oling.</p>
+    </div>
+
+    <section class="panel">
+      <h2>Ma'lumotlaringizni kiriting</h2>
+      <form id="zodiac-form">
+        <label for="z-birth-date">Tug'ilgan kuningiz</label>
+        <input type="date" id="z-birth-date" name="birth_date" required>
+
+        <label for="z-gender">Jinsingiz (ixtiyoriy)</label>
+        <select id="z-gender" name="gender">
+          <option value="">Ko'rsatilmasin</option>
+          <option value="erkak">Erkak</option>
+          <option value="ayol">Ayol</option>
+        </select>
+
+        <fieldset>
+          <legend>Sherigingiz bilan moslikni ham bilmoqchimisiz? (ixtiyoriy)</legend>
+          <label for="z-partner-date">Sherigingizning tug'ilgan kuni</label>
+          <input type="date" id="z-partner-date" name="partner_birth_date">
+
+          <label for="z-partner-gender">Sherigingizning jinsi</label>
+          <select id="z-partner-gender" name="partner_gender">
+            <option value="">Ko'rsatilmasin</option>
+            <option value="erkak">Erkak</option>
+            <option value="ayol">Ayol</option>
+          </select>
+        </fieldset>
+
+        <button type="submit" class="primary">Natijani ko'rish</button>
+      </form>
+      <div id="zodiac-error" class="error-box hidden"></div>
+    </section>
+
+    <section id="zodiac-result"></section>
+
+    <div class="disclaimer">
+      <strong>Muhim eslatma.</strong> Bu test ko'ngilochar maqsadlarda taqdim etilgan. Natijalar ilmiy asoslangan emas. Jiddiy savollar bo'lsa, professional mutaxassisga murojaat qiling. Ishonch telefoni: 1086.
+    </div>
+  </section>
+
+  <section class="view" id="view-lifepath" data-view="lifepath">
+    <button class="back-link" data-nav="home">← Bosh sahifa</button>
+    <div class="view-header">
+      <p class="view-title">Ⅸ Hayot soni</p>
+      <p class="view-sub">Pifagor numerologiyasi asosida shaxsiyat tahlili.</p>
+    </div>
+
+    <section class="panel">
+      <h2>Tug'ilgan kuningizni kiriting</h2>
+      <form id="lifepath-form">
+        <label for="lp-birth-date">Tug'ilgan kun</label>
+        <input type="date" id="lp-birth-date" name="birth_date" required>
+        <button type="submit" class="primary">Hayot sonimni bilish</button>
+      </form>
+      <div id="lifepath-error" class="error-box hidden"></div>
+    </section>
+
+    <section id="lifepath-result"></section>
+
+    <div class="disclaimer">
+      <strong>Muhim eslatma.</strong> Bu test ko'ngilochar maqsadlarda taqdim etilgan. Natijalar ilmiy asoslangan emas. Jiddiy savollar bo'lsa, professional mutaxassisga murojaat qiling. Ishonch telefoni: 1086.
+    </div>
+  </section>
+
+  <section class="view" id="view-lovelang" data-view="lovelang">
+    <button class="back-link" data-nav="home">← Bosh sahifa</button>
+    <div class="view-header">
+      <p class="view-title">♡ Sevgi tilingiz</p>
+      <p class="view-sub">25 ta savol — har birida sizga yaqinroq variantni tanlang. Yakunda 5 sevgi tilining nisbiy ulushini ko'rasiz.</p>
+    </div>
+
+    <div id="lovelang-quiz"></div>
+    <div id="lovelang-result"></div>
+
+    <div class="disclaimer">
+      <strong>Muhim eslatma.</strong> Bu test ko'ngilochar maqsadlarda taqdim etilgan. Zamonaviy tadqiqotlar shuni ko'rsatadiki, sog'lom munosabat uchun 5 ta sevgi tilining barchasi muhim — yagona tilga e'tibor qaratmang. Natijalar ilmiy asoslangan emas va hayotiy qarorlaringizga asos bo'lmasligi kerak.
+    </div>
+  </section>
+
+  <section class="view" id="view-temperament" data-view="temperament">
+    <button class="back-link" data-nav="home">← Bosh sahifa</button>
+    <div class="view-header">
+      <p class="view-title">◐ Temperamentingiz</p>
+      <p class="view-sub">20 ta savol — Hippokrat nazariyasidagi 4 temperament asosida. Har birida sizga eng yaqin javobni tanlang.</p>
+    </div>
+
+    <div id="temperament-quiz"></div>
+    <div id="temperament-result"></div>
+
+    <div class="disclaimer">
+      <strong>Muhim eslatma.</strong> 4 temperament nazariyasi zamonaviy psixologiyada to'g'ridan-to'g'ri qo'llanilmaydi, u shaxsiyat haqida intuitiv, ko'ngilochar bir nuqtai nazar xolos. Natijalar ilmiy asoslangan emas va hayotiy qarorlaringizga asos bo'lmasligi kerak.
+    </div>
+  </section>
+
+  <section class="view" id="view-eq" data-view="eq">
+    <button class="back-link" data-nav="home">← Bosh sahifa</button>
+    <div class="view-header">
+      <p class="view-title">☍ Hissiy intellekt (EQ)</p>
+      <p class="view-sub">20 ta bayonot — har biriga qanchalik rozi ekanligingizni belgilang. Yakunda umumiy EQ darajangiz va 4 yo'nalish bo'yicha tahlil chiqadi.</p>
+    </div>
+
+    <div id="eq-quiz"></div>
+    <div id="eq-result"></div>
+
+    <div class="disclaimer">
+      <strong>Muhim eslatma.</strong> Bu test ko'ngilochar maqsadlarda taqdim etilgan va professional psixologik baholash o'rnini bosmaydi. Natijalar ilmiy asoslangan emas va hayotiy qarorlaringizga asos bo'lmasligi kerak.
+    </div>
+  </section>
+
+  <section class="view" id="view-stress" data-view="stress">
+    <button class="back-link" data-nav="home">← Bosh sahifa</button>
+    <div class="view-header">
+      <p class="view-title">≋ Stress darajasi</p>
+      <p class="view-sub">18 ta savol — so'nggi bir necha haftada qanchalik tez-tez his qilganingizni belgilang. Yakunda stress darajangiz va amaliy tavsiyalar chiqadi.</p>
+    </div>
+
+    <div id="stress-quiz"></div>
+    <div id="stress-result"></div>
+
+    <div class="disclaimer">
+      <strong>Muhim eslatma.</strong> Bu test ko'ngilochar maqsadlarda taqdim etilgan va tibbiy yoki psixologik tashxis emas. Agar stress darajangiz uzoq vaqt davomida yuqori bo'lsa, professional psixolog yoki shifokorga murojaat qiling. Ishonch telefoni: 1086.
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">Ruhshunos Fun — ko'ngilochar testlar platformasi</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Zodiac data (ported from logic/zodiac.py, expanded) ---------- */
+  const ZODIAC_SIGNS = [
+    { key: "hamal", name: "Hamal (Qo'chqor)", glyph: "♈", element: "Olov", modality: "Kardinal", dateRange: "21 mart – 19 aprel",
+      desc: "Hamal tug'ilganlar tashabbuskor, jasur va mustaqil bo'lishadi. Ular yangi ishlarni boshlashni yaxshi ko'radi, tez qaror qabul qiladi va yetakchilikka moyil.",
+      strengths: ["Tashabbuskorlik", "Jasorat", "Mustaqillik", "Tezkor qaror qabul qilish", "Yetakchilik qobiliyati"],
+      weaknesses: ["Sabrsizlik", "Shoshqaloqlik", "O'jarlik", "Tez g'azablanish"],
+      careers: ["Tadbirkor", "Sport murabbiyi", "Harbiy xizmat", "Loyiha rahbari", "Favqulodda yordam xodimi"],
+      relationships: "Munosabatlarda Hamal tashabbusni o'z qo'liga oladi va sevgisini ochiq, jasorat bilan izhor qiladi. Sherigidan mustaqillikni hurmat qilishni va o'ziga teng kuchli, qiziqarli shaxsni kutadi. Janjaldan keyin tez yarashadi, lekin tez-tez ziddiyatga kirishishi mumkin." },
+    { key: "savr", name: "Savr (Buqa)", glyph: "♉", element: "Tuproq", modality: "Sobit", dateRange: "20 aprel – 20 may",
+      desc: "Savr vakillari barqaror, ishonchli va qat'iyatli. Ular qulaylik va farovonlikni qadrlashadi, o'zgarishlarga sekin moslashadi, lekin boshlagan ishini oxiriga yetkazishda tengsiz.",
+      strengths: ["Barqarorlik", "Sadoqat", "Sabr-toqat", "Amaliy fikrlash", "Ishonchlilik"],
+      weaknesses: ["O'jarlik", "O'zgarishlarga qarshilik", "Moddiyparastlik", "Rashk"],
+      careers: ["Moliyachi", "Oshpaz", "Agrobiznes mutaxassisi", "Dizayner", "Bank xodimi"],
+      relationships: "Savr munosabatlarda barqarorlik va xavfsizlikni qadrlaydi. Sekin, lekin chuqur va uzoq muddatli bog'lanish quradi. Jismoniy yaqinlik va sifatli lahzalar orqali mehr ko'rsatishni yaxshi ko'radi, sherigidan sadoqat va izchillikni kutadi." },
+    { key: "javzo", name: "Javzo (Egizaklar)", glyph: "♊", element: "Havo", modality: "Mutable", dateRange: "21 may – 20 iyun",
+      desc: "Javzo tug'ilganlar qiziquvchan, tez fikrlaydigan va muloqotga usta. Ular ko'p qirrali bo'lib, doim yangi g'oyalar va mavzular izlaydi.",
+      strengths: ["Aqliy chaqqonlik", "Muloqotchanlik", "Moslashuvchanlik", "Hazil-mutoyiba", "Ko'p qirralilik"],
+      weaknesses: ["Beqarorlik", "Yuzakilik xavfi", "Diqqatni jamlay olmaslik", "Qat'iyatsizlik"],
+      careers: ["Jurnalist", "Marketolog", "Muallif/blogger", "Til o'qituvchisi", "Savdo vakili"],
+      relationships: "Javzo uchun aqliy aloqa jismoniy jozibadan ko'ra muhimroq. Qiziqarli suhbatlar va yangi tajribalarni birga boshdan kechirishni yaxshi ko'radi. Sherigidan intellektual hamfikrlik va erkinlikka hurmatni kutadi." },
+    { key: "saraton", name: "Saraton (Qisqichbaqa)", glyph: "♋", element: "Suv", modality: "Kardinal", dateRange: "21 iyun – 22 iyul",
+      desc: "Saraton vakillari juda sezgir, g'amxo'r va oilaviy qadriyatlarga sodiq. Ular yaqinlarini himoya qilishga tayyor, his-tuyg'ulari chuqur va samimiy.",
+      strengths: ["Sezgirlik", "G'amxo'rlik", "Sodiqlik", "Intuitiv tushunish", "Himoyalash instinkti"],
+      weaknesses: ["Haddan tashqari hissiyotlilik", "Kayfiyat o'zgaruvchanligi", "O'tmishga yopishib qolish", "Yopiqlik"],
+      careers: ["Shifokor/hamshira", "Psixolog", "Oshpaz", "Tarbiyachi", "Ijtimoiy ishchi"],
+      relationships: "Saraton chuqur hissiy bog'lanish va oilaviy issiqlikni qadrlaydi. Sherigiga g'amxo'rlik qilish orqali sevgisini ko'rsatadi va xuddi shunday munosabatni kutadi. Ishonchni qozonish vaqt talab qiladi, lekin bir marta ishonsa, umrbod sodiq qoladi." },
+    { key: "asad", name: "Asad (Sher)", glyph: "♌", element: "Olov", modality: "Sobit", dateRange: "23 iyul – 22 avgust",
+      desc: "Asad tug'ilganlar o'ziga ishongan, saxiy va tabiiy yetakchi. Ular e'tibor markazida bo'lishni yaxshi ko'rishadi, ijodiy energiyaga boy.",
+      strengths: ["O'ziga ishonch", "Saxiylik", "Ijodkorlik", "Yetakchilik", "Sodiqlik"],
+      weaknesses: ["Mag'rurlik", "E'tiborga muhtojlik", "Boshqaruvchanlik", "Tanqidga sezgirlik"],
+      careers: ["Aktyor/aktrisa", "Menejer", "Dizayner", "Tadbirkor", "Nutq ustasi/prezentator"],
+      relationships: "Asad munosabatlarda romantik va teatrallashtirilgan yondashuvni yaxshi ko'radi — katta jestlar, ochiq maqtovlar. Sherigidan hurmat va e'tirofni kutadi, o'z navbatida cheksiz sadoqat va himoya taklif qiladi." },
+    { key: "sunbula", name: "Sunbula (Boshoqcha)", glyph: "♍", element: "Tuproq", modality: "Mutable", dateRange: "23 avgust – 22 sentyabr",
+      desc: "Sunbula vakillari puxta, tahliliy va mukammallikka intiluvchan. Ular detallarga e'tiborli, mas'uliyatli va foydali bo'lishni istaydi.",
+      strengths: ["Puxtalik", "Tahliliy fikrlash", "Mas'uliyatlilik", "Amaliylik", "Yordamga tayyorlik"],
+      weaknesses: ["Haddan tashqari tanqidchilik", "Mukammalliyatchilik", "Ortiqcha tashvishlanish", "O'ziga qattiqqo'llik"],
+      careers: ["Tahlilchi", "Shifokor", "Muharrir", "Buxgalter", "Sifat nazorati mutaxassisi"],
+      relationships: "Sunbula amaliy g'amxo'rlik va kichik, foydali ishlar orqali sevgisini ko'rsatadi. Sherigidan halollik va aniqlikni kutadi. Munosabatlarda ehtiyotkor, lekin bir marta ishonch paydo bo'lsa, chuqur sodiqlik namoyon etadi." },
+    { key: "mezon", name: "Mezon (Tarozi)", glyph: "♎", element: "Havo", modality: "Kardinal", dateRange: "23 sentyabr – 22 oktyabr",
+      desc: "Mezon tug'ilganlar muvozanat, adolat va uyg'unlikni qadrlashadi. Ular diplomatik va jamoaviy ishlarda kuchli.",
+      strengths: ["Diplomatiya", "Adolatparvarlik", "Estetik did", "Jamoaviylik", "Muvozanat saqlash"],
+      weaknesses: ["Qat'iyatsizlik", "Ziddiyatdan qochish", "Boshqalarga bog'liqlik", "Sirtqi ko'rinishga haddan tashqari e'tibor"],
+      careers: ["Yurist/vositachi", "Dizayner", "Diplomat", "HR mutaxassisi", "San'at kuratori"],
+      relationships: "Mezon uchun hamkorlik va uyg'unlik munosabatlarning markazida turadi. Yolg'izlikdan ko'ra sheriklikni afzal ko'radi va ziddiyatlardan qochishga harakat qiladi. Sherigidan muloyimlik va adolatni kutadi." },
+    { key: "aqrab", name: "Aqrab (Chayon)", glyph: "♏", element: "Suv", modality: "Sobit", dateRange: "23 oktyabr – 21 noyabr",
+      desc: "Aqrab vakillari kuchli irodali, sirli va chuqur his qiluvchi insonlar. Ular sodiqlikni va haqiqatni qadrlashadi, ishtiyoqli va qat'iyatli.",
+      strengths: ["Kuchli iroda", "Chuqur his qilish", "Sodiqlik", "Strategik fikrlash", "Jasorat"],
+      weaknesses: ["Shubhaguyilik", "Rashk", "Qasoskorlik", "Yopiqlik"],
+      careers: ["Tergovchi/detektiv", "Psixolog", "Xirurg", "Moliyaviy tahlilchi", "Tadqiqotchi"],
+      relationships: "Aqrab munosabatlarda hech narsani yarim yo'lda qoldirmaydi — to'liq, chuqur va ishtiyoqli bog'lanishni izlaydi. Ishonchni asta-sekin beradi, lekin xiyonatni kechirish qiyin. Sherigidan sodiqlik va halollikni talab qiladi." },
+    { key: "qavs", name: "Qavs (O'qchi)", glyph: "♐", element: "Olov", modality: "Mutable", dateRange: "22 noyabr – 21 dekabr",
+      desc: "Qavs tug'ilganlar erkinlikni sevuvchi, optimist va sarguzashtga moyil. Ular falsafa va sayohatga qiziqishadi, ochiq fikrli.",
+      strengths: ["Optimizm", "Erkinlikka intilish", "Falsafiy fikrlash", "Sarguzashtga moyillik", "To'g'riso'zlik"],
+      weaknesses: ["Taktsizlik", "Barqarorlikdan qochish", "Mas'uliyatdan qochish xavfi", "Sabrsizlik"],
+      careers: ["Sayyoh yo'lboshchisi", "O'qituvchi/professor", "Jurnalist", "Startap asoschisi", "Sport murabbiyi"],
+      relationships: "Qavs munosabatlarda erkinlik va sarguzashtni birga baham ko'rishni yaxshi ko'radi. Sherigidan mustaqillikka hurmat va yangi tajribalarga ochiqlikni kutadi. Chuqur bog'lanishga sekin keladi, lekin sodiq bo'lganda haqiqiy do'st-sherik bo'ladi." },
+    { key: "jadi", name: "Jadi (Tog' echkisi)", glyph: "♑", element: "Tuproq", modality: "Kardinal", dateRange: "22 dekabr – 19 yanvar",
+      desc: "Jadi vakillari intizomli, mas'uliyatli va maqsadga yo'naltirilgan. Ular sabr bilan cho'qqilarni zabt etishadi, amaliy fikrlaydi.",
+      strengths: ["Intizom", "Mas'uliyat", "Sabr-chidam", "Maqsadga yo'nalganlik", "Amaliy donolik"],
+      weaknesses: ["Haddan tashqari jiddiylik", "Ish-hayot muvozanatini buzish", "Hissiyotlarni yashirish", "Pessimizmga moyillik"],
+      careers: ["Yirik kompaniya rahbari", "Moliyaviy menejer", "Me'mor", "Davlat xizmatchisi", "Yuridik maslahatchi"],
+      relationships: "Jadi munosabatlarda sekin, lekin mustahkam poydevor quradi. Sevgisini amaliy g'amxo'rlik va uzoq muddatli sodiqlik orqali ko'rsatadi. Sherigidan jiddiylik va kelajakka birgalikda reja tuzishni kutadi." },
+    { key: "dalv", name: "Dalv (Ko'za)", glyph: "♒", element: "Havo", modality: "Sobit", dateRange: "20 yanvar – 18 fevral",
+      desc: "Dalv tug'ilganlar mustaqil fikrli, innovatsion va insonparvar. Ular jamiyat manfaati uchun g'oyalar bilan chiqishadi, o'ziga xos bo'lishni yaxshi ko'radi.",
+      strengths: ["Innovatsion fikrlash", "Insonparvarlik", "Mustaqillik", "Original g'oyalar", "Adolat tuyg'usi"],
+      weaknesses: ["Hissiy uzoqlik", "O'jarlik", "Oldindan aytib bo'lmaslik", "Isyonkorlikka moyillik"],
+      careers: ["IT mutaxassisi", "Ijtimoiy islohotchi", "Ilmiy tadqiqotchi", "Ixtirochi", "NNT xodimi"],
+      relationships: "Dalv uchun do'stlik munosabatlarning poydevori hisoblanadi — sherigini avvalo yaqin do'st sifatida ko'radi. Erkinlik va shaxsiy makonni juda qadrlaydi, hissiyotlarni ochiq ifodalashda qiynalishi mumkin. Sherigidan intellektual hamfikrlikni kutadi." },
+    { key: "hut", name: "Hut (Baliq)", glyph: "♓", element: "Suv", modality: "Mutable", dateRange: "19 fevral – 20 mart",
+      desc: "Hut vakillari xayolparast, mehribon va yuqori sezgirlikka ega. Ular san'at va ma'naviyatga moyil, boshqalarga chuqur hamdard bo'ladi.",
+      strengths: ["Empatiya", "Ijodiy tasavvur", "Ma'naviylik", "Mehr-shafqat", "Moslashuvchanlik"],
+      weaknesses: ["Real hayotdan qochish", "Qaror qabul qilishda qat'iyatsizlik", "Haddan tashqari qurbonlik", "Ta'sirlanuvchanlik"],
+      careers: ["San'atkor/musiqachi", "Terapevt", "Xayriya faoliyati", "Yozuvchi", "Ma'naviy yo'l-yo'riqchi"],
+      relationships: "Hut munosabatlarda o'zini to'liq bag'ishlaydi va sherigining his-tuyg'ularini chuqur his qiladi. Romantik va fidoyi, lekin ba'zan o'z ehtiyojlarini unutib qo'yishi mumkin. Sherigidan mehr va sabr-toqatni kutadi." },
+  ];
+
+  const START_DATES = [
+    [3, 21], [4, 20], [5, 21], [6, 21], [7, 23], [8, 23],
+    [9, 23], [10, 23], [11, 22], [12, 22], [1, 20], [2, 19],
+  ];
+
+  function getSignForDate(month, day) {
+    const md = month * 100 + day;
+    for (let i = 0; i < 12; i++) {
+      const [sm, sd] = START_DATES[i];
+      const [nm, nd] = START_DATES[(i + 1) % 12];
+      const startVal = sm * 100 + sd;
+      const nextVal = nm * 100 + nd;
+      const inRange = nm < sm ? (md >= startVal || md < nextVal) : (md >= startVal && md < nextVal);
+      if (inRange) return ZODIAC_SIGNS[i];
+    }
+    throw new Error("Sana uchun zodiak belgisi topilmadi");
+  }
+
+  const SAME_ELEMENT_SCORE = { Olov: 95, Tuproq: 90, Havo: 85, Suv: 92 };
+  const PAIR_ELEMENT_SCORE = {
+    "Havo|Olov": 80, "Suv|Tuproq": 78, "Olov|Suv": 45,
+    "Havo|Tuproq": 50, "Olov|Tuproq": 55, "Havo|Suv": 55,
+  };
+  function elementScore(a, b) {
+    if (a.element === b.element) return SAME_ELEMENT_SCORE[a.element];
+    return PAIR_ELEMENT_SCORE[[a.element, b.element].sort().join("|")];
+  }
+  function modalityScore(a, b) { return a.modality === b.modality ? 80 : 90; }
+
+  const DISTANCE_SCORES = { 0: 70, 1: 75, 2: 90, 3: 40, 4: 95, 5: 55, 6: 65 };
+  function distanceScore(a, b) {
+    const ia = ZODIAC_SIGNS.indexOf(a), ib = ZODIAC_SIGNS.indexOf(b);
+    const raw = Math.abs(ia - ib);
+    return DISTANCE_SCORES[Math.min(raw, 12 - raw)];
+  }
+  function genderScore(ga, gb) { return (ga && gb && ga !== gb) ? 85 : 70; }
+
+  function compatibility(signA, signB, genderA, genderB) {
+    const element = elementScore(signA, signB);
+    const modality = modalityScore(signA, signB);
+    const distance = distanceScore(signA, signB);
+    const gender = genderScore(genderA, genderB);
+    const total = Math.round(element * 0.4 + modality * 0.3 + distance * 0.2 + gender * 0.1);
+
+    let energy, summary;
+    if (total >= 85) { energy = "Juda yuqori"; summary = "Bu ajoyib moslik! Ikkovingiz bir-biringizni tabiiy ravishda to'ldirasiz."; }
+    else if (total >= 70) { energy = "Yuqori"; summary = "Yaxshi moslik. Kichik farqlar bo'lsa ham, umumiy uyg'unlik kuchli."; }
+    else if (total >= 55) { energy = "O'rtacha"; summary = "O'rtacha moslik — muvaffaqiyat uchun ikkovingiz ham harakat qilishingiz kerak."; }
+    else { energy = "Past"; summary = "Bu murakkab moslik. Farqlaringiz ko'p, lekin ular ham o'sish imkoniyati bo'lishi mumkin."; }
+
+    const elementNote = signA.element === signB.element
+      ? `${signA.element} + ${signA.element} — bir xil energiya, kuchli rezonans`
+      : `${signA.element} + ${signB.element} — turli energiyalar`;
+
+    const problems = [];
+    if (signA.modality === signB.modality && signA.modality === "Kardinal") problems.push("Ikkalangiz ham yetakchi bo'lishni xohlaysiz");
+    else if (signA.modality === signB.modality && signA.modality === "Sobit") problems.push("Ikkalangiz ham qarorlaringizdan qaytmasligingiz mumkin");
+    else if (signA.modality === signB.modality && signA.modality === "Mutable") problems.push("Ikkalangiz ham qat'iy qaror qabul qilishda qiynalishingiz mumkin");
+    if ([45, 50, 55].includes(element)) problems.push("Elementlaringiz farqli — bir-biringizni tushunish uchun ko'proq vaqt kerak bo'ladi");
+    if (problems.length === 0) problems.push("Jiddiy nomuvofiqlik kuzatilmadi, lekin har qanday munosabat mehnat talab qiladi");
+
+    return {
+      total, energy, summary,
+      elementNote,
+      communication: element >= 80 ? "Ochiq va to'g'ridan-to'g'ri" : "Sabr va tushunish talab qiladi",
+      problems,
+      advice: "Bir-biringizga gap berish va farqlaringizni qadrlashni o'rganing. Ochiq muloqot har qanday moslikni yanada mustahkamlaydi.",
+      breakdown: { element, modality, distance, gender },
+    };
+  }
+
+  const BREAKDOWN_LABELS = {
+    element: "Element mosligi", modality: "Modallik mosligi",
+    distance: "Burjlar orasidagi masofa", gender: "Jins farqi koeffitsienti",
+  };
+
+  /* ---------- Life path data (ported from logic/life_path.py, expanded) ---------- */
+  const MASTER_NUMBERS = new Set([11, 22, 33]);
+  const LIFE_PATH_MEANINGS = {
+    1: { title: "Yetakchi", summary: "Mustaqil, kuchli, tashabbuskor, individualist. Yetakchilikka moyil.",
+      careers: ["Tadbirkor", "Rahbar", "Loyiha menejeri", "Harbiy yoki sport murabbiyi"],
+      relationships: "1 soni egalari munosabatlarda ham yetakchilikni davom ettiradi — mustaqil va o'ziga ishongan sherikni qadrlaydi, nazorat qilinishni yoqtirmaydi. Sevgini amaliy qo'llab-quvvatlash va himoya orqali ko'rsatadi.",
+      strengths: ["Qat'iyat", "Tashabbuskorlik", "Tez qaror qabul qilish", "O'ziga ishonch"],
+      weaknesses: ["Haddan tashqari o'jarlik", "Yakkaxonlikka moyillik", "Boshqalarni tinglashda qiynalish", "Sabrsizlik"],
+      advice: "Boshqalarning fikrini eshitishni o'rganing — yetakchilik hamkorlikni istisno qilmaydi.", isMaster: false },
+    2: { title: "Diplomat", summary: "Sezgir, hamkorlik, muvozanat. Boshqalar bilan ishlashda kuchli.",
+      careers: ["Psixolog", "Vositachi", "HR mutaxassisi", "Ijtimoiy ishchi"],
+      relationships: "2 soni egalari barqaror, sodiq va uyg'un munosabatlarni izlaydi. Sherigining ehtiyojlarini o'zinikidan ustun qo'yishga moyil, shuning uchun o'z his-tuyg'ularini ham ochiq ifodalashni o'rganishi muhim.",
+      strengths: ["Empatiya", "Diplomatiya", "Jamoada ishlash qobiliyati", "Sezgirlik"],
+      weaknesses: ["Haddan tashqari moslashuvchanlik", "O'z fikrini yashirish", "Qaror qabul qilishda ikkilanish", "Boshqalarga bog'liqlik"],
+      advice: "O'z ehtiyojlaringizni ham ochiq aytishni unutmang.", isMaster: false },
+    3: { title: "Ijodkor", summary: "Ekspressiv, optimist, ijodiy. Muloqot va san'atda iqtidorli.",
+      careers: ["San'atkor", "Yozuvchi", "Dizayner", "Marketolog", "Jurnalist"],
+      relationships: "3 soni egalari quvnoq va ilhomlantiruvchi sherikni qadrlaydi. Munosabatlarda hazil-mutoyiba va ijodiy energiya orqali yaqinlik quradi, lekin chuqur mavzularda barqarorlikni saqlashni mashq qilishi kerak.",
+      strengths: ["Ijodkorlik", "Xushmuomalalik", "Ijobiy energiya", "Ifodali muloqot"],
+      weaknesses: ["Diqqatni jamlashda qiynalish", "Yuzaki munosabatga moyillik", "Beqarorlik", "Haddan tashqari hissiyotlilik"],
+      advice: "G'oyalaringizni oxirigacha yetkazishga e'tibor bering.", isMaster: false },
+    4: { title: "Quruvchi", summary: "Mehnatkash, mas'uliyatli, ishonchli. Tartib va barqarorlikni qadrlaydi.",
+      careers: ["Muhandis", "Moliyachi", "Quruvchi", "Menejer", "Tahlilchi"],
+      relationships: "4 soni egalari ishonchli va barqaror munosabatlarni afzal ko'radi. Sevgisini amaliy g'amxo'rlik va doimiylik orqali ko'rsatadi, lekin ba'zida spontanlikka ham o'rin qoldirishi kerak.",
+      strengths: ["Intizom", "Mas'uliyat", "Amaliy fikrlash", "Ishonchlilik"],
+      weaknesses: ["Haddan tashqari qat'iylik", "O'zgarishlardan qochish", "Qat'iy nazorat qilish", "Moslashuvchanlikning yetishmasligi"],
+      advice: "Ba'zida rejadan chetga chiqishga ham o'zingizga ruxsat bering.", isMaster: false },
+    5: { title: "Sayohatchi", summary: "Erkin, qiziquvchan, o'zgaruvchan. Yangi tajribalarni izlaydi.",
+      careers: ["Sayohat sohasi", "Jurnalist", "Savdo", "Startap asoschisi", "Voqealar tashkilotchisi"],
+      relationships: "5 soni egalari erkinlikni cheklamaydigan, sarguzashtli sherikni istaydi. Munosabatlarda yangilik va o'zgarishni qadrlaydi, lekin uzoq muddatli sodiqlik uchun ongli kuch sarflashi kerak.",
+      strengths: ["Moslashuvchanlik", "Qiziquvchanlik", "Jasorat", "Kommunikabellik"],
+      weaknesses: ["Barqarorlikdan qochish", "Qaror qabul qilishda beqarorlik", "Majburiyatdan qo'rqish", "Sabrsizlik"],
+      advice: "Katta qarorlarda bir oz sabr qiling — har doim ham o'zgarish shart emas.", isMaster: false },
+    6: { title: "G'amxo'r", summary: "Mehribon, oilaviy, ma'sul. Boshqalarga g'amxo'rlik qilishni yaxshi ko'radi.",
+      careers: ["Shifokor", "O'qituvchi", "Ijtimoiy soha", "Oila terapevti", "Bolalar parvarishi mutaxassisi"],
+      relationships: "6 soni egalari oila va sadoqatni yuqori qo'yadi, g'amxo'r sherik izlaydi. Munosabatlarning markazida turishni yaxshi ko'radi, lekin o'zining ham ehtiyojlari borligini unutmasligi kerak.",
+      strengths: ["Mehr", "Mas'uliyat", "Boshqalarga yordam berish qobiliyati", "Sodiqlik"],
+      weaknesses: ["O'zini unutib qurbon bo'lish", "Haddan tashqari nazoratchilik", "Boshqalar hisobiga yashash", "Tanqidga sezgirlik"],
+      advice: "Boshqalarga g'amxo'rlik qilishdan oldin o'zingizga ham vaqt ajrating.", isMaster: false },
+    7: { title: "Mutafakkir", summary: "Tahliliy, ma'naviy, izlanuvchan. Falsafa va ilmga moyil.",
+      careers: ["Tadqiqotchi", "Olim", "Yozuvchi", "Dasturchi", "Ma'naviy yo'l-yo'riqchi"],
+      relationships: "7 soni egalari chuqur intellektual aloqa va shaxsiy makonni qadrlaydi. Munosabatlarga sekin kiradi, lekin bir marta ishonch bog'lansa, chuqur va ma'noli aloqa quradi.",
+      strengths: ["Chuqur tahlil", "Izlanuvchanlik", "Ichki donolik", "Mustaqil fikrlash"],
+      weaknesses: ["Yolg'izlikka berilib ketish", "Odamlardan uzoqlashish", "Haddan tashqari shubhalanish", "His-tuyg'ularini yashirish"],
+      advice: "Bilimlaringizni boshqalar bilan ulashish sizni yanada boyitadi.", isMaster: false },
+    8: { title: "Boshqaruvchi", summary: "Ambitsiyali, moliyaviy, kuchli irodali. Biznes va karyerada muvaffaqiyatli.",
+      careers: ["Biznes rahbari", "Investor", "Yurist", "Moliyaviy menejer"],
+      relationships: "8 soni egalari kuchli va maqsadli sherikni qadrlaydi, mustaqillikni hurmat qiladi. Sevgisini moddiy va amaliy qo'llab-quvvatlash orqali ko'rsatadi, lekin his-tuyg'ularini ochiqroq ifodalashni o'rganishi foydali.",
+      strengths: ["Irodakuchi", "Strategik fikrlash", "Natijaga yo'nalganlik", "Tashkilotchilik"],
+      weaknesses: ["Ishga berilib ketib shaxsiy hayotni unutish", "Hokimiyatga o'chlik", "Boshqalarni nazorat qilishga moyillik", "Materiallik"],
+      advice: "Muvaffaqiyat faqat raqamlarda emasligini yodda tuting.", isMaster: false },
+    9: { title: "Insonparvar", summary: "Olijanob, dunyoga ochiq, idealist. Boshqalarga yordam berishni xohlaydi.",
+      careers: ["Faoliyatchi", "Xayriya sohasi", "O'qituvchi", "San'atkor", "Diplomat"],
+      relationships: "9 soni egalari chuqur ma'noli va insonparvar munosabatlarni izlaydi. Sherigiga cheksiz mehr va tushunish taklif qiladi, lekin kundalik, amaliy ehtiyojlarni ham unutmasligi kerak.",
+      strengths: ["Saxiylik", "Keng dunyoqarash", "Empatiya", "Ijodiy tasavvur"],
+      weaknesses: ["Haddan tashqari idealizm", "Haqiqiy hayotdan uzoqlashish", "O'zini qurbon qilish", "Xayolparastlik"],
+      advice: "Global g'oyalar bilan bir qatorda kundalik ehtiyojlaringizni ham unutmang.", isMaster: false },
+    11: { title: "Master — Ilhomlantiruvchi", summary: "Yuqori sezgirlik, ma'naviy yetakchilik, intuitsiya.",
+      careers: ["Psixolog", "Muallim", "San'atkor", "Ma'naviy yo'l-yo'riq beruvchi", "Terapevt"],
+      relationships: "11 soni egalari sezgir va e'tiborli sherikni qidiradi. Chuqur hissiy va ma'naviy aloqani qadrlaydi, lekin o'z energiyasini himoya qilishni o'rganishi kerak.",
+      strengths: ["Empatiya", "Ijodkorlik", "Ma'naviy chuqurlik", "Yuqori intuitsiya"],
+      weaknesses: ["Charchoq va o'zini qurbon qilish tendensiyasi", "Haddan tashqari sezgirlik", "Real hayotiy masalalarda beqarorlik", "Ichki ziddiyatlar"],
+      advice: "O'z energiyangizni saqlang. Ko'p odamlarga yordam berasiz, lekin o'zingizni unutmang.", isMaster: true },
+    22: { title: "Master — Quruvchi-Ustoz", summary: "Buyuk loyihalar, dunyo darajasidagi maqsadlar.",
+      careers: ["Me'mor", "Yirik loyiha rahbari", "Ijtimoiy islohotchi", "Tadbirkor"],
+      relationships: "22 soni egalari katta maqsadlarni baham ko'radigan, hamfikr sherikni qadrlaydi. Munosabatlarda ham strategik fikrlaydi, lekin kundalik iliqlik va spontan lahzalarni ham unutmasligi kerak.",
+      strengths: ["Vizyoner fikrlash", "Amaliyotchilik", "Katta miqyosda ishlash qobiliyati", "Intizom"],
+      weaknesses: ["Haddan tashqari yuqori talablar qo'yish", "O'zini bosim ostida his qilish", "Kichik detallarni e'tiborsiz qoldirish", "Charchoq"],
+      advice: "Katta orzularingizni kichik, amalga oshiriladigan qadamlarga bo'ling.", isMaster: true },
+    33: { title: "Master — Muallim", summary: "Olamiy xizmat, beg'araz mehr, ma'naviy o'qituvchi.",
+      careers: ["Muallim", "Terapevt", "Ma'naviy rahbar", "Xayriya faoliyati"],
+      relationships: "33 soni egalari beg'araz mehr va chuqur g'amxo'rlik asosidagi munosabatlarni quradi. Sherigiga cheksiz qo'llab-quvvatlash taklif qiladi, lekin o'z 'idishini' ham to'ldirishni unutmasligi kerak.",
+      strengths: ["Beg'araz mehr", "Ilhomlantirish qobiliyati", "Chuqur donolik", "Kechirimlilik"],
+      weaknesses: ["O'zini butunlay boshqalarga bag'ishlash", "Haddan tashqari fidoyilik", "Charchoq", "O'z chegaralarini belgilay olmaslik"],
+      advice: "Boshqalarga xizmat qilishdan oldin o'z 'idishingizni' to'ldirib oling.", isMaster: true },
+  };
+
+  function calculateLifePath(y, m, d) {
+    const ddmmyyyy = `${String(d).padStart(2, "0")}${String(m).padStart(2, "0")}${y}`;
+    let digits = ddmmyyyy.split("").map(Number);
+    let total = digits.reduce((a, b) => a + b, 0);
+    const steps = [`${digits.join("+")} = ${total}`];
+
+    while (total > 9 && !MASTER_NUMBERS.has(total)) {
+      digits = String(total).split("").map(Number);
+      const newTotal = digits.reduce((a, b) => a + b, 0);
+      steps.push(`${digits.join("+")} = ${newTotal}`);
+      total = newTotal;
+    }
+
+    const meaning = LIFE_PATH_MEANINGS[total];
+    return { number: total, isMaster: meaning.isMaster, calculation: steps.join(" → "), meaning };
+  }
+
+  /* ---------- Router ---------- */
+  const views = {
+    home: "view-home", zodiac: "view-zodiac", lifepath: "view-lifepath",
+    lovelang: "view-lovelang", temperament: "view-temperament",
+    eq: "view-eq", stress: "view-stress",
+  };
+  function navigate(name) {
+    if (!views[name]) name = "home";
+    Object.keys(views).forEach((k) => {
+      document.getElementById(views[k]).classList.toggle("active", k === name);
+    });
+    document.querySelectorAll(".navlinks button").forEach((b) => {
+      b.toggleAttribute("aria-current", b.dataset.nav === name);
+      if (b.dataset.nav === name) b.setAttribute("aria-current", "page");
+      else b.removeAttribute("aria-current");
+    });
+    if (name === "lovelang" && window.initLoveQuiz) window.initLoveQuiz();
+    if (name === "temperament" && window.initTemperamentQuiz) window.initTemperamentQuiz();
+    if (name === "eq" && window.initEQQuiz) window.initEQQuiz();
+    if (name === "stress" && window.initStressQuiz) window.initStressQuiz();
+    if (name === "home" && window.initHeroWheel) requestAnimationFrame(window.initHeroWheel);
+    window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+    history.replaceState(null, "", "#" + name);
+  }
+  document.querySelectorAll("[data-nav]").forEach((el) => {
+    el.addEventListener("click", () => navigate(el.dataset.nav));
+  });
+
+  /* ---------- Hero decorative wheel (home view) ---------- */
+  function drawHeroWheel() {
+    const canvas = document.getElementById("hero-wheel");
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const size = rect.width;
+    const cx = size / 2, cy = size / 2, r = size / 2 - 34;
+    const styles = getComputedStyle(document.documentElement);
+    const accent = styles.getPropertyValue("--accent").trim();
+    const border = styles.getPropertyValue("--border").trim();
+
+    ctx.clearRect(0, 0, size, size);
+    ctx.globalAlpha = 0.5;
+    ctx.strokeStyle = border;
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r - 46, 0, Math.PI * 2); ctx.stroke();
+
+    ctx.globalAlpha = 0.55;
+    ctx.fillStyle = accent;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ZODIAC_SIGNS.forEach((s, i) => {
+      const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
+      const gx = cx + Math.cos(angle) * (r - 23);
+      const gy = cy + Math.sin(angle) * (r - 23);
+      ctx.font = `${Math.max(20, size * 0.05)}px Georgia, serif`;
+      ctx.fillText(s.glyph, gx, gy);
+    });
+    ctx.globalAlpha = 1;
+  }
+  let heroThemeObserver;
+  window.initHeroWheel = function () {
+    drawHeroWheel();
+    if (heroThemeObserver) heroThemeObserver.disconnect();
+    heroThemeObserver = new MutationObserver(drawHeroWheel);
+    heroThemeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  };
+  window.addEventListener("resize", () => drawHeroWheel());
+
+  /* ---------- Zodiac wheel canvas ---------- */
+  function drawWheel(canvas, highlightKey, partnerKey) {
+    const size = 220, dpr = window.devicePixelRatio || 1;
+    canvas.width = size * dpr; canvas.height = size * dpr;
+    canvas.style.width = size + "px"; canvas.style.height = size + "px";
+    const ctx = canvas.getContext("2d");
+    ctx.scale(dpr, dpr);
+    const cx = size / 2, cy = size / 2, r = 92;
+    const styles = getComputedStyle(document.documentElement);
+    const border = styles.getPropertyValue("--border").trim();
+    const accent = styles.getPropertyValue("--accent").trim();
+    const accent2 = styles.getPropertyValue("--accent-2").trim();
+    const text = styles.getPropertyValue("--text").trim();
+    const cardBg = styles.getPropertyValue("--card").trim();
+
+    ctx.clearRect(0, 0, size, size);
+    ctx.strokeStyle = border;
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.arc(cx, cy, r - 30, 0, Math.PI * 2); ctx.stroke();
+
+    const positions = {};
+    ZODIAC_SIGNS.forEach((s, i) => {
+      const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
+      const gx = cx + Math.cos(angle) * (r - 15);
+      const gy = cy + Math.sin(angle) * (r - 15);
+      positions[s.key] = { x: gx, y: gy, angle };
+    });
+
+    // connecting chord
+    if (partnerKey && positions[highlightKey] && positions[partnerKey]) {
+      ctx.strokeStyle = accent2;
+      ctx.globalAlpha = 0.55;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(positions[highlightKey].x, positions[highlightKey].y);
+      ctx.lineTo(positions[partnerKey].x, positions[partnerKey].y);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+
+    ZODIAC_SIGNS.forEach((s) => {
+      const p = positions[s.key];
+      const isSelf = s.key === highlightKey;
+      const isPartner = s.key === partnerKey;
+      if (isSelf || isPartner) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 15, 0, Math.PI * 2);
+        ctx.fillStyle = isSelf ? accent : accent2;
+        ctx.globalAlpha = 0.18;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 15, 0, Math.PI * 2);
+        ctx.strokeStyle = isSelf ? accent : accent2;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+      }
+      ctx.fillStyle = (isSelf || isPartner) ? (isSelf ? accent : accent2) : text;
+      ctx.font = (isSelf || isPartner ? "600 " : "400 ") + "15px Georgia, serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(s.glyph, p.x, p.y);
+    });
+
+    ctx.fillStyle = cardBg;
+    ctx.beginPath(); ctx.arc(cx, cy, r - 46, 0, Math.PI * 2); ctx.fill();
+  }
+
+  /* ---------- Shared trait-section renderers ---------- */
+  function chipSection(label, items, variant) {
+    const chips = items.map((t) => `<span class="trait-chip ${variant}">${t}</span>`).join("");
+    return `<div class="trait-section"><span class="k">${label}</span><div class="trait-chips">${chips}</div></div>`;
+  }
+  function textSection(label, text) {
+    return `<div class="trait-section"><span class="k">${label}</span><p>${text}</p></div>`;
+  }
+
+  const ELEMENT_ORDER = ["Olov", "Tuproq", "Havo", "Suv"];
+  function renderElementBars(sign) {
+    const rows = ELEMENT_ORDER.map((el) => {
+      const score = elementScore(sign, { element: el });
+      return `
+        <div class="bar-row-h">
+          <span class="bar-label">${el}</span>
+          <div class="bar-track"><div class="bar-fill" style="width:${score}%"></div></div>
+          <span class="bar-value">${score}%</span>
+        </div>`;
+    }).join("");
+    return `
+      <div class="trait-section" role="img" aria-label="${sign.name} belgisining 4 element bilan moslik darajasi">
+        <span class="k">Elementlar bilan moslik</span>
+        <div class="bar-chart-h">${rows}</div>
+      </div>`;
+  }
+
+  function renderDigitHistogram(y, m, d) {
+    const ddmmyyyy = `${String(d).padStart(2, "0")}${String(m).padStart(2, "0")}${y}`;
+    const counts = new Array(10).fill(0);
+    ddmmyyyy.split("").forEach((ch) => { counts[Number(ch)] += 1; });
+    const max = Math.max(...counts, 1);
+    const cols = counts.map((c, digit) => `
+      <div class="digit-col">
+        <span class="digit-value">${c || ""}</span>
+        <div class="digit-bar-track"><div class="digit-bar" style="height:${(c / max) * 100}%"></div></div>
+        <span class="digit-label">${digit}</span>
+      </div>`).join("");
+    return `
+      <div class="trait-section" role="img" aria-label="Tug'ilgan sanangizdagi (${ddmmyyyy}) raqamlarning 0 dan 9 gacha takrorlanish soni">
+        <span class="k">Tug'ilgan sanangizdagi raqamlar taqsimoti</span>
+        <div class="digit-chart">${cols}</div>
+      </div>`;
+  }
+
+  /* ---------- Zodiac form ---------- */
+  const zForm = document.getElementById("zodiac-form");
+  const zResult = document.getElementById("zodiac-result");
+  const zError = document.getElementById("zodiac-error");
+
+  zForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    zError.classList.add("hidden");
+    zResult.innerHTML = "";
+
+    const birthStr = document.getElementById("z-birth-date").value;
+    if (!birthStr) return;
+    const [by, bm, bd] = birthStr.split("-").map(Number);
+    const gender = document.getElementById("z-gender").value || null;
+    const partnerStr = document.getElementById("z-partner-date").value;
+    const partnerGender = document.getElementById("z-partner-gender").value || null;
+
+    try {
+      const sign = getSignForDate(bm, bd);
+      let html = `
+        <div class="panel">
+          <div class="wheel-wrap"><canvas id="zodiac-wheel" width="220" height="220"></canvas></div>
+          <div class="result-title">${sign.glyph} ${sign.name}</div>
+          <div class="result-sub">${sign.dateRange} · ${sign.element} element · ${sign.modality}</div>
+          <p>${sign.desc}</p>
+
+          ${renderElementBars(sign)}
+          ${chipSection("Kuchli tomonlar", sign.strengths, "positive")}
+          ${chipSection("Zaif tomonlar", sign.weaknesses, "caution")}
+          ${chipSection("Kasb tavsiyalari", sign.careers, "")}
+          ${textSection("Munosabatlarda", sign.relationships)}
+        </div>
+      `;
+
+      let partnerSign = null;
+      let combo = null;
+      if (partnerStr) {
+        const [py, pm, pd] = partnerStr.split("-").map(Number);
+        partnerSign = getSignForDate(pm, pd);
+        combo = compatibility(sign, partnerSign, gender, partnerGender);
+
+        let breakdownHtml = "";
+        Object.entries(combo.breakdown).forEach(([key, value]) => {
+          breakdownHtml += `
+            <div class="breakdown-item">
+              <div class="label-row"><span>${BREAKDOWN_LABELS[key]}</span><span>${value}%</span></div>
+              <div class="progress"><div class="progress-fill" style="width:${value}%"></div></div>
+            </div>`;
+        });
+        const problemsHtml = combo.problems.map((p) => `<li>${p}</li>`).join("");
+
+        html += `
+          <div class="panel">
+            <div class="result-title">Sizning mosligingiz</div>
+            <div class="result-sub">${sign.glyph} ${sign.name} (siz) + ${partnerSign.glyph} ${partnerSign.name} (sherigingiz)</div>
+
+            <div class="stat-row"><strong>Umumiy moslik</strong><strong>${combo.total}%</strong></div>
+            <div class="progress"><div class="progress-fill" style="width:${combo.total}%"></div></div>
+            <p>${combo.summary}</p>
+
+            <ul class="meaning-list">
+              <li><span class="k">Element</span><span>${combo.elementNote}</span></li>
+              <li><span class="k">Energiya darajasi</span><span>${combo.energy}</span></li>
+              <li><span class="k">Muloqot</span><span>${combo.communication}</span></li>
+              <li><span class="k">Mumkin bo'lgan muammolar</span><span><ul class="plain">${problemsHtml}</ul></span></li>
+              <li><span class="k">Maslahat</span><span>${combo.advice}</span></li>
+            </ul>
+
+            <h3 style="margin-top:22px; font-family:var(--font-display); font-size:1.05rem;">Mezonlar bo'yicha taqsimot</h3>
+            ${breakdownHtml}
+          </div>
+        `;
+      }
+
+      zResult.innerHTML = html;
+      drawWheel(document.getElementById("zodiac-wheel"), sign.key, partnerSign ? partnerSign.key : null);
+      zResult.scrollIntoView({ behavior: "smooth", block: "start" });
+    } catch (err) {
+      zError.textContent = err.message || "Xatolik yuz berdi";
+      zError.classList.remove("hidden");
+    }
+  });
+
+  /* ---------- Life path form ---------- */
+  const lpForm = document.getElementById("lifepath-form");
+  const lpResult = document.getElementById("lifepath-result");
+  const lpError = document.getElementById("lifepath-error");
+
+  lpForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    lpError.classList.add("hidden");
+    lpResult.innerHTML = "";
+
+    const birthStr = document.getElementById("lp-birth-date").value;
+    if (!birthStr) return;
+    const [y, m, d] = birthStr.split("-").map(Number);
+    const birthDate = new Date(Date.UTC(y, m - 1, d));
+
+    if (birthDate.getTime() > Date.now()) {
+      lpError.textContent = "Tug'ilgan sana kelajakda bo'lishi mumkin emas";
+      lpError.classList.remove("hidden");
+      return;
+    }
+
+    const data = calculateLifePath(y, m, d);
+    const meaning = data.meaning;
+    const masterBadge = data.isMaster ? `<div class="master-badge">Master son</div>` : "";
+
+    lpResult.innerHTML = `
+      <div class="panel">
+        <div class="result-title">Sizning hayot soningiz</div>
+        <div class="calc-box">${data.calculation}</div>
+
+        ${renderDigitHistogram(y, m, d)}
+
+        <div class="field-row">
+          <div class="number-badge">${data.number}</div>
+          <div>
+            ${masterBadge}
+            <div style="font-family:var(--font-display); font-size:1.2rem; font-weight:700;">${meaning.title}</div>
+          </div>
+        </div>
+
+        <p>${meaning.summary}</p>
+
+        ${chipSection("Kuchli tomonlar", meaning.strengths, "positive")}
+        ${chipSection("Zaif tomonlar", meaning.weaknesses, "caution")}
+        ${chipSection("Kasb tavsiyalari", meaning.careers, "")}
+        ${textSection("Munosabatlarda", meaning.relationships)}
+        ${textSection("Maslahat", meaning.advice)}
+      </div>
+    `;
+    lpResult.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  /* ---------- Generic single-choice quiz engine ---------- */
+  function createQuiz({ mountId, questions, getOptions, onFinish }) {
+    const mount = document.getElementById(mountId);
+    const answers = new Array(questions.length).fill(null);
+    let idx = 0;
+
+    function render() {
+      const q = questions[idx];
+      const opts = getOptions(q);
+      mount.innerHTML = `
+        <div class="quiz-progress">
+          <div class="progress"><div class="progress-fill" style="width:${((idx + 1) / questions.length) * 100}%"></div></div>
+          <span class="quiz-step-label">${idx + 1} / ${questions.length}</span>
+        </div>
+        <div class="quiz-card">
+          <p class="quiz-prompt">${q.prompt}</p>
+          <div class="quiz-options" role="group"></div>
+          <div class="quiz-nav">
+            <button type="button" class="quiz-back" ${idx === 0 ? "disabled" : ""}>← Oldingi savol</button>
+          </div>
+        </div>
+      `;
+      const optionsEl = mount.querySelector(".quiz-options");
+      opts.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "quiz-option";
+        btn.setAttribute("aria-pressed", String(answers[idx] === opt.key));
+        btn.innerHTML = `<span class="dot"></span><span>${opt.text}</span>`;
+        btn.addEventListener("click", () => {
+          answers[idx] = opt.key;
+          if (idx < questions.length - 1) {
+            idx += 1;
+            render();
+          } else {
+            onFinish(answers);
+          }
+        });
+        optionsEl.appendChild(btn);
+      });
+      const backBtn = mount.querySelector(".quiz-back");
+      backBtn.addEventListener("click", () => {
+        if (idx > 0) { idx -= 1; render(); }
+      });
+      mount.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    idx = 0;
+    answers.fill(null);
+    render();
+  }
+
+  /* ---------- Sevgi tili (5 Love Languages, Gary Chapman) ---------- */
+  const LOVE_LANGUAGES = {
+    words: { label: "So'z bilan ifodalash", short: "tilga olingan mehr va maqtovlar", advice: "Sherigingizga tez-tez minnatdorchilik va maqtov so'zlarini ayting." },
+    quality: { label: "Sifatli vaqt", short: "to'liq e'tibor bilan birga o'tkazilgan lahzalar", advice: "Telefonlarni yig'ishtirib, faqat bir-biringizga bag'ishlangan vaqt ajrating." },
+    gifts: { label: "Sovg'alar", short: "o'ylab tanlangan kichik belgilar", advice: "Katta bo'lishi shart emas — muhimi, sizni eslab tanlanganini bilish." },
+    service: { label: "Yordam", short: "amaliy yordam va g'amxo'rlik harakatlari", advice: "So'ramasdan turib kichik yordam ko'rsatish katta ma'no anglatadi." },
+    touch: { label: "Jismoniy yaqinlik", short: "quchoqlash va yaqin bo'lish", advice: "Kundalik oddiy teginish — qo'l ushlash, quchoqlash — bog'liqlikni mustahkamlaydi." },
+  };
+
+  const LOVE_QUESTIONS = [
+    { prompt: "Uzoq va charchagan kundan keyin sizni eng ko'p tetiklashtiradigan narsa qaysi?", a: { lang: "words", text: "Sherigim mehr bilan gapirib, meni maqtaydi" }, b: { lang: "quality", text: "Sherigim hech narsaga chalg'imay, faqat men bilan bo'ladi" } },
+    { prompt: "Sevgi izhorini qanday eshitish sizga yoqadi?", a: { lang: "words", text: "Ochiq-oydin, iliq so'zlar bilan" }, b: { lang: "gifts", text: "Kichik, o'ylangan sovg'alar orqali" } },
+    { prompt: "Uyga charchab kelganingizda nima sizni sevilayotganingizni his qildiradi?", a: { lang: "words", text: "\"Zo'r ish qilding\" degan maqtov" }, b: { lang: "service", text: "Kechki ovqat tayyor bo'lib turishi" } },
+    { prompt: "Uzoqdan sog'inganingizda nima his-tuyg'ungizni qondiradi?", a: { lang: "words", text: "Iliq so'zlar bilan yozilgan xabar" }, b: { lang: "touch", text: "Ko'rishganda mahkam quchoqlash" } },
+    { prompt: "Sevgilingizning vaqt ajratishining qaysi shakli sizga ko'proq ta'sir qiladi?", a: { lang: "quality", text: "Telefonlarni yig'ishtirib, faqat suhbatlashish" }, b: { lang: "gifts", text: "Sevgan narsamni eslab, sovg'a qilish" } },
+    { prompt: "Band kunda sherigingiz sizga g'amxo'rlik qilsa, qaysi holat ko'proq yoqadi?", a: { lang: "quality", text: "Ishini to'xtatib, men bilan gaplashishi" }, b: { lang: "service", text: "So'ramasdan turib uy ishlarimni bajarib qo'yishi" } },
+    { prompt: "Kanapeda birga o'tirganingizda sizga nima muhimroq?", a: { lang: "quality", text: "Telefonsiz, chin dildan suhbat" }, b: { lang: "touch", text: "Yonma-yon o'tirib, qo'l ushlab turish" } },
+    { prompt: "Uzoq safardan qaytganida nima sizni quvontiradi?", a: { lang: "gifts", text: "Siz uchun tanlab olingan sovg'a" }, b: { lang: "service", text: "Uyni tartibga keltirib qo'yishi" } },
+    { prompt: "Bayramda sherigingizdan nimani kutasiz?", a: { lang: "gifts", text: "O'ylangan, ma'noli sovg'a" }, b: { lang: "touch", text: "Mehr bilan quchoqlab tabriklashi" } },
+    { prompt: "Kasal bo'lib qolganingizda nima eng ko'p yordam beradi?", a: { lang: "service", text: "Parvarish qilib, ovqat va dori tayyorlab berishi" }, b: { lang: "touch", text: "Yonimda o'tirib, qo'limni ushlab turishi" } },
+    { prompt: "Muvaffaqiyatga erishganingizda nimani ko'proq xohlaysiz?", a: { lang: "words", text: "Sherigim bu haqda faxr bilan gapirishi" }, b: { lang: "quality", text: "Buni birga nishonlash uchun vaqt ajratishi" } },
+    { prompt: "Uzr so'rashning qaysi usuli sizni yumshatadi?", a: { lang: "words", text: "Chin yurakdan aytilgan uzr so'zlari" }, b: { lang: "gifts", text: "Kichik bir sovg'a bilan uzr so'rash" } },
+    { prompt: "Sizni har kuni nima kuchli his qiladi?", a: { lang: "words", text: "\"Senga rahmat\" deb tez-tez eshitish" }, b: { lang: "service", text: "Kundalik yumushlarda yordam ko'rish" } },
+    { prompt: "Xafa bo'lgan paytingizda sizga nima yordam beradi?", a: { lang: "words", text: "Yupatuvchi, mehribon so'zlar" }, b: { lang: "touch", text: "Jim, mehr bilan quchoqlab turish" } },
+    { prompt: "Sizga eng qadrli sovg'a qaysi?", a: { lang: "quality", text: "Vaqt — ikkovimiz uchun ajratilgan kun" }, b: { lang: "gifts", text: "Meni yaxshi bilgani uchun tanlangan narsa" } },
+    { prompt: "Dam olish kunida sherigingizdan nimani ko'proq kutasiz?", a: { lang: "quality", text: "Butun kunni birga o'tkazishni" }, b: { lang: "service", text: "Uy yumushlarida yordam berishini" } },
+    { prompt: "Kino ko'rayotganingizda nimasi muhim?", a: { lang: "quality", text: "Diqqat bilan birga vaqt o'tkazish" }, b: { lang: "touch", text: "Yonma-yon o'tirib, quchoqlashib turish" } },
+    { prompt: "Tug'ilgan kuningizda nimani ko'proq kutasiz?", a: { lang: "gifts", text: "Diqqat bilan tanlangan sovg'ani" }, b: { lang: "service", text: "Bayramni tashkil qilishda yordam berishini" } },
+    { prompt: "Uzoq ish safaridan qaytganida nimani kutasiz?", a: { lang: "gifts", text: "Kichkina esdalik sovg'a" }, b: { lang: "touch", text: "Eshikda kutib olib, mahkam quchoqlashini" } },
+    { prompt: "Charchagan kuningizda nima sizni tinchlantiradi?", a: { lang: "service", text: "Sherigim ovqat tayyorlab, ishlarimni qilib qo'yishi" }, b: { lang: "touch", text: "Yonimda o'tirib, yelkamni siypalashi" } },
+    { prompt: "Munosabatingizda eng muhim narsa nima deb o'ylaysiz?", a: { lang: "words", text: "Bir-birimizga mehr so'zlarini aytib turish" }, b: { lang: "quality", text: "Bir-birimizga sifatli vaqt ajratish" } },
+    { prompt: "Sevgilingiz siz uchun nima qilsa, eng ko'p ta'sirlanasiz?", a: { lang: "quality", text: "Rejalarini bekor qilib, men bilan qolsa" }, b: { lang: "gifts", text: "Kutilmagan sovg'a bilan hayron qoldirsa" } },
+    { prompt: "Yordam kerak bo'lganida nima ko'proq ta'sir qiladi?", a: { lang: "gifts", text: "Kerakli narsani sovg'a qilib yuborishi" }, b: { lang: "service", text: "Kelib, o'zi qo'lda yordam berishi" } },
+    { prompt: "Bir-biringizga g'amxo'rlik qanday ko'rsatilishi kerak deb o'ylaysiz?", a: { lang: "service", text: "Amaliy ishlarda yordam berish orqali" }, b: { lang: "touch", text: "Jismoniy yaqinlik va iliqlik orqali" } },
+    { prompt: "Kechqurun uxlashdan oldin sizga nima yoqadi?", a: { lang: "touch", text: "Meni mahkam quchoqlab, jim uxlab qolishi" }, b: { lang: "words", text: "Kunim haqida iliq so'zlar bilan xayrlashishi" } },
+  ];
+
+  window.initLoveQuiz = function () {
+    document.getElementById("lovelang-result").innerHTML = "";
+    document.getElementById("lovelang-quiz").classList.remove("hidden");
+    createQuiz({
+      mountId: "lovelang-quiz",
+      questions: LOVE_QUESTIONS,
+      getOptions: (q) => [{ key: q.a.lang, text: q.a.text }, { key: q.b.lang, text: q.b.text }],
+      onFinish: (answers) => {
+        const scores = { words: 0, quality: 0, gifts: 0, service: 0, touch: 0 };
+        answers.forEach((lang) => { scores[lang] += 1; });
+        renderLoveResult(scores);
+      },
+    });
+  };
+
+  function renderLoveResult(scores) {
+    const total = Object.values(scores).reduce((a, b) => a + b, 0);
+    const ranked = Object.entries(scores)
+      .map(([key, score]) => ({ key, score, pct: Math.round((score / total) * 100) }))
+      .sort((a, b) => b.score - a.score);
+    const [top1, top2] = ranked;
+
+    const breakdownHtml = ranked.map((r, i) => `
+      <div class="breakdown-item">
+        <div class="label-row">
+          <span>${LOVE_LANGUAGES[r.key].label}${i === 0 ? " · asosiy" : i === 1 ? " · ikkinchi" : ""}</span>
+          <span>${r.score}/${total} (${r.pct}%)</span>
+        </div>
+        <div class="progress"><div class="progress-fill" style="width:${r.pct}%"></div></div>
+      </div>
+    `).join("");
+
+    document.getElementById("lovelang-quiz").innerHTML = "";
+    document.getElementById("lovelang-result").innerHTML = `
+      <div class="panel">
+        <div class="result-title">Sizning sevgi profilingiz</div>
+        <div class="result-sub">${LOVE_LANGUAGES[top1.key].label} + ${LOVE_LANGUAGES[top2.key].label}</div>
+        <p>Sizning eng kuchli sevgi tilingiz — <strong>${LOVE_LANGUAGES[top1.key].label}</strong> (${top1.pct}%), undan keyin <strong>${LOVE_LANGUAGES[top2.key].label}</strong> (${top2.pct}%) keladi. Siz sevilayotganingizni ko'proq ${LOVE_LANGUAGES[top1.key].short} orqali sezasiz.</p>
+
+        <ul class="meaning-list">
+          <li><span class="k">Maslahat</span><span>${LOVE_LANGUAGES[top1.key].advice}</span></li>
+        </ul>
+
+        <h3 style="margin-top:22px; font-family:var(--font-display); font-size:1.05rem;">5 tilning nisbiy ulushi</h3>
+        ${breakdownHtml}
+
+        <button type="button" class="retake" id="lovelang-retake">Qaytadan boshlash</button>
+      </div>
+    `;
+    document.getElementById("lovelang-retake").addEventListener("click", () => window.initLoveQuiz());
+    document.getElementById("lovelang-result").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ---------- Temperament (Hippokrat 4 temperamenti) ---------- */
+  const TEMPERAMENTS = {
+    sangvinik: { label: "Sangvinik", trait: "Faol, optimist", desc: "Quvnoq, sayqal, tez moslashuvchi. Ko'p do'st bilan o'ralgan. Tez qiziqib, tez sovub qoladi.", career: "Marketing, jurnalistika, tadbirkorlik, aktyorlik", relationship: "Flegmatik yoki melanxolik sherik bilan yaxshi muvozanat topadi", caution: "Boshlagan ishni oxiriga yetkazmaslik xavfi", advice: "Bitta ishga diqqatni jamlashni mashq qiling." },
+    xolerik: { label: "Xolerik", trait: "Kuchli, qaror qabul qiluvchi", desc: "Yetakchi, ambitsiyali, jasur. Tez asabiylashishi mumkin. Maqsadga qaratilgan.", career: "Menejer, tadbirkor, advokat, harbiy soha", relationship: "Flegmatik yoki melanxolik sherik bilan yaxshi muvozanat", caution: "Tezkor qaror sizni ba'zida muammoga olib kelishi mumkin", advice: "Muhim qarorlarga 24 soat 'o'ylash vaqti' bering." },
+    flegmatik: { label: "Flegmatik", trait: "Sokin, barqaror", desc: "Sabrli, tinch, ishonchli. Hissiyotlarni nazoratga oladi. Tez qaror qabul qilmaydi.", career: "Muhandislik, moliya, davlat xizmati, tahlilchilik", relationship: "Xolerik yoki sangvinik sherik bilan yaxshi muvozanat", caution: "O'z fikringizni aytishdan tortinish", advice: "Fikringizni ochiqroq bildirishni mashq qiling." },
+    melanxolik: { label: "Melanxolik", trait: "Sezgir, mulohazali", desc: "Chuqur his etadi, ijodkor, perfeksionist. Yolg'izlikni yaxshi ko'radi. Hassos.", career: "San'at, yozuvchilik, tadqiqotchilik, psixologiya", relationship: "Sangvinik yoki xolerik sherik bilan yaxshi muvozanat", caution: "Haddan tashqari o'z-o'zini tanqid qilish", advice: "Mukammallikdan ko'ra, tugatishga ustuvorlik bering." },
+  };
+
+  const TEMPERAMENT_QUESTIONS = [
+    { prompt: "Yangi guruhda birinchi marta bo'lganingizda qanday tutasiz?", options: [
+      { temp: "sangvinik", text: "Tez tanish bo'ldim, hammasi bilan gaplashaman" },
+      { temp: "xolerik", text: "Atrofni o'rganaman, keyin to'g'ridan-to'g'ri yetakchilarni topib gaplashaman" },
+      { temp: "flegmatik", text: "Sokin kuzataman, keyin tabiiy ravishda gaplasha boshlayman" },
+      { temp: "melanxolik", text: "Bir o'zim turaman, faqat birov o'zi gaplashsa javob beraman" } ] },
+    { prompt: "Katta loyihani boshlashda birinchi qadamingiz qanday?", options: [
+      { temp: "sangvinik", text: "Hammani jamlab, g'oyalarni birga muhokama qilaman" },
+      { temp: "xolerik", text: "Rejani o'zim tuzib, vazifalarni taqsimlayman" },
+      { temp: "flegmatik", text: "Vaqt bilan, bosqichma-bosqich harakat qilaman" },
+      { temp: "melanxolik", text: "Har bir detalni chuqur o'ylab, mukammal reja tuzaman" } ] },
+    { prompt: "Kutilmagan muammo yuzaga kelganda nima qilasiz?", options: [
+      { temp: "sangvinik", text: "Hazil bilan vaziyatni yengillashtirishga harakat qilaman" },
+      { temp: "xolerik", text: "Darhol qaror qabul qilib, harakatga o'taman" },
+      { temp: "flegmatik", text: "Sabr bilan, shoshilmasdan yechim izlayman" },
+      { temp: "melanxolik", text: "Nima xato ketganini chuqur tahlil qilaman" } ] },
+    { prompt: "Do'stlar bilan dam olish rejasi tuzilganda o'zingizni qanday tutasiz?", options: [
+      { temp: "sangvinik", text: "Yangi, qiziqarli joy taklif qilaman" },
+      { temp: "xolerik", text: "Rejani o'zim tashkil qilib, hammani boshqaraman" },
+      { temp: "flegmatik", text: "Ko'pchilik nima desa, o'shanga roziman" },
+      { temp: "melanxolik", text: "Kichik, samimiy davraga afzallik beraman" } ] },
+    { prompt: "Tanqidga duch kelganingizda qanday munosabatda bo'lasiz?", options: [
+      { temp: "sangvinik", text: "Tez unutib, kayfiyatimni saqlab qolaman" },
+      { temp: "xolerik", text: "Himoyalanaman va o'z fikrimni ochiq bildiraman" },
+      { temp: "flegmatik", text: "Xotirjam qabul qilib, ustida o'ylayman" },
+      { temp: "melanxolik", text: "Uzoq vaqt yuragimga olib yuraman" } ] },
+    { prompt: "Ish joyida muddat (deadline) yaqinlashganda qanday harakat qilasiz?", options: [
+      { temp: "sangvinik", text: "Oxirgi daqiqada energiya bilan yakunlayman" },
+      { temp: "xolerik", text: "Boshidanoq qat'iy jadval bo'yicha ishlayman" },
+      { temp: "flegmatik", text: "Bosqichma-bosqich, xotirjam davom etaman" },
+      { temp: "melanxolik", text: "Har bir tafsilotni tekshirib, xavotirlanaman" } ] },
+    { prompt: "Kimdir siz bilan rozi bo'lmasa nima qilasiz?", options: [
+      { temp: "sangvinik", text: "Muloyimlik bilan mavzuni o'zgartiraman" },
+      { temp: "xolerik", text: "O'z fikrimni oxirigacha himoya qilaman" },
+      { temp: "flegmatik", text: "Bahsdan qochib, tinch yo'l izlayman" },
+      { temp: "melanxolik", text: "Ichimda uzoq o'ylab, keyin fikr bildiraman" } ] },
+    { prompt: "Bo'sh vaqtingizni qanday o'tkazishni afzal ko'rasiz?", options: [
+      { temp: "sangvinik", text: "Do'stlar bilan, tashqarida, faol" },
+      { temp: "xolerik", text: "Foydali va samarali biror narsa bilan" },
+      { temp: "flegmatik", text: "Uyda, tinch va osoyishta" },
+      { temp: "melanxolik", text: "Yolg'iz, kitob yoki san'at bilan" } ] },
+    { prompt: "Jamoada ishlaganingizda rolingiz ko'proq qanday bo'ladi?", options: [
+      { temp: "sangvinik", text: "Kayfiyat ko'taruvchi, muloqotchi" },
+      { temp: "xolerik", text: "Yetakchi, qaror qabul qiluvchi" },
+      { temp: "flegmatik", text: "Barqarorlik va tinchlik saqlovchi" },
+      { temp: "melanxolik", text: "Detallarga e'tiborli, tahlilchi" } ] },
+    { prompt: "Katta o'zgarish (masalan, ko'chish) ro'y berganda qanday moslashasiz?", options: [
+      { temp: "sangvinik", text: "Qiziqish bilan qabul qilaman" },
+      { temp: "xolerik", text: "Tezda moslashib, boshqarib olaman" },
+      { temp: "flegmatik", text: "Sekin-asta, bosiqlik bilan moslashaman" },
+      { temp: "melanxolik", text: "Ancha vaqt hissiy tayyorgarlik ko'raman" } ] },
+    { prompt: "Xato qilib qo'yganingizda qanday munosabatda bo'lasiz?", options: [
+      { temp: "sangvinik", text: "Tezda kechirim so'rab, davom etaman" },
+      { temp: "xolerik", text: "Xatoni tuzatishga darhol kirishaman" },
+      { temp: "flegmatik", text: "Vaziyatni xotirjam baholayman" },
+      { temp: "melanxolik", text: "O'zimni qattiq ayblab, uzoq o'ylayman" } ] },
+    { prompt: "Muhim qaror qabul qilishda qanday yo'l tutasiz?", options: [
+      { temp: "sangvinik", text: "Ichki sezgim va hissiyotimga tayanaman" },
+      { temp: "xolerik", text: "Tez va qat'iy qaror qilaman" },
+      { temp: "flegmatik", text: "Shoshmasdan, hamma variantni o'ylayman" },
+      { temp: "melanxolik", text: "Har bir tafsilotni chuqur tahlil qilaman" } ] },
+    { prompt: "Katta olomon orasida o'zingizni qanday his qilasiz?", options: [
+      { temp: "sangvinik", text: "Energiyaga to'laman, hammaga qo'shilaman" },
+      { temp: "xolerik", text: "Boshqaruvni o'z qo'limga olaman" },
+      { temp: "flegmatik", text: "Xotirjam, chetroqda kuzataman" },
+      { temp: "melanxolik", text: "Charchayman, tinchlikka chekinaman" } ] },
+    { prompt: "Sherigingiz bilan kelishmovchilik chiqsa nima qilasiz?", options: [
+      { temp: "sangvinik", text: "Tezda yarashishga harakat qilaman" },
+      { temp: "xolerik", text: "To'g'ridan-to'g'ri muammoni ochiq muhokama qilaman" },
+      { temp: "flegmatik", text: "Vaqt berib, ikkalamiz ham tinchlanishini kutaman" },
+      { temp: "melanxolik", text: "His-tuyg'ularimni chuqur o'ylab, keyin gapiraman" } ] },
+    { prompt: "Yangi mahorat o'rganishda qanday yondashasiz?", options: [
+      { temp: "sangvinik", text: "Qiziqarli va jonli usulni tanlayman" },
+      { temp: "xolerik", text: "Tezkor natija beradigan usulni tanlayman" },
+      { temp: "flegmatik", text: "O'z sur'atimda, shoshilmasdan o'rganaman" },
+      { temp: "melanxolik", text: "Nazariyani chuqur va puxta o'zlashtiraman" } ] },
+    { prompt: "Biror narsani tabriklash yoki nishonlashda qanday yondashasiz?", options: [
+      { temp: "sangvinik", text: "Katta, quvnoq tantana uyushtiraman" },
+      { temp: "xolerik", text: "Aniq va tashkiliy tarzda rejalashtiraman" },
+      { temp: "flegmatik", text: "Sodda, tinch tarzda nishonlayman" },
+      { temp: "melanxolik", text: "Ma'noli, shaxsiy jestni afzal ko'raman" } ] },
+    { prompt: "Ish yuklamasi keskin ortib ketganda nima qilasiz?", options: [
+      { temp: "sangvinik", text: "Boshqalardan yordam so'rab, kayfiyatni saqlayman" },
+      { temp: "xolerik", text: "Ustuvorliklarni belgilab, tezda harakat qilaman" },
+      { temp: "flegmatik", text: "Bosqichma-bosqich, xotirjam bajarib chiqaman" },
+      { temp: "melanxolik", text: "Xavotirlanib, har bir vazifani qayta-qayta tekshiraman" } ] },
+    { prompt: "Suhbatda gap navbati sizga kelganda odatda nima qilasiz?", options: [
+      { temp: "sangvinik", text: "Qiziqarli voqealarni jonli aytib beraman" },
+      { temp: "xolerik", text: "Aniq va qisqa, mohiyatga o'taman" },
+      { temp: "flegmatik", text: "Kam gapiraman, kerak bo'lgandagina" },
+      { temp: "melanxolik", text: "Chuqur va mazmunli fikr bildiraman" } ] },
+    { prompt: "Reja kutilmaganda o'zgarib qolsa qanday munosabatda bo'lasiz?", options: [
+      { temp: "sangvinik", text: "Yangi rejaga tez moslashaman" },
+      { temp: "xolerik", text: "Yangi rejani o'zim boshqarib olaman" },
+      { temp: "flegmatik", text: "Xotirjam qabul qilib, davom etaman" },
+      { temp: "melanxolik", text: "Bezovtalanib, avvalo tushunishga harakat qilaman" } ] },
+    { prompt: "Ertalabki odatlaringiz qanday boshlanadi?", options: [
+      { temp: "sangvinik", text: "Musiqa yoki suhbat bilan tetiklashaman" },
+      { temp: "xolerik", text: "Aniq reja bo'yicha tezda ishga tushaman" },
+      { temp: "flegmatik", text: "Shoshilmasdan, tinch tarzda boshlayman" },
+      { temp: "melanxolik", text: "Jimlikda, o'z fikrlarim bilan boshlayman" } ] },
+  ];
+
+  window.initTemperamentQuiz = function () {
+    document.getElementById("temperament-result").innerHTML = "";
+    document.getElementById("temperament-quiz").classList.remove("hidden");
+    createQuiz({
+      mountId: "temperament-quiz",
+      questions: TEMPERAMENT_QUESTIONS,
+      getOptions: (q) => q.options.map((o) => ({ key: o.temp, text: o.text })),
+      onFinish: (answers) => {
+        const scores = { sangvinik: 0, xolerik: 0, flegmatik: 0, melanxolik: 0 };
+        answers.forEach((temp) => { scores[temp] += 1; });
+        renderTemperamentResult(scores);
+      },
+    });
+  };
+
+  function renderTemperamentResult(scores) {
+    const total = Object.values(scores).reduce((a, b) => a + b, 0);
+    const ranked = Object.entries(scores)
+      .map(([key, score]) => ({ key, score, pct: Math.round((score / total) * 100) }))
+      .sort((a, b) => b.score - a.score);
+    const [top1, top2] = ranked;
+    const t1 = TEMPERAMENTS[top1.key];
+    const t2 = TEMPERAMENTS[top2.key];
+
+    const breakdownHtml = ranked.map((r, i) => `
+      <div class="breakdown-item">
+        <div class="label-row">
+          <span>${TEMPERAMENTS[r.key].label}${i === 0 ? " · asosiy" : i === 1 ? " · ikkinchi" : ""}</span>
+          <span>${r.score}/${total} (${r.pct}%)</span>
+        </div>
+        <div class="progress"><div class="progress-fill" style="width:${r.pct}%"></div></div>
+      </div>
+    `).join("");
+
+    document.getElementById("temperament-quiz").innerHTML = "";
+    document.getElementById("temperament-result").innerHTML = `
+      <div class="panel">
+        <div class="result-title">Sizning temperament profilingiz</div>
+        <div class="profile-label">${t1.label}–${t2.label}</div>
+        <div class="result-sub">${t1.trait}, ${t2.label.toLowerCase()} jihatlar bilan boyigan</div>
+        <p>Sizda <strong>${t1.label}</strong> xususiyatlar ustunlik qiladi (${top1.pct}%): ${t1.desc} <strong>${t2.label}</strong> jihatlaringiz (${top2.pct}%) buni to'ldiradi.</p>
+
+        <ul class="meaning-list">
+          <li><span class="k">Kasb tavsiyalari</span><span>${t1.career}</span></li>
+          <li><span class="k">Munosabatlar</span><span>${t1.relationship}</span></li>
+          <li><span class="k">E'tibor bering</span><span>${t1.caution}</span></li>
+          <li><span class="k">Maslahat</span><span>${t1.advice}</span></li>
+        </ul>
+
+        <h3 style="margin-top:22px; font-family:var(--font-display); font-size:1.05rem;">4 temperamentning nisbiy ulushi</h3>
+        ${breakdownHtml}
+
+        <button type="button" class="retake" id="temperament-retake">Qaytadan boshlash</button>
+      </div>
+    `;
+    document.getElementById("temperament-retake").addEventListener("click", () => window.initTemperamentQuiz());
+    document.getElementById("temperament-result").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ---------- Shared level-band renderer (meter + chip) ---------- */
+  function renderMeter(score, min, max, level) {
+    const pct = Math.round(((score - min) / (max - min)) * 100);
+    return `
+      <span class="level-chip" style="background: color-mix(in srgb, ${level.color} 16%, transparent); color: ${level.color}; border: 1px solid color-mix(in srgb, ${level.color} 40%, transparent);">
+        <span class="level-dot" style="background: ${level.color};"></span>${level.label}
+      </span>
+      <div class="meter-row">
+        <div class="meter-track"><div class="meter-fill" style="width:${pct}%; background:${level.color};"></div></div>
+        <span class="meter-score">${score}/${max}</span>
+      </div>`;
+  }
+
+  /* ---------- Hissiy intellekt (EQ) ---------- */
+  const EQ_LIKERT = [
+    { value: 1, text: "Mutlaqo unday emas" },
+    { value: 2, text: "Ko'pincha unday emas" },
+    { value: 3, text: "Qisman shunday" },
+    { value: 4, text: "Ko'pincha shunday" },
+    { value: 5, text: "Menga juda mos" },
+  ];
+
+  const EQ_CATEGORIES = {
+    selfAwareness: { label: "O'z-o'zini anglash" },
+    selfRegulation: { label: "O'zini boshqarish" },
+    empathy: { label: "Empatiya" },
+    socialSkills: { label: "Ijtimoiy ko'nikmalar" },
+  };
+
+  const EQ_QUESTIONS = [
+    { category: "selfAwareness", prompt: "O'zimning kuchli va zaif tomonlarimni aniq bilaman." },
+    { category: "selfAwareness", prompt: "Hissiyotlarim paydo bo'lgan zahoti ularni farqlay olaman." },
+    { category: "selfAwareness", prompt: "Nima meni asabiylashtirishini yoki xursand qilishini aniq bilaman." },
+    { category: "selfAwareness", prompt: "O'z xatti-harakatlarim boshqalarga qanday ta'sir qilishini tushunaman." },
+    { category: "selfAwareness", prompt: "Kayfiyatim ish yoki qarorlarimga qay darajada ta'sir qilishini bilaman." },
+    { category: "selfRegulation", prompt: "G'azablanganimda ham xotirjamlikni saqlashga harakat qilaman." },
+    { category: "selfRegulation", prompt: "Qiyin vaziyatlarda shoshilinch qaror qabul qilishdan saqlanaman." },
+    { category: "selfRegulation", prompt: "Stressli holatlarda o'zimni tez tinchlantira olaman." },
+    { category: "selfRegulation", prompt: "Va'da bergan narsalarimni bajarishga intizom bilan yondashaman." },
+    { category: "selfRegulation", prompt: "Tanqidga darhol himoyalanish bilan emas, xotirjamlik bilan javob beraman." },
+    { category: "empathy", prompt: "Boshqalarning his-tuyg'ularini so'zsiz ham sezib olaman." },
+    { category: "empathy", prompt: "Suhbatdoshim gapirganda uni to'liq diqqat bilan tinglayman." },
+    { category: "empathy", prompt: "Boshqa odamning nuqtai nazaridan qarashga harakat qilaman." },
+    { category: "empathy", prompt: "Kimdir qiynalganda buni sezib, unga yordam berishga intilaman." },
+    { category: "empathy", prompt: "Turli fikr va his-tuyg'ularga hurmat bilan qarayman." },
+    { category: "socialSkills", prompt: "Yangi odamlar bilan tez til topisha olaman." },
+    { category: "socialSkills", prompt: "Ziddiyatli vaziyatlarda muloqot orqali yechim topishga harakat qilaman." },
+    { category: "socialSkills", prompt: "Jamoada ishlashda boshqalarni rag'batlantira olaman." },
+    { category: "socialSkills", prompt: "Fikrlarimni aniq va tushunarli tarzda yetkaza olaman." },
+    { category: "socialSkills", prompt: "Boshqalar bilan ishonchli munosabatlar qura olaman." },
+  ];
+
+  const EQ_LEVELS = [
+    { min: 20, max: 39, label: "Rivojlantirish kerak", color: "var(--danger)",
+      summary: "Hissiy intellekt ko'nikmalaringiz hali rivojlanish bosqichida — bu odatiy holat va mashq bilan yaxshilanadi.",
+      advice: ["Har kuni his-tuyg'ularingizni bir necha so'z bilan yozib borish (kundalik) o'z-o'zini anglashni kuchaytiradi", "Suhbatda gapirishdan oldin bir necha soniya to'xtab, javobingizni o'ylab ko'ring", "Boshqalarni to'xtatmasdan oxirigacha tinglashni mashq qiling"] },
+    { min: 40, max: 59, label: "O'rtacha", color: "var(--warning)",
+      summary: "Hissiy intellektingiz o'rtacha darajada — ba'zi ko'nikmalar kuchli, ba'zilari rivojlanishga muhtoj.",
+      advice: ["Eng past ball to'plagan yo'nalishga alohida e'tibor qarating", "Ziddiyatli vaziyatlarda darhol reaksiya bildirishdan oldin chuqur nafas oling", "Har kuni kamida bitta suhbatda faol tinglashni mashq qiling"] },
+    { min: 60, max: 79, label: "Yaxshi", color: "color-mix(in srgb, var(--warning) 40%, var(--success) 60%)",
+      summary: "Hissiy intellektingiz yaxshi darajada — his-tuyg'ularingizni va boshqalarnikini anglay olasiz.",
+      advice: ["Kuchli tomonlaringizni jamoaviy ishlarda yetakchilik qilish uchun ishlating", "Stressli vaziyatlarda ham xotirjamligingizni saqlashni davom ettiring", "Boshqalarga ham hissiy ko'nikmalarni rivojlantirishda yordam bering"] },
+    { min: 80, max: 100, label: "Yuqori", color: "var(--success)",
+      summary: "Hissiy intellektingiz yuqori darajada — his-tuyg'ularni boshqarish va boshqalar bilan chuqur aloqa o'rnatishda mohirsiz.",
+      advice: ["Bu kuchli tomoningizni mentorlik yoki yetakchilik rolida qo'llang", "Boshqalarga hissiy qo'llab-quvvatlash ko'rsatishda davom eting, lekin o'zingizni ham unutmang", "Murakkab jamoaviy vaziyatlarda vositachi rolini o'ynashingiz mumkin"] },
+  ];
+
+  window.initEQQuiz = function () {
+    document.getElementById("eq-result").innerHTML = "";
+    document.getElementById("eq-quiz").classList.remove("hidden");
+    createQuiz({
+      mountId: "eq-quiz",
+      questions: EQ_QUESTIONS,
+      getOptions: () => EQ_LIKERT.map((o) => ({ key: String(o.value), text: o.text })),
+      onFinish: (answers) => {
+        const catTotals = { selfAwareness: 0, selfRegulation: 0, empathy: 0, socialSkills: 0 };
+        let overall = 0;
+        answers.forEach((val, i) => {
+          const points = Number(val);
+          overall += points;
+          catTotals[EQ_QUESTIONS[i].category] += points;
+        });
+        renderEQResult(overall, catTotals);
+      },
+    });
+  };
+
+  function renderEQResult(overall, catTotals) {
+    const level = EQ_LEVELS.find((l) => overall >= l.min && overall <= l.max) || EQ_LEVELS[EQ_LEVELS.length - 1];
+    const breakdownHtml = Object.entries(catTotals).map(([key, score]) => {
+      const pct = Math.round((score / 25) * 100);
+      return `
+        <div class="breakdown-item">
+          <div class="label-row"><span>${EQ_CATEGORIES[key].label}</span><span>${score}/25 (${pct}%)</span></div>
+          <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>`;
+    }).join("");
+
+    document.getElementById("eq-quiz").innerHTML = "";
+    document.getElementById("eq-result").innerHTML = `
+      <div class="panel">
+        <div class="result-title">Sizning EQ profilingiz</div>
+        ${renderMeter(overall, 20, 100, level)}
+        <p>${level.summary}</p>
+
+        ${textSection("Maslahatlar", level.advice.map((a) => `• ${a}`).join("<br>"))}
+
+        <h3 style="margin-top:22px; font-family:var(--font-display); font-size:1.05rem;">4 yo'nalish bo'yicha tahlil</h3>
+        ${breakdownHtml}
+
+        <button type="button" class="retake" id="eq-retake">Qaytadan boshlash</button>
+      </div>
+    `;
+    document.getElementById("eq-retake").addEventListener("click", () => window.initEQQuiz());
+    document.getElementById("eq-result").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ---------- Stress darajasi ---------- */
+  const STRESS_LIKERT = [
+    { value: 1, text: "Hech qachon" },
+    { value: 2, text: "Kamdan-kam" },
+    { value: 3, text: "Tez-tez" },
+    { value: 4, text: "Deyarli doim" },
+  ];
+
+  const STRESS_QUESTIONS = [
+    "Kechalari uxlashga qiynalasiz yoki uyqingiz bezovta bo'ladimi?",
+    "Kun davomida o'zingizni asabiy yoki tez jahli chiqadigan his qilasizmi?",
+    "Boshingiz yoki mushaklaringiz (bo'yin, yelka) og'rig'idan aziyat chekasizmi?",
+    "Vazifalar to'planib qolganda o'zingizni bosim ostida his qilasizmi?",
+    "Diqqatingizni jamlashda qiyinchilik sezasizmi?",
+    "Ovqatlanish odatlaringiz (haddan tashqari ko'p yoki kam ovqatlanish) o'zgarganmi?",
+    "Kelajak haqida bezovta yoki tashvishli o'ylaringiz bo'ladimi?",
+    "Dam olgandan keyin ham charchagan, energiyasiz his qilasizmi?",
+    "Do'stlar yoki oila bilan uchrashishni istamay qolasizmi?",
+    "Yurak urishi tezlashgan yoki nafas olish qiyinlashgan holatlarni sezasizmi?",
+    "Kichik muammolar sizga katta bo'lib tuyuladimi?",
+    "Ishingiz yoki o'qishingizdan zavq olish qiyinlashganmi?",
+    "O'zingizni doimo shoshilayotgandek his qilasizmi?",
+    "Qaror qabul qilish odatdagidan qiyinroq bo'layaptimi?",
+    "Tanangizda taranglik (jag', musht qilingan qo'l va h.k.) sezasizmi?",
+    "Bo'sh vaqtingiz bo'lsa ham, dam ololmayotganingizni his qilasizmi?",
+    "Kayfiyatingiz tez-tez o'zgarib turadimi?",
+    "O'zingizni vaziyatlarni nazorat qila olmayotgandek his qilasizmi?",
+  ].map((prompt) => ({ prompt }));
+
+  const STRESS_LEVELS = [
+    { min: 18, max: 31, label: "Past", color: "var(--success)",
+      summary: "Stress darajangiz past — hozircha his-hayajonlaringizni yaxshi boshqarayapsiz.",
+      advice: ["Joriy muvozanatingizni saqlash uchun muntazam dam olish va uyqu tartibiga rioya qiling", "Yoqimli mashg'ulotlar (sport, ijod, tabiat) uchun vaqt ajrating", "Yaqinlaringiz bilan sifatli vaqt o'tkazishni davom ettiring"] },
+    { min: 32, max: 45, label: "O'rtacha", color: "var(--warning)",
+      summary: "O'rtacha stress darajasi — ba'zi vaziyatlar sizga bosim o'tkazmoqda, lekin buni boshqarish mumkin.",
+      advice: ["Kuniga 10-15 daqiqa chuqur nafas olish yoki meditatsiya mashqlarini sinab ko'ring", "Vazifalaringizni ustuvorlik bo'yicha tartiblang va bir vaqtning o'zida hammasini qilishga urinmang", "Muntazam jismoniy faollik stress gormonlarini kamaytirishga yordam beradi", "Uyqu va dam olish vaqtini qat'iy belgilang"] },
+    { min: 46, max: 59, label: "Yuqori", color: "color-mix(in srgb, var(--warning) 40%, var(--danger) 60%)",
+      summary: "Stress darajangiz yuqori — kundalik hayotingizda charchoq va bezovtalikni sezayotgan bo'lishingiz mumkin.",
+      advice: ["Vaqtni boshqarish usullarini (masalan, Pomodoro) qo'llab, ishni kichik bosqichlarga bo'ling", "Ortiqcha majburiyatlardan voz kechishni o'rganing — hammaga \"ha\" deyish shart emas", "Kuniga kamida 20-30 daqiqa jismoniy mashq yoki sayr qiling", "Yaqin do'st yoki oila a'zosi bilan his-tuyg'ularingizni baham ko'ring"] },
+    { min: 60, max: 72, label: "Juda yuqori", color: "var(--danger)",
+      summary: "Stress darajangiz juda yuqori — bu holat sog'lig'ingizga ta'sir qilishi mumkin, o'zingizga g'amxo'rlik qilish vaqti keldi.",
+      advice: ["Imkon qadar tezroq ish yukingizni kamaytirishga harakat qiling", "Nafas olish mashqlari yoki mindfulness texnikalarini kundalik odatga aylantiring", "Uyqu, ovqatlanish va dam olish rejimini tiklashga alohida e'tibor bering", "Agar holat davom etsa, professional psixolog yoki terapevt bilan maslahatlashishni ko'rib chiqing"] },
+  ];
+
+  window.initStressQuiz = function () {
+    document.getElementById("stress-result").innerHTML = "";
+    document.getElementById("stress-quiz").classList.remove("hidden");
+    createQuiz({
+      mountId: "stress-quiz",
+      questions: STRESS_QUESTIONS,
+      getOptions: () => STRESS_LIKERT.map((o) => ({ key: String(o.value), text: o.text })),
+      onFinish: (answers) => {
+        const total = answers.reduce((sum, v) => sum + Number(v), 0);
+        renderStressResult(total);
+      },
+    });
+  };
+
+  function renderStressResult(total) {
+    const level = STRESS_LEVELS.find((l) => total >= l.min && total <= l.max) || STRESS_LEVELS[STRESS_LEVELS.length - 1];
+
+    document.getElementById("stress-quiz").innerHTML = "";
+    document.getElementById("stress-result").innerHTML = `
+      <div class="panel">
+        <div class="result-title">Sizning stress darajangiz</div>
+        ${renderMeter(total, 18, 72, level)}
+        <p>${level.summary}</p>
+
+        ${textSection("Amaliy tavsiyalar", level.advice.map((a) => `• ${a}`).join("<br>"))}
+
+        <button type="button" class="retake" id="stress-retake">Qaytadan boshlash</button>
+      </div>
+    `;
+    document.getElementById("stress-retake").addEventListener("click", () => window.initStressQuiz());
+    document.getElementById("stress-result").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ---------- Starfield ambience ---------- */
+  const canvas = document.getElementById("starfield");
+  const ctx2 = canvas.getContext("2d");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let stars = [];
+  let w, h, dpr2;
+
+  function resize() {
+    dpr2 = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w * dpr2; canvas.height = h * dpr2;
+    canvas.style.width = w + "px"; canvas.style.height = h + "px";
+    ctx2.setTransform(dpr2, 0, 0, dpr2, 0, 0);
+    const count = Math.round((w * h) / 9000);
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 1.2 + 0.3,
+      depth: Math.random() * 0.6 + 0.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.6 + 0.3,
+    }));
+  }
+
+  let pointerX = 0, pointerY = 0;
+  window.addEventListener("pointermove", (e) => {
+    pointerX = (e.clientX / w - 0.5);
+    pointerY = (e.clientY / h - 0.5);
+  }, { passive: true });
+
+  let t = 0;
+  function frame() {
+    t += 0.016;
+    const styles = getComputedStyle(document.documentElement);
+    const starRgb = styles.getPropertyValue("--star").trim();
+    const baseOp = parseFloat(styles.getPropertyValue("--star-op"));
+    ctx2.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      const twinkle = reduceMotion ? 1 : 0.55 + 0.45 * Math.sin(t * s.speed + s.phase);
+      const px = s.x + pointerX * s.depth * 22;
+      const py = s.y + pointerY * s.depth * 22;
+      ctx2.beginPath();
+      ctx2.arc(px, py, s.r, 0, Math.PI * 2);
+      ctx2.fillStyle = `rgba(${starRgb}, ${(baseOp * twinkle).toFixed(3)})`;
+      ctx2.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+  requestAnimationFrame(frame);
+
+  navigate((location.hash || "#home").slice(1));
+})();
+</script>
+
+</body>
+</html>
