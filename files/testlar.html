@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>Ruhshunos.Fun — Testlar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1E36; --ink-2:#262B4A; --parchment:#F7F2E7; --parchment-2:#EFE8D8;
+    --gold:#C9974A; --gold-dark:#A97B2F; --teal:#2F6F6B; --charcoal:#2A2720;
+    --muted:#8A8677; --line:#E3DAC5;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; padding:40px 16px;
+    background:radial-gradient(circle at 20% 10%,#e9e3d3,#d9d0ba 65%);
+    font-family:'Manrope',sans-serif; color:var(--charcoal);
+    display:flex; justify-content:center;
+  }
+  .browser-shell{
+    width:100%; max-width:920px; border-radius:16px; overflow:hidden;
+    box-shadow:0 40px 70px -25px rgba(27,30,54,.5), 0 12px 24px -12px rgba(27,30,54,.35);
+    background:#fff; height:fit-content;
+  }
+  .browser-top{background:#EDEAE3; padding:11px 16px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #DDD7C9;}
+  .dots span{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .dots span:nth-child(1){background:#ED6A5E;} .dots span:nth-child(2){background:#F4BF4F;margin:0 6px;} .dots span:nth-child(3){background:#61C554;}
+  .url-pill{flex:1;background:#fff;border-radius:7px;padding:6px 14px;font-size:12.5px;color:#6b6656;border:1px solid #E1DACB;}
+  .page{background:var(--parchment); padding:26px 34px 34px;}
+  .topline{margin-bottom:18px;}
+  .logo{font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:26px; color:var(--ink);}
+  .nav{display:flex; border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-bottom:24px;}
+  .nav a{flex:1; text-align:center; padding:12px 8px; font-weight:700; font-size:13.5px; color:var(--charcoal); text-decoration:none; border-right:1px solid var(--line); position:relative;}
+  .nav a:last-child{border-right:none;}
+  .nav a.active{background:var(--ink); color:var(--parchment);}
+  .nav a.active::after{content:'●'; color:var(--gold); font-size:8px; position:absolute; top:5px; right:9px;}
+
+  .heading{font-family:'Fraunces',serif; font-weight:600; font-size:22px; margin:0 0 4px;}
+  .subheading{font-size:13px; color:var(--muted); margin:0 0 22px;}
+
+  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 16px;
+    display:flex; align-items:center; gap:14px; transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .card:hover{transform:translateY(-3px); box-shadow:0 14px 24px -14px rgba(27,30,54,.3); border-color:var(--gold);}
+  .card .icon{
+    font-size:20px; width:42px; height:42px; border-radius:10px; background:var(--parchment-2);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .card h3{font-size:14.5px; margin:0 0 2px; font-weight:700;}
+  .card p{font-size:11.5px; color:var(--muted); margin:0;}
+  .chev{margin-left:auto; color:var(--teal); font-weight:800; font-size:15px;}
+  .card.more{border-style:dashed; opacity:.75;}
+  .card.more .icon{background:transparent; border:1px dashed var(--line);}
+</style>
+</head>
+<body>
+<div class="browser-shell">
+  <div class="browser-top">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="url-pill">🔒 ruhshunos.fun/testlar</div>
+  </div>
+  <div class="page">
+    <div class="topline"><div class="logo">Ruhshunos.Fun</div></div>
+    <div class="nav">
+      <a href="#">Home</a>
+      <a class="active" href="#">Testlar</a>
+      <a href="#">Yaratuvchi</a>
+      <a href="#">Yordam</a>
+    </div>
+
+    <div class="heading">Testlar</div>
+    <div class="subheading">Bo'lim tanlang — ichida shu yo'nalishga oid bir yoki bir nechta test ochiladi.</div>
+
+    <div class="grid">
+      <div class="card"><div class="icon">🔮</div><div><h3>Munajjimlar bashorati</h3><p>Yulduz va tole testlari</p></div><div class="chev">›</div></div>
+      <div class="card"><div class="icon">🎭</div><div><h3>Temperament va xarakter</h3><p>O'zingizni chuqur tanish</p></div><div class="chev">›</div></div>
+      <div class="card"><div class="icon">❤️</div><div><h3>Hissiy intellekt</h3><p>His-tuyg'ularni boshqarish</p></div><div class="chev">›</div></div>
+      <div class="card"><div class="icon">🧠</div><div><h3>Aqliy intellekt</h3><p>Mantiq va tafakkur sinovi</p></div><div class="chev">›</div></div>
+      <div class="card"><div class="icon">🎯</div><div><h3>Diqqat testlari</h3><p>Diqqat va e'tibor darajasi</p></div><div class="chev">›</div></div>
+      <div class="card"><div class="icon">📚</div><div><h3>Xotira testlari</h3><p>Xotira quvvatini o'lchash</p></div><div class="chev">›</div></div>
+      <div class="card"><div class="icon">🧬</div><div><h3>Shaxsiyatga oid testlar</h3><p>Shaxsiyat xususiyatlari</p></div><div class="chev">›</div></div>
+      <div class="card more"><div class="icon">➕</div><div><h3>Va boshqa bo'limlar</h3><p>Tez orada qo'shiladi</p></div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>Ruhshunos.Fun — Yaratuvchi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1E36; --ink-2:#262B4A; --parchment:#F7F2E7; --parchment-2:#EFE8D8;
+    --gold:#C9974A; --gold-dark:#A97B2F; --teal:#2F6F6B; --charcoal:#2A2720;
+    --muted:#8A8677; --line:#E3DAC5;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; padding:40px 16px;
+    background:radial-gradient(circle at 20% 10%,#e9e3d3,#d9d0ba 65%);
+    font-family:'Manrope',sans-serif; color:var(--charcoal);
+    display:flex; justify-content:center;
+  }
+  .browser-shell{
+    width:100%; max-width:920px; border-radius:16px; overflow:hidden;
+    box-shadow:0 40px 70px -25px rgba(27,30,54,.5), 0 12px 24px -12px rgba(27,30,54,.35);
+    background:#fff; height:fit-content;
+  }
+  .browser-top{background:#EDEAE3; padding:11px 16px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #DDD7C9;}
+  .dots span{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .dots span:nth-child(1){background:#ED6A5E;} .dots span:nth-child(2){background:#F4BF4F;margin:0 6px;} .dots span:nth-child(3){background:#61C554;}
+  .url-pill{flex:1;background:#fff;border-radius:7px;padding:6px 14px;font-size:12.5px;color:#6b6656;border:1px solid #E1DACB;}
+  .page{background:var(--parchment); padding:26px 34px 34px;}
+  .topline{margin-bottom:18px;}
+  .logo{font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:26px; color:var(--ink);}
+  .nav{display:flex; border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-bottom:28px;}
+  .nav a{flex:1; text-align:center; padding:12px 8px; font-weight:700; font-size:13.5px; color:var(--charcoal); text-decoration:none; border-right:1px solid var(--line); position:relative;}
+  .nav a:last-child{border-right:none;}
+  .nav a.active{background:var(--ink); color:var(--parchment);}
+  .nav a.active::after{content:'●'; color:var(--gold); font-size:8px; position:absolute; top:5px; right:9px;}
+
+  .profile{display:flex; gap:30px; align-items:flex-start;}
+  .photo-wrap{position:relative; flex-shrink:0; width:130px; height:130px;}
+  .ring{position:absolute; inset:-6px; border-radius:50%; border:2px solid var(--gold); opacity:.55; animation:ringPulse 2.8s ease-in-out infinite;}
+  @keyframes ringPulse{0%,100%{transform:scale(1); opacity:.55;} 50%{transform:scale(1.08); opacity:.15;}}
+  .photo{
+    width:130px; height:130px; border-radius:50%; background:var(--ink-2);
+    display:flex; align-items:center; justify-content:center; color:#8B8FB8; font-size:52px;
+    border:3px solid #fff; box-shadow:0 8px 20px -8px rgba(27,30,54,.4);
+  }
+  .bio h2{font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin:0 0 4px;}
+  .role{font-size:13px; color:var(--teal); font-weight:700; margin:0 0 2px;}
+  .role.secondary{color:var(--gold-dark);}
+  .bio p.desc{font-size:13.5px; line-height:1.65; color:var(--charcoal); margin:14px 0 0; max-width:460px;}
+  .tagline{
+    margin-top:22px; padding:14px 16px; background:var(--parchment-2); border-left:3px solid var(--gold);
+    border-radius:8px; font-size:13px; font-style:italic; color:var(--charcoal); max-width:520px;
+  }
+  .more-link{display:inline-block; margin-top:20px; font-size:13px; font-weight:700; color:var(--teal); text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="browser-shell">
+  <div class="browser-top">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="url-pill">🔒 ruhshunos.fun/yaratuvchi</div>
+  </div>
+  <div class="page">
+    <div class="topline"><div class="logo">Ruhshunos.Fun</div></div>
+    <div class="nav">
+      <a href="#">Home</a>
+      <a href="#">Testlar</a>
+      <a class="active" href="#">Yaratuvchi</a>
+      <a href="#">Yordam</a>
+    </div>
+
+    <div class="profile">
+      <div class="photo-wrap">
+        <div class="ring"></div>
+        <div class="photo">🧑‍⚕️</div>
+      </div>
+      <div class="bio">
+        <h2>Xolmo'minov Azizbek Erkin o'g'li</h2>
+        <p class="role">Assistent — TDTU Termiz filiali, Tibbiy psixologiya, nevrologiya va psixiatriya kafedrasi</p>
+        <p class="role secondary">Psixiatr — Surxondaryo mintaqaviy ixtisoslashtirilgan ruhiy salomatlik ilmiy-amaliy tibbiyot markazi</p>
+        <p class="desc">Hozirda psixiatriya va narkologiya (14.00.18) yo'nalishi bo'yicha PhD dissertatsiyasi ustida ishlayapman. Ruhiy salomatlik, shaxsni o'z-o'ziga tanitish va psixologik bilimlarni ommaga yaqinlashtirish — mening asosiy yo'nalishim.</p>
+        <div class="tagline">Ruhshunos.Fun — odamlarni o'z-o'zini chuqurroq tanishga undaydigan, ilmiy asosga tayangan qiziqarli testlar platformasi.</div>
+        <a class="more-link" href="#">Kontakt va hamkorlik uchun Yordam bo'limiga o'ting →</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>Ruhshunos.Fun — Yordam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1E36; --ink-2:#262B4A; --parchment:#F7F2E7; --parchment-2:#EFE8D8;
+    --gold:#C9974A; --gold-dark:#A97B2F; --teal:#2F6F6B; --charcoal:#2A2720;
+    --muted:#8A8677; --line:#E3DAC5;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; padding:40px 16px;
+    background:radial-gradient(circle at 20% 10%,#e9e3d3,#d9d0ba 65%);
+    font-family:'Manrope',sans-serif; color:var(--charcoal);
+    display:flex; justify-content:center;
+  }
+  .browser-shell{
+    width:100%; max-width:920px; border-radius:16px; overflow:hidden;
+    box-shadow:0 40px 70px -25px rgba(27,30,54,.5), 0 12px 24px -12px rgba(27,30,54,.35);
+    background:#fff; height:fit-content;
+  }
+  .browser-top{background:#EDEAE3; padding:11px 16px; display:flex; align-items:center; gap:12px; border-bottom:1px solid #DDD7C9;}
+  .dots span{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .dots span:nth-child(1){background:#ED6A5E;} .dots span:nth-child(2){background:#F4BF4F;margin:0 6px;} .dots span:nth-child(3){background:#61C554;}
+  .url-pill{flex:1;background:#fff;border-radius:7px;padding:6px 14px;font-size:12.5px;color:#6b6656;border:1px solid #E1DACB;}
+  .page{background:var(--parchment); padding:26px 34px 34px;}
+  .topline{margin-bottom:18px;}
+  .logo{font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:26px; color:var(--ink);}
+  .nav{display:flex; border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-bottom:26px;}
+  .nav a{flex:1; text-align:center; padding:12px 8px; font-weight:700; font-size:13.5px; color:var(--charcoal); text-decoration:none; border-right:1px solid var(--line); position:relative;}
+  .nav a:last-child{border-right:none;}
+  .nav a.active{background:var(--ink); color:var(--parchment);}
+  .nav a.active::after{content:'●'; color:var(--gold); font-size:8px; position:absolute; top:5px; right:9px;}
+
+  .block{background:#fff; border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-bottom:16px; opacity:0; animation:fadeUp .5s ease forwards;}
+  .block:nth-child(1){animation-delay:.05s;} .block:nth-child(2){animation-delay:.2s;} .block:nth-child(3){animation-delay:.35s;}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+  .block h3{display:flex; align-items:center; gap:10px; font-size:15px; margin:0 0 12px;}
+  .num{width:24px; height:24px; border-radius:50%; background:var(--ink); color:var(--parchment); font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .region{font-size:12px; color:var(--gold-dark); font-weight:700; margin:-4px 0 12px 34px;}
+
+  .contact-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-left:34px;}
+  .contact-pill{
+    display:flex; align-items:center; gap:8px; background:var(--parchment-2); border-radius:8px;
+    padding:9px 11px; font-size:12.5px; font-weight:600; transition:transform .2s ease;
+  }
+  .contact-pill:hover{transform:translateY(-2px);}
+
+  .fields{margin-left:34px; display:flex; flex-direction:column; gap:9px;}
+  .field label{display:block; font-size:11px; color:var(--muted); font-weight:700; margin-bottom:3px;}
+  .field .box{border:1px solid var(--line); border-radius:7px; padding:8px 10px; font-size:12.5px; color:var(--muted); background:#FBF9F3;}
+
+  .cta-row{margin-left:34px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .cta-row p{font-size:13px; color:var(--charcoal); margin:0; max-width:320px;}
+  .btn{
+    background:var(--gold); color:#fff; border:none; padding:11px 20px; border-radius:9px; font-weight:800;
+    font-size:13px; white-space:nowrap; box-shadow:0 8px 16px -8px rgba(201,151,74,.6);
+    animation:pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+</style>
+</head>
+<body>
+<div class="browser-shell">
+  <div class="browser-top">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="url-pill">🔒 ruhshunos.fun/yordam</div>
+  </div>
+  <div class="page">
+    <div class="topline"><div class="logo">Ruhshunos.Fun</div></div>
+    <div class="nav">
+      <a href="#">Home</a>
+      <a href="#">Testlar</a>
+      <a href="#">Yaratuvchi</a>
+      <a class="active" href="#">Yordam</a>
+    </div>
+
+    <div class="block">
+      <h3><span class="num">1</span> Mening kontaktim</h3>
+      <div class="region">📍 Hududim: Surxondaryo viloyati, Termiz</div>
+      <div class="contact-grid">
+        <div class="contact-pill">✉️ E-pochta</div>
+        <div class="contact-pill">☎️ Nomer</div>
+        <div class="contact-pill">✈️ Telegram</div>
+        <div class="contact-pill">💬 WhatsApp</div>
+        <div class="contact-pill">📷 Instagram</div>
+        <div class="contact-pill">▶️ YouTube</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3><span class="num">2</span> Hamkor izlash</h3>
+      <div class="fields">
+        <div class="field"><label>Yo'nalishi</label><div class="box">Masalan: dasturlash, dizayn, marketing...</div></div>
+        <div class="field"><label>Qo'shimcha ma'lumot</label><div class="box">O'zingiz haqingizda qisqacha</div></div>
+        <div class="field"><label>Ish staji</label><div class="box">Necha yillik tajriba</div></div>
+        <div class="field"><label>Kontaktlari</label><div class="box">Bog'lanish uchun ma'lumot</div></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3><span class="num">3</span> Hamkor izlash</h3>
+      <div class="cta-row">
+        <p>Ruhshunos.Fun jamoasiga qo'shilib, loyihani birga rivojlantirishni xohlaysizmi?</p>
+        <button class="btn">🤝 Ariza yuborish</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
