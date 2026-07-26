@@ -801,6 +801,8 @@ button.retake {
   font-size: 52px;
   border: 3px solid #fff;
   box-shadow: 0 8px 20px -8px rgba(27, 30, 54, .4);
+  object-fit: cover;
+  object-position: center center;
 }
 
 .bio h2 {
