@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Stroop testi — Ruhshunos</title>
+<style>
+  :root{
+    --ink:        #12213B;
+    --slate:      #1B2C4B;
+    --slate-2:    #223559;
+    --amber:      #FFB627;
+    --mist:       #7FB3D5;
+    --fog:        #ECEFF3;
+    --muted:      #8C9AB5;
+    --sage:       #6BA292;
+    --coral:      #E8607A;
+    --radius:     18px;
+    --font-disp:  'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body:  'IBM Plex Sans', 'Segoe UI', sans-serif;
+
+    /* Stroop stimuli uchun turg'un test ranglari — UI aksentlaridan ataylab ajratilgan */
+    --c-red:    #E63946;
+    --c-blue:   #3B82F6;
+    --c-green:  #22C55E;
+    --c-yellow: #FACC15;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 50% 15%, rgba(255,182,39,0.10), transparent 55%),
+      var(--ink);
+    color:var(--fog);
+    font-family:var(--font-body);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+
+  .shell{ width:100%; max-width:480px; }
+
+  header{ text-align:center; margin-bottom:24px; }
+  header .back-link{
+    display:inline-block;
+    margin-bottom:14px;
+    font-size:12px;
+    color:var(--mist);
+    text-decoration:none;
+    font-family:var(--font-disp);
+    letter-spacing:.04em;
+  }
+  header .back-link:hover{ color:var(--amber); }
+  header .eyebrow{
+    font-family:var(--font-disp);
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--amber);
+    margin-bottom:6px;
+  }
+  header h1{ font-family:var(--font-disp); font-size:26px; margin:0 0 8px; font-weight:600; }
+  header p{ color:var(--muted); font-size:14px; line-height:1.5; margin:0; }
+
+  .card{
+    background:var(--slate);
+    border-radius:var(--radius);
+    padding:28px;
+    box-shadow:0 20px 45px rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.05);
+  }
+
+  .primary-btn{
+    width:100%; padding:15px; border:none; border-radius:14px;
+    background:var(--amber); color:#1A1200; font-family:var(--font-disp);
+    font-weight:600; font-size:15px; cursor:pointer;
+    transition:filter .15s, transform .15s;
+  }
+  .primary-btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  .ghost-btn{
+    width:100%; margin-top:10px; padding:13px; border:1.5px solid rgba(255,255,255,0.15);
+    border-radius:14px; background:transparent; color:var(--fog); font-size:14px; cursor:pointer;
+  }
+  .ghost-btn:hover{ border-color:var(--mist); }
+
+  .instructions p{ font-size:14px; line-height:1.6; color:var(--fog); }
+  .instructions .example{
+    display:flex; justify-content:center; gap:18px; margin:18px 0;
+    font-family:var(--font-disp); font-size:26px; font-weight:700;
+  }
+
+  /* --- Test maydoni --- */
+  .hud{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:6px; font-size:12px; color:var(--muted);
+  }
+  .progress-track{
+    height:6px; background:var(--slate-2); border-radius:6px; overflow:hidden; margin-bottom:26px;
+  }
+  .progress-fill{
+    height:100%; background:var(--amber); width:0%; transition:width .2s;
+  }
+
+  .stimulus-zone{
+    height:120px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:26px;
+  }
+  .fixation{
+    font-family:var(--font-disp); font-size:34px; color:var(--muted);
+  }
+  .stimulus-word{
+    font-family:var(--font-disp);
+    font-size:44px;
+    font-weight:700;
+    letter-spacing:0.02em;
+  }
+
+  .answer-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .answer-btn{
+    padding:20px 10px;
+    border-radius:14px;
+    border:none;
+    font-family:var(--font-disp);
+    font-weight:700;
+    font-size:15px;
+    color:#101418;
+    cursor:pointer;
+    transition:transform .08s, filter .15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .answer-btn:active{ transform:scale(0.96); }
+  .answer-btn.correct-flash{ outline:3px solid var(--sage); }
+  .answer-btn.wrong-flash{ outline:3px solid var(--coral); }
+
+  .practice-tag{
+    text-align:center; font-size:12px; color:var(--mist);
+    margin-bottom:10px; letter-spacing:0.05em; text-transform:uppercase;
+  }
+
+  /* --- Natijalar --- */
+  .result-row{
+    display:flex; justify-content:space-between; padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,0.07); font-size:14px;
+  }
+  .result-row:last-child{ border-bottom:none; }
+  .result-row span:first-child{ color:var(--muted); }
+  .result-row span:last-child{ font-family:var(--font-disp); color:var(--fog); }
+
+  .verdict{
+    margin:18px 0; padding:14px 16px; border-radius:12px;
+    background:rgba(127,179,213,0.10); border:1px solid rgba(127,179,213,0.25);
+    font-size:14px; line-height:1.5;
+  }
+  .verdict b{ color:var(--mist); }
+
+  .hidden{ display:none !important; }
+
+  .footnote{
+    margin-top:16px; font-size:11.5px; color:var(--muted); line-height:1.5; text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <header>
+    <a class="back-link" href="testlar.html">← Testlar ro'yxatiga qaytish</a>
+    <div class="eyebrow">Diqqat &middot; Ruhshunos</div>
+    <h1>Stroop testi</h1>
+    <p>So'zni o'qimang &mdash; harflarning <b>rangini</b> tez aniqlang.</p>
+  </header>
+
+  <div class="card">
+
+    <!-- ============ 1. YO'RIQNOMA ============ -->
+    <section id="intro" class="instructions">
+      <p>Ekranda rang nomi yozilgan so'z chiqadi, lekin harflar boshqa rangda bo'yalgan bo'lishi mumkin. Sizning vazifangiz &mdash; so'zning <b>ma'nosini emas</b>, balki harflarning haqiqiy rangini bosish.</p>
+      <div class="example" id="exampleWord"></div>
+      <p>3 ta mashq savoli bilan boshlaymiz, so'ng 20 ta asosiy savol keladi.</p>
+      <button class="primary-btn" id="startBtn">Boshlash</button>
+    </section>
+
+    <!-- ============ 2. TEST MAYDONI ============ -->
+    <section id="testArea" class="hidden">
+      <div class="practice-tag hidden" id="practiceTag">Mashq savoli</div>
+      <div class="hud">
+        <span id="trialLabel">Savol 1 / 20</span>
+        <span id="scoreLabel"></span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="stimulus-zone" id="stimulusZone">
+        <span class="fixation">+</span>
+      </div>
+      <div class="answer-grid" id="answerGrid"></div>
+    </section>
+
+    <!-- ============ 3. NATIJALAR ============ -->
+    <section id="results" class="hidden">
+      <div id="resultRows"></div>
+      <div class="verdict" id="verdictBox"></div>
+      <button class="primary-btn" id="retryBtn">Qayta urinish</button>
+      <button class="ghost-btn" id="closeBtn">Natijani saqlab, chiqish</button>
+    </section>
+
+    <div class="footnote">
+      Bu vosita klinik tashxis emas &mdash; kognitiv nazorat va chalg'ituvchi omillarga qarshilik ko'rsatish qobiliyatini baholovchi skrining topshirig'i.
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   STROOP TESTI — holat va mantiq
+   Backendga yuborish uchun submitResult() ga qarang (/api/results/stroop).
+   ========================================================================= */
+
+const COLORS = [
+  { key:'red',    label:'QIZIL',  hex:'var(--c-red)'    },
+  { key:'blue',   label:"KO'K",   hex:'var(--c-blue)'   },
+  { key:'green',  label:'YASHIL', hex:'var(--c-green)'  },
+  { key:'yellow', label:'SARIQ',  hex:'var(--c-yellow)' }
+];
+const PRACTICE_COUNT = 3;
+const TRIAL_COUNT = 20; // 10 kongruent + 10 inkongruent, aralashtirilgan
+
+const state = {
+  trials: [],        // {word, colorKey, congruent, phase:'practice'|'main'}
+  index: 0,
+  onsetTs: 0,
+  results: []        // {congruent, correct, rtMs}
+};
+
+const introEl      = document.getElementById('intro');
+const testAreaEl   = document.getElementById('testArea');
+const resultsEl    = document.getElementById('results');
+const stimulusZone = document.getElementById('stimulusZone');
+const answerGrid   = document.getElementById('answerGrid');
+const trialLabel   = document.getElementById('trialLabel');
+const scoreLabel   = document.getElementById('scoreLabel');
+const progressFill = document.getElementById('progressFill');
+const practiceTag  = document.getElementById('practiceTag');
+const resultRowsEl = document.getElementById('resultRows');
+const verdictBoxEl = document.getElementById('verdictBox');
+const exampleWordEl= document.getElementById('exampleWord');
+
+// Yo'riqnoma uchun namuna: "QIZIL" so'zi ko'k rangda
+exampleWordEl.innerHTML = `<span style="color:var(--c-blue)">QIZIL</span>`;
+
+function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+function buildAnswerButtons(){
+  answerGrid.innerHTML = '';
+  COLORS.forEach(c=>{
+    const btn = document.createElement('button');
+    btn.className = 'answer-btn';
+    btn.style.background = c.hex;
+    btn.textContent = c.label;
+    btn.dataset.key = c.key;
+    btn.addEventListener('click', onAnswer);
+    answerGrid.appendChild(btn);
+  });
+}
+
+function buildTrialList(){
+  const list = [];
+
+  // Mashq: 3 ta, aralash kongruent/inkongruent
+  for(let i=0;i<PRACTICE_COUNT;i++){
+    list.push(makeTrial('practice', i % 2 === 0));
+  }
+
+  // Asosiy: TRIAL_COUNT ta, yarmi kongruent, yarmi inkongruent
+  const half = TRIAL_COUNT / 2;
+  const mainTrials = [];
+  for(let i=0;i<half;i++) mainTrials.push(makeTrial('main', true));
+  for(let i=0;i<half;i++) mainTrials.push(makeTrial('main', false));
+  shuffle(mainTrials);
+
+  return list.concat(mainTrials);
+}
+
+function makeTrial(phase, congruent){
+  const wordColor = pickRandom(COLORS);
+  let displayColor = wordColor;
+  if(!congruent){
+    const others = COLORS.filter(c=>c.key !== wordColor.key);
+    displayColor = pickRandom(others);
+  }
+  return {
+    phase,
+    word: wordColor.label,
+    colorKey: displayColor.key,
+    colorHex: displayColor.hex,
+    congruent
+  };
+}
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  state.trials = buildTrialList();
+  state.index = 0;
+  state.results = [];
+  introEl.classList.add('hidden');
+  testAreaEl.classList.remove('hidden');
+  buildAnswerButtons();
+  runTrial();
+});
+
+function runTrial(){
+  if(state.index >= state.trials.length){
+    return showResults();
+  }
+  const trial = state.trials[state.index];
+  const mainIndex = state.index - PRACTICE_COUNT;
+
+  practiceTag.classList.toggle('hidden', trial.phase !== 'practice');
+  trialLabel.textContent = trial.phase === 'practice'
+    ? `Mashq ${state.index + 1} / ${PRACTICE_COUNT}`
+    : `Savol ${mainIndex + 1} / ${TRIAL_COUNT}`;
+
+  const correctSoFar = state.results.filter(r=>r.correct).length;
+  scoreLabel.textContent = state.results.length
+    ? `To'g'ri: ${correctSoFar}/${state.results.length}`
+    : '';
+
+  const totalSteps = PRACTICE_COUNT + TRIAL_COUNT;
+  progressFill.style.width = `${(state.index/totalSteps)*100}%`;
+
+  // Fiksatsiya krizi (~450ms), so'ng stimul
+  stimulusZone.innerHTML = '<span class="fixation">+</span>';
+  document.querySelectorAll('.answer-btn').forEach(b=>b.disabled = true);
+
+  setTimeout(()=>{
+    stimulusZone.innerHTML = `<span class="stimulus-word" style="color:${trial.colorHex}">${trial.word}</span>`;
+    document.querySelectorAll('.answer-btn').forEach(b=>b.disabled = false);
+    // Paintdan keyin onset vaqtini olish — reaksiya vaqti aniqligini oshiradi
+    requestAnimationFrame(()=>{ state.onsetTs = performance.now(); });
+  }, 450);
+}
+
+function onAnswer(e){
+  const btn = e.currentTarget;
+  if(btn.disabled) return;
+
+  const rtMs = performance.now() - state.onsetTs;
+  const trial = state.trials[state.index];
+  const correct = btn.dataset.key === trial.colorKey;
+
+  document.querySelectorAll('.answer-btn').forEach(b=>b.disabled = true);
+  btn.classList.add(correct ? 'correct-flash' : 'wrong-flash');
+
+  if(trial.phase === 'main'){
+    state.results.push({ congruent: trial.congruent, correct, rtMs });
+  }
+
+  setTimeout(()=>{
+    btn.classList.remove('correct-flash','wrong-flash');
+    state.index++;
+    runTrial();
+  }, 220);
+}
+
+function showResults(){
+  testAreaEl.classList.add('hidden');
+  resultsEl.classList.remove('hidden');
+
+  const cong = state.results.filter(r=>r.congruent);
+  const incong = state.results.filter(r=>!r.congruent);
+
+  const acc = arr => arr.length ? (arr.filter(r=>r.correct).length / arr.length * 100) : 0;
+  const meanRt = arr => {
+    const correctOnes = arr.filter(r=>r.correct);
+    return correctOnes.length ? correctOnes.reduce((a,b)=>a+b.rtMs,0)/correctOnes.length : null;
+  };
+
+  const accCong = acc(cong), accIncong = acc(incong);
+  const rtCong = meanRt(cong), rtIncong = meanRt(incong);
+  const interference = (rtCong !== null && rtIncong !== null) ? (rtIncong - rtCong) : null;
+  const overallAcc = acc(state.results);
+
+  resultRowsEl.innerHTML = '';
+  addRow('Umumiy aniqlik', `${overallAcc.toFixed(0)}%`);
+  addRow('Aniqlik (kongruent)', `${accCong.toFixed(0)}%`);
+  addRow('Aniqlik (inkongruent)', `${accIncong.toFixed(0)}%`);
+  addRow('O\'rtacha RT (kongruent)', rtCong !== null ? `${rtCong.toFixed(0)} ms` : '—');
+  addRow('O\'rtacha RT (inkongruent)', rtIncong !== null ? `${rtIncong.toFixed(0)} ms` : '—');
+  addRow('Stroop interferensiya effekti', interference !== null ? `${interference.toFixed(0)} ms` : '—');
+
+  let verdict;
+  if(interference === null){
+    verdict = "Natijani hisoblash uchun yetarli to'g'ri javob yig'ilmadi.";
+  } else if(interference < 50){
+    verdict = `<b>Past interferensiya (${interference.toFixed(0)} ms).</b> Chalg'ituvchi so'z ma'nosiga qaramay, rangni aniqlash tezligi deyarli o'zgarmagan — kognitiv nazorat yaxshi ko'rsatkichda.`;
+  } else if(interference < 150){
+    verdict = `<b>O'rtacha interferensiya (${interference.toFixed(0)} ms).</b> Bu ko'pchilik kattalar uchun tipik Stroop effekti oralig'i.`;
+  } else {
+    verdict = `<b>Yuqori interferensiya (${interference.toFixed(0)} ms).</b> Inkongruent savollarda sezilarli sekinlashish kuzatildi. Charchoq, e'tibor tarqoqligi yoki bir martalik omillar ta'sir qilishi mumkin — bitta o'lchov xulosa chiqarish uchun yetarli emas.`;
+  }
+  verdictBoxEl.innerHTML = verdict;
+
+  submitResult({
+    test: 'stroop',
+    trial_count: state.results.length,
+    accuracy_overall_pct: overallAcc,
+    accuracy_congruent_pct: accCong,
+    accuracy_incongruent_pct: accIncong,
+    mean_rt_congruent_ms: rtCong,
+    mean_rt_incongruent_ms: rtIncong,
+    interference_effect_ms: interference,
+    raw_trials: state.results,
+    completed_at: new Date().toISOString()
+  });
+}
+
+function addRow(label, value){
+  const row = document.createElement('div');
+  row.className = 'result-row';
+  row.innerHTML = `<span>${label}</span><span>${value}</span>`;
+  resultRowsEl.appendChild(row);
+}
+
+/* -------------------------------------------------------------------------
+   BACKEND INTEGRATSIYASI
+   FastAPI'da mos endpoint, masalan:
+
+   @app.post("/api/results/stroop")
+   async def save_stroop_result(payload: StroopResult, user = Depends(get_current_user)):
+       ...
+   ------------------------------------------------------------------------- */
+function submitResult(payload){
+  fetch('/api/results/stroop', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(err=>{
+    console.warn('Natija backendga yuborilmadi (offline demo rejimi):', err);
+  });
+}
+
+document.getElementById('retryBtn').addEventListener('click', ()=>{
+  resultsEl.classList.add('hidden');
+  introEl.classList.remove('hidden');
+});
+
+document.getElementById('closeBtn').addEventListener('click', ()=>{
+  window.location.href = 'testlar.html';
+});
+</script>
+</body>
+</html>
