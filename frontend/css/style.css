@@ -640,6 +640,21 @@ ul.plain {
   color: var(--gold-dark);
 }
 
+.disclaimer-sci {
+  margin-top: 16px;
+  margin-bottom: 24px;
+  background: rgba(47, 111, 107, 0.08);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  font-size: 0.86rem;
+  color: var(--charcoal);
+}
+
+.disclaimer-sci strong {
+  color: var(--teal);
+}
+
 .error-box {
   background: var(--danger-soft);
   border: 1px solid rgba(163, 64, 74, 0.35);
