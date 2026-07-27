@@ -17,6 +17,7 @@ window.RuhshunosQuiz = (function () {
           <span class="quiz-step-label">${idx + 1} / ${questions.length}</span>
         </div>
         <div class="quiz-card">
+          ${q.categoryLabel ? `<p class="text-muted" style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; margin:0 0 8px;">${q.categoryLabel}</p>` : ""}
           <p class="quiz-prompt">${q.prompt}</p>
           <div class="quiz-options" role="group"></div>
           <div class="quiz-nav">

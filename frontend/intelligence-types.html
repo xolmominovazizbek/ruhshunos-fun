@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intellekt turlari so'rovnomasi — Ruhshunos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main class="container">
+  <div class="topline"><div class="logo">Ruhshunos</div></div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="testlar.html" class="active">Testlar</a>
+    <a href="yaratuvchi.html">Yaratuvchi</a>
+    <a href="yordam.html">Yordam</a>
+  </nav>
+
+  <div class="page-heading">🧠 Intellekt turlari so'rovnomasi
+    <span class="tag tag-sci heading-tag">🔬 Ilmiy asoslangan</span>
+    <span class="tag tag-child heading-tag">👶 Bolani baholash</span>
+  </div>
+  <div class="page-subheading">Howard Gardnerning "Ko'p qirrali intellekt" nazariyasi asosida, 10 turdagi intellektni aniqlovchi so'rovnoma</div>
+
+  <div class="observer-notice">
+    <strong>⚠️ Bu testni kim to'ldirishi kerak?</strong> Ushbu so'rovnoma <strong>o'zingiz haqingizda o'zingiz to'ldirish uchun emas</strong>.
+    U 7 yosh va undan katta bolani yaxshi taniydigan <strong>ota-ona, vasiy, o'qituvchi yoki maktab psixologi</strong>
+    tomonidan, bolani tengdoshlari bilan solishtirib to'ldirilishi kerak. Eng aniq natija uchun bolani yaxshi
+    biladigan ikki kishi alohida to'ldirib, ballarini o'rtacha hisoblashi tavsiya etiladi. Bu standart klinik
+    kuzatuv testi emas — aniq xulosa uchun klinik psixolog bilan maslahatlashing.
+  </div>
+
+  <section class="panel" id="intro">
+    <h2>Test haqida</h2>
+    <p>83 ta bayonot 10 ta intellekt turi (og'zaki, mantiqiy, vizual, jismoniy-kinestetik, musiqiy, ijtimoiy, ichki zehn, emotsional, axloqiy, tabiiy) bo'yicha guruhlangan. Har bir bayonot uchun bola qay darajada mos kelishini (Yo'q / Kam / Ko'p / Juda ko'p) belgilang.</p>
+    <button type="button" class="primary" id="start-btn">Testni boshlash</button>
+  </section>
+
+  <section id="quiz" class="hidden"></section>
+  <div id="error" class="error-box hidden"></div>
+  <section id="result" class="hidden"></section>
+
+  <div class="disclaimer">
+    <strong>⚠️ Muhim eslatma:</strong> Bu test ko'ngilochar/kuzatuv maqsadida taqdim etilgan va klinik tashxis vositasi emas.
+    Natijalarda qarama-qarshilik yoki jiddiy tashvish bo'lsa, klinik psixolog yoki bolalar mutaxassisiga murojaat qiling.
+    📞 Ishonch telefoni: 1086
+  </div>
+</main>
+
+<script src="js/quiz.js"></script>
+<script src="js/intelligence-types.js"></script>
+</body>
+</html>
