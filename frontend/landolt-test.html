@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Landolt xalqalari — Ruhshunos</title>
+<style>
+  :root{
+    --ink:        #12213B;
+    --slate:      #1B2C4B;
+    --slate-2:    #223559;
+    --amber:      #FFB627;
+    --mist:       #7FB3D5;
+    --fog:        #ECEFF3;
+    --muted:      #8C9AB5;
+    --sage:       #6BA292;
+    --coral:      #E8607A;
+    --radius:     18px;
+    --font-disp:  'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body:  'IBM Plex Sans', 'Segoe UI', sans-serif;
+
+    /* "Qog'oz" paneli — Gorbov jadvali bilan bir xil oilaga tegishli vizual til */
+    --paper:      #F3EFE6;
+    --paper-line: rgba(26,20,10,0.10);
+    --ink-black:  #2A2A2A;
+    --paper-found:#DCEBE3;
+    --paper-miss: rgba(255,182,39,0.28);
+    --paper-wrong:#F3C4CC;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 50% 12%, rgba(255,182,39,0.10), transparent 55%),
+      var(--ink);
+    color:var(--fog);
+    font-family:var(--font-body);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  @media (max-width:420px){ body{ padding:12px; } }
+
+  .shell{ width:100%; max-width:520px; }
+
+  header{ text-align:center; margin-bottom:22px; }
+  header .back-link{
+    display:inline-block;
+    margin-bottom:14px;
+    font-size:12px;
+    color:var(--mist);
+    text-decoration:none;
+    font-family:var(--font-disp);
+    letter-spacing:.04em;
+  }
+  header .back-link:hover{ color:var(--amber); }
+  header .eyebrow{
+    font-family:var(--font-disp); letter-spacing:0.18em; text-transform:uppercase;
+    font-size:12px; color:var(--amber); margin-bottom:6px;
+  }
+  header h1{ font-family:var(--font-disp); font-size:24px; margin:0 0 8px; font-weight:600; }
+  header p{ color:var(--muted); font-size:13.5px; line-height:1.5; margin:0; }
+
+  .card{
+    background:var(--slate);
+    border-radius:var(--radius);
+    padding:24px;
+    box-shadow:0 20px 45px rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.05);
+  }
+  @media (max-width:420px){ .card{ padding:16px; } }
+
+  .primary-btn{
+    width:100%; padding:15px; border:none; border-radius:14px;
+    background:var(--amber); color:#1A1200; font-family:var(--font-disp);
+    font-weight:600; font-size:15px; cursor:pointer;
+    transition:filter .15s, transform .15s;
+  }
+  .primary-btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  .ghost-btn{
+    width:100%; margin-top:10px; padding:13px; border:1.5px solid rgba(255,255,255,0.15);
+    border-radius:14px; background:transparent; color:var(--fog); font-size:14px; cursor:pointer;
+  }
+  .ghost-btn:hover{ border-color:var(--mist); }
+
+  /* --- Yo'riqnoma --- */
+  .instructions p{ font-size:13.5px; line-height:1.6; color:var(--fog); }
+  .target-preview{
+    display:flex; align-items:center; justify-content:center; gap:16px;
+    margin:18px 0; padding:16px; background:var(--paper); border-radius:14px;
+  }
+  .target-preview .tp-label{
+    font-family:var(--font-body); font-size:13px; color:var(--ink-black); max-width:180px; text-align:left;
+  }
+
+  /* --- Test maydoni --- */
+  .hud{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:12px; font-family:var(--font-disp);
+  }
+  .hud .timer{ font-size:24px; color:var(--amber); font-variant-numeric:tabular-nums; }
+  .hud .tally{ font-size:12.5px; color:var(--muted); font-family:var(--font-body); text-align:right; }
+
+  .mini-target{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-bottom:14px; padding:8px; background:var(--paper); border-radius:12px;
+    font-size:12.5px; color:var(--ink-black);
+  }
+
+  .ring-grid{
+    background:var(--paper);
+    border-radius:12px;
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    overflow:hidden;
+    box-shadow: inset 0 0 0 1px var(--paper-line);
+  }
+  .rcell{
+    aspect-ratio:1/1;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    user-select:none;
+    -webkit-tap-highlight-color: transparent;
+    border-right:1px solid var(--paper-line);
+    border-bottom:1px solid var(--paper-line);
+    background:var(--paper);
+    transition:background .15s;
+  }
+  .rcell svg{ width:78%; height:78%; }
+  .rcell.hit{ background:var(--paper-found); }
+  .rcell.false-alarm{ background:var(--paper-wrong); }
+  .rcell.missed{ background:var(--paper-miss); }
+  .rcell.locked{ pointer-events:none; }
+
+  /* --- Natijalar --- */
+  .result-row{
+    display:flex; justify-content:space-between; padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,0.07); font-size:14px;
+  }
+  .result-row:last-child{ border-bottom:none; }
+  .result-row span:first-child{ color:var(--muted); }
+  .result-row span:last-child{ font-family:var(--font-disp); color:var(--fog); }
+
+  .verdict{
+    margin:18px 0; padding:14px 16px; border-radius:12px;
+    background:rgba(127,179,213,0.10); border:1px solid rgba(127,179,213,0.25);
+    font-size:14px; line-height:1.5;
+  }
+  .verdict b{ color:var(--mist); }
+
+  .legend{
+    display:flex; gap:14px; flex-wrap:wrap; margin:12px 0 4px; font-size:11.5px; color:var(--muted);
+  }
+  .legend span{ display:flex; align-items:center; gap:5px; }
+  .legend i{ width:10px; height:10px; border-radius:3px; display:inline-block; }
+  .legend i.hit{ background:var(--paper-found); border:1px solid var(--sage); }
+  .legend i.false{ background:var(--paper-wrong); border:1px solid var(--coral); }
+  .legend i.miss{ background:var(--paper-miss); border:1px solid var(--amber); }
+
+  .hidden{ display:none !important; }
+
+  .footnote{
+    margin-top:16px; font-size:11.5px; color:var(--muted); line-height:1.5; text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <header>
+    <a class="back-link" href="testlar.html">← Testlar ro'yxatiga qaytish</a>
+    <div class="eyebrow">Diqqat &middot; Ruhshunos</div>
+    <h1>Landolt xalqalari</h1>
+    <p>Til va madaniyatga bog'liq bo'lmagan diqqat jamlanishi sinovi.</p>
+  </header>
+
+  <div class="card">
+
+    <!-- ============ 1. YO'RIQNOMA ============ -->
+    <section id="intro" class="instructions">
+      <p>Pastda ko'rsatilgan namunaga <b>aynan mos</b> (ochiq tomoni bir xil yo'nalishda) xalqalarni jadval ichidan toping va ustiga bosing. Vaqt tugaguncha imkon qadar ko'proq to'g'ri xalqani toping, lekin mos kelmaydiganlarga bosishdan saqlaning.</p>
+      <div class="target-preview">
+        <svg id="targetPreviewSvg" viewBox="0 0 70 70" width="70" height="70"></svg>
+        <div class="tp-label" id="targetPreviewLabel">Ana shu yo'nalishdagi xalqalarni izlang.</div>
+      </div>
+      <button class="primary-btn" id="startBtn">Boshlash (45 soniya)</button>
+    </section>
+
+    <!-- ============ 2. TEST MAYDONI ============ -->
+    <section id="testArea" class="hidden">
+      <div class="hud">
+        <div class="timer" id="timerDisplay">00:45</div>
+        <div class="tally">To'g'ri: <span id="hitCount">0</span> &middot; Xato: <span id="falseCount">0</span></div>
+      </div>
+      <div class="mini-target">
+        <svg id="miniTargetSvg" viewBox="0 0 40 40" width="28" height="28"></svg>
+        <span>&mdash; shu yo'nalishdagi xalqalarni toping</span>
+      </div>
+      <div class="ring-grid" id="grid"></div>
+    </section>
+
+    <!-- ============ 3. NATIJALAR ============ -->
+    <section id="results" class="hidden">
+      <div id="resultRows"></div>
+      <div class="legend">
+        <span><i class="hit"></i> Topilgan</span>
+        <span><i class="false"></i> Noto'g'ri bosilgan</span>
+        <span><i class="miss"></i> O'tkazib yuborilgan</span>
+      </div>
+      <div class="verdict" id="verdictBox"></div>
+      <button class="primary-btn" id="retryBtn">Qayta urinish</button>
+      <button class="ghost-btn" id="closeBtn">Natijani saqlab, chiqish</button>
+    </section>
+
+    <div class="footnote">
+      Bu vosita klinik tashxis emas &mdash; til/madaniyatga bog'liq bo'lmagan diqqat jamlanishi va vizual qidiruv aniqligini baholovchi skrining topshirig'i.
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   LANDOLT XALQALARI TESTI
+
+   Har bir "C" shaklidagi xalqaning ochiq tomoni (gap) 8 ta yo'nalishdan
+   (45 gradus qadam bilan) biriga qaratilgan. Foydalanuvchi bitta maqsadli
+   yo'nalishga mos xalqalarni belgilangan vaqt ichida topishi kerak.
+   Backendga yuborish uchun submitResult() ga qarang (/api/results/landolt).
+   ========================================================================= */
+
+const ORIENTATIONS = [0, 45, 90, 135, 180, 225, 270, 315]; // shimoldan soat yo'nalishi bo'yicha
+const GRID_COLS = 7, GRID_ROWS = 10;
+const TOTAL_CELLS = GRID_COLS * GRID_ROWS;
+const TARGET_COUNT = 12;
+const TIME_LIMIT_SEC = 45;
+
+const state = {
+  targetOrientation: 0,
+  cells: [],          // {orientation, isTarget, status:'idle'|'hit'|'false'|'missed'}
+  hits: 0,
+  falseAlarms: 0,
+  timeLeft: TIME_LIMIT_SEC,
+  timerHandle: null,
+  ended: false
+};
+
+const introEl        = document.getElementById('intro');
+const testAreaEl      = document.getElementById('testArea');
+const resultsEl       = document.getElementById('results');
+const gridEl          = document.getElementById('grid');
+const timerDisplay    = document.getElementById('timerDisplay');
+const hitCountEl      = document.getElementById('hitCount');
+const falseCountEl    = document.getElementById('falseCount');
+const resultRowsEl    = document.getElementById('resultRows');
+const verdictBoxEl    = document.getElementById('verdictBox');
+const targetPreviewSvg= document.getElementById('targetPreviewSvg');
+const miniTargetSvg   = document.getElementById('miniTargetSvg');
+
+/**
+ * Landolt xalqasi uchun SVG path yasaydi.
+ * cx,cy: markaz. r: radius. orientationDeg: gap markazi (0=shimol, soat yo'nalishida).
+ * gapDeg: gapning burchak kengligi.
+ */
+function landoltArcPath(cx, cy, r, orientationDeg, gapDeg){
+  const toRad = d => d * Math.PI / 180;
+  const point = deg => {
+    const rad = toRad(deg);
+    return [cx + r * Math.sin(rad), cy - r * Math.cos(rad)];
+  };
+  const startDeg = (orientationDeg + gapDeg/2) % 360;
+  const endDeg   = (orientationDeg - gapDeg/2 + 360) % 360;
+  const [sx, sy] = point(startDeg);
+  const [ex, ey] = point(endDeg);
+  const largeArc = (360 - gapDeg) > 180 ? 1 : 0;
+  return `M ${sx.toFixed(2)} ${sy.toFixed(2)} A ${r} ${r} 0 ${largeArc} 1 ${ex.toFixed(2)} ${ey.toFixed(2)}`;
+}
+
+function ringSvgMarkup(size, orientationDeg, strokeWidth, gapDeg, color){
+  const cx = size/2, cy = size/2, r = size/2 - strokeWidth;
+  const d = landoltArcPath(cx, cy, r, orientationDeg, gapDeg);
+  return `<path d="${d}" fill="none" stroke="${color}" stroke-width="${strokeWidth}" stroke-linecap="round"/>`;
+}
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function setupTargetPreview(){
+  state.targetOrientation = ORIENTATIONS[Math.floor(Math.random()*4) * 2]; // faqat shimol/sharq/janub/g'arb (0,90,180,270)
+  targetPreviewSvg.innerHTML = ringSvgMarkup(70, state.targetOrientation, 8, 50, 'var(--ink-black)');
+  miniTargetSvg.innerHTML = ringSvgMarkup(40, state.targetOrientation, 5, 50, 'var(--ink-black)');
+}
+
+function buildCells(){
+  const cells = [];
+  for(let i=0;i<TARGET_COUNT;i++){
+    cells.push({ orientation: state.targetOrientation, isTarget:true, status:'idle' });
+  }
+  const distractorPool = ORIENTATIONS.filter(o => o !== state.targetOrientation);
+  for(let i=TARGET_COUNT;i<TOTAL_CELLS;i++){
+    const o = distractorPool[Math.floor(Math.random()*distractorPool.length)];
+    cells.push({ orientation:o, isTarget:false, status:'idle' });
+  }
+  shuffle(cells);
+  state.cells = cells;
+}
+
+function renderGrid(){
+  gridEl.innerHTML = '';
+  state.cells.forEach((cellData, idx)=>{
+    const div = document.createElement('div');
+    div.className = 'rcell';
+    div.innerHTML = `<svg viewBox="0 0 40 40">${ringSvgMarkup(40, cellData.orientation, 5, 50, 'var(--ink-black)')}</svg>`;
+    div.dataset.index = idx;
+    div.addEventListener('click', ()=>onCellClick(idx, div));
+    gridEl.appendChild(div);
+  });
+}
+
+function onCellClick(idx, div){
+  if(state.ended) return;
+  const cellData = state.cells[idx];
+  if(cellData.status !== 'idle') return; // allaqachon bosilgan
+
+  if(cellData.isTarget){
+    cellData.status = 'hit';
+    state.hits++;
+    div.classList.add('hit');
+  } else {
+    cellData.status = 'false';
+    state.falseAlarms++;
+    div.classList.add('false-alarm');
+  }
+  div.classList.add('locked');
+  hitCountEl.textContent = state.hits;
+  falseCountEl.textContent = state.falseAlarms;
+}
+
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  introEl.classList.add('hidden');
+  testAreaEl.classList.remove('hidden');
+  startTest();
+});
+
+function startTest(){
+  state.hits = 0;
+  state.falseAlarms = 0;
+  state.timeLeft = TIME_LIMIT_SEC;
+  state.ended = false;
+  hitCountEl.textContent = '0';
+  falseCountEl.textContent = '0';
+  timerDisplay.textContent = formatCountdown(state.timeLeft);
+
+  buildCells();
+  renderGrid();
+
+  clearInterval(state.timerHandle);
+  state.timerHandle = setInterval(()=>{
+    state.timeLeft--;
+    timerDisplay.textContent = formatCountdown(state.timeLeft);
+    if(state.timeLeft <= 0){
+      finishTest();
+    }
+  }, 1000);
+}
+
+function formatCountdown(sec){
+  const s = Math.max(0, sec);
+  const m = Math.floor(s/60).toString().padStart(2,'0');
+  const r = (s%60).toString().padStart(2,'0');
+  return `${m}:${r}`;
+}
+
+function finishTest(){
+  clearInterval(state.timerHandle);
+  state.ended = true;
+
+  // O'tkazib yuborilgan nishonlarni belgilash
+  document.querySelectorAll('.rcell').forEach((div)=>{
+    const idx = parseInt(div.dataset.index, 10);
+    const cellData = state.cells[idx];
+    if(cellData.isTarget && cellData.status === 'idle'){
+      cellData.status = 'missed';
+      div.classList.add('missed');
+    }
+    div.classList.add('locked');
+  });
+
+  showResults();
+}
+
+function showResults(){
+  testAreaEl.classList.add('hidden');
+  resultsEl.classList.remove('hidden');
+
+  const misses = TARGET_COUNT - state.hits;
+  const hitRate = (state.hits / TARGET_COUNT) * 100;
+  const precision = (state.hits + state.falseAlarms) > 0
+    ? (state.hits / (state.hits + state.falseAlarms)) * 100
+    : null;
+
+  resultRowsEl.innerHTML = '';
+  addRow('Jami nishonlar', TARGET_COUNT.toString());
+  addRow('Topilgan (hit)', state.hits.toString());
+  addRow("O'tkazib yuborilgan (miss)", misses.toString());
+  addRow("Noto'g'ri bosilgan (false alarm)", state.falseAlarms.toString());
+  addRow('Topish darajasi', `${hitRate.toFixed(0)}%`);
+  addRow('Aniqlik indeksi', precision !== null ? `${precision.toFixed(0)}%` : '—');
+
+  let verdict;
+  if(hitRate >= 85 && state.falseAlarms <= 2){
+    verdict = `<b>Yuqori jamlanish.</b> Nishonlarning katta qismi topilgan, xato bosishlar minimal &mdash; diqqat jamlanishi va vizual qidiruv aniqligi yaxshi darajada.`;
+  } else if(hitRate >= 60){
+    verdict = `<b>O'rtacha jamlanish.</b> Nishonlarning bir qismi o'tkazib yuborilgan yoki xato bosishlar bo'lgan &mdash; bu odatiy holat, ayniqsa charchagan yoki chalg'igan holatda.`;
+  } else {
+    verdict = `<b>Past jamlanish ko'rsatkichi.</b> Ko'p nishon o'tkazib yuborilgan. Bu diqqatning vaqtinchalik tarqoqligi, charchoq yoki topshiriqqa moslashish vaqti yetishmaganidan bo'lishi mumkin &mdash; bitta natija xulosa chiqarish uchun yetarli emas.`;
+  }
+  verdict += ` Landolt xalqalari tildan mustaqil bo'lgani uchun bu natijani turli til/madaniy guruhlar orasida solishtirish mumkin.`;
+  verdictBoxEl.innerHTML = verdict;
+
+  submitResult({
+    test: 'landolt',
+    target_orientation_deg: state.targetOrientation,
+    total_targets: TARGET_COUNT,
+    hits: state.hits,
+    misses: misses,
+    false_alarms: state.falseAlarms,
+    time_limit_seconds: TIME_LIMIT_SEC,
+    completed_at: new Date().toISOString()
+  });
+}
+
+function addRow(label, value){
+  const row = document.createElement('div');
+  row.className = 'result-row';
+  row.innerHTML = `<span>${label}</span><span>${value}</span>`;
+  resultRowsEl.appendChild(row);
+}
+
+/* -------------------------------------------------------------------------
+   BACKEND INTEGRATSIYASI
+   FastAPI'da mos endpoint, masalan:
+
+   @app.post("/api/results/landolt")
+   async def save_landolt_result(payload: LandoltResult, user = Depends(get_current_user)):
+       ...
+   ------------------------------------------------------------------------- */
+function submitResult(payload){
+  fetch('/api/results/landolt', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(err=>{
+    console.warn('Natija backendga yuborilmadi (offline demo rejimi):', err);
+  });
+}
+
+document.getElementById('retryBtn').addEventListener('click', ()=>{
+  resultsEl.classList.add('hidden');
+  introEl.classList.remove('hidden');
+  setupTargetPreview();
+});
+
+document.getElementById('closeBtn').addEventListener('click', ()=>{
+  window.location.href = 'testlar.html';
+});
+
+// Ilk yuklanishda namuna xalqani tayyorlash
+setupTargetPreview();
+</script>
+</body>
+</html>

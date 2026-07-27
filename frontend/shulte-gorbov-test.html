@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Qizil-qora Shulte-Gorbov jadvali — Ruhshunos</title>
+<style>
+  :root{
+    --ink:        #12213B;
+    --slate:      #1B2C4B;
+    --slate-2:    #223559;
+    --amber:      #FFB627;
+    --mist:       #7FB3D5;
+    --fog:        #ECEFF3;
+    --muted:      #8C9AB5;
+    --sage:       #6BA292;
+    --coral:      #E8607A;
+    --radius:     18px;
+    --font-disp:  'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body:  'IBM Plex Sans', 'Segoe UI', sans-serif;
+
+    /* "Qog'oz" paneli — analog blankaga taqlid, o'qilishni yaxshilaydi */
+    --paper:      #F3EFE6;
+    --paper-line: rgba(26,20,10,0.12);
+    --ink-black:  #1B1B1B;
+    --ink-red:    #C81E3A;
+    --paper-found:#DCEBE3;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 50% 12%, rgba(255,182,39,0.10), transparent 55%),
+      var(--ink);
+    color:var(--fog);
+    font-family:var(--font-body);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  @media (max-width:420px){
+    body{ padding:12px; }
+  }
+
+  .shell{ width:100%; max-width:520px; }
+
+  header{ text-align:center; margin-bottom:24px; }
+  header .back-link{
+    display:inline-block;
+    margin-bottom:14px;
+    font-size:12px;
+    color:var(--mist);
+    text-decoration:none;
+    font-family:var(--font-disp);
+    letter-spacing:.04em;
+  }
+  header .back-link:hover{ color:var(--amber); }
+  header .eyebrow{
+    font-family:var(--font-disp); letter-spacing:0.18em; text-transform:uppercase;
+    font-size:12px; color:var(--amber); margin-bottom:6px;
+  }
+  header h1{ font-family:var(--font-disp); font-size:24px; margin:0 0 8px; font-weight:600; }
+  header p{ color:var(--muted); font-size:13.5px; line-height:1.5; margin:0; }
+
+  .card{
+    background:var(--slate);
+    border-radius:var(--radius);
+    padding:24px;
+    box-shadow:0 20px 45px rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.05);
+  }
+  @media (max-width:420px){
+    .card{ padding:16px; }
+  }
+
+  .primary-btn{
+    width:100%; padding:15px; border:none; border-radius:14px;
+    background:var(--amber); color:#1A1200; font-family:var(--font-disp);
+    font-weight:600; font-size:15px; cursor:pointer;
+    transition:filter .15s, transform .15s;
+  }
+  .primary-btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  .ghost-btn{
+    width:100%; margin-top:10px; padding:13px; border:1.5px solid rgba(255,255,255,0.15);
+    border-radius:14px; background:transparent; color:var(--fog); font-size:14px; cursor:pointer;
+  }
+  .ghost-btn:hover{ border-color:var(--mist); }
+
+  /* --- Yo'riqnoma --- */
+  .instructions p{ font-size:13.5px; line-height:1.6; color:var(--fog); }
+  .pattern-example{
+    display:flex; flex-wrap:wrap; gap:8px; margin:16px 0;
+    font-family:var(--font-disp); font-size:14px; font-weight:700;
+  }
+  .pattern-example span{
+    padding:6px 10px; border-radius:8px; background:var(--slate-2);
+  }
+  .pattern-example span.b{ color:var(--fog); }
+  .pattern-example span.r{ color:var(--coral); }
+
+  .optional-field{
+    margin:18px 0;
+  }
+  .optional-field label{
+    display:block; font-size:12.5px; color:var(--muted); margin-bottom:6px;
+  }
+  .optional-field input{
+    width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.15);
+    background:var(--slate-2); color:var(--fog); font-family:var(--font-body); font-size:14px;
+  }
+  .optional-field input:focus{ outline:none; border-color:var(--amber); }
+
+  /* --- Test maydoni --- */
+  .hud{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:14px; font-family:var(--font-disp);
+  }
+  .hud .timer{ font-size:24px; color:var(--amber); font-variant-numeric:tabular-nums; }
+  .hud .mistake-tag{ font-size:12.5px; color:var(--muted); font-family:var(--font-body); }
+
+  .target-row{
+    display:flex; gap:10px; margin-bottom:16px;
+  }
+  .target-chip{
+    flex:1;
+    padding:10px 12px;
+    border-radius:12px;
+    background:var(--slate-2);
+    border:2px solid transparent;
+    text-align:center;
+    transition:border-color .15s, transform .15s;
+  }
+  .target-chip.active{
+    border-color:var(--amber);
+    transform:scale(1.03);
+  }
+  .target-chip .tc-label{
+    font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:2px;
+  }
+  .target-chip.black .tc-value{ font-family:var(--font-disp); font-size:22px; color:var(--fog); font-weight:700; }
+  .target-chip.red .tc-value{ font-family:var(--font-disp); font-size:22px; color:var(--coral); font-weight:700; }
+
+  .paper-grid{
+    background:var(--paper);
+    border-radius:12px;
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    overflow:hidden;
+    box-shadow: inset 0 0 0 1px var(--paper-line);
+  }
+  .gcell{
+    aspect-ratio:1/1;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-disp);
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    user-select:none;
+    -webkit-tap-highlight-color: transparent;
+    border-right:1px solid var(--paper-line);
+    border-bottom:1px solid var(--paper-line);
+    background:var(--paper);
+    transition:background .15s, opacity .2s;
+  }
+  .gcell.black{ color:var(--ink-black); }
+  .gcell.red{ color:var(--ink-red); }
+  .gcell.found{
+    background:var(--paper-found);
+    opacity:0.4;
+    pointer-events:none;
+  }
+  .gcell.wrong{
+    animation:flashwrong .28s;
+  }
+  @keyframes flashwrong{
+    0%,100%{ background:var(--paper); }
+    40%{ background:#F3C4CC; }
+  }
+
+  /* --- Natijalar --- */
+  .result-row{
+    display:flex; justify-content:space-between; padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,0.07); font-size:14px;
+  }
+  .result-row:last-child{ border-bottom:none; }
+  .result-row span:first-child{ color:var(--muted); }
+  .result-row span:last-child{ font-family:var(--font-disp); color:var(--fog); }
+
+  .verdict{
+    margin:18px 0; padding:14px 16px; border-radius:12px;
+    background:rgba(127,179,213,0.10); border:1px solid rgba(127,179,213,0.25);
+    font-size:14px; line-height:1.5;
+  }
+  .verdict b{ color:var(--mist); }
+
+  .hidden{ display:none !important; }
+
+  .footnote{
+    margin-top:16px; font-size:11.5px; color:var(--muted); line-height:1.5; text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <header>
+    <a class="back-link" href="testlar.html">← Testlar ro'yxatiga qaytish</a>
+    <div class="eyebrow">Diqqat &middot; Ruhshunos</div>
+    <h1>Qizil-qora jadval</h1>
+    <p>Diqqatni bir obyektdan ikkinchisiga tez ko'chirish qobiliyatini sinang.</p>
+  </header>
+
+  <div class="card">
+
+    <!-- ============ 1. YO'RIQNOMA ============ -->
+    <section id="intro" class="instructions">
+      <p>Jadvalda <b>qora</b> (1&ndash;25) va <b>qizil</b> (1&ndash;24) raqamlar aralash joylashgan. Ularni <b>navbatma-navbat</b>, qora &mdash; o'sish tartibida, qizil &mdash; kamayish tartibida topib boring:</p>
+      <div class="pattern-example">
+        <span class="b">Qora 1</span><span class="r">Qizil 24</span><span class="b">Qora 2</span><span class="r">Qizil 23</span><span class="b">Qora 3</span><span>...</span>
+      </div>
+      <div class="optional-field">
+        <label for="prevShulteInput">Oldingi oddiy Shulte natijangiz, soniyada (ixtiyoriy — solishtirish uchun)</label>
+        <input type="number" id="prevShulteInput" placeholder="Masalan: 42">
+      </div>
+      <button class="primary-btn" id="startBtn">Boshlash</button>
+    </section>
+
+    <!-- ============ 2. TEST MAYDONI ============ -->
+    <section id="testArea" class="hidden">
+      <div class="hud">
+        <div class="timer" id="timerDisplay">00:00.0</div>
+        <div class="mistake-tag">Xatolar: <span id="mistakeCount">0</span></div>
+      </div>
+      <div class="target-row">
+        <div class="target-chip black" id="blackChip">
+          <div class="tc-label">Qora</div>
+          <div class="tc-value" id="blackTarget">1</div>
+        </div>
+        <div class="target-chip red" id="redChip">
+          <div class="tc-label">Qizil</div>
+          <div class="tc-value" id="redTarget">24</div>
+        </div>
+      </div>
+      <div class="paper-grid" id="grid"></div>
+    </section>
+
+    <!-- ============ 3. NATIJALAR ============ -->
+    <section id="results" class="hidden">
+      <div id="resultRows"></div>
+      <div class="verdict" id="verdictBox"></div>
+      <button class="primary-btn" id="retryBtn">Qayta urinish</button>
+      <button class="ghost-btn" id="closeBtn">Natijani saqlab, chiqish</button>
+    </section>
+
+    <div class="footnote">
+      Bu vosita klinik tashxis emas &mdash; diqqatning ko'chuvchanligi va idrok tezligini baholovchi skrining topshirig'i.
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   QIZIL-QORA SHULTE-GORBOV JADVALI — holat va mantiq
+
+   Mantiq: qora sonlar 1→25 o'sish tartibida, qizil sonlar 24→1 kamayish
+   tartibida, navbatma-navbat so'raladi: q1, r24, q2, r23, ... , q24, r1, q25.
+   Backendga yuborish uchun submitResult() ga qarang (/api/results/shulte_gorbov).
+   ========================================================================= */
+
+const state = {
+  blackNext: 1,
+  redNext: 24,
+  expectedType: 'black',   // 'black' | 'red'
+  mistakes: 0,
+  startTs: 0,
+  timerHandle: null,
+  prevShulteSeconds: null
+};
+
+const introEl       = document.getElementById('intro');
+const testAreaEl    = document.getElementById('testArea');
+const resultsEl     = document.getElementById('results');
+const gridEl        = document.getElementById('grid');
+const timerDisplay  = document.getElementById('timerDisplay');
+const mistakeCountEl= document.getElementById('mistakeCount');
+const blackChip     = document.getElementById('blackChip');
+const redChip       = document.getElementById('redChip');
+const blackTargetEl = document.getElementById('blackTarget');
+const redTargetEl   = document.getElementById('redTarget');
+const resultRowsEl  = document.getElementById('resultRows');
+const verdictBoxEl  = document.getElementById('verdictBox');
+const prevShulteInput = document.getElementById('prevShulteInput');
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  const raw = parseFloat(prevShulteInput.value);
+  state.prevShulteSeconds = isNaN(raw) ? null : raw;
+
+  introEl.classList.add('hidden');
+  testAreaEl.classList.remove('hidden');
+  startTest();
+});
+
+function startTest(){
+  state.blackNext = 1;
+  state.redNext = 24;
+  state.expectedType = 'black';
+  state.mistakes = 0;
+  mistakeCountEl.textContent = '0';
+  updateTargetChips();
+  buildGrid();
+
+  state.startTs = performance.now();
+  clearInterval(state.timerHandle);
+  state.timerHandle = setInterval(updateTimerDisplay, 100);
+}
+
+function buildGrid(){
+  const cells = [];
+  for(let n=1; n<=25; n++) cells.push({ value:n, color:'black' });
+  for(let n=1; n<=24; n++) cells.push({ value:n, color:'red' });
+  shuffle(cells);
+
+  gridEl.innerHTML = '';
+  cells.forEach(c=>{
+    const el = document.createElement('div');
+    el.className = `gcell ${c.color}`;
+    el.textContent = c.value;
+    el.dataset.value = c.value;
+    el.dataset.color = c.color;
+    el.addEventListener('click', onCellClick);
+    gridEl.appendChild(el);
+  });
+}
+
+function updateTargetChips(){
+  blackTargetEl.textContent = state.blackNext <= 25 ? state.blackNext : '—';
+  redTargetEl.textContent = state.redNext >= 1 ? state.redNext : '—';
+  blackChip.classList.toggle('active', state.expectedType === 'black');
+  redChip.classList.toggle('active', state.expectedType === 'red');
+}
+
+function updateTimerDisplay(){
+  const elapsed = (performance.now() - state.startTs) / 1000;
+  timerDisplay.textContent = formatClock(elapsed);
+}
+
+function formatClock(seconds){
+  const m = Math.floor(seconds/60).toString().padStart(2,'0');
+  const s = (seconds%60).toFixed(1).padStart(4,'0');
+  return `${m}:${s}`;
+}
+
+function onCellClick(e){
+  const cell = e.currentTarget;
+  const val = parseInt(cell.dataset.value, 10);
+  const color = cell.dataset.color;
+
+  const isCorrect =
+    (state.expectedType === 'black' && color === 'black' && val === state.blackNext) ||
+    (state.expectedType === 'red'   && color === 'red'   && val === state.redNext);
+
+  if(isCorrect){
+    cell.classList.add('found');
+    if(state.expectedType === 'black'){
+      state.blackNext++;
+      if(state.blackNext > 25){
+        finishTest();
+        return;
+      }
+      state.expectedType = 'red';
+    } else {
+      state.redNext--;
+      state.expectedType = 'black';
+    }
+    updateTargetChips();
+  } else {
+    state.mistakes++;
+    mistakeCountEl.textContent = state.mistakes;
+    cell.classList.add('wrong');
+    setTimeout(()=>cell.classList.remove('wrong'), 280);
+  }
+}
+
+function finishTest(){
+  clearInterval(state.timerHandle);
+  const elapsed = (performance.now() - state.startTs) / 1000;
+  showResults(elapsed);
+}
+
+function showResults(totalSeconds){
+  testAreaEl.classList.add('hidden');
+  resultsEl.classList.remove('hidden');
+
+  resultRowsEl.innerHTML = '';
+  addRow('Umumiy vaqt', `${totalSeconds.toFixed(1)} soniya`);
+  addRow('Xatolar soni', state.mistakes.toString());
+
+  let verdictHtml = `<b>Baholash:</b> Bu natija diqqatning bir qatordan (o'sish) ikkinchisiga (kamayish) tez ko'chish qobiliyatini aks ettiradi. Bitta o'lchov normativ xulosa uchun yetarli emas &mdash; ko'rsatkichni vaqt o'tishi bilan qayta sinovlar bilan solishtirish tavsiya etiladi.`;
+
+  if(state.prevShulteSeconds !== null && state.prevShulteSeconds > 0){
+    const switchCost = totalSeconds - state.prevShulteSeconds;
+    const ratio = totalSeconds / state.prevShulteSeconds;
+    addRow('Oldingi oddiy Shulte natijasi', `${state.prevShulteSeconds.toFixed(1)} s`);
+    addRow("Ko'chish narxi (farq)", `${switchCost >= 0 ? '+' : ''}${switchCost.toFixed(1)} s`);
+    addRow('Nisbat (Gorbov / oddiy Shulte)', `${ratio.toFixed(2)}×`);
+
+    verdictHtml += `<br><br><b>Ko'chish narxi tahlili:</b> Nisbat 1.0 ga yaqin bo'lsa, diqqatni ikkita qatorga taqsimlash deyarli qo'shimcha vaqt talab qilmagan. Nisbat sezilarli yuqori (masalan, 1.5&times; va undan ko'p) bo'lsa, bu diqqatni ko'chirish/taqsimlashda qo'shimcha kognitiv yuk borligini ko'rsatishi mumkin.`;
+  }
+
+  verdictBoxEl.innerHTML = verdictHtml;
+
+  submitResult({
+    test: 'shulte_gorbov',
+    total_time_seconds: totalSeconds,
+    mistakes: state.mistakes,
+    previous_plain_shulte_seconds: state.prevShulteSeconds,
+    completed_at: new Date().toISOString()
+  });
+}
+
+function addRow(label, value){
+  const row = document.createElement('div');
+  row.className = 'result-row';
+  row.innerHTML = `<span>${label}</span><span>${value}</span>`;
+  resultRowsEl.appendChild(row);
+}
+
+/* -------------------------------------------------------------------------
+   BACKEND INTEGRATSIYASI
+   FastAPI'da mos endpoint, masalan:
+
+   @app.post("/api/results/shulte_gorbov")
+   async def save_gorbov_result(payload: GorbovResult, user = Depends(get_current_user)):
+       ...
+   ------------------------------------------------------------------------- */
+function submitResult(payload){
+  fetch('/api/results/shulte_gorbov', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(err=>{
+    console.warn('Natija backendga yuborilmadi (offline demo rejimi):', err);
+  });
+}
+
+document.getElementById('retryBtn').addEventListener('click', ()=>{
+  resultsEl.classList.add('hidden');
+  introEl.classList.remove('hidden');
+});
+
+document.getElementById('closeBtn').addEventListener('click', ()=>{
+  window.location.href = 'testlar.html';
+});
+</script>
+</body>
+</html>
