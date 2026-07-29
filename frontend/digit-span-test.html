@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Raqamlar diapazoni — Ruhshunos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:        #12213B;
+    --slate:      #1B2C4B;
+    --slate-2:    #223559;
+    --amber:      #FFB627;
+    --mist:       #7FB3D5;
+    --fog:        #ECEFF3;
+    --muted:      #8C9AB5;
+    --sage:       #6BA292;
+    --coral:      #E8607A;
+    --radius:     18px;
+    --font-disp:  'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body:  'IBM Plex Sans', 'Segoe UI', sans-serif;
+    --paper:      #F3EFE6;
+    --paper-line: rgba(26,20,10,0.12);
+    --accent:     var(--mist);
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 50% 8%, rgba(127,179,213,0.14), transparent 55%),
+      var(--ink);
+    color:var(--fog);
+    font-family:var(--font-body);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  @media (max-width:420px){ body{ padding:14px; } }
+
+  .shell{ width:100%; max-width:480px; }
+
+  header{ text-align:center; margin-bottom:22px; }
+  header .back-link{
+    display:inline-block;
+    margin-bottom:14px;
+    font-size:12px;
+    color:var(--mist);
+    text-decoration:none;
+    font-family:var(--font-disp);
+    letter-spacing:.04em;
+  }
+  header .back-link:hover{ color:var(--amber); }
+  header .eyebrow{
+    font-family:var(--font-disp); letter-spacing:0.18em; text-transform:uppercase;
+    font-size:12px; color:var(--accent); margin-bottom:8px; font-weight:600;
+  }
+  header h1{
+    font-family:var(--font-disp); font-size:26px; font-weight:700; margin:0 0 8px;
+    color:var(--fog);
+  }
+  header p{ margin:0; font-size:14px; line-height:1.5; color:var(--muted); }
+
+  .card{
+    background:var(--slate); border-radius:var(--radius);
+    padding:22px; border:1px solid rgba(255,255,255,0.06);
+  }
+
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  /* ---- Intro: mode cards ---- */
+  .mode-list{ display:flex; flex-direction:column; gap:12px; margin-top:18px; }
+  .mode-card{
+    display:flex; align-items:center; gap:14px;
+    background:var(--slate); border:1px solid rgba(255,255,255,0.07);
+    border-radius:var(--radius); padding:16px 18px; cursor:pointer;
+    text-align:left; width:100%; color:var(--fog); font-family:var(--font-body);
+    transition:border-color .15s ease, transform .1s ease;
+    position:relative;
+  }
+  .mode-card:active{ transform:scale(0.98); }
+  .mode-card:hover{ border-color:rgba(127,179,213,0.45); }
+  .mode-card .m-icon{
+    width:42px; height:42px; border-radius:12px; flex:0 0 auto;
+    background:var(--slate-2); display:flex; align-items:center; justify-content:center;
+    font-size:20px;
+  }
+  .mode-card .m-text h3{ margin:0 0 3px; font-family:var(--font-disp); font-size:15px; font-weight:600; }
+  .mode-card .m-text p{ margin:0; font-size:12.5px; color:var(--muted); line-height:1.4; }
+  .mode-card .m-badge{
+    position:absolute; top:-8px; right:14px; background:var(--sage); color:#0E241D;
+    font-size:10px; font-weight:700; letter-spacing:0.04em; padding:3px 9px; border-radius:20px;
+    text-transform:uppercase;
+  }
+
+  .info-block{
+    margin-top:16px; background:rgba(127,179,213,0.08); border:1px solid rgba(127,179,213,0.18);
+    border-radius:14px; padding:14px 16px; font-size:12.5px; color:var(--muted); line-height:1.55;
+  }
+  .info-block b{ color:var(--fog); }
+
+  /* ---- Progress row ---- */
+  .progress-row{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:18px; font-family:var(--font-disp); font-size:12px;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);
+  }
+  .progress-row .dir-tag{ color:var(--accent); font-weight:600; }
+  .trial-dots{ display:flex; gap:5px; }
+  .trial-dots span{ width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,0.16); }
+  .trial-dots span.done{ background:var(--accent); }
+
+  /* ---- Sequence stage ---- */
+  .stage{
+    position:relative; height:220px; border-radius:22px;
+    background:radial-gradient(circle at 50% 45%, rgba(127,179,213,0.16), rgba(18,33,59,0) 65%), var(--slate);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    border:1px solid rgba(127,179,213,0.14);
+  }
+  .trail-digit{
+    position:absolute; font-family:var(--font-disp); font-weight:700;
+    color:var(--fog); transition:opacity .55s ease, transform .55s ease, filter .55s ease;
+  }
+  .trail-digit.current{ font-size:76px; opacity:1; transform:translateY(0) scale(1); filter:blur(0px); }
+  .trail-digit.fading{ font-size:34px; opacity:0; transform:translateY(-72px) scale(0.7); filter:blur(1px); color:var(--muted); }
+  .stage-hint{
+    position:absolute; bottom:14px; font-size:11.5px; color:var(--muted);
+    letter-spacing:0.04em; text-transform:uppercase; font-family:var(--font-disp);
+  }
+
+  /* ---- Input (OTP boxes + keypad) ---- */
+  .input-label{ text-align:center; font-size:13px; color:var(--muted); margin:16px 0 12px; }
+  .otp-row{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+  .otp-box{
+    width:40px; height:52px; border-radius:10px; background:var(--slate-2);
+    border:1.5px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-disp); font-size:22px; font-weight:600; color:var(--fog);
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .otp-box.filled{ border-color:var(--accent); background:rgba(127,179,213,0.12); }
+  .otp-box.next{ border-color:rgba(127,179,213,0.5); }
+  .otp-box.correct{ border-color:var(--sage); background:rgba(107,162,146,0.18); }
+  .otp-box.wrong{ border-color:var(--coral); background:rgba(232,96,122,0.18); }
+
+  .keypad{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .key{
+    height:56px; border-radius:14px; border:1px solid rgba(255,255,255,0.07);
+    background:var(--slate); color:var(--fog); font-family:var(--font-disp);
+    font-size:20px; font-weight:600; cursor:pointer; transition:transform .08s ease, background .12s ease;
+  }
+  .key:active{ transform:scale(0.94); background:var(--slate-2); }
+  .key.wide{ font-size:14px; letter-spacing:0.04em; }
+  .key.ghost{ visibility:hidden; }
+
+  .feedback-flash{
+    text-align:center; font-family:var(--font-disp); font-weight:600; font-size:14px;
+    margin-top:14px; min-height:20px; letter-spacing:0.02em;
+  }
+  .feedback-flash.ok{ color:var(--sage); }
+  .feedback-flash.bad{ color:var(--coral); }
+
+  /* ---- Transition screen ---- */
+  .transition-icon{ font-size:38px; text-align:center; margin-bottom:8px; }
+  .transition-text{ text-align:center; font-size:14.5px; line-height:1.6; color:var(--fog); margin-bottom:8px; }
+  .transition-example{
+    text-align:center; font-family:var(--font-disp); font-size:14px; color:var(--accent);
+    background:rgba(127,179,213,0.08); border-radius:12px; padding:10px; margin:14px 0 18px;
+  }
+
+  /* ---- Buttons ---- */
+  .btn{
+    display:block; width:100%; text-align:center; border:none; cursor:pointer;
+    font-family:var(--font-disp); font-weight:600; font-size:15px; letter-spacing:0.02em;
+    border-radius:14px; padding:15px; transition:transform .08s ease, opacity .15s ease;
+  }
+  .btn:active{ transform:scale(0.98); }
+  .btn-primary{ background:var(--accent); color:#0E1F33; }
+  .btn-ghost{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.12); margin-top:10px; }
+
+  /* ---- Results ---- */
+  .result-cards{ display:flex; gap:12px; margin:18px 0; }
+  .result-card{
+    flex:1; background:var(--slate); border-radius:16px; padding:16px 14px; text-align:center;
+    border:1px solid rgba(255,255,255,0.06);
+  }
+  .result-card .r-label{ font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); font-family:var(--font-disp); }
+  .result-card .r-num{ font-family:var(--font-disp); font-size:38px; font-weight:700; color:var(--accent); margin:4px 0; }
+  .result-card .r-class{ font-size:12px; color:var(--fog); }
+
+  .ladder{ margin:8px 0 18px; }
+  .ladder-row{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .ladder-row .l-len{ width:20px; font-family:var(--font-disp); font-size:12px; color:var(--muted); text-align:right; }
+  .ladder-track{ flex:1; height:14px; background:var(--slate-2); border-radius:8px; overflow:hidden; }
+  .ladder-fill{ height:100%; border-radius:8px; background:var(--accent); opacity:0.85; }
+  .ladder-fill.fail{ background:var(--coral); opacity:0.55; }
+
+  .disclaimer{
+    font-size:11.5px; color:var(--muted); text-align:center; line-height:1.5;
+    margin-top:6px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.07);
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header>
+    <a class="back-link" href="testlar.html">← Testlar ro'yxatiga qaytish</a>
+    <div class="eyebrow">Xotira sinovi</div>
+    <h1>Raqamlar diapazoni</h1>
+    <p>Ishchi xotira hajmini o'lchovchi klassik test (Digit Span). Raqamlar ketma-ketligini eslab qoling va qayta kiriting.</p>
+  </header>
+
+  <!-- INTRO -->
+  <section id="screen-intro" class="screen active card">
+    <div class="mode-list">
+      <button class="mode-card" data-mode="forward">
+        <div class="m-icon">→</div>
+        <div class="m-text">
+          <h3>To'g'ri tartibda</h3>
+          <p>Raqamlarni ko'rgan tartibingizda kiritasiz</p>
+        </div>
+      </button>
+      <button class="mode-card" data-mode="backward">
+        <div class="m-icon">←</div>
+        <div class="m-text">
+          <h3>Teskari tartibda</h3>
+          <p>Raqamlarni oxiridan boshiga qarab kiritasiz</p>
+        </div>
+      </button>
+      <button class="mode-card" data-mode="full">
+        <span class="m-badge">Tavsiya</span>
+        <div class="m-icon">⇄</div>
+        <div class="m-text">
+          <h3>To'liq sinov</h3>
+          <p>Avval to'g'ri, so'ng teskari tartib — to'liq natija</p>
+        </div>
+      </button>
+    </div>
+    <div class="info-block">
+      Har uzunlikda <b>2 ta urinish</b> beriladi. Uzunlik ketma-ket oshib boradi; bitta uzunlikdagi ikkala urinish ham xato bo'lsa, sinov shu yerda to'xtaydi va eng yuqori muvaffaqiyatli uzunlik <b>diapazon</b> sifatida qayd etiladi.
+    </div>
+  </section>
+
+  <!-- SEQUENCE -->
+  <section id="screen-sequence" class="screen card">
+    <div class="progress-row">
+      <span><span class="dir-tag" id="seq-dir-tag">Oldinga</span> · Uzunlik <span id="seq-len">3</span></span>
+      <span class="trial-dots" id="seq-dots"><span></span><span></span></span>
+    </div>
+    <div class="stage" id="stage"></div>
+    <div class="input-label" id="seq-status">Diqqat bilan kuzating...</div>
+  </section>
+
+  <!-- INPUT -->
+  <section id="screen-input" class="screen card">
+    <div class="progress-row">
+      <span><span class="dir-tag" id="in-dir-tag">Oldinga</span> · Uzunlik <span id="in-len">3</span></span>
+      <span class="trial-dots" id="in-dots"><span></span><span></span></span>
+    </div>
+    <div class="input-label" id="in-instruction">Ko'rgan tartibingizda kiriting</div>
+    <div class="otp-row" id="otp-row"></div>
+    <div class="keypad" id="keypad"></div>
+    <div class="feedback-flash" id="feedback"></div>
+  </section>
+
+  <!-- TRANSITION (forward -> backward) -->
+  <section id="screen-transition" class="screen card">
+    <div class="transition-icon">⇄</div>
+    <div class="transition-text">Birinchi qism tugadi. Endi raqamlar xuddi shunday ko'rsatiladi, lekin siz ularni <b>oxiridan boshiga qarab</b> kiritasiz.</div>
+    <div class="transition-example">2 – 5 – 8 ko'rsatilsa → siz <b>8 – 5 – 2</b> deb kiritasiz</div>
+    <button class="btn btn-primary" id="btn-continue-backward">Davom etish</button>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="screen-results" class="screen card">
+    <div class="eyebrow" style="text-align:center;">Natija</div>
+    <div class="result-cards" id="result-cards"></div>
+    <div class="ladder" id="ladder"></div>
+    <button class="btn btn-primary" id="btn-restart">Qayta sinash</button>
+    <div class="disclaimer">Bu natija skrining maqsadida taqdim etilgan bo'lib, klinik tashxis o'rnini bosmaydi.</div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var LENGTHS = { forward:[3,4,5,6,7,8,9], backward:[2,3,4,5,6,7,8] };
+  var DIGIT_MS = 800, GAP_MS = 250;
+
+  var el = {
+    intro: document.getElementById('screen-intro'),
+    sequence: document.getElementById('screen-sequence'),
+    input: document.getElementById('screen-input'),
+    transition: document.getElementById('screen-transition'),
+    results: document.getElementById('screen-results'),
+    stage: document.getElementById('stage'),
+    seqDirTag: document.getElementById('seq-dir-tag'),
+    seqLen: document.getElementById('seq-len'),
+    seqDots: document.getElementById('seq-dots'),
+    seqStatus: document.getElementById('seq-status'),
+    inDirTag: document.getElementById('in-dir-tag'),
+    inLen: document.getElementById('in-len'),
+    inDots: document.getElementById('in-dots'),
+    inInstruction: document.getElementById('in-instruction'),
+    otpRow: document.getElementById('otp-row'),
+    keypad: document.getElementById('keypad'),
+    feedback: document.getElementById('feedback'),
+    resultCards: document.getElementById('result-cards'),
+    ladder: document.getElementById('ladder')
+  };
+
+  var screens = [el.intro, el.sequence, el.input, el.transition, el.results];
+  function show(target){
+    screens.forEach(function(s){ s.classList.remove('active'); });
+    target.classList.add('active');
+  }
+
+  var state = null;
+
+  function resetState(mode){
+    var queue = mode === 'full' ? ['forward','backward'] : [mode];
+    state = {
+      mode: mode,
+      queue: queue,
+      queueIndex: 0,
+      direction: queue[0],
+      lengthIndex: 0,
+      trialInLength: 0,
+      lengthResults: {},        // per direction: {length: [bool,bool]}
+      spans: { forward:null, backward:null },
+      allTrials: []
+    };
+    state.lengthResults[state.direction] = {};
+  }
+
+  function dirLabel(d){ return d === 'forward' ? 'Oldinga' : 'Teskari'; }
+
+  function genSequence(len){
+    var seq = [];
+    var last = -1;
+    for (var i=0;i<len;i++){
+      var d;
+      do { d = Math.floor(Math.random()*10); } while (d === last);
+      last = d;
+      seq.push(d);
+    }
+    return seq;
+  }
+
+  function updateDots(container, filledCount){
+    var dots = container.querySelectorAll('span');
+    dots.forEach(function(dot, i){
+      dot.classList.toggle('done', i < filledCount);
+    });
+  }
+
+  function startTrial(){
+    var lengths = LENGTHS[state.direction];
+    var len = lengths[state.lengthIndex];
+    state.currentSeq = genSequence(len);
+
+    el.seqDirTag.textContent = dirLabel(state.direction);
+    el.seqLen.textContent = len;
+    updateDots(el.seqDots, state.trialInLength);
+    el.seqStatus.textContent = 'Diqqat bilan kuzating...';
+    el.stage.innerHTML = '';
+
+    show(el.sequence);
+    playSequence(state.currentSeq, 0);
+  }
+
+  function playSequence(seq, idx){
+    if (idx >= seq.length){
+      setTimeout(function(){ showInputScreen(seq); }, 350);
+      return;
+    }
+    var prev = el.stage.querySelector('.trail-digit.current');
+    if (prev){
+      prev.classList.remove('current');
+      prev.classList.add('fading');
+      setTimeout(function(){ if (prev.parentNode) prev.parentNode.removeChild(prev); }, 600);
+    }
+    var node = document.createElement('div');
+    node.className = 'trail-digit current';
+    node.textContent = seq[idx];
+    el.stage.appendChild(node);
+
+    setTimeout(function(){ playSequence(seq, idx+1); }, DIGIT_MS + GAP_MS);
+  }
+
+  function showInputScreen(seq){
+    var lengths = LENGTHS[state.direction];
+    var len = lengths[state.lengthIndex];
+    el.inDirTag.textContent = dirLabel(state.direction);
+    el.inLen.textContent = len;
+    updateDots(el.inDots, state.trialInLength);
+    el.inInstruction.textContent = state.direction === 'forward'
+      ? "Ko'rgan tartibingizda kiriting"
+      : "Oxiridan boshiga qarab kiriting";
+    el.feedback.textContent = '';
+    el.feedback.className = 'feedback-flash';
+
+    state.userInput = [];
+    state.expected = state.direction === 'forward' ? seq.slice() : seq.slice().reverse();
+
+    renderOtpRow(len);
+    renderKeypad();
+    show(el.input);
+  }
+
+  function renderOtpRow(len){
+    el.otpRow.innerHTML = '';
+    for (var i=0;i<len;i++){
+      var box = document.createElement('div');
+      box.className = 'otp-box' + (i===0 ? ' next' : '');
+      el.otpRow.appendChild(box);
+    }
+  }
+
+  function renderKeypad(){
+    el.keypad.innerHTML = '';
+    var layout = ['1','2','3','4','5','6','7','8','9','','0','del'];
+    layout.forEach(function(k){
+      var btn = document.createElement('button');
+      if (k === ''){ btn.className = 'key ghost'; btn.disabled = true; }
+      else if (k === 'del'){ btn.className = 'key wide'; btn.textContent = 'O’chirish'; btn.onclick = function(){ handleDelete(); }; }
+      else { btn.className = 'key'; btn.textContent = k; btn.onclick = function(){ handleDigit(k); }; }
+      el.keypad.appendChild(btn);
+    });
+  }
+
+  function handleDigit(d){
+    if (state.userInput.length >= state.expected.length) return;
+    state.userInput.push(parseInt(d,10));
+    refreshOtpRow();
+    if (state.userInput.length === state.expected.length){
+      setTimeout(evaluateTrial, 280);
+    }
+  }
+
+  function handleDelete(){
+    if (state.userInput.length === 0) return;
+    state.userInput.pop();
+    refreshOtpRow();
+  }
+
+  function refreshOtpRow(){
+    var boxes = el.otpRow.querySelectorAll('.otp-box');
+    boxes.forEach(function(box, i){
+      box.classList.remove('next');
+      if (i < state.userInput.length){
+        box.textContent = state.userInput[i];
+        box.classList.add('filled');
+      } else {
+        box.textContent = '';
+        box.classList.remove('filled');
+        if (i === state.userInput.length) box.classList.add('next');
+      }
+    });
+  }
+
+  function evaluateTrial(){
+    var boxes = el.otpRow.querySelectorAll('.otp-box');
+    var correct = true;
+    for (var i=0;i<state.expected.length;i++){
+      var ok = state.userInput[i] === state.expected[i];
+      boxes[i].classList.add(ok ? 'correct' : 'wrong');
+      if (!ok) correct = false;
+    }
+    el.feedback.textContent = correct ? "To'g'ri!" : "Noto'g'ri";
+    el.feedback.className = 'feedback-flash ' + (correct ? 'ok' : 'bad');
+
+    var lengths = LENGTHS[state.direction];
+    var len = lengths[state.lengthIndex];
+    if (!state.lengthResults[state.direction][len]) state.lengthResults[state.direction][len] = [];
+    state.lengthResults[state.direction][len].push(correct);
+    state.allTrials.push({ direction: state.direction, length: len, correct: correct });
+
+    setTimeout(nextStep, 900);
+  }
+
+  function nextStep(){
+    var lengths = LENGTHS[state.direction];
+    var len = lengths[state.lengthIndex];
+    var results = state.lengthResults[state.direction][len];
+
+    state.trialInLength++;
+
+    if (state.trialInLength < 2){
+      startTrial();
+      return;
+    }
+
+    // both trials at this length done
+    var passedLength = results.indexOf(true) !== -1;
+    state.trialInLength = 0;
+
+    if (!passedLength || state.lengthIndex + 1 >= lengths.length){
+      finishDirection();
+      return;
+    }
+
+    state.lengthIndex++;
+    startTrial();
+  }
+
+  function computeSpan(direction){
+    var lengths = LENGTHS[direction];
+    var span = lengths[0] - 1;
+    var res = state.lengthResults[direction];
+    for (var i=0;i<lengths.length;i++){
+      var r = res[lengths[i]];
+      if (r && r.indexOf(true) !== -1) span = lengths[i];
+      else break;
+    }
+    return span;
+  }
+
+  function finishDirection(){
+    state.spans[state.direction] = computeSpan(state.direction);
+    state.queueIndex++;
+    if (state.queueIndex < state.queue.length){
+      state.direction = state.queue[state.queueIndex];
+      state.lengthIndex = 0;
+      state.trialInLength = 0;
+      state.lengthResults[state.direction] = {};
+      show(el.transition);
+    } else {
+      showResults();
+    }
+  }
+
+  document.getElementById('btn-continue-backward').addEventListener('click', function(){
+    startTrial();
+  });
+
+  function classify(direction, span){
+    if (direction === 'forward'){
+      if (span <= 4) return "Me'yordan past";
+      if (span === 5) return "O'rtachadan past";
+      if (span <= 7) return "O'rtacha (norma)";
+      if (span === 8) return "O'rtachadan yuqori";
+      return "Yuqori / a'lo";
+    } else {
+      if (span <= 2) return "Me'yordan past";
+      if (span === 3) return "O'rtachadan past";
+      if (span <= 5) return "O'rtacha (norma)";
+      if (span === 6) return "O'rtachadan yuqori";
+      return "Yuqori / a'lo";
+    }
+  }
+
+  function showResults(){
+    el.resultCards.innerHTML = '';
+    var directions = state.queue;
+    directions.forEach(function(d){
+      var span = state.spans[d];
+      var card = document.createElement('div');
+      card.className = 'result-card';
+      card.innerHTML =
+        '<div class="r-label">' + dirLabel(d) + '</div>' +
+        '<div class="r-num">' + span + '</div>' +
+        '<div class="r-class">' + classify(d, span) + '</div>';
+      el.resultCards.appendChild(card);
+    });
+
+    el.ladder.innerHTML = '';
+    directions.forEach(function(d){
+      var lengths = LENGTHS[d];
+      var res = state.lengthResults[d];
+      var title = document.createElement('div');
+      title.style.cssText = 'font-family:var(--font-disp);font-size:12px;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin:14px 0 8px;';
+      title.textContent = dirLabel(d) + ' — bosqichlar';
+      el.ladder.appendChild(title);
+      lengths.forEach(function(len){
+        var r = res[len];
+        if (!r) return;
+        var passed = r.indexOf(true) !== -1;
+        var pct = Math.round((len / lengths[lengths.length-1]) * 100);
+        var row = document.createElement('div');
+        row.className = 'ladder-row';
+        row.innerHTML =
+          '<div class="l-len">' + len + '</div>' +
+          '<div class="ladder-track"><div class="ladder-fill' + (passed ? '' : ' fail') + '" style="width:' + pct + '%"></div></div>';
+        el.ladder.appendChild(row);
+      });
+    });
+
+    show(el.results);
+    sendResults();
+  }
+
+  function sendResults(){
+    var payload = {
+      test: 'digit-span',
+      mode: state.mode,
+      forwardSpan: state.spans.forward,
+      backwardSpan: state.spans.backward,
+      trials: state.allTrials,
+      timestamp: new Date().toISOString()
+    };
+    try{
+      fetch('/api/results/digit-span', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(function(err){ console.log('Backend hali ulanmagan:', err); });
+    } catch(e){ console.log('Natija yuborilmadi (offline rejim):', e); }
+  }
+
+  document.querySelectorAll('.mode-card').forEach(function(card){
+    card.addEventListener('click', function(){
+      var mode = card.getAttribute('data-mode');
+      resetState(mode);
+      startTrial();
+    });
+  });
+
+  document.getElementById('btn-restart').addEventListener('click', function(){
+    show(el.intro);
+  });
+
+})();
+</script>
+</body>
+</html>
