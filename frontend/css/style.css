@@ -459,6 +459,18 @@ a {
   color: var(--ink);
 }
 
+.panel h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin: 20px 0 8px;
+}
+
+.panel h3:first-of-type {
+  margin-top: 4px;
+}
+
 label {
   display: block;
   font-size: 0.85rem;
@@ -583,9 +595,55 @@ button.primary:disabled {
   margin-bottom: 4px;
 }
 
-ul.plain {
+ul.plain,
+ol.plain {
   padding-left: 20px;
   margin: 8px 0;
+}
+
+ol.plain li {
+  margin-bottom: 4px;
+}
+
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.scope-card {
+  background: #FBF9F3;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+}
+
+.scope-card--no {
+  border-left-color: var(--danger);
+}
+
+.scope-card h3 {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+}
+
+.scope-card ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.88rem;
+  color: var(--charcoal);
+}
+
+.scope-card li {
+  margin-bottom: 6px;
+}
+
+@media (max-width: 680px) {
+  .scope-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .calc-box {

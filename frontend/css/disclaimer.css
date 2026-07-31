@@ -1,0 +1,166 @@
+/* ============================================================
+   Ruhshunos — Ogohlantirish va yordam bloklari
+   Fayl: css/disclaimer.css
+   style.css'dan KEYIN ulanadi. Ranglar Ruhshunosning pergament/
+   oltin/teal palitrasidagi CSS o'zgaruvchilariga moslashtirilgan.
+   ============================================================ */
+
+:root {
+  --rs-note-bg:      var(--parchment-2);
+  --rs-note-border:  var(--line);
+  --rs-note-text:    var(--charcoal);
+  --rs-sci-accent:   var(--teal);
+  --rs-fun-accent:   var(--gold-dark);
+  --rs-help-accent:  #B5651D;
+  --rs-help-bg:      rgba(181, 101, 29, 0.08);
+  --rs-help-border:  rgba(181, 101, 29, 0.35);
+}
+
+/* ---------- Umumiy eslatma (fun / sci) ---------- */
+
+.rs-note {
+  max-width: 720px;
+  margin: 2rem 0;
+  padding: 1.1rem 1.25rem;
+  background: var(--rs-note-bg);
+  border: 1px solid var(--rs-note-border);
+  border-left: 3px solid var(--rs-note-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--rs-note-text);
+}
+
+.rs-note__label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--rs-note-text);
+}
+
+.rs-note p { margin: 0 0 0.5rem; }
+.rs-note p:last-child { margin-bottom: 0; }
+
+/* Ilmiy variant — teal urg'u bilan */
+.rs-note--sci {
+  border-left-color: var(--rs-sci-accent);
+}
+.rs-note--sci .rs-note__label { color: var(--rs-sci-accent); }
+
+/* Qiziqarli variant — oltin urg'u bilan */
+.rs-note--fun {
+  border-left-color: var(--rs-fun-accent);
+}
+.rs-note--fun .rs-note__label { color: var(--rs-fun-accent); }
+
+/* ---------- Yordam / inqiroz bloki ---------- */
+
+.rs-help {
+  max-width: 720px;
+  margin: 0 0 2rem;
+  padding: 1.5rem 1.4rem;
+  background: var(--rs-help-bg);
+  border: 1px solid var(--rs-help-border);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+}
+
+.rs-help__title {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--rs-help-accent);
+  letter-spacing: -0.01em;
+}
+
+.rs-help__lead {
+  margin: 0 0 1.15rem;
+  font-size: 0.925rem;
+  line-height: 1.6;
+  color: var(--charcoal);
+}
+
+.rs-help__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.rs-help__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.9rem;
+  background: #FBF9F3;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.rs-help__name {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--charcoal);
+}
+
+.rs-help__meta {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.775rem;
+  color: var(--muted);
+}
+
+/* Raqam — mobilda bosiladigan tugma */
+.rs-help__tel {
+  flex: 0 0 auto;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--rs-help-border);
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--rs-help-accent);
+  text-decoration: none;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.rs-help__tel:hover,
+.rs-help__tel:focus-visible {
+  background: var(--rs-help-accent);
+  color: #fff;
+}
+
+.rs-help__foot {
+  margin: 1.1rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ---------- Fokus va harakat ---------- */
+
+.rs-help a:focus-visible,
+.rs-note a:focus-visible {
+  outline: 2px solid var(--rs-sci-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rs-help__tel { transition: none; }
+}
+
+@media (max-width: 480px) {
+  .rs-help { padding: 1.25rem 1.1rem; }
+  .rs-help__row { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+  .rs-help__tel { width: 100%; text-align: center; }
+}

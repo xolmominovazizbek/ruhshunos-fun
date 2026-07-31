@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yordam — Ruhshunos</title>
+<title>Yordam va aloqa — Ruhshunos</title>
+<meta name="description" content="Ruhshunos sayti bo'yicha savollar, ruhiy salomatlik bo'yicha yordam raqamlari va loyihaga hamkor bo'lish uchun ma'lumot.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/disclaimer.css">
 </head>
 <body>
 <main class="container">
-  <div class="topline">
-    <div class="logo">Ruhshunos</div>
-  </div>
+  <div class="topline"><div class="logo">Ruhshunos</div></div>
   <nav class="site-nav">
     <a href="index.html">Home</a>
     <a href="testlar.html">Testlar</a>
@@ -20,59 +20,85 @@
     <a href="yordam.html" class="active">Yordam</a>
   </nav>
 
-  <div class="page-heading">Yordam</div>
-  <div class="page-subheading">Ikkita maqsad — ikkita bo'lim: savol-javob/bog'lanish uchun alohida, hamkorlik taklifi uchun alohida.</div>
+  <div class="page-heading">Yordam va aloqa</div>
+  <div class="page-subheading">
+    Bu sahifada uchta narsa bor: og'ir holatda qo'ng'iroq qiladigan
+    raqamlar, sayt bo'yicha savol berish yo'llari va loyihaga
+    qo'shilish uchun ma'lumot.
+  </div>
 
-  <div class="section-label">🆘 Yordam va aloqa — testlar yoki sayt bo'yicha savolingiz bo'lsa</div>
-  <div class="block block-help">
-    <h3><span class="num">1</span> Mening kontaktim</h3>
+  <!-- ============ 1. YORDAM RAQAMLARI (birinchi o'rinda) ============
+       Blok mazmuni js/disclaimer.js faylidan keladi. -->
+  <div data-rs-help>
+    <!-- JS o'chirilgan bo'lsa ko'rinadigan zaxira matn -->
+    <h2>Yordam kerakmi?</h2>
+    <p>Hayotga xavf tug'ilsa — <a href="tel:103">103</a>.</p>
+  </div>
+
+  <!-- ============ 2. SAYT DOIRASI ============ -->
+  <div class="panel">
+    <h2>Ruhshunos nima qiladi, nima qilmaydi</h2>
+    <div class="scope-grid">
+      <div class="scope-card">
+        <h3>✅ Qiladi</h3>
+        <ul>
+          <li>O'zbek tilida testlar taklif qiladi</li>
+          <li>Natijani tushunarli tilda izohlaydi</li>
+          <li>Qayerga murojaat qilish mumkinligini ko'rsatadi</li>
+        </ul>
+      </div>
+      <div class="scope-card scope-card--no">
+        <h3>❌ Qilmaydi</h3>
+        <ul>
+          <li>Tashxis qo'ymaydi</li>
+          <li>Dori tavsiya qilmaydi va retsept bermaydi</li>
+          <li>Onlayn konsultatsiya o'tkazmaydi</li>
+          <li>Shoshilinch yordam ko'rsatmaydi</li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-muted" style="font-size:0.85rem;">
+      Shaxsiy shikoyatlaringizni quyidagi kanallarga yozmang — ular
+      maxfiy tibbiy aloqa uchun mo'ljallanmagan. Ko'rikka yozilish uchun
+      yashash joyingizdagi ruhiy salomatlik markaziga murojaat qiling.
+    </p>
+  </div>
+
+  <!-- ============ 3. MENING KONTAKTIM ============ -->
+  <div class="panel block-help">
+    <h3><span class="num">1</span> Sayt va testlar bo'yicha savol</h3>
+    <p class="section-intro">Test ishlamadi, savol noto'g'ri tarjima qilingan yoki xato topdingizmi — yozing. Xatoliklar haqidagi xabarlar men uchun eng qimmatli xat turi.</p>
     <div class="region">📍 Hududim: Surxondaryo viloyati, Termiz</div>
     <div class="contact-grid">
-      <a class="contact-pill" href="mailto:xolmominov2018@gmail.com">✉️ E-pochta</a>
+      <a class="contact-pill" href="mailto:xolmominov2018@gmail.com?subject=Ruhshunos%20—%20sayt%20bo'yicha%20savol">✉️ E-pochta</a>
       <a class="contact-pill" href="tel:+998909106067">☎️ +998 90 910 60 67</a>
       <a class="contact-pill" href="https://t.me/xolmominov2018" target="_blank" rel="noopener">✈️ Telegram</a>
       <a class="contact-pill" href="https://wa.me/998909106067" target="_blank" rel="noopener">💬 WhatsApp</a>
       <span class="contact-pill disabled">📷 Instagram</span>
       <span class="contact-pill disabled">▶️ YouTube</span>
     </div>
-    <p class="note">Instagram va YouTube havolalari hali qo'shilmagan — tez orada yangilanadi.</p>
+    <p class="note">Instagram va YouTube havolalari hali qo'shilmagan — tez orada yangilanadi. Javob odatda bir necha kun ichida keladi, shoshilinch holatlar uchun bu kanallar yaramaydi.</p>
   </div>
 
-  <div class="section-label" style="margin-top:38px;">🤝 Hamkorlik — loyihaga qo'shilmoqchi bo'lsangiz</div>
-  <div class="block block-partner">
-    <h3><span class="num">2</span> Hamkor izlash</h3>
-    <p class="section-intro">Dasturchi, dizayner, marketolog yoki psixolog sifatida jamoaga qo'shilmoqchi bo'lsangiz — quyidagi ma'lumotlarni tayyorlab qo'ying.</p>
-    <div class="fields">
-      <div class="field"><label>Yo'nalishi</label><div class="box">Masalan: dasturlash, dizayn, marketing...</div></div>
-      <div class="field"><label>Qo'shimcha ma'lumot</label><div class="box">O'zingiz haqingizda qisqacha</div></div>
-      <div class="field"><label>Ish staji</label><div class="box">Necha yillik tajriba</div></div>
-      <div class="field"><label>Kontaktlari</label><div class="box">Bog'lanish uchun ma'lumot</div></div>
-    </div>
-  </div>
-
-  <div class="block block-partner">
-    <h3><span class="num">3</span> Jamoaga qo'shiling</h3>
-    <div class="cta-row">
-      <p>Ruhshunos jamoasiga qo'shilib, loyihani birga rivojlantirishni xohlaysizmi?</p>
-      <a class="btn" href="mailto:xolmominov2018@gmail.com?subject=Ruhshunos%20—%20Hamkorlik%20taklifi&body=Yo'nalishi%3A%20%0A%0AQo'shimcha%20ma'lumot%3A%20%0A%0AIsh%20staji%3A%20%0A%0AKontaktlarim%3A%20%0A">🤝 Ariza yuborish</a>
-    </div>
-    <p class="note">Tugma orqali to'g'ridan-to'g'ri e-pochtaga xat yozasiz. To'liq onlayn ariza formasi tez orada qo'shiladi.</p>
-  </div>
-
-  <div class="disclaimer-sci">
-    <strong>🔒 Maxfiylik:</strong> Testlarga bergan javoblaringiz serverimizda saqlanmaydi — ular faqat
-    natijani hisoblash uchun so'rov vaqtida ishlatiladi va darhol unutiladi. Hozircha saytda foydalanuvchi
-    hisobi (akkaunt), login yoki shaxsiy ma'lumotlar bazasi mavjud emas.
-  </div>
-
-  <div class="disclaimer">
-    <strong>⚠️ Muhim eslatma:</strong> Agar sizda ruhiy salomatlik bo'yicha jiddiy savollar bo'lsa,
-    professional psixolog yoki psixiatrga murojaat qiling. 📞 Ishonch telefoni: 1086
+  <!-- ============ 4. HAMKORLIK ============ -->
+  <div class="panel block-partner">
+    <h3><span class="num">2</span> Loyihaga qo'shilish</h3>
+    <p class="section-intro">Ruhshunos bitta odam tomonidan yuritiladi. Dasturchi, dizayner, psixolog yoki tarjimon sifatida yordam bermoqchi bo'lsangiz — quyidagi tugma orqali yozing va xatda shu to'rt narsani ko'rsating:</p>
+    <ol class="plain">
+      <li>Yo'nalishingiz (dasturlash, dizayn, psixologiya, matn)</li>
+      <li>Tajribangiz va ish namunalari havolasi</li>
+      <li>Haftada qancha vaqt ajratishingiz mumkin</li>
+      <li>Bog'lanish uchun kontakt</li>
+    </ol>
+    <a class="btn" href="mailto:xolmominov2018@gmail.com?subject=Ruhshunos%20—%20hamkorlik%20taklifi&body=Yo'nalishim%3A%20%0A%0ATajribam%3A%20%0A%0AVaqtim%3A%20%0A%0AKontaktim%3A%20%0A">🤝 Xat yozish</a>
   </div>
 </main>
 
 <footer class="site-footer">
   Ruhshunos — o'zingizni anglash va ruhiy holatga aniqlik kiritish platformasi
+  <div style="margin-top:8px;"><a href="maxfiylik.html">Maxfiylik siyosati</a></div>
 </footer>
+
+<script src="js/disclaimer.js"></script>
 </body>
 </html>
