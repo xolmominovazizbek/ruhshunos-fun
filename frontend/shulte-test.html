@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Shulte jadvali — Ruhshunos</title>
+<link rel="stylesheet" href="css/disclaimer.css">
 <style>
   /* ===========================================================
      DIZAYN TOKENLARI — "Diqqat" moduli uchun umumiy vizual til.
@@ -23,6 +24,15 @@
     --radius:     18px;
     --font-disp:  'Space Grotesk', 'Segoe UI', sans-serif;
     --font-body:  'IBM Plex Sans', 'Segoe UI', sans-serif;
+
+    /* disclaimer.css komponentlari (rs-note) uchun quyuq tema moslamasi */
+    --rs-note-bg:      rgba(255,255,255,0.04);
+    --rs-note-border:  rgba(255,255,255,0.14);
+    --rs-note-text:    var(--fog);
+    --rs-sci-accent:   var(--mist);
+    --rs-fun-accent:   var(--amber);
+    --radius-sm:       14px;
+    --font-display:    var(--font-disp);
   }
 
   *{ box-sizing: border-box; }
@@ -60,6 +70,28 @@
     letter-spacing:.04em;
   }
   header .back-link:hover{ color:var(--amber); }
+  .site-nav{
+    display:flex;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:20px;
+    background:var(--slate);
+  }
+  .site-nav a{
+    flex:1;
+    text-align:center;
+    padding:12px 6px;
+    font-family:var(--font-disp);
+    font-weight:600;
+    font-size:12.5px;
+    color:var(--fog);
+    text-decoration:none;
+    border-right:1px solid rgba(255,255,255,0.08);
+  }
+  .site-nav a:last-child{ border-right:none; }
+  .site-nav a:hover{ background:var(--slate-2); }
+  .site-nav a.active{ background:var(--amber); color:#1A1200; }
   header .eyebrow{
     font-family:var(--font-disp);
     letter-spacing:0.18em;
@@ -259,7 +291,12 @@
 
 <div class="shell">
   <header>
-    <a class="back-link" href="testlar.html">← Testlar ro'yxatiga qaytish</a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="testlar.html" class="active">Testlar</a>
+      <a href="yaratuvchi.html">Yaratuvchi</a>
+      <a href="yordam.html">Yordam</a>
+    </nav>
     <div class="eyebrow">Diqqat &middot; Ruhshunos</div>
     <h1>Shulte jadvali</h1>
     <p>1 dan 25 gacha bo'lgan sonlarni tartib bilan, imkon qadar tez toping.</p>
@@ -300,6 +337,7 @@
       <div class="verdict" id="verdictBox"></div>
       <button class="primary-btn" id="retryBtn">Qayta urinish</button>
       <button class="ghost-btn" id="closeBtn">Natijani saqlab, chiqish</button>
+      <div data-rs-note="sci"></div>
     </section>
 
     <div class="footnote">
@@ -516,5 +554,6 @@ document.getElementById('closeBtn').addEventListener('click', ()=>{
   window.location.href = 'testlar.html';
 });
 </script>
+<script src="js/disclaimer.js"></script>
 </body>
 </html>
