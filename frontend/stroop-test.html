@@ -220,7 +220,6 @@
 <script>
 /* =========================================================================
    STROOP TESTI — holat va mantiq
-   Backendga yuborish uchun submitResult() ga qarang (/api/results/stroop).
    ========================================================================= */
 
 const COLORS = [
@@ -413,19 +412,6 @@ function showResults(){
     verdict = `<b>Yuqori interferensiya (${interference.toFixed(0)} ms).</b> Inkongruent savollarda sezilarli sekinlashish kuzatildi. Charchoq, e'tibor tarqoqligi yoki bir martalik omillar ta'sir qilishi mumkin — bitta o'lchov xulosa chiqarish uchun yetarli emas.`;
   }
   verdictBoxEl.innerHTML = verdict;
-
-  submitResult({
-    test: 'stroop',
-    trial_count: state.results.length,
-    accuracy_overall_pct: overallAcc,
-    accuracy_congruent_pct: accCong,
-    accuracy_incongruent_pct: accIncong,
-    mean_rt_congruent_ms: rtCong,
-    mean_rt_incongruent_ms: rtIncong,
-    interference_effect_ms: interference,
-    raw_trials: state.results,
-    completed_at: new Date().toISOString()
-  });
 }
 
 function addRow(label, value){
@@ -433,24 +419,6 @@ function addRow(label, value){
   row.className = 'result-row';
   row.innerHTML = `<span>${label}</span><span>${value}</span>`;
   resultRowsEl.appendChild(row);
-}
-
-/* -------------------------------------------------------------------------
-   BACKEND INTEGRATSIYASI
-   FastAPI'da mos endpoint, masalan:
-
-   @app.post("/api/results/stroop")
-   async def save_stroop_result(payload: StroopResult, user = Depends(get_current_user)):
-       ...
-   ------------------------------------------------------------------------- */
-function submitResult(payload){
-  fetch('/api/results/stroop', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(err=>{
-    console.warn('Natija backendga yuborilmadi (offline demo rejimi):', err);
-  });
 }
 
 document.getElementById('retryBtn').addEventListener('click', ()=>{

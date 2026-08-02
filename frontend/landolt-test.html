@@ -229,7 +229,6 @@
    Har bir "C" shaklidagi xalqaning ochiq tomoni (gap) 8 ta yo'nalishdan
    (45 gradus qadam bilan) biriga qaratilgan. Foydalanuvchi bitta maqsadli
    yo'nalishga mos xalqalarni belgilangan vaqt ichida topishi kerak.
-   Backendga yuborish uchun submitResult() ga qarang (/api/results/landolt).
    ========================================================================= */
 
 const ORIENTATIONS = [0, 45, 90, 135, 180, 225, 270, 315]; // shimoldan soat yo'nalishi bo'yicha
@@ -425,17 +424,6 @@ function showResults(){
   }
   verdict += ` Landolt xalqalari tildan mustaqil bo'lgani uchun bu natijani turli til/madaniy guruhlar orasida solishtirish mumkin.`;
   verdictBoxEl.innerHTML = verdict;
-
-  submitResult({
-    test: 'landolt',
-    target_orientation_deg: state.targetOrientation,
-    total_targets: TARGET_COUNT,
-    hits: state.hits,
-    misses: misses,
-    false_alarms: state.falseAlarms,
-    time_limit_seconds: TIME_LIMIT_SEC,
-    completed_at: new Date().toISOString()
-  });
 }
 
 function addRow(label, value){
@@ -445,23 +433,6 @@ function addRow(label, value){
   resultRowsEl.appendChild(row);
 }
 
-/* -------------------------------------------------------------------------
-   BACKEND INTEGRATSIYASI
-   FastAPI'da mos endpoint, masalan:
-
-   @app.post("/api/results/landolt")
-   async def save_landolt_result(payload: LandoltResult, user = Depends(get_current_user)):
-       ...
-   ------------------------------------------------------------------------- */
-function submitResult(payload){
-  fetch('/api/results/landolt', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(err=>{
-    console.warn('Natija backendga yuborilmadi (offline demo rejimi):', err);
-  });
-}
 
 document.getElementById('retryBtn').addEventListener('click', ()=>{
   resultsEl.classList.add('hidden');

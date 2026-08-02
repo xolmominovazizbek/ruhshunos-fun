@@ -268,7 +268,6 @@
 
    Mantiq: qora sonlar 1→25 o'sish tartibida, qizil sonlar 24→1 kamayish
    tartibida, navbatma-navbat so'raladi: q1, r24, q2, r23, ... , q24, r1, q25.
-   Backendga yuborish uchun submitResult() ga qarang (/api/results/shulte_gorbov).
    ========================================================================= */
 
 const state = {
@@ -420,14 +419,6 @@ function showResults(totalSeconds){
   }
 
   verdictBoxEl.innerHTML = verdictHtml;
-
-  submitResult({
-    test: 'shulte_gorbov',
-    total_time_seconds: totalSeconds,
-    mistakes: state.mistakes,
-    previous_plain_shulte_seconds: state.prevShulteSeconds,
-    completed_at: new Date().toISOString()
-  });
 }
 
 function addRow(label, value){
@@ -435,24 +426,6 @@ function addRow(label, value){
   row.className = 'result-row';
   row.innerHTML = `<span>${label}</span><span>${value}</span>`;
   resultRowsEl.appendChild(row);
-}
-
-/* -------------------------------------------------------------------------
-   BACKEND INTEGRATSIYASI
-   FastAPI'da mos endpoint, masalan:
-
-   @app.post("/api/results/shulte_gorbov")
-   async def save_gorbov_result(payload: GorbovResult, user = Depends(get_current_user)):
-       ...
-   ------------------------------------------------------------------------- */
-function submitResult(payload){
-  fetch('/api/results/shulte_gorbov', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(err=>{
-    console.warn('Natija backendga yuborilmadi (offline demo rejimi):', err);
-  });
 }
 
 document.getElementById('retryBtn').addEventListener('click', ()=>{

@@ -595,25 +595,6 @@
     });
 
     show(el.results);
-    sendResults();
-  }
-
-  function sendResults(){
-    var payload = {
-      test: 'digit-span',
-      mode: state.mode,
-      forwardSpan: state.spans.forward,
-      backwardSpan: state.spans.backward,
-      trials: state.allTrials,
-      timestamp: new Date().toISOString()
-    };
-    try{
-      fetch('/api/results/digit-span', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).catch(function(err){ console.log('Backend hali ulanmagan:', err); });
-    } catch(e){ console.log('Natija yuborilmadi (offline rejim):', e); }
   }
 
   document.querySelectorAll('.mode-card').forEach(function(card){

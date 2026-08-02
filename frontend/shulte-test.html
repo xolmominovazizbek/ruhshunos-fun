@@ -311,8 +311,6 @@
 <script>
 /* =========================================================================
    SHULTE JADVALI — holat va mantiq
-   Backendga integratsiya qilish uchun pastdagi submitResult() funksiyasiga
-   qarang: u /api/results/shulte manziliga POST so'rov yuboradi.
    ========================================================================= */
 
 const state = {
@@ -476,15 +474,6 @@ function showResults(){
   }
 
   verdictBoxEl.innerHTML = verdictHtml;
-
-  // Backendga yuborish (mavjud bo'lsa)
-  submitResult({
-    test: 'shulte',
-    mode: state.totalRounds === 1 ? 'quick' : 'full_protocol',
-    round_times_seconds: times,
-    round_mistakes: state.roundMistakes,
-    completed_at: new Date().toISOString()
-  });
 }
 
 function addRow(label, value){
@@ -515,29 +504,6 @@ function drawChart(times){
       return `<circle cx="${x}" cy="${y}" r="3.5" fill="#7FB3D5"/>`;
     }).join('')}
   `;
-}
-
-/* -------------------------------------------------------------------------
-   BACKEND INTEGRATSIYASI
-   FastAPI'da mos endpoint, masalan:
-
-   @app.post("/api/results/shulte")
-   async def save_shulte_result(payload: ShulteResult, user = Depends(get_current_user)):
-       ...
-
-   Fetch muvaffaqiyatsiz bo'lsa (masalan, mustaqil sinov paytida backend
-   ishlamayotgan bo'lsa), natija konsolga chiqariladi — ishlab chiqarishda
-   bu holat foydalanuvchiga ko'rinmaydigan tarzda qayta urinish/navbat
-   mexanizmi bilan almashtirilishi kerak.
-   ------------------------------------------------------------------------- */
-function submitResult(payload){
-  fetch('/api/results/shulte', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(err=>{
-    console.warn('Natija backendga yuborilmadi (offline demo rejimi):', err);
-  });
 }
 
 document.getElementById('retryBtn').addEventListener('click', ()=>{
