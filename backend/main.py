@@ -8,7 +8,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from logic import zodiac, life_path, love_language, temperament, eq, stress, eq_tarhan, intelligence_types
+from logic import zodiac, life_path, love_language, temperament, eq, stress, eq_tarhan, intelligence_types, cranial_nerves
 
 BASE_DIR = Path(__file__).resolve().parent
 FRONTEND_DIR = BASE_DIR.parent / "frontend"
@@ -153,6 +153,19 @@ def get_intelligence_types_questions():
 def post_intelligence_types(payload: IntAnswersRequest):
     try:
         return intelligence_types.calculate(payload.answers)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/cranial-nerves/questions")
+def get_cranial_nerves_questions():
+    return cranial_nerves.get_questions()
+
+
+@app.post("/api/cranial-nerves")
+def post_cranial_nerves(payload: AnswersRequest):
+    try:
+        return cranial_nerves.calculate(payload.answers)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
