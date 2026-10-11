@@ -31,40 +31,18 @@
       <span style="top:90px;left:88%;animation-delay:.9s;"></span>
       <span style="top:110px;left:55%;animation-delay:2s;"></span>
     </div>
-    <span class="tag tag-fun">✨ Qiziqarli test</span>
-    <h1>Siz sevib qoldingizmi? Muhabbatingiz bilan birga sizni qanday kelajak kutayotganini bilmoqchimisiz?</h1>
-    <p>Ruhshunos — o'zingiz haqingizda qiziqarli, qisqa va chuqur haqiqatlarni ochib beruvchi, ruhiy holatingizga aniqlik kirituvchi testlar to'plami.</p>
-    <a class="cta-link" href="zodiac.html">⭐ Yulduzingiz yulduziga mosligini tekshiring</a>
+    <span class="tag tag-sci">🔬 Ilmiy asoslangan</span>
+    <h1>O'zingizni va ruhiy holatingizni ilmiy asoslangan testlar orqali chuqurroq anglang.</h1>
+    <p>Ruhshunos — zamonaviy psixologiya va klinik skrining metodikalariga asoslangan, o'zbek tilidagi testlar to'plami. Astrologiya, numerologiya yoki boshqa ilmiy asoslanmagan ko'ngilochar testlar bu yerda yo'q.</p>
+    <a class="cta-link" href="testlar.html">🔬 Barcha testlarni ko'rish</a>
   </div>
 
-  <div class="section-label">Sizni kutayotgan boshqa testlar</div>
-  <div class="teasers" id="teasers">
-    <a class="teaser" href="life-path.html">
-      <div class="icon">🔢</div>
-      <h3>Hayot soningiz nimadan darak beradi?</h3>
-      <p>Tug'ilgan sanangiz asosida numerologik shaxsiyat tahlilini bilib oling.</p>
-      <span class="tag tag-fun">✨ Qiziqarli</span>
-      <span class="go" style="display:block; margin-top:8px;">Testni boshlash →</span>
-    </a>
-    <a class="teaser" href="love-language.html">
-      <div class="icon">💞</div>
-      <h3>Qanday mehr tilida sevasiz?</h3>
-      <p>5 sevgi tilidan qaysi biri sizga xosligini aniqlang.</p>
-      <span class="tag tag-fun">✨ Qiziqarli</span>
-      <span class="go" style="display:block; margin-top:8px;">Testni boshlash →</span>
-    </a>
-    <a class="teaser" href="eq.html">
-      <div class="icon">🧩</div>
-      <h3>Hissiyotlaringizni his qila olasizmi?</h3>
-      <p>Hissiy intellekt darajangizni aniqlang.</p>
-      <span class="tag tag-sci">🔬 Ilmiy</span>
-      <span class="go" style="display:block; margin-top:8px;">Testni boshlash →</span>
-    </a>
-  </div>
+  <div class="section-label">Sizni kutayotgan testlar</div>
+  <div class="teasers" id="teasers"></div>
 
-  <p class="section-intro" style="margin-top:14px; margin-left:0;">🔬 Ilmiy asosga tayangan testlar ham mavjud — <a href="testlar.html#kat-hissiy">to'liq ro'yxatni shu yerdan ko'ring →</a></p>
+  <p class="section-intro" style="margin-top:14px; margin-left:0;">📖 Tibbiyot talabalari uchun bilim testlari ham mavjud — <a href="testlar.html#kat-nevrologiya">shu yerdan ko'ring →</a></p>
 
-  <div data-rs-note="fun"></div>
+  <div data-rs-note="sci"></div>
 </main>
 
 <footer class="site-footer">
@@ -79,11 +57,16 @@
   // tasodifiy tartibda ko'rsatiladi, shunda bitta test doim birinchi bo'lib
   // ko'proq bosilib qolish ("rich get richer") holati oldini olinadi.
   const TEASER_POOL = [
-    { href: "life-path.html", icon: "🔢", title: "Hayot soningiz nimadan darak beradi?", desc: "Tug'ilgan sanangiz asosida numerologik shaxsiyat tahlilini bilib oling.", tag: "fun" },
-    { href: "love-language.html", icon: "💞", title: "Qanday mehr tilida sevasiz?", desc: "5 sevgi tilidan qaysi biri sizga xosligini aniqlang.", tag: "fun" },
-    { href: "eq.html", icon: "🧩", title: "Hissiyotlaringizni his qila olasizmi?", desc: "Hissiy intellekt darajangizni aniqlang.", tag: "sci", badge: "🆕 Yangi" },
-    { href: "temperament.html", icon: "🎭", title: "Xarakteringiz sizni qayerga yetaklaydi?", desc: "Temperament turingizni kashf eting.", tag: "fun" },
-    { href: "stress.html", icon: "🌀", title: "Stress darajangiz qanday?", desc: "So'nggi kunlardagi holatingiz asosida bilib oling.", tag: "sci", badge: "🆕 Yangi" },
+    { href: "eq.html", icon: "🧩", title: "Hissiyotlaringizni his qila olasizmi?", desc: "Hissiy intellekt darajangizni aniqlang.", tag: "sci" },
+    { href: "stress.html", icon: "🌀", title: "Stress darajangiz qanday?", desc: "So'nggi kunlardagi holatingiz asosida bilib oling.", tag: "sci" },
+    { href: "eq-tarhan.html", icon: "❤️", title: "Emotsional intellektingiz qay darajada?", desc: "Dr. Nevzat Tarhan testi bo'yicha o'z-o'zini baholash.", tag: "sci" },
+    { href: "leonhard-shmishek-test.html", icon: "🎭", title: "Xarakteringizning yetakchi xususiyatlari qanday?", desc: "Leonhard-Shmishek 88-savolli aksentuatsiya so'rovnomasi.", tag: "sci" },
+    { href: "gad7-test.html", icon: "😰", title: "Xavotir darajangiz qanday?", desc: "GAD-7 — standart klinik xavotir skriningi.", tag: "sci", badge: "🆕 Yangi" },
+    { href: "phq9-test.html", icon: "🌧️", title: "Kayfiyatingiz so'nggi kunlarda qanday?", desc: "PHQ-9 — standart klinik kayfiyat/depressiya skriningi.", tag: "sci", badge: "🆕 Yangi" },
+    { href: "stai-test.html", icon: "📋", title: "Vaziyatli va shaxsiy xavotirlilik darajangiz?", desc: "Spilberger-Xanin 40-savolli so'rovnomasi.", tag: "sci", badge: "🆕 Yangi" },
+    { href: "shulte-test.html", icon: "🔢", title: "Diqqatingiz qanchalik tez jamlanadi?", desc: "Shulte jadvali — vizual qidiruv tezligi testi.", tag: "sci" },
+    { href: "digit-span-test.html", icon: "🔢", title: "Ishchi xotirangiz qanchalik kuchli?", desc: "Digit Span — raqamlar diapazoni testi.", tag: "sci" },
+    { href: "bosh-miya-nervlari-test.html", icon: "🧠", title: "Bosh miya nervlarini qanchalik bilasiz?", desc: "Tibbiyot talabalari uchun 50-savolli bilim testi.", tag: "med" },
   ];
 
   function shuffle(arr) {
@@ -96,7 +79,7 @@
   }
 
   const chosen = shuffle(TEASER_POOL).slice(0, 3);
-  const tagLabel = { sci: "🔬 Ilmiy", fun: "✨ Qiziqarli" };
+  const tagLabel = { sci: "🔬 Ilmiy", med: "📖 Tibbiy bilim" };
   document.getElementById("teasers").innerHTML = chosen.map((t) => `
     <a class="teaser" href="${t.href}">
       ${t.badge ? `<span class="badge-flag">${t.badge}</span>` : ""}

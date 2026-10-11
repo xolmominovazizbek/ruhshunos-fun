@@ -1,7 +1,7 @@
 /**
  * Barcha savol-javob (A/B tanlov yoki Likert shkala) testlari uchun umumiy
- * bosqichma-bosqich (stepper) mexanizm. Har bir test sahifasi (love-language.js,
- * temperament.js, eq.js, stress.js) shu funksiyani chaqirib, faqat natijani
+ * bosqichma-bosqich (stepper) mexanizm. Har bir test sahifasi (eq.js,
+ * stress.js, gad7.js va h.k.) shu funksiyani chaqirib, faqat natijani
  * chizish (renderResult) qismini o'zi ta'minlaydi.
  */
 window.RuhshunosQuiz = (function () {

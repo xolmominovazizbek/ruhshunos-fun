@@ -1,20 +1,24 @@
 # Ruhshunos — sayt versiyasi (MVP)
 
 Asl `@Ruhshunos_Fun loyihasi.docx` hujjatida Telegram bot sifatida rejalashtirilgan
-testlarning veb-sayt versiyasi. Nom "Ruhshunos" — sayt nafaqat ko'ngilochar, balki
-odamning ruhiy holatiga aniqlik kiritishga ham xizmat qilishini ta'kidlaydi.
+testlarning veb-sayt versiyasi. Ruhshunos — **faqat ilmiy asoslangan psixologik
+testlar va tibbiy bilim testlarini** taqdim etadigan platforma. Astrologiya,
+numerologiya va shunga o'xshash ilmiy asoslanmagan ko'ngilochar testlar saytda
+qasddan yo'q.
 
-6 ta test tayyor, ikkiga ajratilgan:
-
-**🔬 Ilmiy asoslangan:**
+**🔬 Ilmiy asoslangan psixologik testlar:**
 - 🧩 Hissiy intellekt (EQ)
+- ❤️ Emotsional intellekt — Nevzat Tarhan testi
 - 🌀 Stress darajasi
+- 🧠 Intellekt turlari so'rovnomasi (10 turdagi intellekt, bolani kuzatish uchun)
+- 🔢 Shulte jadvali, 🎨 Stroop testi, 🔴 Shulte-Gorbov, ⭕ Landolt xalqalari (diqqat)
+- 🔢 Digit Span, 🟢 Corsi bloklari (xotira)
+- 🎭 Leonhard-Shmishek xarakter aksentuatsiyasi (88 savol, 10 shkala)
+- 😰 GAD-7, 🌧️ PHQ-9, 📋 Spilberger-Xanin STAI (klinik skrining testlari)
 
-**✨ Qiziqarli (ko'ngilochar, ilmiy tasdiqlanmagan):**
-- ♈ Munajjimlar bashorati (zodiak belgisi + juftlik mosligi)
-- 🔢 Hayot soni (Pythagorean numerologiya)
-- 💞 Sevgi tilingiz (5 Love Languages, Gary Chapman)
-- 🧠 Temperamentingiz (Gippokrat 4 temperamenti)
+**📖 Tibbiy bilim testlari (tibbiyot talabalari/shifokorlar uchun, ob'ektiv
+to'g'ri-javobli savollar, psixologik test emas):**
+- 🧠 Bosh miya nervlari (I, II, III, IV, VI juftlar)
 
 To'lov va foydalanuvchi tarixi keyingi bosqichlarda qo'shiladi.
 
@@ -41,42 +45,52 @@ Brauzerda `http://127.0.0.1:8000` sahifasini oching.
 
 ```
 backend/
-  main.py              # FastAPI ilova va API endpoint'lari
+  main.py                   # FastAPI ilova va API endpoint'lari
   logic/
-    zodiac.py           # zodiak belgisi va moslik hisoblash
-    life_path.py        # hayot soni hisoblash
-    love_language.py     # sevgi tili testi
-    temperament.py       # temperament testi
-    eq.py                # hissiy intellekt testi
-    stress.py            # stress darajasi testi
+    eq.py                   # hissiy intellekt testi
+    eq_tarhan.py            # Nevzat Tarhan EQ testi
+    stress.py               # stress darajasi testi
+    intelligence_types.py   # 10 turdagi intellekt so'rovnomasi
+    cranial_nerves.py       # bosh miya nervlari bilim testi
+    leonhard_shmishek.py    # xarakter aksentuatsiyasi testi
+    gad7.py                 # GAD-7 xavotir skriningi
+    phq9.py                 # PHQ-9 kayfiyat skriningi
+    stai.py                 # Spilberger-Xanin STAI testi
 frontend/
-  index.html            # Home — bosh sahifa
-  testlar.html          # Testlar — ilmiy/qiziqarli guruhlangan ro'yxat
-  yaratuvchi.html        # Yaratuvchi — loyiha muallifi haqida
-  yordam.html            # Yordam — kontakt va hamkorlik
-  zodiac.html, life-path.html, love-language.html,
-  temperament.html, eq.html, stress.html
-  css/style.css
-  js/quiz.js             # umumiy savol-javob (stepper) mexanizmi
-  js/zodiac.js, js/life-path.js, js/love-language.js,
-  js/temperament.js, js/eq.js, js/stress.js
-  img/yaratuvchi.jpg     # muallif profil rasmi
+  index.html                # Home — bosh sahifa
+  testlar.html               # Testlar — toifalar bo'yicha guruhlangan ro'yxat
+  yaratuvchi.html             # Yaratuvchi — loyiha muallifi haqida
+  yordam.html                 # Yordam — kontakt, yordam raqamlari, hamkorlik
+  maxfiylik.html               # Maxfiylik siyosati
+  eq.html, eq-tarhan.html, stress.html, intelligence-types.html,
+  shulte-test.html, stroop-test.html, shulte-gorbov-test.html, landolt-test.html,
+  digit-span-test.html, corsi-blocks-test.html,
+  leonhard-shmishek-test.html, gad7-test.html, phq9-test.html, stai-test.html,
+  bosh-miya-nervlari-test.html
+  css/style.css, css/disclaimer.css
+  js/quiz.js                 # umumiy savol-javob (stepper) mexanizmi
+  js/disclaimer.js           # markazlashtirilgan ogohlantirish/yordam matnlari
+  js/<har-bir-test>.js        # test sahifasiga mos natija render qiluvchi skript
+  img/yaratuvchi.jpg          # muallif profil rasmi
 ```
 
 ## API
 
 | Endpoint | Metod | Tavsif |
 | --- | --- | --- |
-| `/api/zodiac` | POST | Zodiak belgisi + (ixtiyoriy) juftlik moslik |
-| `/api/life-path` | POST | Hayot soni hisob-kitobi |
-| `/api/love-language/questions` | GET | Sevgi tili savollari |
-| `/api/love-language` | POST | Sevgi tili natijasi |
-| `/api/temperament/questions` | GET | Temperament savollari |
-| `/api/temperament` | POST | Temperament natijasi |
-| `/api/eq/questions` | GET | EQ savollari |
-| `/api/eq` | POST | EQ natijasi |
-| `/api/stress/questions` | GET | Stress savollari |
-| `/api/stress` | POST | Stress natijasi |
+| `/api/eq/questions`, `/api/eq` | GET, POST | EQ savollari / natijasi |
+| `/api/eq-tarhan/questions`, `/api/eq-tarhan` | GET, POST | Nevzat Tarhan EQ testi |
+| `/api/stress/questions`, `/api/stress` | GET, POST | Stress savollari / natijasi |
+| `/api/intelligence-types/questions`, `/api/intelligence-types` | GET, POST | Intellekt turlari so'rovnomasi |
+| `/api/cranial-nerves/questions`, `/api/cranial-nerves` | GET, POST | Bosh miya nervlari bilim testi |
+| `/api/leonhard-shmishek/questions`, `/api/leonhard-shmishek` | GET, POST | Xarakter aksentuatsiyasi testi |
+| `/api/gad7/questions`, `/api/gad7` | GET, POST | GAD-7 xavotir skriningi |
+| `/api/phq9/questions`, `/api/phq9` | GET, POST | PHQ-9 kayfiyat skriningi |
+| `/api/stai/questions`, `/api/stai` | GET, POST | Spilberger-Xanin STAI testi |
+
+Diqqat va xotira testlari (Shulte, Stroop, Shulte-Gorbov, Landolt, Digit Span,
+Corsi bloklari) to'liq frontend tomonda ishlaydi — server bilan natija
+almashinmaydi (maxfiylik siyosatiga muvofiq).
 
 ## Deploy
 
