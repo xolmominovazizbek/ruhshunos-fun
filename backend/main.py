@@ -8,7 +8,10 @@ from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from logic import zodiac, life_path, love_language, temperament, eq, stress, eq_tarhan, intelligence_types, cranial_nerves
+from logic import (
+    zodiac, life_path, love_language, temperament, eq, stress, eq_tarhan,
+    intelligence_types, cranial_nerves, leonhard_shmishek, gad7, phq9, stai,
+)
 
 BASE_DIR = Path(__file__).resolve().parent
 FRONTEND_DIR = BASE_DIR.parent / "frontend"
@@ -166,6 +169,58 @@ def get_cranial_nerves_questions():
 def post_cranial_nerves(payload: AnswersRequest):
     try:
         return cranial_nerves.calculate(payload.answers)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/leonhard-shmishek/questions")
+def get_leonhard_shmishek_questions():
+    return leonhard_shmishek.get_questions()
+
+
+@app.post("/api/leonhard-shmishek")
+def post_leonhard_shmishek(payload: IntAnswersRequest):
+    try:
+        return leonhard_shmishek.calculate(payload.answers)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/gad7/questions")
+def get_gad7_questions():
+    return gad7.get_questions()
+
+
+@app.post("/api/gad7")
+def post_gad7(payload: IntAnswersRequest):
+    try:
+        return gad7.calculate(payload.answers)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/phq9/questions")
+def get_phq9_questions():
+    return phq9.get_questions()
+
+
+@app.post("/api/phq9")
+def post_phq9(payload: IntAnswersRequest):
+    try:
+        return phq9.calculate(payload.answers)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/stai/questions")
+def get_stai_questions():
+    return stai.get_questions()
+
+
+@app.post("/api/stai")
+def post_stai(payload: IntAnswersRequest):
+    try:
+        return stai.calculate(payload.answers)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 

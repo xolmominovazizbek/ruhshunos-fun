@@ -124,7 +124,11 @@
     });
 
     document.querySelectorAll("[data-rs-help]").forEach(function (el) {
-      el.className = "rs-help";
+      // Agar HTML'da boshlanishidan "hidden" belgilangan bo'lsa (masalan,
+      // PHQ-9 kabi xavfsizlik bayrog'iga bog'liq shartli bloklar uchun),
+      // shu holatni saqlab qolamiz — faqat JS keyinroq ko'rinadigan qiladi.
+      var wasHidden = el.classList.contains("hidden");
+      el.className = "rs-help" + (wasHidden ? " hidden" : "");
       el.setAttribute("role", "complementary");
       el.innerHTML = renderHelp();
     });

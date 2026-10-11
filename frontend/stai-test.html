@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spilberger-Xanin xavotirlilik testi — Ruhshunos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/disclaimer.css">
+</head>
+<body>
+<main class="container">
+  <div class="topline"><div class="logo">Ruhshunos</div></div>
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="testlar.html" class="active">Testlar</a>
+    <a href="yaratuvchi.html">Yaratuvchi</a>
+    <a href="yordam.html">Yordam</a>
+  </nav>
+
+  <div class="page-heading">📋 Spilberger-Xanin <span class="tag tag-sci heading-tag">🔬 Ilmiy asoslangan</span></div>
+  <div class="page-subheading">Vaziyatli va shaxsiy xavotirlilik so'rovnomasi (STAI) — 40 savol, 2 blok</div>
+
+  <section class="panel" id="intro">
+    <h2>Test haqida</h2>
+    <p>Test 2 blokdan iborat: birinchi blok hozirgi (shu lahzadagi) holatingizni, ikkinchi blok esa odatda qanday his qilishingizni so'raydi. Har bir bayonotga eng mos keladigan javobni tanlang. Jami 40 savol.</p>
+    <p class="text-muted" style="font-size:0.85rem;">Bu <strong>tashxis emas</strong> — xavotirlilik darajasini o'lchaydigan keng tarqalgan ilmiy vosita (Ch.Spielberger / Yu.Xanin).</p>
+    <button type="button" class="primary" id="start-btn">Testni boshlash</button>
+  </section>
+
+  <section id="quiz" class="hidden"></section>
+  <div id="error" class="error-box hidden"></div>
+  <section id="result" class="hidden"></section>
+
+  <div data-rs-note="sci"></div>
+</main>
+
+<footer class="site-footer">
+  Ruhshunos — o'zingizni anglash va ruhiy holatga aniqlik kiritish platformasi
+  <div style="margin-top:8px;"><a href="maxfiylik.html">Maxfiylik siyosati</a> · <a href="yordam.html">Yordam</a></div>
+</footer>
+
+<script src="js/quiz.js"></script>
+<script src="js/stai.js"></script>
+<script src="js/disclaimer.js"></script>
+</body>
+</html>
