@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 from logic import (
     eq, stress, eq_tarhan, intelligence_types, cranial_nerves,
-    leonhard_shmishek, gad7, phq9, stai,
+    leonhard_shmishek, gad7, phq9, stai, hads,
 )
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -138,6 +138,19 @@ def get_stai_questions():
 def post_stai(payload: IntAnswersRequest):
     try:
         return stai.calculate(payload.answers)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/hads/questions")
+def get_hads_questions():
+    return hads.get_questions()
+
+
+@app.post("/api/hads")
+def post_hads(payload: IntAnswersRequest):
+    try:
+        return hads.calculate(payload.answers)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
