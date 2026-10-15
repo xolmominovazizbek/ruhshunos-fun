@@ -1,16 +1,172 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XKT-10 — Ruhshunos</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XKT-10 kod qulfi — Ruhshunos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: bitta ustun — bo'lim tanlash, markazda kombinatsiyali qulf, ostida natija oynasi (keng ekranda ikki ustun). */
+:root {
+  --bg: #eaf0ee;
+  --surface: #ffffff;
+  --surface-2: #f4f7f6;
+  --ink: #13201d;
+  --muted: #586964;
+  --line: #d2dcd9;
+  --accent: #0d6a5e;
+  --accent-soft: #d8ede8;
+  --warn: #9a5b00;
+  --warn-soft: #f8ead3;
+  --ok: #17733a;
+  --ok-soft: #dcf1e2;
+  --stage: #dfe7e4;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --row: clamp(34px, 9vw, 46px);
+  --wheel-w: clamp(33px, 9.4vw, 52px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1513; --surface: #15201e; --surface-2: #1a2725; --ink: #e4eeeb; --muted: #94a7a2;
+    --line: #2a3a37; --accent: #57c4b0; --accent-soft: #173733; --warn: #e3ac4f; --warn-soft: #3a2d15;
+    --ok: #63d18c; --ok-soft: #173424; --stage: #111b19; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1513; --surface: #15201e; --surface-2: #1a2725; --ink: #e4eeeb; --muted: #94a7a2;
+  --line: #2a3a37; --accent: #57c4b0; --accent-soft: #173733; --warn: #e3ac4f; --warn-soft: #3a2d15;
+  --ok: #63d18c; --ok-soft: #173424; --stage: #111b19; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 48px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 22px; }
+.wrap > * { min-width: 0; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Ruhshunos sayt navigatsiyasi — shu sahifaning o'z rang tokenlariga moslangan */
+.site-nav { display: flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); margin-bottom: 18px; }
+.site-nav a { flex: 1; text-align: center; padding: 10px 8px; font-size: 12.5px; font-weight: 600; color: var(--ink); text-decoration: none; border-right: 1px solid var(--line); white-space: nowrap; }
+.site-nav a:last-child { border-right: none; }
+.site-nav a:hover { background: var(--surface-2); }
+.site-nav a.active { background: var(--accent); color: var(--surface); }
+
+/* header */
+.head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.eyebrow b { color: var(--accent); }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 5vw, 40px); line-height: 1.05; margin: 4px 0 0; text-wrap: balance; letter-spacing: -.01em; }
+.lede { margin: 6px 0 0; color: var(--muted); max-width: 62ch; }
+.search { display: flex; gap: 8px; min-width: 0; flex: 0 1 340px; }
+.search input { flex: 1; min-width: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-family: var(--font-mono); font-size: 15px; }
+.btn { border: 1px solid var(--accent); background: var(--accent); color: var(--surface); padding: 9px 14px; border-radius: 10px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.err { color: var(--warn); font-size: 13px; margin-top: -14px; min-height: 1em; }
+
+/* block chips */
+.blocks { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.chip { text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 9px 11px; cursor: pointer; display: grid; gap: 1px; min-width: 0; transition: border-color .15s, background .15s; }
+.chip .c { font-family: var(--font-mono); font-weight: 600; font-size: 13px; color: var(--accent); }
+.chip .t { font-size: 13px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+@media (max-width: 720px) {
+  .blocks { display: flex; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 6px; scrollbar-width: thin; }
+  .chip { flex: 0 0 auto; min-width: 128px; scroll-snap-align: start; }
+}
+
+/* stage + lock */
+.stage { background: var(--stage); border: 1px solid var(--line); border-radius: 20px; padding: 28px 12px 18px; display: grid; justify-items: center; gap: 14px; overflow: hidden; }
+.lock { position: relative; padding-top: calc(var(--row) * 2.3); user-select: none; -webkit-user-select: none; }
+.shackle { position: absolute; left: 50%; top: 0; width: 66%; height: calc(var(--row) * 2.9); transform: translateX(-46%); transition: transform .45s cubic-bezier(.3,1.6,.5,1); z-index: 0; }
+.lock.open .shackle { transform: translateX(-46%) translateY(calc(var(--row) * -0.55)); }
+.lock-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 18px 26px repeat(2, var(--wheel-w)) 12px repeat(4, var(--wheel-w)) 24px; column-gap: 3px; align-items: center; }
+.body-bg { position: absolute; z-index: 0; left: -10px; right: -10px; top: calc(var(--row) * -0.32); bottom: calc(var(--row) * -0.32); border-radius: 999px;
+  background: linear-gradient(180deg, #4a4e52 0%, #1a1c1e 9%, #0b0c0d 45%, #050506 70%, #1d1f21 92%, #3b3e41 100%);
+  box-shadow: 0 18px 30px -18px rgba(0,0,0,.6), inset 0 2px 0 rgba(255,255,255,.12); }
+.plate, .dot { position: relative; color: #f2f2f2; font-family: var(--font-mono); font-weight: 600; text-align: center; z-index: 1; }
+.plate { font-size: calc(var(--row) * .62); }
+.dot { font-size: calc(var(--row) * .7); line-height: 1; padding-top: calc(var(--row) * .5); }
+.cap-r { position: relative; width: 22px; height: calc(var(--row) * 2.1); border-radius: 0 999px 999px 0; z-index: 1; justify-self: end; margin-right: -12px;
+  background: radial-gradient(ellipse at 30% 40%, #f4f4f4 0%, #b8bcc0 40%, #6b7075 80%); box-shadow: inset -2px 0 3px rgba(0,0,0,.4); }
+.wheel { position: relative; height: calc(var(--row) * 3); overflow: hidden; border-radius: 7px; z-index: 1; cursor: ns-resize; touch-action: none;
+  background: linear-gradient(180deg, #000 0%, #232528 50%, #000 100%);
+  box-shadow: inset 0 0 0 1px #000, inset 1px 0 0 rgba(255,255,255,.08); }
+.wheel::before, .wheel::after { content: ""; position: absolute; left: 0; right: 0; height: var(--row); z-index: 2; pointer-events: none; }
+.wheel::before { top: 0; background: linear-gradient(180deg, rgba(0,0,0,.85), rgba(0,0,0,.15)); }
+.wheel::after { bottom: 0; background: linear-gradient(0deg, rgba(0,0,0,.85), rgba(0,0,0,.15)); }
+.wheel .win { position: absolute; left: 2px; right: 2px; top: var(--row); height: var(--row); border-radius: 5px; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.18); pointer-events: none; z-index: 3; }
+.strip { position: absolute; left: 0; right: 0; top: 0; will-change: transform; }
+.cell { height: var(--row); display: grid; place-items: center; font-family: var(--font-mono); font-weight: 600; font-size: calc(var(--row) * .6); color: #fff; font-variant-numeric: tabular-nums; }
+.cell.none { color: #7d8388; font-size: calc(var(--row) * .45); }
+.wheel.off { cursor: default; touch-action: auto; background: linear-gradient(180deg, #050505, #121314 50%, #050505); }
+.wheel.off .cell { color: #3b3f43; }
+.wheel.cur .win { box-shadow: inset 0 0 0 2px #7fe0cd; }
+.wheel:focus-visible { outline: 2px solid #7fe0cd; outline-offset: 2px; }
+.caps-row { display: grid; grid-template-columns: 18px 26px repeat(2, var(--wheel-w)) 12px repeat(4, var(--wheel-w)) 24px; column-gap: 3px; margin-top: calc(var(--row) * .5); }
+.cap-lbl { font-size: clamp(9.5px, 2.5vw, 11px); line-height: 1.2; text-align: center; color: var(--muted); letter-spacing: .02em; white-space: nowrap; justify-self: center; }
+@media (max-width: 560px) { .cap-lbl.alt { margin-top: 1.3em; } }
+.cap-lbl.on { color: var(--ink); font-weight: 600; }
+.nt { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; font-size: 13px; color: var(--muted); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: var(--surface); }
+.seg button { border: 0; background: transparent; padding: 5px 12px; cursor: pointer; font-family: var(--font-mono); font-weight: 600; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+.hint { font-size: 12.5px; color: var(--muted); text-align: center; max-width: 56ch; margin: 0; }
+@media (prefers-reduced-motion: reduce) { .shackle { transition: none; } }
+
+/* result */
+.result { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px clamp(16px, 3vw, 28px) 24px; display: grid; gap: 20px; }
+.r-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.code { font-family: var(--font-mono); font-weight: 600; font-size: clamp(26px, 5vw, 34px); letter-spacing: .02em; }
+.pill { font-size: 12.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+.r-top .btn { margin-left: auto; padding: 6px 12px; font-size: 13.5px; }
+.dx { font-family: var(--font-display); font-weight: 500; font-size: clamp(19px, 3vw, 24px); line-height: 1.25; margin: -8px 0 0; text-wrap: balance; }
+.cols { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 22px 28px; }
+@media (max-width: 860px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+h2 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0 0 10px; }
+ol.path { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: lv; }
+ol.path li { counter-increment: lv; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 2px 10px; padding: 9px 0; border-top: 1px solid var(--line); }
+ol.path li:first-child { border-top: 0; }
+ol.path li::before { content: counter(lv) "."; color: var(--muted); font-family: var(--font-mono); font-size: 13px; padding-top: 2px; }
+.lv-code { font-family: var(--font-mono); font-weight: 600; color: var(--accent); }
+mark { background: var(--accent-soft); color: inherit; border-radius: 3px; padding: 0 1px; }
+.lv-tag { font-size: 11.5px; color: var(--muted); margin-left: 6px; letter-spacing: .02em; }
+.lv-name { grid-column: 2; min-width: 0; }
+.explain { background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 12px; min-width: 0; }
+.ex-tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.ex-tbl td { padding: 5px 0; vertical-align: top; border-top: 1px dashed var(--line); }
+.ex-tbl tr:first-child td { border-top: 0; }
+.ex-tbl td:first-child { white-space: nowrap; color: var(--muted); padding-right: 10px; font-size: 12.5px; }
+.ex-tbl td:nth-child(2) { font-family: var(--font-mono); font-weight: 600; padding-right: 10px; }
+.ex-tbl .what { color: var(--muted); font-size: 12px; display: block; }
+.notes { display: grid; gap: 8px; font-size: 13.5px; }
+.note { padding-left: 10px; border-left: 2px solid var(--accent); }
+.note.warn { border-left-color: var(--warn); }
+.vars { display: grid; gap: 4px; }
+.var { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; text-align: left; border: 1px solid transparent; background: transparent; border-radius: 9px; padding: 6px 8px; cursor: pointer; align-items: baseline; }
+.var:hover { background: var(--surface-2); border-color: var(--line); }
+.var[aria-current="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.var .vc { font-family: var(--font-mono); font-weight: 600; font-size: 13.5px; color: var(--accent); white-space: nowrap; }
+.var .vn { font-size: 13.5px; min-width: 0; }
+.src { font-size: 12px; color: var(--muted); margin: 0; }
+</style>
 </head>
 <body>
-<main class="container">
-  <div class="topline"><div class="logo">Ruhshunos</div></div>
+<noscript><p style="padding:16px">Kod qulfi ishlashi uchun brauzerda JavaScript yoqilgan bo'lishi kerak.</p></noscript>
+<div class="wrap">
   <nav class="site-nav">
     <a href="index.html">Home</a>
     <a href="testlar.html">Testlar</a>
@@ -18,20 +174,1250 @@
     <a href="xkt-11.html">XKT-11</a>
     <a href="yaratuvchi.html">Yaratuvchi</a>
   </nav>
+  <header class="head">
+    <div>
+      <div class="eyebrow"><b>Ruhshunos</b> · XKT-10 · V sinf (F00–F99)</div>
+      <h1>Kod qulfi</h1>
+      <p class="lede">G'ildiraklarni aylantiring: har bir raqam tashxisning bir qismini bildiradi — bo'lim, kategoriya, shakl, kechish, remissiya va boshqalar. Kod to'liq bo'lganda qulf ochiladi.</p>
+    </div>
+    <form class="search" id="searchForm" autocomplete="off">
+      <input id="codeInput" type="text" inputmode="text" spellcheck="false" placeholder="Kod: F20.606" aria-label="Kodni kiriting">
+      <button class="btn" type="submit">Ko'rsatish</button>
+    </form>
+  </header>
+  <div class="err" id="err" role="status"></div>
 
-  <div class="page-heading">XKT-10</div>
-  <div class="page-subheading">Xalqaro Kasalliklar Tasnifi, 10-ko'rinish (ICD-10) — tashxis kodlarini bosqichma-bosqich qidirish bo'limi</div>
+  <nav class="blocks" id="blocks" aria-label="Bo'limlar"></nav>
 
-  <div class="panel">
-    <h2>Bu bo'lim tez orada to'ldiriladi</h2>
-    <p>Bu yerda XKT-10 tashxis kodlarini blok → sinf → kod → subkod darajalari bo'yicha bosqichma-bosqich qidirish mumkin bo'lgan interaktiv vosita joylashtiriladi.</p>
-    <p class="text-muted" style="font-size:0.85rem;">Hozircha mazmun tayyorlanmoqda.</p>
-  </div>
-</main>
+  <section class="stage" aria-label="Kombinatsiyali qulf">
+    <div class="lock" id="lock">
+      <svg class="shackle" viewBox="0 0 300 150" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="chrome" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#8c9196"/><stop offset=".18" stop-color="#f6f7f8"/><stop offset=".35" stop-color="#9da2a7"/>
+            <stop offset=".55" stop-color="#e9ebed"/><stop offset=".8" stop-color="#7c8186"/><stop offset="1" stop-color="#d6d9dc"/>
+          </linearGradient>
+        </defs>
+        <path d="M45 150 V78 A105 70 0 0 1 255 78 V150" fill="none" stroke="#2b2d30" stroke-width="30"/>
+        <path d="M45 150 V78 A105 70 0 0 1 255 78 V150" fill="none" stroke="url(#chrome)" stroke-width="24"/>
+      </svg>
+      <div class="lock-grid" id="lockGrid">
+        <div class="body-bg"></div>
+        <div></div>
+        <div class="plate">F</div>
+      </div>
+      <div class="caps-row" id="capsRow"></div>
+    </div>
+    <div class="nt" id="ntBox" hidden>
+      <span>Kod oxiridagi harf:</span>
+      <span class="seg" role="group" aria-label="Narkomaniya yoki toksikomaniya belgisi">
+        <button type="button" data-nt="">yo'q</button><button type="button" data-nt="Н">Н</button><button type="button" data-nt="Т">Т</button>
+      </span>
+    </div>
+    <p class="hint">G'ildirakni sichqoncha g'ildiragi, sudrash yoki ↑ ↓ tugmalari bilan aylantiring, raqam tugmasi bilan ham tanlash mumkin. Pastdagi variantlar ro'yxatidan bosib tanlasa ham bo'ladi. «–» — belgi hali tanlanmagan.</p>
+  </section>
 
-<footer class="site-footer">
-  Ruhshunos — o'zingizni anglash va ruhiy holatga aniqlik kiritish platformasi
-  <div style="margin-top:8px;"><a href="maxfiylik.html">Maxfiylik siyosati</a> · <a href="yaratuvchi.html#yordam">Yordam</a></div>
-</footer>
+  <section class="result" aria-label="Natija">
+    <div class="r-top">
+      <span class="code" id="rCode">F20.606</span>
+      <span class="pill" id="rPill"></span>
+      <button class="btn ghost" type="button" id="copyBtn">Nusxa olish</button>
+    </div>
+    <p class="dx" id="rName"></p>
+    <div class="sr-only" id="live" aria-live="polite" aria-atomic="true"></div>
+    <div class="cols">
+      <div>
+        <h2>Kod tuzilishi</h2>
+        <ol class="path" id="rPath"></ol>
+      </div>
+      <div class="explain">
+        <h2 style="margin:0">Izoh va tushuntirish</h2>
+        <table class="ex-tbl"><tbody id="rTbl"></tbody></table>
+        <div class="notes" id="rNotes"></div>
+      </div>
+    </div>
+    <div>
+      <h2 id="varsTitle">Variantlar</h2>
+      <div class="vars" id="rVars"></div>
+    </div>
+    <p class="src">Manba: «Psixik va xulq-atvor buzilishlari (F00–F99). Rossiya Federatsiyasida foydalanish uchun moslashtirilgan XKT-10 V sinfi». Moskva, 1998. O'zbekistonda XKT-10 amalda, XKT-11 ga o'tish jarayoni davom etmoqda. O'zbekcha nomlar — ishchi tarjima.</p>
+  </section>
+</div>
+
+<script>
+/* ==== XKT-10 (V sinf, RF uchun moslashtirilgan variant, 1998) — ma'lumotlar bazasi ====
+   Kalitlar: "F" va nuqtasiz raqamlar ketma-ketligi. Masalan F20.606 -> "20606".
+   n    — to'liq nom;
+   q    — ota-nomga qo'shiladigan aniqlovchi (vergul bilan; "(" bilan boshlansa — bo'sh joy bilan);
+   b    — bolalar nomini tuzishda ishlatiladigan qisqa asos;
+   t    — F10–F19 uchun nom shabloni (modda shakllarini oladi);
+   x    — «+» bilan belgilangan asosiy kasallik kodi;  star — yulduzcha (*) kodi;
+   subs — keyingi belgi uchun qisqa yorliq (g'ildirak ostida);  subl — o'sha belgining to'liq tavsifi;
+   note — shu kod tanlanganda chiqadigan izoh.
+   "1x..." — F10–F19 uchun umumiy (moddaga bog'liq bo'lmagan) kodlar.                       */
+
+const BLOCKS = {
+  "0": { range: "F00–F09", chip: "Organik", n: "Organik, shu jumladan simptomatik psixik buzilishlar" },
+  "1": { range: "F10–F19", chip: "Psixofaol moddalar", n: "Psixofaol moddalarni iste'mol qilish bilan bog'liq (sabab bo'lgan) psixik va xulq-atvor buzilishlari" },
+  "2": { range: "F20–F29", chip: "Shizofreniya", n: "Shizofreniya, shizotipik va vasvasali buzilishlar" },
+  "3": { range: "F30–F39", chip: "Affektiv", n: "Kayfiyat buzilishlari (affektiv buzilishlar)" },
+  "4": { range: "F40–F48", chip: "Nevrotik", n: "Nevrotik, stress bilan bog'liq va somatoform buzilishlar" },
+  "5": { range: "F50–F59", chip: "Fiziologik", n: "Fiziologik buzilishlar va jismoniy omillar bilan bog'liq xulq-atvor sindromlari" },
+  "6": { range: "F60–F69", chip: "Shaxs", n: "Yetuk yoshdagi shaxs va xulq-atvor buzilishlari" },
+  "7": { range: "F70–F79", chip: "Aqliy zaiflik", n: "Aqliy zaiflik" },
+  "8": { range: "F80–F89", chip: "Rivojlanish", n: "Psixologik (psixik) rivojlanish buzilishlari" },
+  "9": { range: "F90–F99", chip: "Bolalik · F99", n: "Odatda bolalik va o'smirlik davrida boshlanadigan emotsional va xulq-atvor buzilishlari; aniqlanmagan psixik buzilishlar (F99)" }
+};
+
+/* F10–F19: moddaning grammatik shakllari (nom — bosh kelishik, acc — tushum, dat — jo'nalish) */
+const SUBF = {
+  "0": { nom: "Alkogol", acc: "Alkogolni", dat: "Alkogolga" },
+  "1": { nom: "Opioidlar", acc: "Opioidlarni", dat: "Opioidlarga" },
+  "2": { nom: "Kannabinoidlar", acc: "Kannabinoidlarni", dat: "Kannabinoidlarga" },
+  "3": { nom: "Sedativ yoki uxlatuvchi vositalar", acc: "Sedativ yoki uxlatuvchi vositalarni", dat: "Sedativ yoki uxlatuvchi vositalarga" },
+  "4": { nom: "Kokain", acc: "Kokainni", dat: "Kokainga" },
+  "5": { nom: "Boshqa stimulyatorlar (shu jumladan kofein)", acc: "Boshqa stimulyatorlarni (shu jumladan kofeinni)", dat: "Boshqa stimulyatorlarga (shu jumladan kofeinga)" },
+  "6": { nom: "Gallyutsinogenlar", acc: "Gallyutsinogenlarni", dat: "Gallyutsinogenlarga" },
+  "7": { nom: "Tamaki", acc: "Tamakini", dat: "Tamakiga" },
+  "8": { nom: "Uchuvchan erituvchilar", acc: "Uchuvchan erituvchilarni", dat: "Uchuvchan erituvchilarga" },
+  "9": { nom: "Bir nechta psixofaol moddalar", acc: "Bir nechta psixofaol moddalarni", dat: "Bir nechta psixofaol moddalarga" }
+};
+const lcFirst = s => s.charAt(0).toLowerCase() + s.slice(1);
+
+const T = {
+  /* ---------- F00–F09 ---------- */
+  "00": { n: "Altsgeymer kasalligidagi demensiya", star: true, x: "G30.-+", subs: "Turi", subl: "Altsgeymer kasalligi turi (boshlanish yoshi)" },
+  "000": { n: "Erta boshlangan Altsgeymer kasalligidagi demensiya", star: true, x: "G30.0+" },
+  "001": { n: "Kech boshlangan Altsgeymer kasalligidagi demensiya", star: true, x: "G30.1+" },
+  "002": { n: "Altsgeymer kasalligidagi atipik yoki aralash tipdagi demensiya", star: true, x: "G30.8+" },
+  "009": { n: "Altsgeymer kasalligidagi aniqlanmagan demensiya", star: true, x: "G30.9+" },
+  "01": { n: "Tomir demensiyasi", subs: "Turi", subl: "tomir demensiyasi turi" },
+  "010": { n: "O'tkir boshlangan tomir demensiyasi" },
+  "011": { n: "Multiinfarkt demensiya" },
+  "012": { n: "Po'stloq osti tomir demensiyasi" },
+  "013": { n: "Aralash po'stloq va po'stloq osti tomir demensiyasi" },
+  "018": { n: "Boshqa tomir demensiyasi" },
+  "019": { n: "Aniqlanmagan tomir demensiyasi" },
+  "02": { n: "Boshqa bo'limlarda tasniflangan boshqa kasalliklardagi demensiya", star: true, subs: "Kasallik", subl: "asosiy kasallik" },
+  "020": { n: "Pik kasalligidagi demensiya", star: true, x: "G31.0+" },
+  "021": { n: "Kreytsfeldt–Yakob kasalligidagi demensiya", star: true, x: "A81.0+" },
+  "022": { n: "Gentington kasalligidagi demensiya", star: true, x: "G10+" },
+  "023": { n: "Parkinson kasalligidagi demensiya", star: true, x: "G20+" },
+  "024": { n: "Odam immunitet tanqisligi virusi (OIV) keltirib chiqargan kasallikdagi demensiya", star: true, x: "B22.0+" },
+  "028": { n: "Boshqa bo'limlarda tasniflangan boshqa aniqlangan kasalliklardagi demensiya", star: true },
+  "03": { n: "Aniqlanmagan demensiya", subs: "Turi", subl: "turi (yosh davri)" },
+  "031": { n: "Aniqlanmagan presenil demensiya" },
+  "032": { n: "Aniqlanmagan senil demensiya" },
+  "033": { n: "Aniqlanmagan presenil psixoz" },
+  "034": { n: "Aniqlanmagan senil psixoz" },
+  "04": { n: "Alkogol yoki boshqa psixofaol moddalar sabab bo'lmagan organik amnestik sindrom", b: "Organik amnestik sindrom" },
+  "05": { n: "Alkogol yoki boshqa psixofaol moddalar sabab bo'lmagan deliriy", subs: "Variant", subl: "deliriy varianti" },
+  "050": { n: "Demensiya fonida bo'lmagan deliriy" },
+  "051": { n: "Demensiya fonidagi deliriy" },
+  "058": { n: "Boshqa deliriy" },
+  "059": { n: "Aniqlanmagan deliriy" },
+  "06": { n: "Bosh miya shikastlanishi va disfunksiyasi yoki somatik kasallik sabab bo'lgan boshqa psixik buzilishlar", subs: "Sindrom", subl: "psixopatologik sindrom" },
+  "060": { n: "Organik gallyutsinoz" },
+  "061": { n: "Organik katatonik holat" },
+  "062": { n: "Organik vasvasali (shizofreniyasimon) buzilish" },
+  "063": { n: "Organik kayfiyat (affektiv) buzilishlari", subs: "Variant", subl: "daraja (psixotik/nopsixotik) va qutblilik" },
+  "0630": { n: "Organik tabiatli psixotik maniakal buzilish" },
+  "0631": { n: "Organik tabiatli psixotik bipolyar buzilish" },
+  "0632": { n: "Organik tabiatli psixotik depressiv buzilish" },
+  "0633": { n: "Organik tabiatli psixotik aralash buzilish" },
+  "0634": { n: "Organik tabiatli gipomaniakal buzilish" },
+  "0635": { n: "Organik tabiatli nopsixotik bipolyar buzilish" },
+  "0636": { n: "Organik tabiatli nopsixotik depressiv buzilish" },
+  "0637": { n: "Organik tabiatli nopsixotik aralash buzilish" },
+  "064": { n: "Organik xavotirli buzilish" },
+  "065": { n: "Organik dissotsiativ buzilish" },
+  "066": { n: "Organik emotsional labil (astenik) buzilish" },
+  "067": { n: "Yengil kognitiv buzilish" },
+  "068": { n: "Bosh miya shikastlanishi va disfunksiyasi yoki somatik kasallik sabab bo'lgan boshqa aniqlangan psixik buzilishlar", subs: "Daraja", subl: "daraja (psixotik/nopsixotik)" },
+  "0681": { n: "Boshqa organik psixotik buzilishlar" },
+  "0682": { n: "Boshqa organik nopsixotik buzilishlar" },
+  "069": { n: "Bosh miya shikastlanishi va disfunksiyasi yoki somatik kasallik sabab bo'lgan aniqlanmagan psixik buzilish", subs: "Daraja", subl: "daraja (psixotik/nopsixotik)" },
+  "0691": { n: "Aniqlanmagan organik psixotik buzilishlar" },
+  "0692": { n: "Aniqlanmagan organik nopsixotik buzilishlar" },
+  "0699": { n: "Aniqlanmagan organik psixik buzilishlar" },
+  "07": { n: "Bosh miya kasalligi, shikastlanishi yoki disfunksiyasi sabab bo'lgan shaxs va xulq-atvor buzilishlari", subs: "Sindrom", subl: "sindrom" },
+  "070": { n: "Organik etiologiyali shaxs buzilishi" },
+  "071": { n: "Postensefalitik sindrom" },
+  "072": { n: "Postkontuzion (postkommotsion) sindrom" },
+  "078": { n: "Bosh miya kasalligi, shikastlanishi va disfunksiyasi sabab bo'lgan boshqa organik shaxs va xulq-atvor buzilishlari", b: "Boshqa organik shaxs va xulq-atvor buzilishlari" },
+  "079": { n: "Bosh miya kasalligi, shikastlanishi yoki disfunksiyasi sabab bo'lgan aniqlanmagan organik shaxs va xulq-atvor buzilishi", b: "Aniqlanmagan organik shaxs va xulq-atvor buzilishi" },
+  "09": { n: "Aniqlanmagan organik yoki simptomatik psixik buzilish" },
+
+  /* ---------- F10–F19 ---------- */
+  "10": { n: "Alkogol iste'moli sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+  "11": { n: "Opioidlar iste'moli sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+  "12": { n: "Kannabinoidlar iste'moli sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+  "13": { n: "Sedativ yoki uxlatuvchi vositalar iste'moli sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+  "14": { n: "Kokain iste'moli sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+  "15": { n: "Boshqa stimulyatorlar (shu jumladan kofein) iste'moli sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+  "16": { n: "Gallyutsinogenlar iste'moli sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+  "17": { n: "Tamaki iste'moli sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+  "18": { n: "Uchuvchan erituvchilar iste'moli sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+  "19": { n: "Bir nechta narkotik vositalarni bir vaqtda iste'mol qilish va boshqa psixofaol moddalardan foydalanish sabab bo'lgan psixik va xulq-atvor buzilishlari" },
+
+  "1x0": { n: "O'tkir intoksikatsiya", t: s => s.nom + " iste'moli sabab bo'lgan o'tkir intoksikatsiya", subs: "Asorat", subl: "asoratlar" },
+  "170": { n: "O'tkir intoksikatsiya", full: "Tamaki iste'moli sabab bo'lgan o'tkir intoksikatsiya (o'tkir nikotin intoksikatsiyasi)", subs: "Asorat", subl: "asoratlar" },
+  "1x00": { q: "asoratsiz" },
+  "1x01": { q: "jarohat yoki boshqa tan shikastlanishi bilan", note: "Bu rubrika jarohat emas, aynan o'tkir intoksikatsiya tibbiy yordamga murojaat sababi bo'lganda qo'llanadi." },
+  "1x02": { q: "boshqa tibbiy asoratlar bilan" },
+  "1x03": { q: "deliriy bilan" },
+  "1x04": { q: "idrok buzilishi bilan" },
+  "1x05": { q: "koma bilan" },
+  "1x06": { q: "tutqanoqlar (talvasalar) bilan" },
+  "1007": { n: "Patologik (alkogolli) mastlik", note: "Bu rubrika faqat alkogol iste'molida qo'llanadi (F10.07)." },
+  "1x08": { q: "boshqa asoratlar bilan" },
+  "1x09": { q: "aniqlanmagan asoratlar bilan" },
+  "1x1": { n: "Zararli iste'mol", t: s => s.acc + " zararli iste'mol qilish (salbiy oqibatlarga olib keluvchi iste'mol)" },
+  "1x2": { n: "Qaramlik sindromi", t: s => s.dat + " qaramlik sindromi", subs: "Joriy holat", subl: "joriy holat (remissiya yoki iste'mol)" },
+  "1x20": { q: "hozirgi vaqtda iste'moldan tiyilish (remissiya)" },
+  "1x21": { q: "hozirgi vaqtda tiyilish, lekin iste'molni istisno qiluvchi (himoyalangan) sharoitda" },
+  "1x22": { q: "hozirgi vaqtda klinik kuzatuvning qo'llab-quvvatlovchi rejimida yoki o'rinbosar terapiyada (nazorat qilinadigan qaramlik)" },
+  "1x23": { q: "hozirgi vaqtda tiyilish, lekin aversiv (jirkanish uyg'otuvchi) yoki moddaning ta'sirini bloklovchi preparatlar bilan davolash fonida" },
+  "1x24": { q: "hozirgi vaqtda moddani iste'mol qilish (faol qaramlik)" },
+  "1x25": { q: "muntazam (doimiy) iste'mol" },
+  "1x26": { q: "davriy iste'mol" },
+  "1x29": { q: "davriy iste'mol, qo'shimcha aniqlashtirishsiz" },
+  "1x3": { n: "Abstinent holat (to'xtatish sindromi)", t: s => s.nom + " abstinent holati (to'xtatish sindromi)", subs: "Asorat", subl: "asoratlar" },
+  "1x30": { q: "asoratsiz" },
+  "1x31": { q: "tutqanoq xurujlari bilan" },
+  "1x39": { q: "qo'shimcha aniqlashtirishsiz" },
+  "1x4": { n: "Deliriy bilan kechuvchi abstinent holat", t: s => "Deliriy bilan kechuvchi " + lcFirst(s.nom) + " abstinent holati", subs: "Deliriy", subl: "deliriy shakli" },
+  "1x40": { q: "(«klassik» deliriy)" },
+  "1x41": { q: "(tutqanoq xurujlari bilan kechuvchi deliriy)" },
+  "1x42": { q: "(mussitatsiyali, «g'o'ldirovchi» deliriy)" },
+  "1x43": { q: "(«kasbiy» deliriy)" },
+  "1x44": { q: "(gallyutsinatsiyalarsiz, lyutsid deliriy)" },
+  "1x46": { q: "(abortiv deliriy)" },
+  "1x48": { q: "(boshqa deliriy)" },
+  "1x49": { q: "(aniqlanmagan deliriy)" },
+  "1x5": { n: "Psixotik buzilish", t: s => s.nom + " iste'moli sabab bo'lgan psixotik buzilish", subs: "Variant", subl: "psixotik buzilish varianti" },
+  "1x50": { q: "shizofreniyasimon" },
+  "1x51": { q: "asosan vasvasali" },
+  "1x52": { q: "asosan gallyutsinator" },
+  "1052": { q: "asosan gallyutsinator (alkogolli gallyutsinozni o'z ichiga oladi)" },
+  "1x53": { q: "asosan polimorf" },
+  "1x54": { q: "asosan depressiv psixotik simptomlar bilan" },
+  "1x55": { q: "asosan maniakal psixotik simptomlar bilan" },
+  "1x6": { n: "Amnestik sindrom", t: s => s.nom + " iste'moli sabab bo'lgan amnestik sindrom" },
+  "1x7": { n: "Rezidual va kechikkan psixik buzilishlar", t: s => s.nom + " iste'moli sabab bo'lgan rezidual va kechikkan psixik buzilishlar", subs: "Variant", subl: "rezidual buzilish varianti" },
+  "1x70": { q: "«fleshbek»" },
+  "1x71": { q: "shaxs va xulq-atvor buzilishi" },
+  "1x72": { q: "qoldiq (rezidual) affektiv buzilish" },
+  "1x73": { q: "demensiya" },
+  "1x74": { q: "boshqa turg'un kognitiv buzilish" },
+  "1x75": { q: "kech boshlanuvchi psixotik buzilish" },
+  "1x8": { n: "Boshqa psixik va xulq-atvor buzilishlari", t: s => s.nom + " iste'moli sabab bo'lgan boshqa psixik va xulq-atvor buzilishlari", subs: "Variant", subl: "daraja (psixotik/nopsixotik)" },
+  "1x81": { q: "boshqa psixotik buzilishlar" },
+  "1x82": { q: "boshqa nopsixotik buzilishlar va xulq-atvor buzilishlari" },
+  "1x9": { n: "Aniqlanmagan psixik va xulq-atvor buzilishi", t: s => s.nom + " iste'moli sabab bo'lgan aniqlanmagan psixik va xulq-atvor buzilishi", subs: "Variant", subl: "daraja (psixotik/nopsixotik)" },
+  "1x91": { q: "aniqlanmagan psixotik buzilishlar" },
+  "1x92": { q: "aniqlanmagan nopsixotik buzilishlar va xulq-atvor buzilishlari" },
+  "1x99": { q: "aniqlanmagan psixik buzilishlar" },
+
+  /* ---------- F20–F29 ---------- */
+  "20": { n: "Shizofreniya", subs: "Shakl", subl: "shizofreniya shakli" },
+  "200": { n: "Paranoid shizofreniya" },
+  "201": { n: "Gebefren shizofreniya" },
+  "202": { n: "Katatonik shizofreniya" },
+  "203": { n: "Differensiatsiyalanmagan shizofreniya" },
+  "204": { n: "Postshizofrenik depressiya" },
+  "205": { n: "Qoldiq (rezidual) shizofreniya" },
+  "206": { n: "Oddiy shizofreniya" },
+  "208": { n: "Shizofreniyaning boshqa turi" },
+  "209": { n: "Aniqlanmagan shizofreniya" },
+  "21": { n: "Shizotipik buzilish", subs: "Variant", subl: "klinik variant" },
+  "211": { n: "Latent shizofreniya" },
+  "212": { n: "Shizofrenik reaksiya" },
+  "213": { n: "Psevdonevrotik (nevrozsimon) shizofreniya" },
+  "214": { n: "Psevdopsixopatik (psixopatiyasimon) shizofreniya" },
+  "215": { n: "«Simptomlarga kambag'al» shizofreniya" },
+  "218": { n: "Shizotipik shaxs buzilishi" },
+  "219": { n: "Aniqlanmagan shizotipik buzilish" },
+  "22": { n: "Surunkali vasvasali buzilishlar", subs: "Turi", subl: "turi" },
+  "220": { n: "Vasvasali buzilish", subs: "Variant", subl: "klinik variant" },
+  "2201": { n: "Paranoyya" },
+  "2202": { n: "Kech parafreniya" },
+  "2203": { n: "Sensitiv munosabat vasvasasi bilan paranoyyal shizofreniya" },
+  "2208": { n: "Boshqa vasvasali buzilishlar" },
+  "228": { n: "Boshqa surunkali vasvasali buzilishlar", subs: "Variant", subl: "klinik variant" },
+  "2281": { n: "Involyutsion paranoid" },
+  "2282": { n: "Paranoyyal shizofreniya" },
+  "2288": { n: "Boshqa surunkali vasvasali buzilishlar" },
+  "229": { n: "Aniqlanmagan surunkali vasvasali buzilish" },
+  "23": { n: "O'tkir va o'tkinchi psixotik buzilishlar", subs: "Sindrom", subl: "sindrom tuzilishi" },
+  "230": { n: "Shizofreniya simptomlarisiz o'tkir polimorf psixotik buzilish" },
+  "231": { n: "Shizofreniya simptomlari bilan o'tkir polimorf psixotik buzilish" },
+  "232": { n: "O'tkir shizofreniform (shizofreniyasimon) psixotik buzilish" },
+  "233": { n: "Boshqa o'tkir, asosan vasvasali psixotik buzilishlar" },
+  "238": { n: "Boshqa o'tkir va o'tkinchi psixotik buzilishlar" },
+  "239": { n: "Aniqlanmagan o'tkir va o'tkinchi psixotik buzilish" },
+  "24": { n: "Induksiyalangan vasvasali buzilish" },
+  "25": { n: "Shizoaffektiv buzilishlar", subs: "Tip", subl: "affektiv tip" },
+  "250": { n: "Shizoaffektiv buzilish, maniakal tip", subs: "Variant", subl: "nozologik variant" },
+  "2501": { n: "Xurujsimon shizofreniya, shizoaffektiv varianti, maniakal tip" },
+  "2508": { n: "Boshqa shizoaffektiv buzilish, maniakal tip" },
+  "251": { n: "Shizoaffektiv buzilish, depressiv tip", subs: "Variant", subl: "nozologik variant" },
+  "2511": { n: "Xurujsimon shizofreniya, shizoaffektiv varianti, depressiv tip" },
+  "2518": { n: "Boshqa shizoaffektiv buzilish, depressiv tip" },
+  "252": { n: "Shizoaffektiv buzilish, aralash tip", subs: "Variant", subl: "nozologik variant" },
+  "2521": { n: "Xurujsimon shizofreniya, shizoaffektiv varianti, aralash (bipolyar) affektiv tip" },
+  "2522": { n: "Aralash psixoz — xurujsimon shizofreniyaning sirkulyar varianti" },
+  "2528": { n: "Aralash bipolyar affektiv buzilishlar bilan kechuvchi boshqa shizoaffektiv holat" },
+  "258": { n: "Boshqa shizoaffektiv buzilishlar" },
+  "259": { n: "Aniqlanmagan shizoaffektiv buzilish" },
+  "28": { n: "Boshqa noorganik psixotik buzilishlar" },
+  "29": { n: "Aniqlanmagan noorganik psixoz" },
+
+  /* ---------- F30–F39 ---------- */
+  "30": { n: "Maniakal epizod", subs: "Daraja", subl: "og'irlik darajasi" },
+  "300": { n: "Gipomaniya" },
+  "301": { n: "Psixotik simptomlarsiz maniya" },
+  "302": { n: "Psixotik simptomlar bilan maniya", subs: "Simptom", subl: "psixotik simptomlarning affektga mosligi" },
+  "3023": { n: "Affektga mos (kongruent) vasvasa bilan maniakal-vasvasali holat" },
+  "3024": { n: "Affektga mos bo'lmagan (nokongruent) vasvasa bilan maniakal-vasvasali holat" },
+  "3028": { n: "Psixotik simptomlar bilan boshqa maniya" },
+  "308": { n: "Boshqa maniakal epizodlar" },
+  "309": { n: "Aniqlanmagan maniakal epizod" },
+  "31": { n: "Bipolyar affektiv buzilish", subs: "Epizod", subl: "joriy epizod" },
+  "310": { n: "Bipolyar affektiv buzilish, joriy epizod — gipomaniya" },
+  "311": { n: "Bipolyar affektiv buzilish, joriy epizod — psixotik simptomlarsiz maniya" },
+  "312": { n: "Bipolyar affektiv buzilish, joriy epizod — psixotik simptomlar bilan maniya", subs: "Simptom", subl: "psixotik simptomlarning affektga mosligi" },
+  "3123": { n: "Maniakal-vasvasali holat, bipolyar tip, affektga mos (kongruent) vasvasa bilan" },
+  "3124": { n: "Maniakal-vasvasali holat, bipolyar tip, affektga mos bo'lmagan (nokongruent) vasvasa bilan" },
+  "3128": { n: "Boshqa bipolyar affektiv buzilish, joriy epizod — boshqa psixotik simptomlar bilan maniya" },
+  "313": { n: "Bipolyar affektiv buzilish, joriy epizod — yengil yoki o'rtacha depressiya", subs: "Somatika", subl: "somatik simptomlar bor-yo'qligi" },
+  "3130": { q: "somatik simptomlarsiz" },
+  "3131": { q: "somatik simptomlar bilan" },
+  "314": { n: "Bipolyar affektiv buzilish, joriy epizod — psixotik simptomlarsiz og'ir depressiya" },
+  "315": { n: "Bipolyar affektiv buzilish, joriy epizod — psixotik simptomlar bilan og'ir depressiya", subs: "Simptom", subl: "psixotik simptomlarning affektga mosligi" },
+  "3153": { n: "Depressiv-vasvasali holat, bipolyar tip, affektga mos (kongruent) vasvasa bilan" },
+  "3154": { n: "Depressiv-vasvasali holat, bipolyar tip, affektga mos bo'lmagan (nokongruent) vasvasa bilan" },
+  "3158": { n: "Boshqa bipolyar affektiv buzilish, joriy epizod — boshqa psixotik simptomlar bilan og'ir depressiya" },
+  "316": { n: "Bipolyar affektiv buzilish, joriy epizod — aralash xarakterli" },
+  "317": { n: "Bipolyar affektiv buzilish, joriy remissiya" },
+  "318": { n: "Boshqa bipolyar affektiv buzilishlar" },
+  "319": { n: "Aniqlanmagan bipolyar affektiv buzilish" },
+  "32": { n: "Depressiv epizod", subs: "Daraja", subl: "og'irlik darajasi" },
+  "320": { n: "Yengil darajadagi depressiv epizod", subs: "Somatika", subl: "somatik simptomlar bor-yo'qligi" },
+  "3200": { q: "somatik simptomlarsiz" },
+  "3201": { q: "somatik simptomlar bilan" },
+  "321": { n: "O'rta darajadagi depressiv epizod", subs: "Somatika", subl: "somatik simptomlar bor-yo'qligi" },
+  "3210": { q: "somatik simptomlarsiz" },
+  "3211": { q: "somatik simptomlar bilan" },
+  "322": { n: "Psixotik simptomlarsiz og'ir darajadagi depressiv epizod" },
+  "323": { n: "Psixotik simptomlar bilan og'ir darajadagi depressiv epizod", subs: "Simptom", subl: "psixotik simptomlarning affektga mosligi" },
+  "3233": { n: "Affektga mos (kongruent) vasvasa bilan depressiv-vasvasali holat" },
+  "3234": { n: "Affektga mos bo'lmagan (nokongruent) vasvasa bilan depressiv-vasvasali holat" },
+  "3238": { n: "Boshqa psixotik simptomlar bilan og'ir darajadagi boshqa depressiv epizod" },
+  "328": { n: "Boshqa depressiv epizodlar" },
+  "329": { n: "Aniqlanmagan depressiv epizod" },
+  "33": { n: "Rekurrent depressiv buzilish", subs: "Epizod", subl: "joriy epizod" },
+  "330": { n: "Rekurrent depressiv buzilish, joriy epizod — yengil daraja", subs: "Somatika", subl: "somatik simptomlar bor-yo'qligi" },
+  "3300": { q: "somatik simptomlarsiz" },
+  "3301": { q: "somatik simptomlar bilan" },
+  "331": { n: "Rekurrent depressiv buzilish, joriy epizod — o'rta daraja", subs: "Somatika", subl: "somatik simptomlar bor-yo'qligi" },
+  "3310": { q: "somatik simptomlarsiz" },
+  "3311": { q: "somatik simptomlar bilan" },
+  "332": { n: "Rekurrent depressiv buzilish, joriy epizod — psixotik simptomlarsiz og'ir daraja" },
+  "333": { n: "Rekurrent depressiv buzilish, joriy epizod — psixotik simptomlar bilan og'ir daraja", subs: "Simptom", subl: "psixotik simptomlarning affektga mosligi" },
+  "3333": { n: "Maniakal-depressiv psixoz, monopolyar-depressiv tip, psixotik simptomlar bilan" },
+  "3334": { n: "Depressiv-vasvasali holat, monopolyar tip, affektga mos bo'lmagan (nokongruent) vasvasa bilan" },
+  "3338": { n: "Boshqa rekurrent depressiv buzilish, joriy epizod — boshqa psixotik simptomlar bilan og'ir depressiya" },
+  "334": { n: "Rekurrent depressiv buzilish, joriy remissiya holati" },
+  "338": { n: "Boshqa rekurrent depressiv buzilishlar" },
+  "339": { n: "Aniqlanmagan rekurrent depressiv buzilish" },
+  "34": { n: "Turg'un (surunkali) kayfiyat (affektiv) buzilishlari", subs: "Turi", subl: "turi" },
+  "340": { n: "Siklotimiya" },
+  "341": { n: "Distimiya" },
+  "348": { n: "Boshqa turg'un (surunkali) kayfiyat (affektiv) buzilishlari" },
+  "349": { n: "Aniqlanmagan turg'un (surunkali) kayfiyat (affektiv) buzilishi" },
+  "38": { n: "Boshqa kayfiyat (affektiv) buzilishlari", subs: "Turi", subl: "turi" },
+  "380": { n: "Boshqa yakka kayfiyat (affektiv) buzilishlari", subs: "Variant", subl: "klinik variant" },
+  "3800": { n: "Aralash affektiv epizod" },
+  "3808": { n: "Boshqa yakka kayfiyat (affektiv) buzilishlari" },
+  "381": { n: "Boshqa rekurrent kayfiyat (affektiv) buzilishlari", subs: "Variant", subl: "klinik variant" },
+  "3810": { n: "Rekurrent qisqa muddatli depressiv buzilish" },
+  "3818": { n: "Boshqa rekurrent kayfiyat (affektiv) buzilishlari" },
+  "388": { n: "Boshqa aniqlangan kayfiyat (affektiv) buzilishlari" },
+  "39": { n: "Aniqlanmagan kayfiyat (affektiv) buzilishi" },
+
+  /* ---------- F40–F48 ---------- */
+  "40": { n: "Fobik xavotirli buzilishlar", subs: "Turi", subl: "turi" },
+  "400": { n: "Agorafobiya", subs: "Vahima", subl: "vahima buzilishi bor-yo'qligi" },
+  "4000": { n: "Vahima buzilishisiz agorafobiya" },
+  "4001": { n: "Vahima buzilishi bilan agorafobiya" },
+  "401": { n: "Ijtimoiy fobiyalar" },
+  "402": { n: "Spetsifik (izolyatsiyalangan) fobiyalar" },
+  "408": { n: "Boshqa fobik xavotirli buzilishlar" },
+  "409": { n: "Aniqlanmagan fobik xavotirli buzilish" },
+  "41": { n: "Boshqa xavotirli buzilishlar", subs: "Turi", subl: "turi" },
+  "410": { n: "Vahima (panik) buzilishi — epizodik paroksizmal xavotir" },
+  "411": { n: "Generalizatsiyalashgan xavotirli buzilish" },
+  "412": { n: "Aralash xavotirli va depressiv buzilish" },
+  "413": { n: "Boshqa aralash xavotirli buzilishlar" },
+  "418": { n: "Boshqa aniqlangan xavotirli buzilishlar" },
+  "419": { n: "Aniqlanmagan xavotirli buzilish" },
+  "42": { n: "Obsessiv-kompulsiv buzilish", subs: "Turi", subl: "ustun klinik ko'rinish" },
+  "420": { n: "Asosan obsessiv fikrlar yoki mulohazalar (obsessiv ruminatsiyalar)" },
+  "421": { n: "Asosan kompulsiv harakatlar (obsessiv rituallar)" },
+  "422": { n: "Aralash obsessiv fikrlar va harakatlar" },
+  "428": { n: "Boshqa obsessiv-kompulsiv buzilishlar" },
+  "429": { n: "Aniqlanmagan obsessiv-kompulsiv buzilish" },
+  "43": { n: "Og'ir stressga reaksiya va moslashuv buzilishlari", subs: "Turi", subl: "turi" },
+  "430": { n: "Stressga o'tkir reaksiya" },
+  "431": { n: "Posttravmatik stress buzilishi" },
+  "432": { n: "Moslashuv reaksiyalari buzilishi", subs: "Simptom", subl: "ustun simptomlar" },
+  "4320": { n: "Moslashuv buzilishi sabab bo'lgan qisqa muddatli depressiv reaksiya" },
+  "4321": { n: "Moslashuv buzilishi sabab bo'lgan uzoq davom etuvchi depressiv reaksiya" },
+  "4322": { n: "Moslashuv buzilishi sabab bo'lgan aralash xavotirli va depressiv reaksiya" },
+  "4323": { n: "Boshqa emotsiyalar buzilishi ustun bo'lgan moslashuv buzilishi" },
+  "4324": { n: "Xulq-atvor buzilishi ustun bo'lgan moslashuv buzilishi" },
+  "4325": { n: "Moslashuv buzilishi sabab bo'lgan emotsiya va xulq-atvorning aralash buzilishi" },
+  "4328": { n: "Moslashuv buzilishi sabab bo'lgan boshqa spetsifik ustun simptomlar" },
+  "438": { n: "Og'ir stressga boshqa reaksiyalar" },
+  "439": { n: "Og'ir stressga aniqlanmagan reaksiya" },
+  "44": { n: "Dissotsiativ (konversion) buzilishlar", subs: "Turi", subl: "turi" },
+  "440": { n: "Dissotsiativ amneziya" },
+  "441": { n: "Dissotsiativ fuga" },
+  "442": { n: "Dissotsiativ stupor" },
+  "443": { n: "Trans va egallanganlik holati" },
+  "444": { n: "Dissotsiativ harakat buzilishlari" },
+  "445": { n: "Dissotsiativ talvasalar" },
+  "446": { n: "Dissotsiativ anesteziya yoki sezgi idrokining yo'qolishi" },
+  "447": { n: "Aralash dissotsiativ (konversion) buzilishlar" },
+  "448": { n: "Boshqa dissotsiativ (konversion) buzilishlar", subs: "Variant", subl: "klinik variant" },
+  "4480": { n: "Ganzer sindromi" },
+  "4481": { n: "Ko'p shaxslilik buzilishi" },
+  "4482": { n: "Bolalik va o'smirlik davrida yuzaga keladigan tranzitor dissotsiativ (konversion) buzilishlar" },
+  "4488": { n: "Boshqa aniqlangan dissotsiativ (konversion) buzilishlar" },
+  "449": { n: "Aniqlanmagan dissotsiativ (konversion) buzilish" },
+  "45": { n: "Somatoform buzilishlar", subs: "Turi", subl: "turi" },
+  "450": { n: "Somatizatsiyalashgan buzilish" },
+  "451": { n: "Differensiatsiyalanmagan somatoform buzilish" },
+  "452": { n: "Ipoxondrik buzilish" },
+  "453": { n: "Vegetativ nerv tizimining somatoform disfunksiyasi", subs: "A'zo", subl: "a'zo yoki tizim" },
+  "4530": { q: "yurak va yurak-qon tomir tizimi" },
+  "4531": { q: "oshqozon-ichak traktining yuqori qismi" },
+  "4532": { q: "oshqozon-ichak traktining pastki qismi" },
+  "4533": { q: "nafas a'zolari" },
+  "4534": { q: "siydik-tanosil a'zolari" },
+  "4538": { q: "boshqa a'zolar" },
+  "454": { n: "Turg'un somatoform og'riq buzilishi" },
+  "458": { n: "Boshqa somatoform buzilishlar" },
+  "459": { n: "Aniqlanmagan somatoform buzilish" },
+  "48": { n: "Boshqa nevrotik buzilishlar", subs: "Turi", subl: "turi" },
+  "480": { n: "Nevrasteniya" },
+  "481": { n: "Depersonalizatsiya-derealizatsiya sindromi" },
+  "488": { n: "Boshqa aniqlangan nevrotik buzilishlar" },
+  "489": { n: "Aniqlanmagan nevrotik buzilish" },
+
+  /* ---------- F50–F59 ---------- */
+  "50": { n: "Ovqatlanish buzilishlari", subs: "Turi", subl: "turi" },
+  "500": { n: "Nerv anoreksiyasi" },
+  "501": { n: "Atipik nerv anoreksiyasi" },
+  "502": { n: "Nerv bulimiyasi" },
+  "503": { n: "Atipik nerv bulimiyasi" },
+  "504": { n: "Boshqa psixologik buzilishlar bilan bog'liq ortiqcha ovqatlanish" },
+  "505": { n: "Boshqa psixologik buzilishlar bilan bog'liq qusish" },
+  "508": { n: "Boshqa ovqatlanish buzilishlari" },
+  "509": { n: "Aniqlanmagan ovqatlanish buzilishi" },
+  "51": { n: "Noorganik etiologiyali uyqu buzilishlari", subs: "Turi", subl: "turi" },
+  "510": { n: "Noorganik etiologiyali uyqusizlik (insomniya)" },
+  "511": { n: "Noorganik etiologiyali uyquchanlik (gipersomniya)" },
+  "512": { n: "Noorganik etiologiyali uyqu va bedorlik rejimi buzilishi" },
+  "513": { n: "Uyquda yurish (somnambulizm)" },
+  "514": { n: "Uyqudagi qo'rquvlar (tungi dahshatlar)" },
+  "515": { n: "Dahshatli tushlar (koshmarlar)" },
+  "518": { n: "Noorganik etiologiyali boshqa uyqu buzilishlari" },
+  "519": { n: "Noorganik etiologiyali aniqlanmagan uyqu buzilishi" },
+  "52": { n: "Organik buzilishlar yoki kasalliklar sabab bo'lmagan jinsiy disfunksiyalar", subs: "Turi", subl: "turi" },
+  "520": { n: "Jinsiy maylning yo'qligi yoki yo'qolishi" },
+  "521": { n: "Jinsiy aloqadan jirkanish va jinsiy lazzatning yo'qligi", subs: "Variant", subl: "klinik variant" },
+  "5210": { n: "Jinsiy jirkanish" },
+  "5211": { n: "Jinsiy qoniqish hissining yo'qligi" },
+  "522": { n: "Genital reaksiya yetishmovchiligi" },
+  "523": { n: "Orgazmik disfunksiya" },
+  "524": { n: "Erta eyakulyatsiya", subs: "Variant", subl: "klinik variant" },
+  "5241": { n: "Mutlaq erta eyakulyatsiya" },
+  "5242": { n: "Nisbiy erta eyakulyatsiya" },
+  "5249": { n: "Aniqlanmagan erta eyakulyatsiya" },
+  "525": { n: "Noorganik kelib chiqishli vaginizm" },
+  "526": { n: "Noorganik kelib chiqishli dispareuniya" },
+  "527": { n: "Jinsiy maylning kuchayishi" },
+  "528": { n: "Organik buzilish yoki kasallik sabab bo'lmagan boshqa jinsiy disfunksiya" },
+  "529": { n: "Organik buzilish yoki kasallik sabab bo'lmagan aniqlanmagan jinsiy disfunksiya" },
+  "53": { n: "Tug'ruqdan keyingi davr bilan bog'liq, boshqa rubrikalarda tasniflanmagan psixik va xulq-atvor buzilishlari", subs: "Og'irlik", subl: "og'irlik darajasi" },
+  "530": { n: "Tug'ruqdan keyingi davr bilan bog'liq yengil psixik va xulq-atvor buzilishlari" },
+  "531": { n: "Tug'ruqdan keyingi davr bilan bog'liq og'ir psixik va xulq-atvor buzilishlari" },
+  "538": { n: "Tug'ruqdan keyingi davr bilan bog'liq boshqa psixik va xulq-atvor buzilishlari" },
+  "539": { n: "Aniqlanmagan tug'ruqdan keyingi psixik buzilish" },
+  "54": { n: "Boshqa rubrikalarda tasniflangan buzilishlar yoki kasalliklar bilan bog'liq psixologik va xulq-atvor omillari" },
+  "55": { n: "Qaramlik keltirib chiqarmaydigan moddalarni suiiste'mol qilish", subs: "Modda", subl: "modda turi" },
+  "550": { n: "Antidepressantlarni suiiste'mol qilish" },
+  "551": { n: "Surgi vositalarni suiiste'mol qilish" },
+  "552": { n: "Analgetiklarni suiiste'mol qilish" },
+  "553": { n: "Kislotalikni pasaytiruvchi vositalarni suiiste'mol qilish" },
+  "554": { n: "Vitaminlarni suiiste'mol qilish" },
+  "555": { n: "Steroidlar yoki gormonlarni suiiste'mol qilish" },
+  "556": { n: "Maxsus o'tlar va xalq vositalarini suiiste'mol qilish" },
+  "558": { n: "Qaramlik keltirib chiqarmaydigan boshqa moddalarni suiiste'mol qilish" },
+  "559": { n: "Aniqlanmagan moddalarni suiiste'mol qilish" },
+  "59": { n: "Fiziologik buzilishlar va jismoniy omillar bilan bog'liq aniqlanmagan xulq-atvor sindromlari" },
+
+  /* ---------- F60–F69 ---------- */
+  "60": { n: "Spetsifik shaxs buzilishlari", subs: "Tip", subl: "shaxs buzilishi tipi" },
+  "600": { n: "Paranoid (paranoyyal) shaxs buzilishi" },
+  "601": { n: "Shizoid shaxs buzilishi" },
+  "602": { n: "Dissotsial shaxs buzilishi" },
+  "603": { n: "Emotsional beqaror shaxs buzilishi", subs: "Tip", subl: "kichik tip" },
+  "6030": { n: "Emotsional beqaror shaxs buzilishi, impulsiv tip" },
+  "6031": { n: "Emotsional beqaror shaxs buzilishi, chegaraviy tip" },
+  "604": { n: "Isterik shaxs buzilishi" },
+  "605": { n: "Anankast shaxs buzilishi" },
+  "606": { n: "Xavotirli (qochuvchi, chetlanuvchi) shaxs buzilishi" },
+  "607": { n: "Qaram shaxs tipidagi buzilish" },
+  "608": { n: "Boshqa spetsifik shaxs buzilishlari" },
+  "609": { n: "Aniqlanmagan shaxs buzilishi" },
+  "61": { n: "Aralash va boshqa shaxs buzilishlari", subs: "Turi", subl: "turi" },
+  "610": { n: "Aralash shaxs buzilishlari" },
+  "611": { n: "Bezovtalik tug'diruvchi shaxs o'zgarishlari" },
+  "62": { n: "Bosh miya shikastlanishi yoki kasalligi bilan bog'liq bo'lmagan turg'un shaxs o'zgarishlari", subs: "Turi", subl: "turi" },
+  "620": { n: "Halokatni boshdan kechirgandan keyingi turg'un shaxs o'zgarishi" },
+  "621": { n: "Psixik kasallikdan keyingi turg'un shaxs o'zgarishi" },
+  "628": { n: "Boshqa turg'un shaxs o'zgarishlari" },
+  "629": { n: "Aniqlanmagan turg'un shaxs o'zgarishi" },
+  "63": { n: "Odat va mayllar buzilishlari", subs: "Turi", subl: "turi" },
+  "630": { n: "Qimor o'yinlariga patologik mayl" },
+  "631": { n: "O't qo'yishga patologik mayl (piromaniya)" },
+  "632": { n: "O'g'irlikka patologik mayl (kleptomaniya)" },
+  "633": { n: "Trixotillomaniya" },
+  "638": { n: "Boshqa odat va mayl buzilishlari" },
+  "639": { n: "Aniqlanmagan odat va mayl buzilishi" },
+  "64": { n: "Jinsiy identifikatsiya buzilishlari", subs: "Turi", subl: "turi" },
+  "640": { n: "Transseksualizm" },
+  "641": { n: "Ikki rolli transvestizm (transrol xulq)" },
+  "642": { n: "Bolalik davridagi jinsiy identifikatsiya buzilishi", subs: "Tip", subl: "tip" },
+  "6421": { n: "Bolalik davridagi jinsiy identifikatsiya buzilishi, transseksual tip" },
+  "6422": { n: "Bolalik davridagi jinsiy identifikatsiya buzilishi, transrol tip" },
+  "6429": { n: "Bolalik davridagi aniqlanmagan jinsiy identifikatsiya buzilishi" },
+  "648": { n: "Boshqa jinsiy identifikatsiya buzilishi" },
+  "649": { n: "Aniqlanmagan jinsiy identifikatsiya buzilishi" },
+  "65": { n: "Jinsiy afzallik buzilishlari", subs: "Turi", subl: "turi" },
+  "650": { n: "Fetishizm" },
+  "651": { n: "Fetishistik transvestizm" },
+  "652": { n: "Ekshibitsionizm", subs: "Tip", subl: "tip" },
+  "6521": { n: "Ekshibitsionizm, sadistik tip" },
+  "6522": { n: "Ekshibitsionizm, mazoxistik tip" },
+  "6529": { n: "Aniqlanmagan ekshibitsionizm" },
+  "653": { n: "Vuayerizm" },
+  "654": { n: "Pedofiliya" },
+  "655": { n: "Sadomazoxizm" },
+  "656": { n: "Jinsiy afzallikning ko'plab buzilishlari" },
+  "658": { n: "Boshqa jinsiy afzallik buzilishlari" },
+  "659": { n: "Aniqlanmagan jinsiy afzallik buzilishi" },
+  "66": { n: "Jinsiy (psixoseksual) rivojlanish va jinsiy orientatsiya bilan bog'liq psixologik va xulq-atvor buzilishlari", subs: "Turi", subl: "turi" },
+  "660": { n: "Psixoseksual yetilish (rivojlanish) buzilishi" },
+  "661": { n: "Egodistonik jinsiy orientatsiya" },
+  "662": { n: "Jinsiy munosabatlar buzilishi" },
+  "668": { n: "Boshqa psixoseksual rivojlanish buzilishlari" },
+  "669": { n: "Aniqlanmagan psixoseksual rivojlanish buzilishi" },
+  "68": { n: "Yetuk yoshdagi boshqa shaxs va xulq-atvor buzilishlari", subs: "Turi", subl: "turi" },
+  "680": { n: "Psixologik sabablarga ko'ra somatik simptomatikani bo'rttirish" },
+  "681": { n: "Jismoniy yoki psixologik xarakterdagi simptomlar yoki nogironlikni qasddan chaqirish yoki simulyatsiya qilish (soxta buzilish)" },
+  "688": { n: "Yetuk yoshdagi boshqa aniqlangan shaxs va xulq-atvor buzilishlari" },
+  "69": { n: "Yetuk yoshdagi aniqlanmagan shaxs va xulq-atvor buzilishi" },
+
+  /* ---------- F70–F79 ---------- */
+  "70": { n: "Yengil darajadagi aqliy zaiflik" },
+  "71": { n: "O'rtacha aqliy zaiflik" },
+  "72": { n: "Og'ir aqliy zaiflik" },
+  "73": { n: "Chuqur aqliy zaiflik" },
+  "78": { n: "Aqliy zaiflikning boshqa shakllari" },
+  "79": { n: "Aniqlanmagan aqliy zaiflik" },
+
+  /* ---------- F80–F89 ---------- */
+  "80": { n: "Nutq va tilning spetsifik rivojlanish buzilishlari", subs: "Turi", subl: "turi" },
+  "800": { n: "Nutq artikulyatsiyasining spetsifik buzilishi" },
+  "801": { n: "Ekspressiv nutq buzilishi" },
+  "802": { n: "Retseptiv nutq buzilishi" },
+  "803": { n: "Epilepsiya bilan kechuvchi orttirilgan afaziya (Landau–Kleffner sindromi)", subs: "Kechish", subl: "kechish varianti" },
+  "8031": { q: "psixotik kechish varianti" },
+  "8032": { q: "nopsixotik kechish varianti" },
+  "8039": { q: "kechish tipi aniqlanmagan" },
+  "808": { n: "Nutq va til rivojlanishining boshqa buzilishlari", subs: "Variant", subl: "klinik variant" },
+  "8081": { n: "Ijtimoiy deprivatsiya sabab bo'lgan nutq rivojlanishining kechikishi" },
+  "8082": { n: "Intellektual rivojlanish kechikishi bilan birga kechuvchi nutq rivojlanishi kechikishi" },
+  "8088": { n: "Nutq va til rivojlanishining boshqa buzilishlari" },
+  "809": { n: "Aniqlanmagan nutq va til rivojlanishi buzilishlari" },
+  "81": { n: "O'quv ko'nikmalarining spetsifik rivojlanish buzilishlari", subs: "Turi", subl: "turi" },
+  "810": { n: "O'qishning spetsifik buzilishi" },
+  "811": { n: "Imloning spetsifik buzilishi" },
+  "812": { n: "Arifmetik ko'nikmalarning spetsifik buzilishi" },
+  "813": { n: "O'quv ko'nikmalarining aralash buzilishi" },
+  "818": { n: "O'quv ko'nikmalari rivojlanishining boshqa buzilishlari" },
+  "819": { n: "O'quv ko'nikmalari rivojlanishining aniqlanmagan buzilishi" },
+  "82": { n: "Motor funksiyaning spetsifik rivojlanish buzilishlari" },
+  "83": { n: "Psixologik (psixik) rivojlanishning aralash spetsifik buzilishlari" },
+  "84": { n: "Psixologik (psixik) rivojlanishning umumiy buzilishlari", subs: "Turi", subl: "turi" },
+  "840": { n: "Bolalar autizmi", subs: "Sabab", subl: "sabab" },
+  "8401": { n: "Bosh miyaning organik kasalligi sabab bo'lgan bolalar autizmi" },
+  "8402": { n: "Boshqa sabablar tufayli rivojlangan bolalar autizmi" },
+  "841": { n: "Atipik autizm", subs: "Intellekt", subl: "aqliy zaiflik bor-yo'qligi" },
+  "8411": { n: "Aqliy zaiflik bilan kechuvchi atipik autizm" },
+  "8412": { n: "Aqliy zaifliksiz atipik autizm" },
+  "842": { n: "Rett sindromi" },
+  "843": { n: "Bolalik davrining boshqa dezintegrativ buzilishlari" },
+  "844": { n: "Aqliy zaiflik va stereotip harakatlar bilan birga kechuvchi giperaktiv buzilish" },
+  "845": { n: "Asperger sindromi" },
+  "848": { n: "Boshqa umumiy rivojlanish buzilishlari" },
+  "849": { n: "Aniqlanmagan umumiy rivojlanish buzilishi" },
+  "88": { n: "Psixologik (psixik) rivojlanishning boshqa buzilishlari" },
+  "89": { n: "Psixologik (psixik) rivojlanishning aniqlanmagan buzilishi" },
+
+  /* ---------- F90–F99 ---------- */
+  "90": { n: "Giperkinetik buzilishlar", subs: "Turi", subl: "turi" },
+  "900": { n: "Faollik va diqqat buzilishi" },
+  "901": { n: "Xulq-atvorning giperkinetik buzilishi" },
+  "908": { n: "Boshqa giperkinetik buzilishlar" },
+  "909": { n: "Aniqlanmagan giperkinetik buzilish" },
+  "91": { n: "Xulq-atvor buzilishlari", subs: "Turi", subl: "turi" },
+  "910": { n: "Oila doirasi bilan cheklangan xulq-atvor buzilishi" },
+  "911": { n: "Ijtimoiylashmagan xulq-atvor buzilishi" },
+  "912": { n: "Ijtimoiylashgan xulq-atvor buzilishi" },
+  "913": { n: "Qarshilik ko'rsatuvchi oppozitsion buzilish" },
+  "918": { n: "Boshqa xulq-atvor buzilishlari" },
+  "919": { n: "Aniqlanmagan xulq-atvor buzilishi" },
+  "92": { n: "Xulq-atvor va emotsiyalarning aralash buzilishlari", subs: "Turi", subl: "turi" },
+  "920": { n: "Xulq-atvorning depressiv buzilishi" },
+  "928": { n: "Xulq-atvor va emotsiyalarning boshqa aralash buzilishlari" },
+  "929": { n: "Xulq-atvor va emotsiyalarning aniqlanmagan aralash buzilishi" },
+  "93": { n: "Boshlanishi bolalik davriga xos bo'lgan emotsional buzilishlar", subs: "Turi", subl: "turi" },
+  "930": { n: "Bolalarda ajralish sabab bo'lgan xavotirli buzilish" },
+  "931": { n: "Bolalik davridagi fobik xavotirli buzilish" },
+  "932": { n: "Bolalik davridagi ijtimoiy xavotirli buzilish" },
+  "933": { n: "Aka-uka, opa-singillar raqobati (sibling raqobati) sabab bo'lgan buzilish" },
+  "938": { n: "Bolalik davridagi boshqa emotsional buzilishlar" },
+  "939": { n: "Bolalik davridagi aniqlanmagan emotsional buzilish" },
+  "94": { n: "Boshlanishi bolalik va o'smirlik davriga xos bo'lgan ijtimoiy faoliyat buzilishlari", subs: "Turi", subl: "turi" },
+  "940": { n: "Elektiv mutizm" },
+  "941": { n: "Bolalik davridagi reaktiv bog'lanish buzilishi" },
+  "942": { n: "Bolalik davridagi tormozlanmagan tipdagi bog'lanish buzilishi" },
+  "948": { n: "Bolalik davridagi ijtimoiy faoliyatning boshqa buzilishlari" },
+  "949": { n: "Bolalik davridagi ijtimoiy faoliyatning aniqlanmagan buzilishi" },
+  "95": { n: "Tiklar", subs: "Turi", subl: "turi" },
+  "950": { n: "Tranzitor tiklar" },
+  "951": { n: "Surunkali motor tiklar yoki vokalizmlar" },
+  "952": { n: "Vokalizmlar va ko'plab motor tiklar kombinatsiyasi (Jil de la Turett sindromi)" },
+  "958": { n: "Boshqa tiklar" },
+  "959": { n: "Aniqlanmagan tiklar" },
+  "98": { n: "Odatda bolalik va o'smirlik davrida boshlanadigan boshqa emotsional va xulq-atvor buzilishlari", subs: "Turi", subl: "turi" },
+  "980": { n: "Noorganik tabiatli enurez" },
+  "981": { n: "Noorganik tabiatli enkoprez" },
+  "982": { n: "Go'daklik va bolalik davridagi ovqatlanish buzilishi" },
+  "983": { n: "Go'daklar va bolalarda yeyilmaydigan narsalarni yeyish (pika)" },
+  "984": { n: "Stereotip harakat buzilishlari" },
+  "985": { n: "Duduqlanish" },
+  "986": { n: "Shoshqaloq nutq (klatterring)" },
+  "988": { n: "Odatda bolalik va o'smirlik davrida boshlanadigan boshqa aniqlangan emotsional va xulq-atvor buzilishlari" },
+  "989": { n: "Odatda bolalik va o'smirlik davrida boshlanadigan aniqlanmagan emotsional va xulq-atvor buzilishi" },
+  "99": { n: "Aniqlanmagan psixik buzilishlar", subs: "Daraja", subl: "daraja (psixotik/nopsixotik)" },
+  "991": { n: "Qo'shimcha aniqlashtirishsiz psixotik buzilish" },
+  "992": { n: "Qo'shimcha aniqlashtirishsiz nopsixotik buzilish" },
+  "999": { n: "Qo'shimcha aniqlashtirishsiz psixik buzilish" }
+};
+
+/* ---- Qo'shimcha belgilar jadvallari ---- */
+const ETIO = {
+  "0": { q: "bosh miya jarohati bilan bog'liq" },
+  "1": { q: "bosh miyaning tomir kasalligi bilan bog'liq" },
+  "2": { q: "epilepsiya bilan bog'liq" },
+  "3": { q: "bosh miya o'smasi (yangi hosilasi) bilan bog'liq" },
+  "4": { q: "odam immunitet tanqisligi virusi (OIV-infeksiya) bilan bog'liq" },
+  "5": { q: "neyrosifilis bilan bog'liq" },
+  "6": { q: "boshqa virusli va bakterial neyroinfeksiyalar bilan bog'liq" },
+  "7": { q: "boshqa kasalliklar bilan bog'liq" },
+  "8": { q: "aralash kasalliklar bilan bog'liq" },
+  "9": { q: "aniqlanmagan kasallik bilan bog'liq" }
+};
+function pick(tbl, keys, over) {
+  const o = {};
+  keys.split("").forEach(k => { o[k] = Object.assign({}, tbl[k], (over && over[k]) || {}); });
+  return o;
+}
+
+const SYMPT = {
+  "0": { q: "qo'shimcha simptomlarsiz" },
+  "1": { q: "boshqa simptomlar bilan, asosan vasvasali" },
+  "2": { q: "boshqa simptomlar bilan, asosan gallyutsinator" },
+  "3": { q: "boshqa simptomlar bilan, asosan depressiv" },
+  "4": { q: "boshqa aralash simptomlar bilan" }
+};
+
+const COURSE = {
+  "0": { a: "uzluksiz", q: "uzluksiz kechishi" },
+  "1": { a: "nuqson ortib boruvchi epizodik", q: "nuqson ortib boruvchi epizodik kechishi" },
+  "2": { a: "barqaror nuqsonli epizodik", q: "barqaror nuqsonli epizodik kechishi" },
+  "3": { a: "epizodik remittirlovchi (rekurrent)", q: "epizodik remittirlovchi (rekurrent) kechishi" },
+  "7": { a: "boshqa turdagi", q: "boshqa turdagi kechishi" },
+  "9": { a: null, q: "kuzatuv davri bir yildan kam" }
+};
+const REMISSION = {
+  "4": { a: "to'liq bo'lmagan remissiyali", q: "to'liq bo'lmagan remissiya" },
+  "5": { a: "to'liq remissiyali", q: "to'liq remissiya" },
+  "6": { a: "remissiyasiz", q: "remissiya yo'q" },
+  "8": { a: "boshqa tipdagi remissiyali", q: "boshqa tipdagi remissiya" },
+  "9": { a: "aniqlanmagan remissiyali", q: "aniqlanmagan remissiya" }
+};
+const F20TYPE = {
+  "1": { n: "Ipoxondrik shizofreniya" },
+  "2": { n: "Senestopatik shizofreniya" },
+  "3": { n: "Shizofreniyaning bolalik tipi" },
+  "4": { n: "Shizofreniyaning atipik shakllari" },
+  "8": { n: "Shizofreniyaning boshqa aniqlangan turlari" }
+};
+function f20phrase(c, r) {
+  const C = COURSE[c];
+  if (r == null) return C.q;
+  const R = REMISSION[r];
+  return C.a ? R.a + " " + C.a + " kechishi" : R.q + ", kuzatuv davri bir yildan kam";
+}
+
+const F23Q = {
+  "0": { q: "o'tkir stress bilan bog'liq emas" },
+  "1": { q: "o'tkir stress bilan bog'liq" },
+  "2": { q: "reaktiv holat" },
+  "3": { q: "xurujsimon shizofreniya, o'tkir stress bilan bog'liq emas" },
+  "4": { q: "xurujsimon shizofreniya, o'tkir stress bilan bog'liq" },
+  "5": { q: "shizofrenik reaksiya, o'tkir stress bilan bog'liq emas" },
+  "6": { q: "shizofrenik reaksiya, o'tkir stress bilan bog'liq" }
+};
+const F23LABEL = "nozologik mansublik va o'tkir stress bilan bog'liqlik";
+const ORG = "etiologiya (asosiy organik yoki somatik kasallik)";
+const ucFirst = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+/* re — qaysi prefiksga (oldingi raqamlar) qo'llanadi; label — belgi ma'nosi;
+   optional — bu belgi ixtiyoriy (kitobda «ma'lum bo'lsa qo'yiladi» deyilgan) */
+const RULES = [
+  { re: /^(00[0129]|01[0-389]|02[0-48]|03[1-4])$/, label: "qo'shimcha psixopatologik simptomlar", short: "Simptomlar", opts: SYMPT },
+  { re: /^028[0-4]$/, label: "etiologiya (demensiyaga sabab bo'lgan kasallik)", short: "Etiologiya",
+    opts: pick(ETIO, "02356789", { "0": { x: "S00.-+ – S09.-+" }, "2": { x: "G40.-+" }, "3": { x: "C00.-+ – D48.-+" }, "5": { x: "A50.-+ – A53.-+" } }),
+    compose: code => ucFirst(ETIO[code[4]].q) + " demensiya, " + SYMPT[code[3]].q },
+  { re: /^04$/, label: ORG, short: "Etiologiya", opts: ETIO },
+  { re: /^05[0189]$/, label: ORG, short: "Etiologiya", opts: ETIO },
+  { re: /^06[0-24-7]$/, label: ORG, short: "Etiologiya", opts: ETIO },
+  { re: /^063[0-7]$|^068[12]$|^069[129]$/, label: ORG, short: "Etiologiya", opts: ETIO },
+  { re: /^07[089]$/, label: ORG, short: "Etiologiya", opts: ETIO },
+  { re: /^071$/, label: "etiologiya (neyroinfeksiya turi)", short: "Etiologiya",
+    opts: pick(ETIO, "45689", { "9": { q: "aniqlanmagan neyroinfeksiya bilan bog'liq" } }) },
+  { re: /^100[0-689]$/, label: "mastlik (o'tkir alkogol intoksikatsiyasi) darajasi", short: "Daraja", opts: {
+      "1": { q: "yengil darajadagi mastlik", note: "Asosan o'zini his qilishdagi o'zgarishlar va xulq-atvorning yengil buzilishlari bilan namoyon bo'ladi." },
+      "2": { q: "o'rta darajadagi mastlik" },
+      "3": { q: "og'ir darajadagi mastlik" } } },
+  { re: /^1\d2[0-69]$/, label: "qaramlik bosqichi", short: "Bosqich", opts: {
+      "1": { q: "boshlang'ich (birinchi) bosqich", note: "Kamida ikki mezon: kuchli istak yoki tortilish; iste'molni nazorat qilish qobiliyatining pasayishi; tolerantlikning oshishi; zararli oqibatlarga qaramay iste'molni davom ettirish." },
+      "2": { q: "o'rta (ikkinchi) bosqich", note: "Boshlang'ich bosqich belgilariga abstinent (to'xtatish) sindromi yoki iste'molga berilib ketish (boshqa qiziqishlardan voz kechish) qo'shiladi." },
+      "3": { q: "oxirgi (uchinchi) bosqich", note: "Rezidual va kech boshlanuvchi psixik buzilishlar (F1x.7), tolerantlikning pasayishi, turg'un somatonevrologik buzilishlar (polinevropatiya, miyacha buzilishlari, yurak va jigar zararlanishi)." },
+      "9": { q: "qaramlik bosqichi noma'lum" } } },
+  { re: /^20[0-689]$/, label: "kechish turi", short: "Kechish", opts: COURSE,
+    compose: (code, base) => base + ", " + f20phrase(code[3]) },
+  { re: /^20[0-689][012379]$/, label: "remissiya holati", short: "Remissiya", opts: REMISSION,
+    compose: code => T["20" + code[2]].n + ", " + f20phrase(code[3], code[4]) },
+  { re: /^208[012379][45689]$/, label: "shizofreniya tipi", short: "Tip", opts: F20TYPE,
+    compose: code => F20TYPE[code[5]].n + ", " + f20phrase(code[3], code[4]) },
+  { re: /^23[0-3]$/, label: F23LABEL, short: "Stress", opts: F23Q },
+  { re: /^23[89]$/, label: F23LABEL, short: "Stress", opts: pick(F23Q, "01256") },
+  { re: /^60[0-24-9]$|^603[01]$/, label: "shaxs holati (kompensatsiya, dekompensatsiya, rivojlanish)", short: "Holat", opts: {
+      "1": { q: "kompensatsiyalangan holat" },
+      "2": { q: "dekompensatsiya holati (psixopatik reaksiya)" },
+      "3": { q: "shaxs rivojlanishi" },
+      "9": { q: "aniqlanmagan holat" } } },
+  { re: /^66[0-289]$/, label: "jinsiy orientatsiya tipi", short: "Orientatsiya", opts: {
+      "0": { q: "geteroseksual tip" },
+      "1": { q: "gomoseksual tip" },
+      "2": { q: "biseksual tip", note: "Faqat ikkala jinsga nisbatan jinsiy jalb aniq bo'lganda qo'llanadi." },
+      "8": { q: "boshqa tip, shu jumladan prepubertat" } } },
+  { re: /^7[0-389]$/, label: "xulq-atvor buzilishlarining ifodalanganligi", short: "Xulq-atvor", opts: {
+      "0": { q: "xulq-atvor buzilishi yo'q yoki sust ifodalangan" },
+      "1": { q: "parvarish va davolashni talab qiluvchi sezilarli xulq-atvor buzilishlari bilan" },
+      "8": { q: "boshqa xulq-atvor buzilishlari bilan" },
+      "9": { q: "xulq-atvor buzilishi haqida ma'lumot yo'q" } } },
+  { re: /^7[0-389][0189]$/, label: "aqliy zaiflik etiologiyasi", short: "Etiologiya", optional: true,
+    optNote: "5-belgi ixtiyoriy: kitobga ko'ra u aqliy zaiflik etiologiyasi ma'lum bo'lganda qo'yiladi.", opts: {
+      "1": { q: "oldingi infeksiya yoki intoksikatsiya sababli", note: "Masalan: prenatal infeksiyalar (qizilcha, sifilis, toksoplazmoz), postnatal infeksiyalar (miya abssessi, ensefalit), intoksikatsiyalar (homiladorlik toksikozi, sariqlik, qo'rg'oshin bilan zaharlanish)." },
+      "2": { q: "oldingi jarohat yoki jismoniy omil sababli", note: "Masalan: tug'ruqdagi mexanik jarohat yoki gipoksiya (asfiksiya), postnatal jarohat yoki gipoksiya." },
+      "3": { q: "fenilketonuriya sababli" },
+      "4": { q: "xromosoma buzilishlari bilan bog'liq", note: "Masalan: Daun kasalligi, Klaynfelter sindromi va boshqa xromosoma kasalliklari." },
+      "5": { q: "gipertireoz sababli" },
+      "6": { q: "gipotireoz sababli" },
+      "7": { q: "chala tug'ilish bilan bog'liq" },
+      "8": { q: "boshqa aniqlangan sabablar tufayli", note: "Masalan: modda almashinuvi, o'sish yoki ovqatlanish buzilishlari, bosh miyaning tug'ma anomaliyasi, kraniostenoz, gipertelorizm, mikrotsefaliya." },
+      "9": { q: "aniqlanmagan sabablar tufayli" } } }
+];
+
+/* ---- Izohlar (kitobdagi «Следует отметить» bandlari asosida, qisqartirilgan) ---- */
+const NOTES = {
+  "0": "Moslashtirilgan variantda bu bo'limdagi ko'pchilik buzilishlar uchun qo'shimcha belgi bilan asosiy organik yoki somatik kasallik (etiologiya) ko'rsatiladi. Asosiy kasallikning o'z kodi XKT-10 ning boshqa sinflaridan alohida qo'yiladi.",
+  "00": "Yulduzcha (*) bilan belgilangan kod hech qachon mustaqil ishlatilmaydi: u asosiy kasallik kodi («+» belgisi bilan, bu yerda G30.-) bilan birga qo'yiladi.",
+  "02": "Yulduzcha (*) bilan belgilangan kod hech qachon mustaqil ishlatilmaydi: u asosiy kasallik kodi («+» belgisi bilan) bilan birga qo'yiladi.",
+  "028": "F02.8 da 5-belgidan (qo'shimcha simptomlar) keyin 6-belgi ham qo'yiladi — u demensiya etiologiyasini bildiradi. Kitobda F02.8x1 va F02.8x4 berilmagan: tomir demensiyasi F01 da, OIV bilan bog'liq demensiya F02.4 da kodlanadi.",
+  "031": "45–64 yoshdagi shaxslarda, kasallik tabiatini aniqlash qiyin bo'lganda qo'llanadi.",
+  "033": "45–64 yoshdagi shaxslarda, kasallik tabiatini aniqlash qiyin bo'lganda qo'llanadi. 5-belgi qaysi psixotik buzilish kuzatilayotganini aniqlaydi.",
+  "032": "65 yosh va undan katta shaxslarda, kasallik tabiatini aniqlash qiyin bo'lganda qo'llanadi.",
+  "034": "65 yosh va undan katta shaxslarda, kasallik tabiatini aniqlash qiyin bo'lganda qo'llanadi. 5-belgi qaysi psixotik buzilish kuzatilayotganini aniqlaydi.",
+  "04": "Alkogol yoki narkotiklar sabab bo'lgan Korsakov sindromi bu yerda emas, F1x.6 da kodlanadi.",
+  "05": "Psixofaol moddalar bilan bog'liq deliriy bu yerda emas: intoksikatsiya deliriysi F1x.03 da, abstinent holatdagi deliriy F1x.4 da kodlanadi.",
+  "063": "5-belgi buzilish darajasini (psixotik yoki nopsixotik) va qutbliligini (monopolyar yoki bipolyar), 6-belgi esa etiologiyani bildiradi.",
+  "1": "2- va 3-belgi (F dan keyingi ikki raqam) moddani, 4-, 5- va 6-belgilar klinik holatni bildiradi. 4- va keyingi belgilarning hammasi ham har bir modda uchun qo'llanavermaydi.",
+  "1x0": "Intoksikatsiya zararli iste'mol, qaramlik yoki psixotik buzilish bilan birga kechsa, ustuvorlik o'sha tashxislarga (F1x.1, F1x.2, F1x.5) beriladi.",
+  "1x2": "Moslashtirilgan variantda 5-belgi joriy holatni, 6-belgi qaramlik bosqichini bildiradi.",
+  "1x5": "Psixotik simptomlar modda iste'moli fonida yoki undan keyingi 2 hafta ichida rivojlanadi va 48 soatdan ortiq saqlanadi.",
+  "1x75": "Buzilish moddani qabul qilgandan 2 haftadan ko'proq vaqt o'tib yuzaga keladi va 6 oydan ortiq davom etadi.",
+  "20": "Moslashtirilgan variantda 5-belgi kechish turini, 6-belgi remissiya holatini bildiradi. F20.8 da 7-belgi shizofreniya tipini aniqlaydi.",
+  "200": "Kechishi epizodik (xurujsimon, F20.01x) yoki surunkali uzluksiz (F20.00x) bo'lishi mumkin.",
+  "201": "Kechishi epizodik (xurujsimon-progredient, F20.11x) yoki surunkali uzluksiz (F20.10x) bo'lishi mumkin.",
+  "202": "Lyutsid katatoniya uzluksiz (F20.20x) yoki xurujsimon-progredient (F20.21x) kechuvchi xavfli shizofreniya varianti. Oneyroid katatoniya xurujsimon (rekurrent) shizofreniyada uchraydi (F20.23x).",
+  "204": "Xurujsimon shizofreniya dinamikasida, psixotik xurujdan keyin rivojlanuvchi bosqich sifatida ko'rib chiqiladi (F20.42x).",
+  "205": "Turg'un shizofrenik nuqson tushunchasiga, shu jumladan shizofreniyaning oxirgi holatiga mos keladi.",
+  "206": "Oddiy tip uzluksiz kechuvchi xavfli shizofreniya varianti sifatida ko'rib chiqiladi (F20.60x).",
+  "23": "Mahalliy tasnifga ko'ra F20 ga to'g'ri kelmaydigan xurujsimon shizofreniya holatlari ham shu yerda x3 yoki x4 5-belgisi bilan kodlanadi; bunda 4-belgi xuruj sindromini ko'rsatadi (F23.03/04, F23.13/14, F23.23/24, F23.33/34). Nozologik mansublik aniqlanmagan bo'lsa, 5-belgi faqat stress bor-yo'qligini ko'rsatadi (0 yoki 1).",
+  "302": "F30.2x, F31.2x, F31.5x, F32.3x va F33.3x mahalliy tasnifdagi maniakal-depressiv psixozga mos keladi (psixotik simptomlar affektga mos bo'lsa). Affektga mos bo'lmagan psixotik simptomlar xurujsimon (rekurrent) shizofreniyaning affektiv-vasvasali varianti sifatida baholanadi.",
+  "60": "Moslashtirilgan variantda 5-belgi (F60.3 da 6-belgi) kompensatsiya, dekompensatsiya (psixopatik reaksiya) yoki shaxs rivojlanishini bildiradi.",
+  "66": "Jinsiy orientatsiyaning o'zi buzilish hisoblanmaydi; 5-belgi faqat shaxs uchun muammo tug'diradigan holatlarni qayd etishda ishlatiladi.",
+  "7": "4-belgi xulq-atvor buzilishlarining ifodalanganligini (agar ular yondosh psixik buzilish bilan bog'liq bo'lmasa), 5-belgi esa etiologiya ma'lum bo'lganda sababini bildiradi.",
+  "70": "Aqliy rivojlanish koeffitsiyenti (IQ) odatda 50–69.",
+  "71": "Aqliy rivojlanish koeffitsiyenti (IQ) odatda 35–49.",
+  "72": "Aqliy rivojlanish koeffitsiyenti (IQ) odatda 20–34.",
+  "73": "Aqliy rivojlanish koeffitsiyenti (IQ) 20 dan past.",
+  "556": "Kitobda bu kod «F55.В» ko'rinishida bosilgan; XKT-10 dagi rasmiy kod — F55.6.",
+  "99": "Tavsiya etilmaydigan qoldiq kategoriya: F00–F98 dagi boshqa kodni qo'llab bo'lmaganda ishlatiladi.",
+  "992": "Kitobda bu rubrika ham «F99.1» deb bosilgan (bosma xato); tartib bo'yicha u F99.2. Amaliyotda tekshirib qo'llang."
+};
+["312", "315", "323", "333"].forEach(k => NOTES[k] = NOTES["302"]);
+
+</script>
+<script>
+/* ================= Dvigatel ================= */
+const DIG = "0123456789".split("");
+const NPOS = 6;
+const lcf = s => s.charAt(0).toLowerCase() + s.slice(1);
+const isSub = c => c[0] === "1" && c.length >= 3;
+const ruleFor = p => RULES.find(r => r.re.test(p));
+
+function node(c) {
+  if (c.length === 1) return BLOCKS[c] ? { n: BLOCKS[c].n } : null;
+  if (T[c]) return T[c];
+  if (isSub(c) && T["1x" + c.slice(2)]) return T["1x" + c.slice(2)];
+  const r = ruleFor(c.slice(0, -1));
+  if (r && r.opts[c.slice(-1)]) return Object.assign({ rule: r }, r.opts[c.slice(-1)]);
+  return null;
+}
+function explicitChild(c) { return !!(T[c] || (isSub(c) && T["1x" + c.slice(2)])); }
+function children(p) {
+  const out = [];
+  DIG.forEach(d => { if (node(p + d)) out.push(d); });
+  return out;
+}
+function full(c) {
+  if (c.length === 1) return BLOCKS[c].n;
+  const nd = node(c);
+  if (nd.full) return nd.full;
+  if (isSub(c) && c.length === 3 && nd.t) return nd.t(SUBF[c[1]]);
+  if (nd.rule && nd.rule.compose) return nd.rule.compose(c, base(c.slice(0, -1)));
+  if (nd.n) return nd.n;
+  const b = base(c.slice(0, -1));
+  return nd.q.charAt(0) === "(" ? b + " " + nd.q : b + ", " + nd.q;
+}
+function base(c) { const nd = node(c); return (nd && nd.b) || full(c); }
+function fmt(c) {
+  if (c.length === 1) return BLOCKS[c].range;
+  return "F" + c.slice(0, 2) + (c.length > 2 ? "." + c.slice(2) : "");
+}
+/* belgi pozitsiyasi haqida: p — oldingi raqamlar */
+function posInfo(p) {
+  const k = p.length;
+  if (k === 0) return { short: "Blok", label: "bo'lim (blok)" };
+  if (k === 1) return p === "1" ? { short: "Modda", label: "psixofaol modda" } : { short: "Kategoriya", label: "kategoriya (uch belgili rubrika)" };
+  const ch = children(p);
+  if (ch.some(d => explicitChild(p + d))) {
+    if (p[0] === "1" && k === 2) return { short: "Holat", label: "klinik holat (to'rt belgili rubrika)" };
+    const pn = node(p);
+    const s = (pn && pn.subs) || (k === 2 ? "Rubrika" : "Variant");
+    const l = (pn && pn.subl) || lcf(s);
+    return { short: s, label: k === 2 ? l + " (to'rt belgili rubrika)" : l };
+  }
+  const r = ruleFor(p);
+  return r ? { short: r.short, label: r.label, optional: !!r.optional, optNote: r.optNote } : { short: "", label: "" };
+}
+/* kod to'liqmi: keyingi belgi yo'q yoki faqat ixtiyoriy */
+function isComplete(c) {
+  const ch = children(c);
+  if (c.length >= NPOS || !ch.length) return true;
+  const r = ruleFor(c);
+  return !!(r && r.optional) && !ch.some(d => explicitChild(c + d));
+}
+/* Н/Т harfi: F13, F15, F16, F18, F19 — klinik holat (4-belgi) tanlangandan keyin */
+const ntRelevant = c => c.length >= 3 && c[0] === "1" && "35689".includes(c[1]);
+const pathHasStar = c => /^0[02]/.test(c);
+
+
+/* ================= Holat ================= */
+const S = { d: ["2", "0", "6", "0", "6", null], nt: "", focus: null };
+function optionsFor(k, d = S.d) {
+  if (k === 0) return DIG.slice();
+  for (let i = 0; i < k; i++) if (d[i] == null) return null;
+  const ch = children(d.slice(0, k).join(""));
+  if (!ch.length) return null;
+  return k === 1 ? ch : [null].concat(ch);
+}
+function normalize(d = S.d) {
+  for (let k = 1; k < NPOS; k++) {
+    const o = optionsFor(k, d);
+    if (!o) d[k] = null;
+    else if (!o.includes(d[k])) d[k] = k === 1 ? o[0] : null;
+  }
+}
+const curCode = () => { let s = ""; for (const x of S.d) { if (x == null) break; s += x; } return s; };
+/* k-belgini o'rnatish. Blok yoki kategoriya o'zgarsa, quyi belgilar tozalanadi (ma'nosi o'zgaradi). */
+function setDigit(k, v, advance) {
+  S.d[k] = v;
+  if (k <= 1) for (let j = 2; j < NPOS; j++) S.d[j] = null;
+  normalize();
+  S.focus = advance && optionsFor(k + 1) ? k + 1 : k;
+  renderAll();
+}
+
+/* ================= Qulf ================= */
+const $ = id => document.getElementById(id);
+const lockGrid = $("lockGrid"), capsRow = $("capsRow");
+const wheels = [];
+(function buildLock() {
+  for (let k = 0; k < NPOS; k++) {
+    if (k === 2) { const dot = document.createElement("div"); dot.className = "dot"; dot.textContent = "."; lockGrid.appendChild(dot); }
+    const w = document.createElement("div");
+    w.className = "wheel"; w.tabIndex = 0; w.setAttribute("role", "spinbutton"); w.dataset.k = k;
+    w.innerHTML = '<div class="strip"></div><div class="win"></div>';
+    lockGrid.appendChild(w); wheels.push(w); bindWheel(w, k);
+  }
+  const cap = document.createElement("div"); cap.className = "cap-r"; lockGrid.appendChild(cap);
+  /* yorliqlar qatori: ustunlar qulf bilan bir xil */
+  capsRow.appendChild(document.createElement("div"));
+  capsRow.appendChild(document.createElement("div"));
+  for (let k = 0; k < NPOS; k++) {
+    if (k === 2) capsRow.appendChild(document.createElement("div"));
+    /* tor ekranda qo'shni yorliqlar ustma-ust tushmasin: har ikkinchisi pastroqda */
+    const l = document.createElement("div"); l.className = k % 2 ? "cap-lbl alt" : "cap-lbl"; l.id = "cap" + k; capsRow.appendChild(l);
+  }
+  capsRow.appendChild(document.createElement("div"));
+})();
+
+const rowH = () => wheels[0].querySelector(".win").offsetHeight || 40;
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function renderWheel(k) {
+  const w = wheels[k], strip = w.firstChild, o = optionsFor(k);
+  strip.style.transition = "none";
+  strip.style.transform = `translateY(${-rowH()}px)`;
+  if (!o) {
+    w.classList.add("off"); w.tabIndex = -1; w.setAttribute("aria-disabled", "true");
+    strip.innerHTML = '<div class="cell none">–</div>'.repeat(5);
+    w.setAttribute("aria-label", `${k + 2}-belgi: faol emas`);
+    w.removeAttribute("aria-valuetext"); w.removeAttribute("aria-valuenow");
+    return;
+  }
+  w.classList.remove("off"); w.tabIndex = 0; w.removeAttribute("aria-disabled");
+  const i = Math.max(0, o.indexOf(S.d[k])), L = o.length;
+  let h = "";
+  for (let j = -2; j <= 2; j++) {
+    const v = o[((i + j) % L + L) % L];
+    h += v == null ? '<div class="cell none">–</div>' : `<div class="cell">${v}</div>`;
+  }
+  strip.innerHTML = h;
+  const pi = posInfo(S.d.slice(0, k).join(""));
+  w.setAttribute("aria-label", `${k + 2}-belgi: ${pi.short}`);
+  w.setAttribute("aria-valuetext", S.d[k] == null ? "tanlanmagan" : S.d[k]);
+  if (S.d[k] == null) w.removeAttribute("aria-valuenow"); else w.setAttribute("aria-valuenow", S.d[k]);
+}
+
+const busy = {};
+function spin(k, steps) {
+  const o = optionsFor(k); if (!o || busy[k] || !steps) return;
+  steps = Math.max(-2, Math.min(2, steps));
+  const i = Math.max(0, o.indexOf(S.d[k])), L = o.length;
+  const commit = () => { busy[k] = false; setDigit(k, o[((i + steps) % L + L) % L]); };
+  if (reduce) return commit();
+  busy[k] = true;
+  const strip = wheels[k].firstChild;
+  strip.style.transition = "transform .17s cubic-bezier(.3,.7,.4,1)";
+  strip.style.transform = `translateY(${(-1 - steps) * rowH()}px)`;
+  let done = false;
+  const fin = () => { if (done) return; done = true; commit(); };
+  strip.addEventListener("transitionend", fin, { once: true });
+  setTimeout(fin, 260);
+}
+
+function bindWheel(w, k) {
+  let y0 = null, dy = 0, drag = false, lastWheel = 0;
+  w.addEventListener("pointerdown", e => {
+    if (w.classList.contains("off") || busy[k]) return;
+    y0 = e.clientY; dy = 0; drag = false;
+    try { w.setPointerCapture(e.pointerId); } catch (err) { /* ixtiyoriy */ }
+  });
+  w.addEventListener("pointermove", e => {
+    if (y0 == null) return;
+    dy = e.clientY - y0;
+    if (Math.abs(dy) > 5) drag = true;
+    if (drag) {
+      const r = rowH(), lim = 2.2 * r;
+      const off = Math.max(-lim, Math.min(lim, dy));
+      const strip = w.firstChild; strip.style.transition = "none"; strip.style.transform = `translateY(${-r + off}px)`;
+    }
+  });
+  const end = e => {
+    if (y0 == null) return;
+    const r = rowH();
+    if (drag) {
+      const st = -Math.round(dy / r);
+      if (st) spin(k, st); else renderWheel(k);
+    } else {
+      const rect = w.getBoundingClientRect(), y = e.clientY - rect.top;
+      if (y < rect.height / 3) spin(k, -1); else if (y > rect.height * 2 / 3) spin(k, 1);
+      else { S.focus = k; renderResult(); }
+    }
+    y0 = null; drag = false;
+  };
+  w.addEventListener("pointerup", end);
+  w.addEventListener("pointercancel", () => { y0 = null; renderWheel(k); });
+  w.addEventListener("wheel", e => {
+    if (w.classList.contains("off")) return;
+    e.preventDefault();
+    const now = Date.now(); if (now - lastWheel < 120) return; lastWheel = now;
+    spin(k, e.deltaY > 0 ? 1 : -1);
+  }, { passive: false });
+  w.addEventListener("keydown", e => {
+    if (e.key === "ArrowUp") { e.preventDefault(); spin(k, -1); }
+    else if (e.key === "ArrowDown") { e.preventDefault(); spin(k, 1); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+      e.preventDefault();
+      const dir = e.key === "ArrowLeft" ? -1 : 1;
+      for (let j = k + dir; j >= 0 && j < NPOS; j += dir) if (!wheels[j].classList.contains("off")) { wheels[j].focus(); break; }
+    } else if (/^[0-9]$/.test(e.key)) {
+      const o = optionsFor(k);
+      if (o && o.includes(e.key)) {
+        setDigit(k, e.key);
+        const nx = wheels[k + 1]; if (nx && !nx.classList.contains("off")) nx.focus();
+      } else flashErr(`${fmt(S.d.slice(0, k).join("") + e.key)} bu tasnifda mavjud emas`);
+    } else if (e.key === "Backspace" || e.key === "Delete") {
+      if (k >= 2) { e.preventDefault(); setDigit(k, null); }
+    }
+  });
+  w.addEventListener("focus", () => { if (S.focus !== k) { S.focus = k; renderResult(); } });
+}
+
+/* ================= Bo'limlar ================= */
+const blocksEl = $("blocks");
+Object.keys(BLOCKS).forEach(b => {
+  const btn = document.createElement("button");
+  btn.type = "button"; btn.className = "chip"; btn.dataset.b = b;
+  btn.innerHTML = `<span class="c">${BLOCKS[b].range}</span><span class="t">${BLOCKS[b].chip}</span>`;
+  btn.title = BLOCKS[b].n;
+  /* bo'lim tanlanganda qulf shu bo'limning birinchi kategoriyasidan boshlanadi */
+  btn.addEventListener("click", () => { S.nt = ""; S.d = [b, null, null, null, null, null]; normalize(); S.focus = 1; renderAll(); });
+  blocksEl.appendChild(btn);
+});
+let lastBlock = null;
+function syncChips() {
+  let active = null;
+  blocksEl.querySelectorAll(".chip").forEach(b => {
+    const on = b.dataset.b === S.d[0];
+    b.setAttribute("aria-pressed", String(on));
+    if (on) active = b;
+  });
+  /* telefonda bo'limlar bir qatorda suriladi: tanlangan bo'lim ko'rinib tursin */
+  if (active && S.d[0] !== lastBlock && blocksEl.scrollWidth > blocksEl.clientWidth + 2) {
+    const l = active.offsetLeft, r = l + active.offsetWidth;
+    if (l < blocksEl.scrollLeft || r > blocksEl.scrollLeft + blocksEl.clientWidth) {
+      try { blocksEl.scrollTo({ left: Math.max(0, l - 8), behavior: reduce ? "auto" : "smooth" }); } catch (e) { blocksEl.scrollLeft = Math.max(0, l - 8); }
+    }
+  }
+  lastBlock = S.d[0];
+}
+
+/* ================= Natija ================= */
+function focusPos() {
+  if (S.focus != null && optionsFor(S.focus)) return S.focus;
+  for (let k = 1; k < NPOS; k++) { const o = optionsFor(k); if (o && S.d[k] == null) return k; }
+  let last = 0; for (let k = 0; k < NPOS; k++) if (optionsFor(k)) last = k;
+  return last;
+}
+function markFocus() {
+  const f = focusPos();
+  wheels.forEach((w, k) => w.classList.toggle("cur", k === f));
+  for (let k = 0; k < NPOS; k++) $("cap" + k).classList.toggle("on", k === f);
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch])); }
+function codeHTML(c, hiLast) {
+  const f = fmt(c);
+  if (!hiLast || c.length < 2) return esc(f);
+  return esc(f.slice(0, -1)) + "<mark>" + esc(f.slice(-1)) + "</mark>";
+}
+function displayCode(c = curCode()) {
+  let s = fmt(c);
+  if (pathHasStar(c)) s += "*";
+  if (S.nt && ntRelevant(c)) s += S.nt;
+  return s;
+}
+let lastLive = "";
+function announce(t) { if (t !== lastLive) { lastLive = t; $("live").textContent = t; } }
+
+function renderResult() {
+  const c = curCode();
+  const done = isComplete(c);
+  const more = done && c.length < NPOS && !!optionsFor(c.length);
+  const name = full(c);
+  const code = displayCode(c);
+  $("rCode").textContent = code;
+  $("rName").textContent = name;
+  const pill = $("rPill");
+  if (done) { pill.className = "pill ok"; pill.textContent = more ? `Kod to'liq · ${c.length + 2}-belgi ixtiyoriy` : "Kod to'liq — qulf ochildi"; }
+  else { pill.className = "pill warn"; pill.textContent = `${c.length + 2}-belgi kerak: ${lcf(posInfo(c).short)}`; }
+  $("lock").classList.toggle("open", done);
+  announce(`${code} — ${name}${done ? "" : ". Kod hali to'liq emas"}`);
+
+  /* tuzilish */
+  let ph = "";
+  for (let i = 1; i <= c.length; i++) {
+    const p = c.slice(0, i), pi = posInfo(c.slice(0, i - 1));
+    const nm = i === 1 ? BLOCKS[p].n : full(p);
+    const star = i > 1 && pathHasStar(p) ? "*" : "";
+    ph += `<li><div><span class="lv-code">${codeHTML(p, i > 2)}${star}</span><span class="lv-tag">${i + 1}-belgi · ${esc(pi.short)}</span></div><div class="lv-name">${esc(nm)}</div></li>`;
+  }
+  if (S.nt && ntRelevant(c)) ph += `<li><div><span class="lv-code">${esc(fmt(c))}<mark>${S.nt}</mark></span><span class="lv-tag">harf</span></div><div class="lv-name">${S.nt === "Н" ? "Narkomaniya: modda nazorat qilinadigan narkotik vositalar ro'yxatiga kiradi" : "Toksikomaniya: modda nazorat qilinadigan narkotik vositalar ro'yxatiga kirmaydi"}</div></li>`;
+  $("rPath").innerHTML = ph;
+
+  /* izoh jadvali: har bir belgi nimani bildiradi */
+  let th = "";
+  for (let i = 1; i <= c.length; i++) {
+    const p = c.slice(0, i), pi = posInfo(c.slice(0, i - 1)), nd = node(p);
+    const val = i === 1 ? BLOCKS[p].n : (nd.q || nd.n);
+    th += `<tr><td>${i + 1}-belgi</td><td>${p.slice(-1)}</td><td><span class="what">${esc(pi.label)}</span>${esc(val)}</td></tr>`;
+  }
+  $("rTbl").innerHTML = th;
+
+  /* izohlar */
+  const notes = [], seen = new Set();
+  const addNote = (t, cls) => { if (t && !seen.has(t)) { seen.add(t); notes.push(`<div class="note${cls ? " " + cls : ""}">${esc(t)}</div>`); } };
+  for (let i = 1; i <= c.length; i++) {
+    const p = c.slice(0, i), nd = node(p);
+    addNote(NOTES[p]);
+    if (isSub(p)) addNote(NOTES["1x" + p.slice(2)]);
+    if (nd && nd.note) addNote(nd.note);
+    if (nd && nd.x) addNote(`Asosiy kasallik kodi («+» bilan belgilanadi, yulduzchali kod bilan birga qo'yiladi): ${nd.x}.`);
+  }
+  if (ntRelevant(c)) addNote("F13, F15, F16, F18, F19 da: aniqlangan modda nazorat qilinadigan narkotik vositalar ro'yxatiga kirsa, asosiy belgidan keyin «Н» (narkomaniya), kirmasa «Т» (toksikomaniya) harfi qo'yiladi. F11, F12, F14 — har doim narkomaniya, harf qo'yilmaydi; F10 va F17 da «Т» qo'yilmaydi. (Kitobda Rossiya Federatsiyasi ro'yxati nazarda tutilgan.)");
+  if (more) addNote(posInfo(c).optNote);
+  if (!done) addNote(`Kod hali to'liq emas: moslashtirilgan variantda ${c.length + 2}-belgi (${posInfo(c).label}) qo'yilishi kerak.`, "warn");
+  $("rNotes").innerHTML = notes.join("");
+
+  /* variantlar */
+  const fk = focusPos(), fo = optionsFor(fk) || [];
+  const fp = S.d.slice(0, fk).join("");
+  $("varsTitle").textContent = `${fk + 2}-belgi variantlari — ${posInfo(fp).label}`;
+  let vh = "";
+  fo.forEach(v => {
+    if (v == null) return;
+    const cc = fp + v;
+    const nm = cc.length === 1 ? BLOCKS[cc].n : full(cc);
+    vh += `<button type="button" class="var" data-k="${fk}" data-v="${v}" aria-current="${S.d[fk] === v}"><span class="vc">${codeHTML(cc, cc.length > 2)}</span><span class="vn">${esc(nm)}</span></button>`;
+  });
+  $("rVars").innerHTML = vh;
+  markFocus();
+}
+$("rVars").addEventListener("click", e => {
+  const b = e.target.closest(".var"); if (!b) return;
+  setDigit(+b.dataset.k, b.dataset.v, true);
+});
+
+function renderAll() {
+  for (let k = 0; k < NPOS; k++) renderWheel(k);
+  for (let k = 0; k < NPOS; k++) {
+    const o = optionsFor(k);
+    $("cap" + k).textContent = o ? posInfo(S.d.slice(0, k).join("")).short : "";
+  }
+  const rel = ntRelevant(curCode());
+  if (!rel) S.nt = "";
+  $("ntBox").hidden = !rel;
+  document.querySelectorAll("#ntBox button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.nt === S.nt)));
+  syncChips();
+  renderResult();
+}
+document.querySelectorAll("#ntBox button").forEach(b => b.addEventListener("click", () => { S.nt = b.dataset.nt; renderAll(); }));
+
+/* ================= Qidiruv ================= */
+let errT;
+function flashErr(t) { const e = $("err"); e.textContent = t; clearTimeout(errT); errT = setTimeout(() => { e.textContent = ""; }, 5000); }
+function applyCode(str) {
+  let s = String(str).trim().toUpperCase().replace(/^[FФ]/, "").replace(/[\s.,*+]/g, "");
+  let nt = "";
+  const m = s.match(/[НТNT]$/);
+  if (m) { nt = { "Н": "Н", "N": "Н", "Т": "Т", "T": "Т" }[m[0]]; s = s.slice(0, -1); }
+  if (/[XХ]/.test(s)) { flashErr("«x» o'rniga aniq raqam kiriting, masalan F20.606"); return; }
+  if (!/^\d{1,6}$/.test(s)) { flashErr("Kodni F harfi va raqamlar bilan kiriting, masalan F20.606 yoki F13.242Н"); return; }
+  const d = [null, null, null, null, null, null];
+  let bad = false;
+  for (let i = 0; i < s.length; i++) {
+    const o = optionsFor(i, d);
+    if (!o || !o.includes(s[i])) { flashErr(`${fmt(s.slice(0, i + 1))} bu tasnifda mavjud emas — kodning to'g'ri qismi qo'yildi.`); bad = true; break; }
+    d[i] = s[i];
+  }
+  if (d[0] == null) return;
+  normalize(d);
+  S.d = d; S.focus = null;
+  S.nt = ntRelevant(curCode()) ? nt : "";
+  if (!bad) $("err").textContent = "";
+  renderAll();
+}
+$("searchForm").addEventListener("submit", e => { e.preventDefault(); applyCode($("codeInput").value); });
+/* havola orqali ochish: sahifa.html#F20.606 */
+function fromHash() {
+  let h = "";
+  try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) { h = ""; }
+  if (/^[FfФф]?\d/.test(h)) applyCode(h);
+}
+window.addEventListener("hashchange", fromHash);
+
+/* ================= Nusxa ================= */
+$("copyBtn").addEventListener("click", () => {
+  const txt = `${displayCode()} ${$("rName").textContent}`;
+  const btn = $("copyBtn");
+  const ok = () => { btn.textContent = "Nusxalandi"; setTimeout(() => { btn.textContent = "Nusxa olish"; }, 1600); };
+  const fallback = () => {
+    const r = document.createRange(); r.selectNodeContents($("rName"));
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    btn.textContent = "Belgilandi — Ctrl+C"; setTimeout(() => { btn.textContent = "Nusxa olish"; }, 2200);
+  };
+  try { navigator.clipboard.writeText(txt).then(ok, fallback); } catch (e) { fallback(); }
+});
+
+if (!document.documentElement.lang) document.documentElement.lang = "uz";
+normalize(); renderAll(); fromHash();
+window.addEventListener("resize", () => { for (let k = 0; k < NPOS; k++) renderWheel(k); });
+/* Saytga iframe orqali qo'yilganda: balandlikni ota sahifaga yuboradi */
+(function () {
+  if (window.parent === window) return;
+  let last = 0;
+  const post = () => {
+    const h = Math.ceil(document.documentElement.scrollHeight);
+    if (Math.abs(h - last) > 2) { last = h; try { window.parent.postMessage({ type: "xkt10-height", height: h }, "*"); } catch (e) { /* e'tiborsiz */ } }
+  };
+  if ("ResizeObserver" in window) new ResizeObserver(post).observe(document.body);
+  window.addEventListener("load", post);
+  post();
+})();
+</script>
 </body>
 </html>
