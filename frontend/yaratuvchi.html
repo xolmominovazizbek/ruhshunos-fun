@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yaratuvchi — Ruhshunos</title>
+<title>Yaratuvchi va Yordam — Ruhshunos</title>
+<meta name="description" content="Ruhshunos loyihasi muallifi haqida, sayt bo'yicha savollar, ruhiy salomatlik bo'yicha yordam raqamlari va loyihaga hamkor bo'lish uchun ma'lumot.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/disclaimer.css">
 </head>
 <body>
 <main class="container">
@@ -16,10 +18,12 @@
   <nav class="site-nav">
     <a href="index.html">Home</a>
     <a href="testlar.html">Testlar</a>
+    <a href="xkt-10.html">XKT-10</a>
+    <a href="xkt-11.html">XKT-11</a>
     <a href="yaratuvchi.html" class="active">Yaratuvchi</a>
-    <a href="yordam.html">Yordam</a>
   </nav>
 
+  <!-- ============ 1. YARATUVCHI (bio) ============ -->
   <div class="panel">
     <div class="profile">
       <div class="photo-wrap">
@@ -32,15 +36,90 @@
         <p class="role secondary">Psixiatr — Surxondaryo mintaqaviy ixtisoslashtirilgan ruhiy salomatlik ilmiy-amaliy tibbiyot markazi</p>
         <p class="desc">Hozirda psixiatriya va narkologiya (14.00.18) yo'nalishi bo'yicha PhD dissertatsiyasi ustida ishlayapman. Ruhiy salomatlik, shaxsni o'z-o'ziga tanitish va psixologik bilimlarni ommaga yaqinlashtirish — mening asosiy yo'nalishim.</p>
         <div class="tagline">Ruhshunos — odamlarni o'z-o'zini chuqurroq tanishga va ruhiy holatiga aniqlik kiritishga undaydigan, ilmiy asosga tayangan testlar platformasi.</div>
-        <a class="more-link" href="yordam.html">Kontakt va hamkorlik uchun Yordam bo'limiga o'ting →</a>
+        <a class="more-link" href="#yordam">Kontakt va hamkorlik uchun pastga tushing ↓</a>
       </div>
     </div>
+  </div>
+
+  <!-- ============ 2. YORDAM VA ALOQA ============ -->
+  <div id="yordam" class="page-heading" style="margin-top:36px; scroll-margin-top:16px;">Yordam va aloqa</div>
+  <div class="page-subheading">
+    Bu bo'limda uchta narsa bor: og'ir holatda qo'ng'iroq qiladigan
+    raqamlar, sayt bo'yicha savol berish yo'llari va loyihaga
+    qo'shilish uchun ma'lumot.
+  </div>
+
+  <!-- 2a. YORDAM RAQAMLARI (birinchi o'rinda) — js/disclaimer.js faylidan keladi. -->
+  <div data-rs-help>
+    <!-- JS o'chirilgan bo'lsa ko'rinadigan zaxira matn -->
+    <h2>Yordam kerakmi?</h2>
+    <p>Hayotga xavf tug'ilsa — <a href="tel:103">103</a>.</p>
+  </div>
+
+  <!-- 2b. SAYT DOIRASI -->
+  <div class="panel">
+    <h2>Ruhshunos nima qiladi, nima qilmaydi</h2>
+    <div class="scope-grid">
+      <div class="scope-card">
+        <h3>✅ Qiladi</h3>
+        <ul>
+          <li>O'zbek tilida testlar taklif qiladi</li>
+          <li>Natijani tushunarli tilda izohlaydi</li>
+          <li>Qayerga murojaat qilish mumkinligini ko'rsatadi</li>
+        </ul>
+      </div>
+      <div class="scope-card scope-card--no">
+        <h3>❌ Qilmaydi</h3>
+        <ul>
+          <li>Tashxis qo'ymaydi</li>
+          <li>Dori tavsiya qilmaydi va retsept bermaydi</li>
+          <li>Onlayn konsultatsiya o'tkazmaydi</li>
+          <li>Shoshilinch yordam ko'rsatmaydi</li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-muted" style="font-size:0.85rem;">
+      Shaxsiy shikoyatlaringizni quyidagi kanallarga yozmang — ular
+      maxfiy tibbiy aloqa uchun mo'ljallanmagan. Ko'rikka yozilish uchun
+      yashash joyingizdagi ruhiy salomatlik markaziga murojaat qiling.
+    </p>
+  </div>
+
+  <!-- 2c. MENING KONTAKTIM -->
+  <div class="panel block-help">
+    <h3><span class="num">1</span> Sayt va testlar bo'yicha savol</h3>
+    <p class="section-intro">Test ishlamadi, savol noto'g'ri tarjima qilingan yoki xato topdingizmi — yozing. Xatoliklar haqidagi xabarlar men uchun eng qimmatli xat turi.</p>
+    <div class="region">📍 Hududim: Surxondaryo viloyati, Termiz</div>
+    <div class="contact-grid">
+      <a class="contact-pill" href="mailto:xolmominov2018@gmail.com?subject=Ruhshunos%20—%20sayt%20bo'yicha%20savol">✉️ E-pochta</a>
+      <a class="contact-pill" href="tel:+998909106067">☎️ +998 90 910 60 67</a>
+      <a class="contact-pill" href="https://t.me/xolmominov2018" target="_blank" rel="noopener">✈️ Telegram</a>
+      <a class="contact-pill" href="https://wa.me/998909106067" target="_blank" rel="noopener">💬 WhatsApp</a>
+      <a class="contact-pill" href="https://www.instagram.com/dr.azizbek_xolmominov" target="_blank" rel="noopener">📷 Instagram</a>
+      <a class="contact-pill" href="https://www.youtube.com/@azizbekxolmominov-psixiatr" target="_blank" rel="noopener">▶️ YouTube</a>
+    </div>
+    <p class="note">Javob odatda bir necha kun ichida keladi, shoshilinch holatlar uchun bu kanallar yaramaydi.</p>
+  </div>
+
+  <!-- 2d. HAMKORLIK -->
+  <div class="panel block-partner">
+    <h3><span class="num">2</span> Loyihaga qo'shilish</h3>
+    <p class="section-intro">Ruhshunos bitta odam tomonidan yuritiladi. Dasturchi, dizayner, psixolog yoki tarjimon sifatida yordam bermoqchi bo'lsangiz — quyidagi tugma orqali yozing va xatda shu to'rt narsani ko'rsating:</p>
+    <ol class="plain">
+      <li>Yo'nalishingiz (dasturlash, dizayn, psixologiya, matn)</li>
+      <li>Tajribangiz va ish namunalari havolasi</li>
+      <li>Haftada qancha vaqt ajratishingiz mumkin</li>
+      <li>Bog'lanish uchun kontakt</li>
+    </ol>
+    <a class="btn" href="mailto:xolmominov2018@gmail.com?subject=Ruhshunos%20—%20hamkorlik%20taklifi&body=Yo'nalishim%3A%20%0A%0ATajribam%3A%20%0A%0AVaqtim%3A%20%0A%0AKontaktim%3A%20%0A">🤝 Xat yozish</a>
   </div>
 </main>
 
 <footer class="site-footer">
   Ruhshunos — o'zingizni anglash va ruhiy holatga aniqlik kiritish platformasi
-  <div style="margin-top:8px;"><a href="maxfiylik.html">Maxfiylik siyosati</a> · <a href="yordam.html">Yordam</a></div>
+  <div style="margin-top:8px;"><a href="maxfiylik.html">Maxfiylik siyosati</a></div>
 </footer>
+
+<script src="js/disclaimer.js"></script>
 </body>
 </html>
