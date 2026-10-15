@@ -17,6 +17,20 @@ FRONTEND_DIR = BASE_DIR.parent / "frontend"
 app = FastAPI(title="Ruhshunos")
 
 
+@app.middleware("http")
+async def no_cache_static(request, call_next):
+    """Statik fayllar (HTML/CSS/JS) brauzer tomonidan muddatsiz keshlanib
+    qolmasligi uchun. Sayt tez-tez yangilanadi; muddatsiz kesh ba'zi
+    foydalanuvchilarda eski sahifa ko'rinishiga olib kelgan edi (masalan,
+    allaqachon ochiq bo'lgan sahifalarda yangi navigatsiya ko'rinmay
+    qolgan holat). ETag asosida revalidatsiya hali ham ishlaydi — bu
+    faqat brauzerning so'ramasdan eski nusxani ishlatishini oldini oladi.
+    """
+    response = await call_next(request)
+    response.headers["Cache-Control"] = "no-cache, must-revalidate"
+    return response
+
+
 class AnswersRequest(BaseModel):
     answers: list[str]
 
