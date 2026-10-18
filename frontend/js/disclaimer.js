@@ -3,12 +3,11 @@
    Fayl: js/disclaimer.js
 
    Ishlatilishi — sahifada shunchaki bitta div qoldiring:
-     <div data-rs-note="fun"></div>   → ko'ngilochar testlar
      <div data-rs-note="sci"></div>   → ilmiy asosga tayangan testlar
      <div data-rs-help></div>         → yordam raqamlari bloki
 
    Matnni yoki raqamni o'zgartirish kerak bo'lsa — faqat shu fayl
-   tahrirlanadi, 15 ta HTML sahifa emas.
+   tahrirlanadi, HTML sahifalar emas.
    ============================================================ */
 
 (function () {
@@ -45,15 +44,6 @@
   /* ---------- 2. MATNLAR ---------- */
 
   var NOTES = {
-    fun: {
-      label: "Ko'ngilochar test",
-      body:
-        "<p>Bu test faqat ko'ngilochar maqsadda tuzilgan. Uning ortida ilmiy " +
-        "asos yo'q va natija sizning shaxsiyatingiz, qobiliyatingiz yoki " +
-        "kelajagingiz haqida hech narsa aytmaydi.</p>" +
-        "<p>Muhim qarorlarni — sog'liq, o'qish, ish yoki munosabatlar " +
-        "haqidagi qarorlarni — bunday natijalarga tayanib qabul qilmang.</p>"
-    },
     sci: {
       label: "Ilmiy konstruktga asoslangan",
       body:
@@ -88,7 +78,7 @@
   }
 
   function renderNote(kind) {
-    var n = NOTES[kind] || NOTES.fun;
+    var n = NOTES[kind] || NOTES.sci;
     return (
       '<span class="rs-note__label">' + esc(n.label) + "</span>" + n.body
     );
@@ -119,7 +109,7 @@
   function init() {
     document.querySelectorAll("[data-rs-note]").forEach(function (el) {
       var kind = el.getAttribute("data-rs-note");
-      el.className = "rs-note" + (kind === "sci" ? " rs-note--sci" : " rs-note--fun");
+      el.className = "rs-note rs-note--sci";
       el.innerHTML = renderNote(kind);
     });
 
