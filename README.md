@@ -5,7 +5,7 @@ testlarning veb-sayt versiyasi. Ruhshunos — ikki toifa foydalanuvchiga mo'ljal
 ilmiy platforma:
 
 - **O'z holatini tushunmoqchi bo'lganlar** uchun — ilmiy asoslangan o'z-o'zini
-  baholash testlari ("Testlar" bo'limi).
+  baholash testlari ("Ruhiyatga doir testlar" bo'limi).
 - **Tibbiyot talabalari** (bakalavr, ordinator, rezident, magistr, doktorant) va
   **soha mutaxassislari** (psixiatr, narkolog, nevropatolog, psixoterapevt, tibbiy
   psixolog, suitsidolog) uchun — bilim testlari va klinik tasnif ko'rsatmalari
@@ -13,7 +13,7 @@ ilmiy platforma:
 
 ## Bo'limlar
 
-**🔬 Testlar — ilmiy asoslangan psixologik o'z-o'zini baholash:**
+**🔬 Ruhiyatga doir testlar — ilmiy asoslangan psixologik o'z-o'zini baholash:**
 - 🧩 Hissiy intellekt (EQ)
 - ❤️ Emotsional intellekt — Nevzat Tarhan testi
 - 🌀 Stress darajasi
@@ -22,6 +22,9 @@ ilmiy platforma:
 - 🔢 Digit Span, 🟢 Corsi bloklari (xotira)
 - 🎭 Leonhard-Shmishek xarakter aksentuatsiyasi (88 savol, 10 shkala)
 - 😰 GAD-7, 🌧️ PHQ-9, 📋 Spilberger-Xanin STAI, 🩺 HADS (klinik skrining testlari)
+- 📋 Shizofreniya klinik baholash shkalalari — PANSS, BNSS, CDSS, PSP, C-SSRS
+  (shifokor tomonidan to'ldiriladi, o'z-o'zini baholash emas; `shkalalar-uz.html`
+  hozircha faqat kirish sahifasi — 5 ta shkalaning o'zi keyinroq qo'shiladi)
 
 **📖 Fanga doir testlar — ob'ektiv bilim savollari, psixologik test emas:**
 - 🧠 Bosh miya nervlari (I, II, III, IV, VI juftlar) — 50 savol
@@ -66,7 +69,7 @@ backend/
     hads.py                 # HADS xavotir/depressiya shkalasi
 frontend/
   index.html                 # Home — bosh sahifa
-  testlar.html                # Testlar — psixologik o'z-o'zini baholash testlari
+  ruhiyatga-doir-testlar.html  # Ruhiyatga doir testlar — psixologik o'z-o'zini baholash + klinik shkalalar
   fanga-doir-testlar.html      # Fanga doir testlar — tibbiy bilim testlari
   xkt-10.html, xkt-11.html      # ICD-10 / ICD-11 kod qulfi vositalari
   demensiya-test.html            # Demensiya bilim testi (o'z mustaqil dvigatelida)
