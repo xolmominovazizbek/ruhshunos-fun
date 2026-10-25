@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PSP shkalasi — Ruhshunos</title>
+<meta name="description" content="PSP — Shaxsiy va ijtimoiy funksionallik shkalasi (1–100). O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022) asosida o‘zbek tilida.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>:root{
+  --bg:#f5f3ee; --surface:#ffffff; --surface-2:#faf8f4; --ink:#1d2421; --ink-2:#4b5551; --ink-3:#7a837f;
+  --line:#e2ddd3; --line-2:#cfc8bb; --accent:#1f5e57; --accent-ink:#ffffff; --accent-soft:#e3efec;
+  --p:#b4532a; --p-soft:#f6e6dd; --n:#3d5a8a; --n-soft:#e2e9f4; --g:#7a6a1e; --g-soft:#f1ecd6;
+  --ok:#2e7d4f; --ok-soft:#e1f1e7; --bad:#a83a32; --bad-soft:#f6e1df; --warn:#9a6a00; --warn-soft:#f7ecd2;
+  --shadow:0 1px 2px rgba(30,30,20,.05),0 4px 14px rgba(30,30,20,.05);
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+    --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+    --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+    --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+  --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+  --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+  --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header.top{padding:28px 0 18px;border-bottom:1px solid var(--line);background:var(--surface)}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+h1{font-size:clamp(24px,4vw,34px);line-height:1.15;margin:6px 0 8px;font-weight:700;letter-spacing:-.01em}
+.lead{color:var(--ink-2);max-width:780px;margin:0}
+.meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px;max-width:780px}
+.meta-row label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-3);font-weight:500}
+.meta-row input{font:inherit;font-size:15px;padding:9px 11px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink);min-width:0}
+.meta-row input:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Info */
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:20px 0 6px}
+.info details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:0}
+.info summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px}
+.info summary::-webkit-details-marker{display:none}
+.info summary::after{content:"+";color:var(--ink-3);font-weight:500}
+.info details[open] summary::after{content:"−"}
+.info .body{padding:0 16px 14px;color:var(--ink-2);font-size:14.5px}
+.info .body ul,.info .body ol{padding-left:18px;margin:6px 0}
+.info .body li{margin:3px 0}
+.warnbox{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);color:var(--ink);border-radius:var(--radius);padding:12px 16px;font-size:14.5px;margin:14px 0 0}
+.warnbox b{color:var(--warn)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding:18px 0 110px}
+@media (min-width:980px){.layout{grid-template-columns:minmax(0,1fr) 350px;padding-bottom:48px}}
+
+/* Overview grid */
+.overview{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.ov-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.ov-head h2{font-size:15px;margin:0}
+.ov-head .muted{font-size:13px;color:var(--ink-3)}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.ov-cell{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:5px 2px 4px;text-align:center;cursor:pointer;line-height:1.1}
+.ov-cell .c{font-size:11px;color:var(--ink-3);font-weight:600}
+.ov-cell .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:16px;margin-top:2px;color:var(--ink-3)}
+.ov-cell.done .v{color:var(--ink)}
+.ov-cell[data-s="P"].done{background:var(--p-soft);border-color:color-mix(in srgb,var(--p) 40%,transparent)}
+.ov-cell[data-s="N"].done{background:var(--n-soft);border-color:color-mix(in srgb,var(--n) 40%,transparent)}
+.ov-cell[data-s="G"].done{background:var(--g-soft);border-color:color-mix(in srgb,var(--g) 40%,transparent)}
+.ov-cell:hover{border-color:var(--line-2)}
+.ov-cell:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Sections */
+.section{margin-top:26px}
+.sec-head{display:flex;align-items:center;gap:12px;margin:0 0 10px;flex-wrap:wrap}
+.sec-tag{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;padding:3px 9px;border-radius:999px;color:#fff}
+.sec-head h2{margin:0;font-size:20px;font-weight:700}
+.sec-head .range{color:var(--ink-3);font-size:13.5px}
+.sec-head .sub{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px}
+[data-s="P"] .sec-tag{background:var(--p)} [data-s="N"] .sec-tag{background:var(--n)} [data-s="G"] .sec-tag{background:var(--g)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sec-tag{color:#141816}}
+:root[data-theme="dark"] .sec-tag{color:#141816}
+
+/* Item card */
+.item{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;scroll-margin-top:14px}
+.item.open{box-shadow:var(--shadow);border-color:var(--line-2)}
+.item-h{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;background:none;border:0;text-align:left;cursor:pointer}
+.item-h:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.code{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;min-width:42px;text-align:center;padding:4px 0;border-radius:7px}
+.item[data-s="P"] .code{background:var(--p-soft);color:var(--p)}
+.item[data-s="N"] .code{background:var(--n-soft);color:var(--n)}
+.item[data-s="G"] .code{background:var(--g-soft);color:var(--g)}
+.iname{flex:1;min-width:0;font-weight:600;font-size:15.5px;line-height:1.3}
+.iname small{display:block;font-weight:400;color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.sup{display:inline-block;font-size:11px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.pill{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px;min-width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1.5px dashed var(--line-2);color:var(--ink-3)}
+.item.scored .pill{border:0;background:var(--accent);color:var(--accent-ink)}
+.chev{flex:none;width:18px;height:18px;color:var(--ink-3);transition:transform .18s}
+.item.open .chev{transform:rotate(180deg)}
+.item-b{display:none;padding:0 14px 14px}
+.item.open .item-b{display:block}
+.def{margin:0 0 6px;color:var(--ink)}
+.basis{margin:0 0 12px;font-size:13.5px;color:var(--ink-2);padding-left:10px;border-left:3px solid var(--line-2)}
+.basis b{color:var(--ink-2);font-weight:600}
+.note{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:8px 10px;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--line-2)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.opt .n{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:17px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+.opt .t{font-size:14.5px;color:var(--ink-2)}
+.opt .t b{display:block;color:var(--ink);font-weight:600;font-size:14px;margin-bottom:1px}
+.opt[aria-checked="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.opt[aria-checked="true"] .n{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opt[aria-checked="true"] .t{color:var(--ink)}
+.item-f{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+.lnk{background:none;border:0;color:var(--accent);cursor:pointer;font-size:14px;padding:4px 0;font-weight:500}
+.lnk:disabled{color:var(--ink-3);cursor:default}
+
+/* Summary */
+aside.summary{align-self:start}
+@media (min-width:980px){aside.summary{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow:auto}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.card h3{margin:0 0 10px;font-size:15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--surface-2)}
+.stat .l{font-size:12px;color:var(--ink-3);font-weight:600;display:flex;justify-content:space-between}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:24px;line-height:1.15;margin-top:2px}
+.stat .bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.stat .bar i{display:block;height:100%;width:0;border-radius:2px;transition:width .2s}
+.stat.P .bar i{background:var(--p)} .stat.N .bar i{background:var(--n)} .stat.G .bar i{background:var(--g)} .stat.T .bar i{background:var(--accent)}
+.stat.T{grid-column:1/-1;background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.stat.T .v{font-size:30px}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0;border-top:1px dashed var(--line)}
+.kv:first-of-type{border-top:0}
+.kv span:last-child{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.progress{font-size:13px;color:var(--ink-3);margin-top:10px}
+.verdict{border-radius:10px;padding:10px 12px;font-size:14px;margin-top:8px}
+.verdict b{display:block;font-size:15px;margin-bottom:2px}
+.v-ok{background:var(--ok-soft);color:var(--ink)} .v-ok b{color:var(--ok)}
+.v-bad{background:var(--bad-soft);color:var(--ink)} .v-bad b{color:var(--bad)}
+.v-warn{background:var(--warn-soft);color:var(--ink)} .v-warn b{color:var(--warn)}
+.v-neu{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--line-2)}
+.rem-list{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px}
+.rem-list span{font-family:"IBM Plex Mono",monospace;font-size:12px;text-align:center;padding:5px 0;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-3)}
+.rem-list span.y{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.rem-list span.x{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.field{display:flex;gap:8px;align-items:center;margin-top:6px}
+.field input{width:100%;font:inherit;font-family:"IBM Plex Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink)}
+.small{font-size:12.5px;color:var(--ink-3);margin:6px 0 0}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{border:1px solid var(--line-2);background:var(--surface);border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.full{grid-column:1/-1}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Mobile bar */
+.mbar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.08);padding:9px 16px calc(9px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;z-index:20}
+.mbar .m{flex:1;display:flex;gap:12px;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;overflow:hidden}
+.mbar .m span{white-space:nowrap}
+.mbar .m em{font-style:normal;color:var(--ink-3);font-weight:500;margin-right:3px}
+.mbar .btn{padding:8px 12px}
+@media (min-width:980px){.mbar{display:none}}
+
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--ink-3);font-size:13px;background:var(--surface)}
+footer p{margin:4px 0;max-width:900px}
+
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.toast.show{opacity:1}
+
+/* Print */
+#printSheet{display:none}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  header.top,.layout,.mbar,footer,.info,.warnbox,.toast{display:none!important}
+  #printSheet{display:block;padding:0}
+  #printSheet h2{font-size:16pt;margin:0 0 4pt}
+  #printSheet table{width:100%;border-collapse:collapse;margin-top:8pt;font-size:10pt}
+  #printSheet th,#printSheet td{border:1px solid #999;padding:3pt 5pt;text-align:left}
+  #printSheet td.s{text-align:center;font-weight:700;width:36pt}
+  .pcols{columns:2;column-gap:16pt}
+  .pcols table{break-inside:avoid}
+}
+
+/* ---- shared extras for scale pages ---- */
+:root{
+  --c1:#b4532a; --c1s:#f6e6dd; --c2:#3d5a8a; --c2s:#e2e9f4; --c3:#7a6a1e; --c3s:#f1ecd6;
+  --c4:#6b4a8a; --c4s:#ece4f4; --c5:#2f7a66; --c5s:#dff0ea; --c6:#8a3d5e; --c6s:#f4e1ea;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+    --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+  }
+}
+:root[data-theme="dark"]{
+  --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+  --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+}
+.back{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:500;text-decoration:none;margin-bottom:12px}
+.back:hover{text-decoration:underline}
+.site-nav{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:16px 0}
+.site-nav a{flex:1;text-align:center;padding:10px 8px;font-size:12.5px;font-weight:600;color:var(--ink);text-decoration:none;border-right:1px solid var(--line);white-space:nowrap}
+.site-nav a:last-child{border-right:none}
+.site-nav a:hover{background:var(--surface-2)}
+.site-nav a.active{background:var(--accent);color:var(--accent-ink)}
+.item .code.k{background:var(--ks);color:var(--k)}
+.ov-cell.k.done{background:var(--ks);border-color:color-mix(in srgb,var(--k) 40%,transparent)}
+.sec-tag.k{background:var(--k)}
+.qs{margin:0 0 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.qs summary{cursor:pointer;padding:9px 12px;font-weight:600;font-size:14px;color:var(--accent);list-style:none}
+.qs summary::-webkit-details-marker{display:none}
+.qs summary::before{content:"▸ ";}
+.qs[open] summary::before{content:"▾ ";}
+.qs .qb{padding:0 12px 10px;font-size:14.5px;color:var(--ink-2)}
+.qs .qb p{margin:6px 0}
+.qs .qb b{color:var(--ink);font-weight:600}
+.alert{border-radius:var(--radius);padding:12px 14px;font-size:14.5px;margin-top:10px;background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent)}
+.alert b{color:var(--bad);display:block;margin-bottom:3px;font-size:15px}
+.alert a{font-weight:600}
+.alert ul{margin:6px 0 0;padding-left:18px}
+.sub-list .kv span:first-child{color:var(--ink-2)}
+.dom{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.lvl-legend{font-size:12.5px;color:var(--ink-3);margin:4px 0 0}
+
+.domain{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.domain h3{margin:0 0 2px;font-size:16px;display:flex;gap:10px;align-items:center}
+.domain h3 .code{font-size:13px}
+.domain .hint{font-size:13.5px;color:var(--ink-2);margin:0 0 10px}
+.opt .n.rn{font-size:13px}
+.step-h{display:flex;align-items:baseline;gap:10px;margin:26px 0 10px}
+.step-h .num{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:2px 9px}
+.step-h h2{margin:0;font-size:20px}
+.ivs{display:flex;flex-direction:column;gap:6px}
+.iv{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:start;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer}
+.iv:hover{border-color:var(--line-2)}
+.iv:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.iv .r{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px}
+.iv .t{font-size:14px;color:var(--ink-2)}
+.iv .tag{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:5px;padding:1px 6px;margin-left:6px}
+.iv[aria-checked="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.iv[aria-checked="true"] .t{color:var(--ink)}
+.iv.sug{border-style:dashed;border-color:var(--accent)}
+.scores{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:420px}
+.sc{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:17px;padding:10px 0;border-radius:9px;border:1px solid var(--line);background:var(--surface);cursor:pointer}
+.sc[aria-checked="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.sc:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.consider{columns:2;column-gap:22px;font-size:14px;color:var(--ink-2);padding-left:18px;margin:10px 0 0}
+@media (max-width:620px){.consider{columns:1}}
+.sugbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;margin-bottom:10px;font-size:14.5px}
+.sugbox b{font-family:"IBM Plex Mono",monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="ruhiyatga-doir-testlar.html" class="active">Ruhiyatga doir testlar</a>
+    <a href="fanga-doir-testlar.html">Fanga doir testlar</a>
+    <a href="xkt-10.html">XKT-10</a>
+    <a href="xkt-11.html">XKT-11</a>
+    <a href="tuzuvchilar.html">Tuzuvchilar</a>
+  </nav>
+</div>
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="shkalalar-uz.html">← Barcha shkalalar</a>
+    <div class="eyebrow">Klinik shkala · Psixiatriya · Ijtimoiy funksionallik</div>
+    <h1>PSP — Shaxsiy va ijtimoiy funksionallik shkalasi</h1>
+    <p class="lead">Bemorning so‘nggi 7 kundagi funksionalligini 4 asosiy sohada baholab, 1–100 oralig‘idagi yakuniy ball beradi. Milliy protokolga ko‘ra remissiyada ijtimoiy tiklanish (ijtimoiy funksionallik va hayot sifati) PSP bo‘yicha baholanadi.</p>
+    <div class="meta-row">
+      <label>Bemor (kod yoki initsiallar)<input id="mPatient" autocomplete="off" placeholder="masalan, A.B.-024"></label>
+      <label>Baholash sanasi<input id="mDate" type="date"></label>
+      <label>Baholovchi shifokor<input id="mRater" autocomplete="off" placeholder="F.I.Sh."></label>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="warnbox"><b>Faqat mutaxassislar uchun.</b> PSP klinik suhbat, kuzatuv va yaqinlar ma’lumotlari asosida shifokor tomonidan to‘ldiriladi. Suitsidal xulq va suitsid xavfi bu shkalada hisobga olinmaydi. Ma’lumotlar faqat shu brauzerda saqlanadi.</div>
+  <div class="info">
+    <details>
+      <summary>Qanday baholanadi</summary>
+      <div class="body"><ol>
+        <li>4 sohaning har birida so‘nggi 7 kundagi qiyinchilik darajasini belgilang. a–c sohalari va d sohasi uchun mezonlar alohida.</li>
+        <li>Sahifa 10 ballik oraliqni avtomatik taklif qiladi. Klinik asos bo‘lsa, boshqa oraliqni tanlashingiz mumkin.</li>
+        <li>Oraliq ichida boshqa hayotiy sohalardagi funksionallikni hisobga olib yakuniy ballni tanlang.</li>
+      </ol></div>
+    </details>
+    <details>
+      <summary>Talqin</summary>
+      <div class="body"><ul>
+        <li><b>71–100</b> — faqat yengil qiyinchiliklar.</li>
+        <li><b>31–70</b> — turli darajada cheklangan funksionallik.</li>
+        <li><b>1–30</b> — funksionallik shunchalik buzilganki, bemor faol ko‘mak yoki doimiy nazoratga muhtoj.</li>
+      </ul></div>
+    </details>
+  </div>
+
+  <div class="layout">
+    <main>
+      <div class="step-h"><span class="num">1</span><h2>Sohalar bo‘yicha qiyinchilik darajasi</h2></div>
+      <div id="domains"></div>
+
+      <div class="step-h"><span class="num">2</span><h2>10 ballik oraliq</h2></div>
+      <div class="sugbox" id="sugbox">Oraliq taklif qilinishi uchun 4 sohaning barchasini baholang.</div>
+      <div class="ivs" id="ivs" role="radiogroup" aria-label="10 ballik oraliq"></div>
+
+      <div class="step-h"><span class="num">3</span><h2>Yakuniy ball</h2></div>
+      <div class="sugbox" id="scoreHint">Avval oraliqni tanlang.</div>
+      <div class="scores" id="scores" role="radiogroup" aria-label="Yakuniy ball"></div>
+      <div class="card" style="margin-top:14px;box-shadow:none">
+        <h3>Oraliq ichida ballni tanlashda hisobga olinadigan sohalar</h3>
+        <ul class="consider">
+          <li>Jismoniy va psixologik holatiga g‘amxo‘rlik</li>
+          <li>Yashash joyini (uy, xona) yaxshi holatda saqlash</li>
+          <li>Ro‘zg‘or, oila yoki statsionar hayotida ishtirok</li>
+          <li>Intim va jinsiy munosabatlar</li>
+          <li>Farzandlarga g‘amxo‘rlik</li>
+          <li>Do‘stlar va yordam beruvchilar bilan aloqalar</li>
+          <li>Jamiyat qoidalariga rioya qilish</li>
+          <li>Qiziqishlar doirasi</li>
+          <li>Moliyani boshqarish</li>
+          <li>Transport va telefondan foydalanish</li>
+          <li>Inqirozli vaziyatlarni yengish qobiliyati</li>
+        </ul>
+      </div>
+    </main>
+
+    <aside class="summary" id="summary">
+      <div class="card">
+        <h3>Natija</h3>
+        <div class="stats">
+          <div class="stat T"><div class="l"><span>PSP yakuniy ball</span><span>1–100</span></div><div class="v" id="sT">—</div><div class="bar"><i id="bT"></i></div></div>
+        </div>
+        <div id="verd"></div>
+        <div class="sub-list" style="margin-top:10px" id="domList"></div>
+      </div>
+      <div class="card"><div class="btns">
+        <button class="btn primary" id="btnCopy">Natijani nusxalash</button>
+        <button class="btn" id="btnPrint">Chop etish</button>
+        <button class="btn full" id="btnReset">Yangi bemor (tozalash)</button>
+      </div></div>
+    </aside>
+  </div>
+</div>
+
+<div class="mbar"><div class="m"><span><em>PSP</em><b id="mT">—</b></span><span id="mV" style="font-family:'IBM Plex Sans',sans-serif;font-weight:500;color:var(--ink-2)"></span></div><button class="btn primary" id="btnToSum">Natija</button></div>
+
+<footer><div class="wrap">
+  <p><b>Manba:</b> O‘zR SSV. Shizofreniya bilan og‘rigan bemorlarni olib borish bo‘yicha milliy klinik protokol. Toshkent, 2022 — ilova «Шкала личностного и социального функционирования».</p>
+  <p><b>Asl shkala:</b> Morosini P.L., Magliano L., Brambilla L., Ugolini S., Pioli R. Development, reliability and acceptability of a new version of the DSM-IV SOFAS to assess routine social functioning. <i>Acta Psychiatr Scand.</i> 2000;101(4):323–329.</p>
+  <p><b>Izoh:</b> oraliqni avtomatik taklif qilish protokoldagi «10 ballik oraliqni tanlash» qoidalariga asoslangan; a–c sohalaridan birida «juda kuchli» buzilish bo‘lsa, 1–10 oralig‘i taklif qilinadi. Yakuniy qaror shifokorda.</p>
+</div></footer>
+<div id="printSheet"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var LV=["Yo‘q","Yengil","Sezilarli","Yaqqol","Kuchli","Juda kuchli"];
+var RN=["i","ii","iii","iv","v","vi"];
+var AC=["Qiyinchilik yo‘q.",
+ "Bu haqda faqat juda yaqin odamlar biladi.",
+ "Qiyinchiliklar bemor atrofidagi har qanday odamga ko‘rinadi, lekin bemorning ijtimoiy-madaniy mavqei, yoshi, jinsi va ma’lumotini hisobga olganda bu sohadagi funksiyalarini bajarishiga jiddiy salbiy ta’sir qilmaydi.",
+ "Qiyinchiliklar bu sohadagi funksiyalarni bajarishga kuchli to‘sqinlik qiladi; shunga qaramay bemor hali ham kasbiy yoki ijtimoiy yordamsiz, garchi har doim ham adekvat bo‘lmasa-da va/yoki epizodik tarzda, faoliyat yurita oladi; tashqi yordam bilan avvalgi funksionallik darajasiga erisha oladi.",
+ "Qiyinchiliklar bu sohada kasbiy yordamsiz faoliyat yuritishni imkonsiz qiladi yoki destruktiv xulqqa olib keladi, ammo hayot uchun xavf yo‘q.",
+ "Buzilishlar va qiyinchiliklar shunchalik yaqqolki, bemorning hayoti xavf ostida."];
+var AD=["Muammo yo‘q.",
+ "Biroz qo‘pol, odamovi yoki doimo shikoyat qiladi.",
+ "Masalan, haddan tashqari baland gapiradi, boshqalar bilan o‘ta tortinmasdan (familyar) muomala qiladi yoki ijtimoiy jihatdan nomaqbul tarzda ovqatlanadi.",
+ "Odamlarni ochiq haqorat qiladi, narsalarni sindiradi yoki buzadi; xulqi ko‘pincha ijtimoiy nomaqbul, lekin xavfli emas (masalan, jamoat joyida yechinadi yoki siydik chiqaradi).",
+ "Tez-tez og‘zaki tahdidlar yoki tez-tez jismoniy zo‘ravonlik, lekin jiddiy jismoniy zarar yetkazish niyati yoki imkoniyatisiz.",
+ "Jiddiy jismoniy zarar yetkazish maqsadidagi tez-tez agressiv xatti-harakatlar yoki jiddiy jismoniy zararga olib kelishi ehtimoli yuqori bo‘lgan harakatlar."];
+var DOMS=[
+ {c:"a",n:"Ijtimoiy foydali faoliyat",sm:"ish va o‘qishni ham o‘z ichiga oladi",a:AC},
+ {c:"b",n:"Yaqinlar bilan munosabatlar va boshqa ijtimoiy munosabatlar",a:AC},
+ {c:"c",n:"O‘zini o‘zi parvarish qilish",a:AC},
+ {c:"d",n:"Bezovta qiluvchi va agressiv xulq",sm:"atrofdagilar tinchligini buzuvchi xulq",a:AD,
+  note:"Agressiv xulq faqat bir marta kuzatilgan bo‘lsa va vaziyat yoki anamnez u yaqin kelajakda takrorlanmasligiga asos bersa, darajani 1 pog‘onaga pasaytirish mumkin (masalan, «kuchli»dan «yaqqol»ga)."}
+];
+var IV=[
+ {lo:91,hi:100,t:"Barcha 4 asosiy sohada to‘liq funksionallik. Bemorning ijobiy fazilatlari atrofdagilar tomonidan yuqori baholanadi, kundalik muammolarni muvaffaqiyatli hal qiladi, qiziqishlari va faoliyati xilma-xil."},
+ {lo:81,hi:90,t:"Barcha 4 asosiy sohada yaxshi funksionallik; faqat hamma odamlar duch keladigan muammo yoki qiyinchiliklar mavjud."},
+ {lo:71,hi:80,t:"a–c sohalaridan bir yoki bir nechtasida yengil qiyinchiliklar."},
+ {lo:61,hi:70,t:"a–c sohalaridan bir yoki bir nechtasida sezilarli, lekin yaqqol darajaga yetmagan qiyinchiliklar yoki d sohasida yengil muammolar."},
+ {lo:51,hi:60,t:"a–c sohalaridan birida yaqqol qiyinchiliklar yoki d sohasida sezilarli muammolar."},
+ {lo:41,hi:50,t:"a–c sohalaridan ikkitasi yoki undan ko‘pida yaqqol qiyinchiliklar yoki birida kuchli qiyinchiliklar (d sohasida sezilarli muammolar bilan yoki ularsiz)."},
+ {lo:31,hi:40,t:"a–c sohalaridan birida kuchli va kamida yana bittasida yaqqol qiyinchiliklar yoki d sohasida yaqqol muammolar."},
+ {lo:21,hi:30,t:"a–c sohalaridan ikkitasida kuchli qiyinchiliklar yoki d sohasida kuchli muammolar (a–c dagi buzilishlar bilan yoki ularsiz)."},
+ {lo:11,hi:20,t:"Barcha a–d sohalarida kuchli buzilishlar yoki d sohasida juda kuchli muammolar. Bemor tashqi qo‘zg‘atuvchilarga javob bersa — 16–20, javob bermasa — 11–15 ball."},
+ {lo:1,hi:10,t:"Aspontanlik va xulqning o‘ta qo‘pol buzilishlari: hayot uchun xavfsiz (6–10 ball) yoki hayot uchun xavfli, masalan ochlik, suvsizlanish, infeksiya, xavfli vaziyatni baholay olmaslik tufayli o‘lim xavfi (1–5 ball)."}
+];
+var KEY="psp_uz_draft_v1";
+var st={dom:{},iv:null,score:null,meta:{patient:"",date:"",rater:""}};
+function $(id){return document.getElementById(id);}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&typeof d==="object"){st.dom=d.dom||{};st.iv=(typeof d.iv==="number")?d.iv:null;st.score=d.score||null;st.meta=d.meta||st.meta;}}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+function complete(){return ["a","b","c","d"].every(function(k){return typeof st.dom[k]==="number";});}
+
+/* oraliq taklifi: IV indeksini qaytaradi (0 = 91–100) */
+function suggest(){
+  if(!complete())return null;
+  var ac=[st.dom.a,st.dom.b,st.dom.c],d=st.dom.d;
+  function cnt(min){return ac.filter(function(x){return x>=min;}).length;}
+  if(cnt(5)>=1)return {i:9,why:"a–c sohalaridan birida juda kuchli buzilish (hayot xavf ostida)."};
+  if((cnt(4)===3&&d>=4)||d===5)return {i:8,why:d===5?"d sohasida juda kuchli muammolar.":"Barcha a–d sohalarida kuchli buzilishlar."};
+  if(cnt(4)>=2||d===4)return {i:7,why:cnt(4)>=2?"a–c sohalaridan ikkitasida kuchli qiyinchiliklar.":"d sohasida kuchli muammolar."};
+  if((cnt(4)>=1&&cnt(3)>=2)||d===3)return {i:6,why:d===3&&!(cnt(4)>=1&&cnt(3)>=2)?"d sohasida yaqqol muammolar.":"Bir sohada kuchli va yana bittasida yaqqol qiyinchiliklar."};
+  if(cnt(3)>=2||cnt(4)>=1)return {i:5,why:cnt(4)>=1?"a–c sohalaridan birida kuchli qiyinchiliklar.":"a–c sohalaridan ikkitasi yoki ko‘pida yaqqol qiyinchiliklar."};
+  if(cnt(3)>=1||d===2)return {i:4,why:cnt(3)>=1?"a–c sohalaridan birida yaqqol qiyinchiliklar.":"d sohasida sezilarli muammolar."};
+  if(cnt(2)>=1||d===1)return {i:3,why:cnt(2)>=1?"a–c sohalarida sezilarli qiyinchiliklar.":"d sohasida yengil muammolar."};
+  if(cnt(1)>=1)return {i:2,why:"a–c sohalarida yengil qiyinchiliklar."};
+  return {i:1,why:"Hech bir sohada qiyinchilik yo‘q. Funksionallik a’lo darajada bo‘lsa (ijobiy fazilatlar yuqori baholanadi, qiziqishlar xilma-xil), 91–100 oralig‘ini tanlang.",alt:0};
+}
+function interp(s){
+  if(s>=71)return {k:"v-ok",h:"Yengil qiyinchiliklar",d:"71–100: faqat yengil qiyinchiliklar."};
+  if(s>=31)return {k:"v-warn",h:"Cheklangan funksionallik",d:"31–70: turli darajada cheklangan funksionallik."};
+  return {k:"v-bad",h:"Funksionallik keskin buzilgan",d:"1–30: bemor faol ko‘mak yoki doimiy nazoratga muhtoj."};
+}
+
+function build(){
+  var h="";
+  DOMS.forEach(function(D){
+    h+='<div class="domain"><h3><span class="code" style="background:var(--accent-soft);color:var(--accent);padding:3px 9px;border-radius:7px;font-family:\'IBM Plex Mono\',monospace">'+D.c+'</span>'+esc(D.n)+'</h3>'+(D.sm?'<p class="hint">'+esc(D.sm)+'</p>':'<p class="hint"></p>')+(D.note?'<p class="note">'+esc(D.note)+'</p>':'')+'<div class="opts" role="radiogroup" aria-label="'+esc(D.n)+'">';
+    D.a.forEach(function(t,i){h+='<button class="opt" role="radio" aria-checked="false" data-d="'+D.c+'" data-v="'+i+'"><span class="n rn">'+RN[i]+'</span><span class="t"><b>'+LV[i]+'</b>'+esc(t)+'</span></button>';});
+    h+='</div></div>';
+  });
+  $("domains").innerHTML=h;
+  var iv="";
+  IV.forEach(function(x,i){iv+='<button class="iv" role="radio" aria-checked="false" data-iv="'+i+'"><span class="r">'+x.hi+'–'+x.lo+'</span><span class="t" id="ivt-'+i+'">'+esc(x.t)+'</span></button>';});
+  $("ivs").innerHTML=iv;
+}
+function render(){
+  document.querySelectorAll(".opt[data-d]").forEach(function(b){b.setAttribute("aria-checked",String(st.dom[b.dataset.d]===+b.dataset.v));});
+  var sg=suggest();
+  if(sg){
+    var x=IV[sg.i];
+    $("sugbox").innerHTML='Taklif etilgan oraliq: <b>'+x.hi+'–'+x.lo+'</b>'+(sg.alt===0?' yoki <b>100–91</b>':'')+'. '+esc(sg.why)+(st.iv!==null&&st.iv!==sg.i&&st.iv!==sg.alt?' <span style="color:var(--warn)">Siz boshqa oraliq tanladingiz — klinik asosini qayd eting.</span>':'');
+  } else $("sugbox").textContent="Oraliq taklif qilinishi uchun 4 sohaning barchasini baholang.";
+  document.querySelectorAll(".iv").forEach(function(b){
+    var i=+b.dataset.iv;
+    b.setAttribute("aria-checked",String(st.iv===i));
+    b.classList.toggle("sug",!!sg&&(sg.i===i||sg.alt===i));
+    var t=$("ivt-"+i); t.innerHTML=esc(IV[i].t)+((sg&&(sg.i===i||sg.alt===i))?'<span class="tag">taklif</span>':'');
+  });
+  var sc="";
+  if(st.iv!==null){
+    var R=IV[st.iv];
+    for(var v=R.hi;v>=R.lo;v--)sc+='<button class="sc" role="radio" aria-checked="'+(st.score===v)+'" data-s="'+v+'">'+v+'</button>';
+    $("scoreHint").innerHTML='Oraliq <b class="mono">'+R.hi+'–'+R.lo+'</b>. Pastdagi sohalarni hisobga olib yakuniy ballni tanlang.'+(st.iv===8?' Tashqi qo‘zg‘atuvchilarga javob bersa 16–20, javob bermasa 11–15.':'')+(st.iv===9?' Hayot uchun xavf bo‘lmasa 6–10, xavf bo‘lsa 1–5.':'');
+  } else $("scoreHint").textContent="Avval oraliqni tanlang.";
+  $("scores").innerHTML=sc;
+  var s=st.score;
+  $("sT").textContent=s||"—";$("mT").textContent=s||"—";$("bT").style.width=s?s+"%":"0";
+  if(s){var I=interp(s);$("verd").innerHTML='<div class="verdict '+I.k+'"><b>'+I.h+'</b>'+I.d+'</div>';$("mV").textContent=I.h;}
+  else{$("verd").innerHTML="";$("mV").textContent="";}
+  var dl="";
+  DOMS.forEach(function(D){var v=st.dom[D.c];dl+='<div class="kv"><span>'+D.c+') '+esc(D.n.split(" va ")[0])+'</span><span>'+(typeof v==="number"?RN[v]+" · "+LV[v]:"—")+'</span></div>';});
+  $("domList").innerHTML=dl;
+  renderPrint();
+}
+function report(){
+  var L=["PSP — Shaxsiy va ijtimoiy funksionallik shkalasi"];
+  if(st.meta.patient)L.push("Bemor: "+st.meta.patient);
+  if(st.meta.date)L.push("Sana: "+st.meta.date);
+  if(st.meta.rater)L.push("Baholovchi: "+st.meta.rater);
+  L.push("");
+  DOMS.forEach(function(D){var v=st.dom[D.c];L.push(D.c+") "+D.n+": "+(typeof v==="number"?LV[v]+" ("+RN[v]+")":"—"));});
+  if(st.iv!==null)L.push("Oraliq: "+IV[st.iv].hi+"–"+IV[st.iv].lo);
+  L.push("PSP yakuniy ball: "+(st.score||"—")+(st.score?" — "+interp(st.score).h:""));
+  return L.join("\n");
+}
+function renderPrint(){
+  var h='<h2>PSP — Shaxsiy va ijtimoiy funksionallik shkalasi</h2><div>Bemor: <b>'+esc(st.meta.patient||"________")+'</b> &nbsp; Sana: <b>'+esc(st.meta.date||"________")+'</b> &nbsp; Baholovchi: <b>'+esc(st.meta.rater||"________")+'</b></div><table><tr><th>Soha</th>';
+  LV.forEach(function(l){h+='<th>'+l+'</th>';});h+='</tr>';
+  DOMS.forEach(function(D){h+='<tr><td>'+D.c+') '+esc(D.n)+'</td>';for(var i=0;i<6;i++)h+='<td class="s">'+(st.dom[D.c]===i?"✕":"")+'</td>';h+='</tr>';});
+  h+='</table><table><tr><th>10 ballik oraliq</th><th>Yakuniy ball</th><th>Talqin</th></tr><tr><td class="s">'+(st.iv!==null?IV[st.iv].hi+"–"+IV[st.iv].lo:"")+'</td><td class="s">'+(st.score||"")+'</td><td>'+(st.score?interp(st.score).h:"")+'</td></tr></table><p style="font-size:9pt;margin-top:8pt">Manba: O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022); Morosini va b. (2000).</p>';
+  $("printSheet").innerHTML=h;
+}
+function toast(t){var e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){e.classList.remove("show");},1800);}
+
+function bind(){
+  document.addEventListener("click",function(e){
+    var t=e.target.closest(".opt[data-d],.iv,.sc");if(!t)return;
+    if(t.dataset.d){
+      var wasComplete=complete(), prevSug=suggest();
+      st.dom[t.dataset.d]=+t.dataset.v;
+      var sg=suggest();
+      if(sg&&(st.iv===null||(prevSug&&st.iv===prevSug.i))){ if(st.iv!==sg.i){st.iv=sg.i;st.score=null;} }
+      save();render();
+      if(!wasComplete&&complete())setTimeout(function(){$("sugbox").scrollIntoView({behavior:"smooth",block:"center"});},150);
+      return;
+    }
+    if(t.dataset.iv!==undefined){var i=+t.dataset.iv;if(st.iv!==i){st.iv=i;st.score=null;}save();render();setTimeout(function(){$("scoreHint").scrollIntoView({behavior:"smooth",block:"center"});},120);return;}
+    if(t.dataset.s){st.score=+t.dataset.s;save();render();toast("Yakuniy ball: "+st.score);if(window.innerWidth<980)$("summary").scrollIntoView({behavior:"smooth"});}
+  });
+  [["mPatient","patient"],["mDate","date"],["mRater","rater"]].forEach(function(p){var el=$(p[0]);el.value=st.meta[p[1]]||"";el.addEventListener("input",function(){st.meta[p[1]]=el.value;save();renderPrint();});});
+  $("btnCopy").addEventListener("click",function(){
+    var txt=report();
+    function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Nusxalandi");}catch(err){toast("Nusxalab bo‘lmadi");}document.body.removeChild(ta);}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(function(){toast("Nusxalandi");},fb);else fb();
+  });
+  $("btnPrint").addEventListener("click",function(){renderPrint();window.print();});
+  $("btnReset").addEventListener("click",function(){if(!confirm("Barcha ma’lumotlar o‘chiriladi. Davom etasizmi?"))return;st={dom:{},iv:null,score:null,meta:{patient:"",date:"",rater:""}};save();["mPatient","mDate","mRater"].forEach(function(id){$(id).value="";});render();window.scrollTo({top:0,behavior:"smooth"});});
+  $("btnToSum").addEventListener("click",function(){$("summary").scrollIntoView({behavior:"smooth"});});
+}
+load();build();bind();render();
+})();
+</script>
+</body>
+</html>

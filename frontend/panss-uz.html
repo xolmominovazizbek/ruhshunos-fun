@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PANSS shkalasi — Ruhshunos</title>
+<meta name="description" content="PANSS — Pozitiv va negativ sindromlar shkalasi (30 band). O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022) asosida o‘zbek tilida klinik baholash vositasi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f3ee; --surface:#ffffff; --surface-2:#faf8f4; --ink:#1d2421; --ink-2:#4b5551; --ink-3:#7a837f;
+  --line:#e2ddd3; --line-2:#cfc8bb; --accent:#1f5e57; --accent-ink:#ffffff; --accent-soft:#e3efec;
+  --p:#b4532a; --p-soft:#f6e6dd; --n:#3d5a8a; --n-soft:#e2e9f4; --g:#7a6a1e; --g-soft:#f1ecd6;
+  --ok:#2e7d4f; --ok-soft:#e1f1e7; --bad:#a83a32; --bad-soft:#f6e1df; --warn:#9a6a00; --warn-soft:#f7ecd2;
+  --shadow:0 1px 2px rgba(30,30,20,.05),0 4px 14px rgba(30,30,20,.05);
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+    --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+    --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+    --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+  --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+  --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+  --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header.top{padding:28px 0 18px;border-bottom:1px solid var(--line);background:var(--surface)}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+h1{font-size:clamp(24px,4vw,34px);line-height:1.15;margin:6px 0 8px;font-weight:700;letter-spacing:-.01em}
+.lead{color:var(--ink-2);max-width:780px;margin:0}
+.meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px;max-width:780px}
+.meta-row label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-3);font-weight:500}
+.meta-row input{font:inherit;font-size:15px;padding:9px 11px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink);min-width:0}
+.meta-row input:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Info */
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:20px 0 6px}
+.info details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:0}
+.info summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px}
+.info summary::-webkit-details-marker{display:none}
+.info summary::after{content:"+";color:var(--ink-3);font-weight:500}
+.info details[open] summary::after{content:"−"}
+.info .body{padding:0 16px 14px;color:var(--ink-2);font-size:14.5px}
+.info .body ul,.info .body ol{padding-left:18px;margin:6px 0}
+.info .body li{margin:3px 0}
+.warnbox{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);color:var(--ink);border-radius:var(--radius);padding:12px 16px;font-size:14.5px;margin:14px 0 0}
+.warnbox b{color:var(--warn)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding:18px 0 110px}
+@media (min-width:980px){.layout{grid-template-columns:minmax(0,1fr) 350px;padding-bottom:48px}}
+
+/* Overview grid */
+.overview{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.ov-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.ov-head h2{font-size:15px;margin:0}
+.ov-head .muted{font-size:13px;color:var(--ink-3)}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.ov-cell{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:5px 2px 4px;text-align:center;cursor:pointer;line-height:1.1}
+.ov-cell .c{font-size:11px;color:var(--ink-3);font-weight:600}
+.ov-cell .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:16px;margin-top:2px;color:var(--ink-3)}
+.ov-cell.done .v{color:var(--ink)}
+.ov-cell[data-s="P"].done{background:var(--p-soft);border-color:color-mix(in srgb,var(--p) 40%,transparent)}
+.ov-cell[data-s="N"].done{background:var(--n-soft);border-color:color-mix(in srgb,var(--n) 40%,transparent)}
+.ov-cell[data-s="G"].done{background:var(--g-soft);border-color:color-mix(in srgb,var(--g) 40%,transparent)}
+.ov-cell:hover{border-color:var(--line-2)}
+.ov-cell:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Sections */
+.section{margin-top:26px}
+.sec-head{display:flex;align-items:center;gap:12px;margin:0 0 10px;flex-wrap:wrap}
+.sec-tag{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;padding:3px 9px;border-radius:999px;color:#fff}
+.sec-head h2{margin:0;font-size:20px;font-weight:700}
+.sec-head .range{color:var(--ink-3);font-size:13.5px}
+.sec-head .sub{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px}
+[data-s="P"] .sec-tag{background:var(--p)} [data-s="N"] .sec-tag{background:var(--n)} [data-s="G"] .sec-tag{background:var(--g)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sec-tag{color:#141816}}
+:root[data-theme="dark"] .sec-tag{color:#141816}
+
+/* Item card */
+.item{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;scroll-margin-top:14px}
+.item.open{box-shadow:var(--shadow);border-color:var(--line-2)}
+.item-h{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;background:none;border:0;text-align:left;cursor:pointer}
+.item-h:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.code{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;min-width:42px;text-align:center;padding:4px 0;border-radius:7px}
+.item[data-s="P"] .code{background:var(--p-soft);color:var(--p)}
+.item[data-s="N"] .code{background:var(--n-soft);color:var(--n)}
+.item[data-s="G"] .code{background:var(--g-soft);color:var(--g)}
+.iname{flex:1;min-width:0;font-weight:600;font-size:15.5px;line-height:1.3}
+.iname small{display:block;font-weight:400;color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.sup{display:inline-block;font-size:11px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.pill{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px;min-width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1.5px dashed var(--line-2);color:var(--ink-3)}
+.item.scored .pill{border:0;background:var(--accent);color:var(--accent-ink)}
+.chev{flex:none;width:18px;height:18px;color:var(--ink-3);transition:transform .18s}
+.item.open .chev{transform:rotate(180deg)}
+.item-b{display:none;padding:0 14px 14px}
+.item.open .item-b{display:block}
+.def{margin:0 0 6px;color:var(--ink)}
+.basis{margin:0 0 12px;font-size:13.5px;color:var(--ink-2);padding-left:10px;border-left:3px solid var(--line-2)}
+.basis b{color:var(--ink-2);font-weight:600}
+.note{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:8px 10px;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--line-2)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.opt .n{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:17px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+.opt .t{font-size:14.5px;color:var(--ink-2)}
+.opt .t b{display:block;color:var(--ink);font-weight:600;font-size:14px;margin-bottom:1px}
+.opt[aria-checked="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.opt[aria-checked="true"] .n{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opt[aria-checked="true"] .t{color:var(--ink)}
+.item-f{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+.lnk{background:none;border:0;color:var(--accent);cursor:pointer;font-size:14px;padding:4px 0;font-weight:500}
+.lnk:disabled{color:var(--ink-3);cursor:default}
+
+/* Summary */
+aside.summary{align-self:start}
+@media (min-width:980px){aside.summary{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow:auto}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.card h3{margin:0 0 10px;font-size:15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--surface-2)}
+.stat .l{font-size:12px;color:var(--ink-3);font-weight:600;display:flex;justify-content:space-between}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:24px;line-height:1.15;margin-top:2px}
+.stat .bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.stat .bar i{display:block;height:100%;width:0;border-radius:2px;transition:width .2s}
+.stat.P .bar i{background:var(--p)} .stat.N .bar i{background:var(--n)} .stat.G .bar i{background:var(--g)} .stat.T .bar i{background:var(--accent)}
+.stat.T{grid-column:1/-1;background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.stat.T .v{font-size:30px}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0;border-top:1px dashed var(--line)}
+.kv:first-of-type{border-top:0}
+.kv span:last-child{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.progress{font-size:13px;color:var(--ink-3);margin-top:10px}
+.verdict{border-radius:10px;padding:10px 12px;font-size:14px;margin-top:8px}
+.verdict b{display:block;font-size:15px;margin-bottom:2px}
+.v-ok{background:var(--ok-soft);color:var(--ink)} .v-ok b{color:var(--ok)}
+.v-bad{background:var(--bad-soft);color:var(--ink)} .v-bad b{color:var(--bad)}
+.v-warn{background:var(--warn-soft);color:var(--ink)} .v-warn b{color:var(--warn)}
+.v-neu{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--line-2)}
+.rem-list{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px}
+.rem-list span{font-family:"IBM Plex Mono",monospace;font-size:12px;text-align:center;padding:5px 0;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-3)}
+.rem-list span.y{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.rem-list span.x{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.field{display:flex;gap:8px;align-items:center;margin-top:6px}
+.field input{width:100%;font:inherit;font-family:"IBM Plex Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink)}
+.small{font-size:12.5px;color:var(--ink-3);margin:6px 0 0}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{border:1px solid var(--line-2);background:var(--surface);border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.full{grid-column:1/-1}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Mobile bar */
+.mbar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.08);padding:9px 16px calc(9px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;z-index:20}
+.mbar .m{flex:1;display:flex;gap:12px;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;overflow:hidden}
+.mbar .m span{white-space:nowrap}
+.mbar .m em{font-style:normal;color:var(--ink-3);font-weight:500;margin-right:3px}
+.mbar .btn{padding:8px 12px}
+@media (min-width:980px){.mbar{display:none}}
+
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--ink-3);font-size:13px;background:var(--surface)}
+footer p{margin:4px 0;max-width:900px}
+
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.toast.show{opacity:1}
+
+/* Print */
+#printSheet{display:none}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  header.top,.layout,.mbar,footer,.info,.warnbox,.toast{display:none!important}
+  #printSheet{display:block;padding:0}
+  #printSheet h2{font-size:16pt;margin:0 0 4pt}
+  #printSheet table{width:100%;border-collapse:collapse;margin-top:8pt;font-size:10pt}
+  #printSheet th,#printSheet td{border:1px solid #999;padding:3pt 5pt;text-align:left}
+  #printSheet td.s{text-align:center;font-weight:700;width:36pt}
+  .pcols{columns:2;column-gap:16pt}
+  .pcols table{break-inside:avoid}
+}
+.back{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:500;text-decoration:none;margin-bottom:12px}
+.back:hover{text-decoration:underline}
+.site-nav{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:16px 0}
+.site-nav a{flex:1;text-align:center;padding:10px 8px;font-size:12.5px;font-weight:600;color:var(--ink);text-decoration:none;border-right:1px solid var(--line);white-space:nowrap}
+.site-nav a:last-child{border-right:none}
+.site-nav a:hover{background:var(--surface-2)}
+.site-nav a.active{background:var(--accent);color:var(--accent-ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="ruhiyatga-doir-testlar.html" class="active">Ruhiyatga doir testlar</a>
+    <a href="fanga-doir-testlar.html">Fanga doir testlar</a>
+    <a href="xkt-10.html">XKT-10</a>
+    <a href="xkt-11.html">XKT-11</a>
+    <a href="tuzuvchilar.html">Tuzuvchilar</a>
+  </nav>
+</div>
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="shkalalar-uz.html">← Barcha shkalalar</a>
+    <div class="eyebrow">Klinik shkala · Psixiatriya · XKT-10 F20</div>
+    <h1>PANSS — Pozitiv va negativ sindromlar shkalasi</h1>
+    <p class="lead">Shizofreniyada psixopatologik simptomatika og‘irligini baholovchi 30 bandli klinik shkala: 7 ta pozitiv, 7 ta negativ va 16 ta umumiy psixopatologiya bandi. Matn O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022) ilovasi asosida o‘zbek tiliga o‘girilgan.</p>
+    <div class="meta-row">
+      <label>Bemor (kod yoki initsiallar)<input id="mPatient" autocomplete="off" placeholder="masalan, A.B.-024"></label>
+      <label>Baholash sanasi<input id="mDate" type="date"></label>
+      <label>Baholovchi shifokor<input id="mRater" autocomplete="off" placeholder="F.I.Sh."></label>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="warnbox"><b>Faqat mutaxassislar uchun.</b> PANSS o‘z-o‘zini baholash testi emas. Uni psixiatr klinik intervyu (≈ 30–45 daqiqa), kuzatuv hamda tibbiyot xodimlari va qarindoshlar ma’lumotlari asosida to‘ldiradi. Kiritilgan ma’lumotlar faqat shu brauzerda saqlanadi va hech qayerga yuborilmaydi.</div>
+
+  <div class="info">
+    <details>
+      <summary>Qanday baholanadi</summary>
+      <div class="body">
+        <ul>
+          <li>Baholash davri — <b>so‘nggi 7 kun</b>.</li>
+          <li>Har bir band 1 dan 7 gacha baholanadi: 1 — yo‘q, 2 — minimal, 3 — yengil, 4 — o‘rtacha, 5 — kuchli, 6 — juda kuchli, 7 — ekstremal.</li>
+          <li>Talablari <b>to‘liq bajarilgan eng yuqori</b> ballni tanlang. Belgi ta’rifga umuman mos kelmasa, 1 qo‘yiladi.</li>
+          <li>Har bir band uchun berilgan «Baholash asosi»ga amal qiling: suhbat, kuzatuv yoki uchinchi shaxslar ma’lumotlari.</li>
+          <li>Ball tanlangach, keyingi baholanmagan band avtomatik ochiladi.</li>
+        </ul>
+      </div>
+    </details>
+    <details>
+      <summary>Ballar va talqin</summary>
+      <div class="body">
+        <ul>
+          <li>Pozitiv (P): 7–49; Negativ (N): 7–49; Umumiy psixopatologiya (G): 16–112; <b>Jami: 30–210</b>.</li>
+          <li>Kompozit indeks = P − N (−42…+42): musbat qiymat pozitiv simptomlar ustunligini, manfiy qiymat negativ simptomlar ustunligini bildiradi.</li>
+          <li>Og‘irlik darajasi (taxminiy): ≈58 — yengil, ≈75 — o‘rtacha, ≈95 — yaqqol, ≈116 — og‘ir kasallik (Leucht va b., 2005, CGI-S bilan solishtirma).</li>
+        </ul>
+      </div>
+    </details>
+    <details>
+      <summary>Protokol bo‘yicha samaradorlik mezoni</summary>
+      <div class="body">
+        <p style="margin:0 0 6px">Milliy protokolga ko‘ra, PANSS jami ballining kamayishi:</p>
+        <ul>
+          <li><b>&gt; 50%</b> — davolash samarali, effekt chuqur;</li>
+          <li><b>≥ 20%</b> — davolash samarali, effekt qisman;</li>
+          <li><b>&lt; 20%</b> — davolash samarasiz.</li>
+        </ul>
+        <p style="margin:6px 0 0">Antipsixotik effekt davolashning kamida 4-haftasida, rezistentlikka shubha bo‘lsa 6–8-haftada baholanadi. Foiz «−30» tuzatmasi bilan hisoblanadi (pastda izoh bor).</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="layout">
+    <main id="main">
+      <div class="overview" aria-label="Umumiy ko‘rinish">
+        <div class="ov-head"><h2>Barcha bandlar</h2><span class="muted" id="ovCount">0 / 30 baholandi</span></div>
+        <div class="ov-grid" id="ovGrid"></div>
+      </div>
+      <div id="sections"></div>
+    </main>
+
+    <aside class="summary" id="summary">
+      <div class="card">
+        <h3>Natija</h3>
+        <div class="stats">
+          <div class="stat P"><div class="l"><span>Pozitiv (P)</span><span>7–49</span></div><div class="v" id="sP">—</div><div class="bar"><i id="bP"></i></div></div>
+          <div class="stat N"><div class="l"><span>Negativ (N)</span><span>7–49</span></div><div class="v" id="sN">—</div><div class="bar"><i id="bN"></i></div></div>
+          <div class="stat G" style="grid-column:1/-1"><div class="l"><span>Umumiy psixopatologiya (G)</span><span>16–112</span></div><div class="v" id="sG">—</div><div class="bar"><i id="bG"></i></div></div>
+          <div class="stat T"><div class="l"><span>PANSS jami</span><span>30–210</span></div><div class="v" id="sT">—</div><div class="bar"><i id="bT"></i></div></div>
+        </div>
+        <div style="margin-top:10px">
+          <div class="kv"><span>Kompozit indeks (P − N)</span><span id="sC">—</span></div>
+        </div>
+        <div class="progress" id="prog">0 / 30 band baholandi</div>
+        <div id="sev"></div>
+      </div>
+
+      <div class="card">
+        <h3>Simptomatik remissiya</h3>
+        <p class="small" style="margin-top:0">Andreasen va b. (2005) mezoni: 8 ta asosiy bandning barchasi ≤ 3 ball va bu holat kamida 6 oy saqlanishi kerak.</p>
+        <div class="rem-list" id="remList"></div>
+        <div id="remV"></div>
+      </div>
+
+      <div class="card">
+        <h3>Davolashga javob</h3>
+        <label class="small" for="baseline" style="display:block;margin:0">Boshlang‘ich (davolashgacha) PANSS jami bali</label>
+        <div class="field"><input id="baseline" type="number" inputmode="numeric" min="30" max="210" placeholder="masalan, 96"></div>
+        <div id="respV"></div>
+        <p class="small">Foiz Leucht tuzatmasi bilan: (boshlang‘ich − joriy) ÷ (boshlang‘ich − 30) × 100. Har bir band minimal 1 ball bo‘lgani uchun 30 ball «simptom yo‘q» darajasiga teng; tuzatmasiz foiz samarani past ko‘rsatadi. Protokolda bu tuzatma alohida ko‘rsatilmagan, shuning uchun ikkala qiymat ham beriladi. Protokolga ko‘ra natija klinik taassurot va ijtimoiy funksionallik bilan birga baholanadi.</p>
+      </div>
+
+      <div class="card">
+        <div class="btns">
+          <button class="btn primary" id="btnCopy">Natijani nusxalash</button>
+          <button class="btn" id="btnPrint">Chop etish</button>
+          <button class="btn full" id="btnReset">Yangi bemor (tozalash)</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="mbar" id="mbar">
+  <div class="m"><span><em>P</em><b id="mP">—</b></span><span><em>N</em><b id="mN">—</b></span><span><em>G</em><b id="mG">—</b></span><span><em>Jami</em><b id="mT">—</b></span></div>
+  <button class="btn primary" id="btnToSum">Natija</button>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><b>Manba:</b> O‘zbekiston Respublikasi Sog‘liqni saqlash vazirligi. Shizofreniya bilan og‘rigan bemorlarni olib borish bo‘yicha milliy klinik protokol. Toshkent, 2022 — ilova «Шкала оценки позитивных и негативных симптомов».</p>
+    <p><b>Asl shkala:</b> Kay S.R., Fiszbein A., Opler L.A. The Positive and Negative Syndrome Scale (PANSS) for schizophrenia. <i>Schizophr Bull.</i> 1987;13(2):261–276. PANSS mualliflik huquqi Multi-Health Systems Inc.ga tegishli.</p>
+    <p><b>Qo‘shimcha:</b> Leucht S. va b. <i>Schizophr Res.</i> 2005;79:231–238 (og‘irlik talqini); Andreasen N.C. va b. <i>Am J Psychiatry.</i> 2005;162:441–449 (remissiya mezoni).</p>
+    <p><b>Muharrir izohi:</b> protokol ilovasida tushib qolgan P4 «Qo‘zg‘alish» va G4 «Taranglik» bandlari hamda N2 bandining ta’rifi asl PANSS bo‘yicha to‘ldirildi. Ilovadagi raqamlash xatosi (ikkinchi «O12») G13 deb tuzatildi.</p>
+  </div>
+</footer>
+
+<div id="printSheet"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+var LV = ["Yo‘q","Minimal","Yengil","O‘rtacha","Kuchli","Juda kuchli","Ekstremal"];
+var A1 = "Bemor holati ushbu buzilish ta’rifiga mos kelmaydi.";
+var A2 = "Patologiya shubhali; belgilar me’yorning yuqori chegarasida bo‘lishi mumkin.";
+var SUPNOTE = "Bu band protokol ilovasida tushib qolgan. Shkala 30 bandli bo‘lishi va jami ball to‘g‘ri hisoblanishi uchun asl PANSS (Kay va b., 1987) bo‘yicha to‘ldirildi.";
+
+var ITEMS = [
+/* ---------- POZITIV ---------- */
+{c:"P1",s:"P",n:"Vasvasa g‘oyalari (bred)",
+ d:"Asossiz, noreal va idiosinkratik (g‘ayrioddiy) g‘oyalarga ishonch, noto‘g‘ri xulosa.",
+ b:"Suhbatda aytilgan fikrlar mazmuni va ularning ijtimoiy munosabatlar hamda xulq-atvorga ta’siri bo‘yicha (tibbiyot xodimlari va qarindoshlar ma’lumotlari asosida).",
+ a:["Bir-ikkita noaniq, kam shakllangan va beqaror vasvasa g‘oyalari mavjud; ular tafakkur, xulq va boshqalar bilan munosabatlarni buzmaydi.",
+    "Ko‘plab kam shakllangan, beqaror vasvasa g‘oyalarining kaleydoskopik almashinuvi yoki bir nechta aniq shakllangan g‘oyalar; ular ba’zan tafakkurga xalal beradi, munosabatlar va xulqda aks etadi.",
+    "Ko‘p sonli, aniq shakllangan va turg‘un vasvasa g‘oyalari davriy ravishda tafakkur, ijtimoiy munosabatlar va xulqda namoyon bo‘ladi.",
+    "Shakllangan, ko‘pincha tizimlashgan, turg‘un vasvasa g‘oyalari majmuasi tafakkur jarayoni, boshqalar bilan munosabat va xulqni sezilarli buzadi.",
+    "Ko‘p sonli yoki batafsil tizimlashgan vasvasa g‘oyalarining turg‘un majmuasi hayotning asosiy jihatlariga kuchli ta’sir qiladi; noadekvat, mas’uliyatsiz, ayrim hollarda bemor va atrofdagilar uchun xavfli harakatlarga olib keladi."]},
+{c:"P2",s:"P",n:"Konseptual dezorganizatsiya",sm:"tafakkurning tartibsizlanishi",
+ d:"Maqsadga yo‘naltirilgan fikr oqimining uzilishi bilan tavsiflanuvchi tafakkur tartibsizlanishi: ortiqcha batafsillik, yuzakilik, rezonyorlik, sirpanishlar, assotsiatsiyalarning amorfligi, izchilsizlik, paralogiklik yoki «fikrlarning to‘xtab qolishi» (shperrung).",
+ b:"Suhbat davomida tafakkur-nutq jarayoni holatiga ko‘ra.",
+ a:["Tafakkur batafsil, yuzaki, paralogik yoki sirpanishli («urinma bo‘ylab javoblar»). Maqsadli fikrlashda biroz qiyinchilik bor; shifokor qat’iyat ko‘rsatganda tasodifiy assotsiatsiyalar paydo bo‘lishi mumkin.",
+    "Aniq va qisqa muloqotda diqqatni muayyan fikrlarga jamlash saqlanadi, biroq ozgina bosim ostida yoki murakkabroq vaziyatda tafakkur amorf (noaniq) va maqsadsiz bo‘lib qoladi.",
+    "Tashqi bosim bo‘lmaganda ham bemor deyarli doimo maqsadli fikr oqimini tashkil etishda qiynaladi: sirpanishlar, izchilsizlik, noaniqlik, bog‘liqlikning qisman yo‘qolishi.",
+    "Fikrlash faoliyati jiddiy buzilgan va tizimsiz; deyarli doimo yaqqol izchilsizlik va tafakkurning uzuq-yuluqligi (razorvannost) qayd etiladi.",
+    "Uzuq-yuluqlik bog‘lanmaslik (inkogerentlik) darajasiga yetadi. Assotsiativ aloqalarning keskin bo‘shashuvi muloqot qobiliyatining to‘liq yo‘qolishiga, «so‘z okroshkasi» yoki mutizmgacha olib keladi."]},
+{c:"P3",s:"P",n:"Gallyutsinatsiyalar",
+ d:"Tegishli tashqi qo‘zg‘atuvchisiz idrok etishni ko‘rsatuvchi fikrlar yoki xulq. Patologik idrok eshitish, ko‘rish, hid bilish yoki somatik sohalarda bo‘lishi mumkin.",
+ b:"Suhbatdagi og‘zaki ma’lumotlar yoki tashqi namoyon bo‘lishlar, shuningdek tibbiyot xodimlari va qarindoshlar ma’lumotlari bo‘yicha.",
+ a:["Bir-ikki marta kam uchraydigan, ammo aniq gallyutsinatsiya yoki tafakkur va xulqqa ta’sir qilmaydigan bir nechta noaniq patologik idrok.",
+    "Tez-tez, lekin doimiy bo‘lmagan gallyutsinatsiyalar; tafakkur va xulq biroz buzilgan.",
+    "Tez-tez uchraydigan, ba’zan bir nechta sezgi sohasini qamrab oluvchi, tafakkur va/yoki xulqni sezilarli buzuvchi gallyutsinatsiyalar. Ularning vasvasaviy talqini, emotsional va ba’zan verbal reaksiyalar bilan kechishi mumkin.",
+    "Deyarli uzluksiz gallyutsinatsiyalar tafakkur va xulqni jiddiy buzadi. Ular real voqealar sifatida kechiriladi, tez-tez emotsional va verbal reaksiyalar bemorning moslashuvini keskin cheklaydi.",
+    "Shaxs deyarli to‘liq gallyutsinatsiyalar bilan qamrab olingan, ular tafakkur va xulq yo‘nalishini belgilaydi. Turg‘un vasvasaviy talqin, verbal va xulqiy reaksiyalar, jumladan imperativ gallyutsinatsiyalarga to‘liq bo‘ysunish kuzatiladi."]},
+{c:"P4",s:"P",n:"Qo‘zg‘alish",sup:1,
+ d:"Harakat faolligining tezlashuvi, qo‘zg‘atuvchilarga reaksiyaning kuchayishi, o‘ta hushyorlik yoki kayfiyatning haddan tashqari labilligi bilan namoyon bo‘luvchi giperaktivlik.",
+ b:"Suhbat davomidagi xulq ko‘rinishlari, shuningdek tibbiyot xodimlari va qarindoshlar ma’lumotlari bo‘yicha.",
+ a:["Suhbat davomida biroz bezovta, o‘ta hushyor yoki yengil qo‘zg‘algan, lekin aniq qo‘zg‘alish epizodlari yoki kayfiyatning yaqqol labilligi yo‘q; nutq biroz tezlashgan bo‘lishi mumkin.",
+    "Bezovtalik yoki qo‘zg‘alganlik butun suhbat davomida aniq ko‘rinadi, nutq va umumiy harakatchanlikka ta’sir qiladi yoki vaqti-vaqti bilan epizodik portlashlar kuzatiladi.",
+    "Sezilarli giperaktivlik yoki tez-tez harakat qo‘zg‘alishi portlashlari; bemor bir necha daqiqadan ortiq jim o‘tira olmaydi.",
+    "Yaqqol qo‘zg‘alish suhbatda ustunlik qiladi, diqqatni cheklaydi va ovqatlanish, uyqu kabi shaxsiy funksiyalarga ma’lum darajada ta’sir ko‘rsatadi.",
+    "Yaqqol qo‘zg‘alish ovqatlanish va uyquga jiddiy xalal beradi, shaxslararo muloqotni amalda imkonsiz qiladi. Nutq va harakatning tezlashuvi bog‘lanmaslik va holsizlanishga olib kelishi mumkin."]},
+{c:"P5",s:"P",n:"Ulug‘vorlik g‘oyalari",
+ d:"O‘zini yuqori baholash va o‘z ustunligiga asossiz ishonch, jumladan alohida qobiliyat, boylik, bilim, shon-shuhrat, hokimiyat va axloqiy haqlikka ega ekanligi haqidagi vasvasa g‘oyalari.",
+ b:"Suhbatda aniqlangan fikrlar mazmuni va ularning xulqda aks etishi bo‘yicha (tibbiyot xodimlari va qarindoshlar ma’lumotlari asosida).",
+ a:["Biroz ekspansivlik va maqtanchoqlik qayd etiladi. Aniq shakllangan ulug‘vorlik g‘oyalari aniqlanmaydi.",
+    "Boshqalardan ustunlik haqida aniq va noreal tuyg‘u; alohida mavqe yoki qobiliyat haqida kam shakllangan vasvasa g‘oyalari bo‘lishi mumkin, lekin ular xulqni belgilamaydi.",
+    "Favqulodda qobiliyat, hokimiyat yoki alohida mavqe haqidagi aniq shakllangan g‘oyalar ustanovkalarga ta’sir qiladi, lekin xulqda namoyon bo‘lmaydi.",
+    "Bir nechta jihat (boylik, bilim, shon-shuhrat va h.k.) bo‘yicha ustunlik haqidagi aniq shakllangan vasvasa g‘oyalari gaplarda, munosabatlarda va ayrim harakatlarda namoyon bo‘ladi.",
+    "Tafakkur, munosabatlar va xulq deyarli to‘liq g‘ayrioddiy qobiliyat, boylik, bilim, shon-shuhrat va/yoki axloqiy fazilatlar haqidagi ko‘plab vasvasa g‘oyalari bilan belgilanadi; ular bema’ni tus olishi mumkin."]},
+{c:"P6",s:"P",n:"Shubhalanish, ta’qib g‘oyalari",
+ d:"Ehtiyotkorlik, ishonchsizlik, shubhali hushyorlik yoki atrofdagilarning dushmanona munosabatiga yaqqol vasvasaviy ishonch ko‘rinishidagi asossiz yoki bo‘rttirilgan ta’qib g‘oyalari.",
+ b:"Suhbatda aytilgan fikrlar mazmuni va ularning xulqqa ta’siri bo‘yicha, jumladan tibbiyot xodimlari va qarindoshlar ma’lumotlari asosida.",
+ a:["Bemor ehtiyotkor yoki hatto ochiq ishonchsiz, lekin tafakkur, xulq va munosabatlar deyarli buzilmagan.",
+    "Ishonchsizlik suhbatni qiyinlashtiradigan va xulqda aks etadigan darajada sezilarli, ammo ta’qib vasvasasi yo‘q. Ayrim bemorlarda xulqqa ta’sir qilmaydigan kam shakllangan ta’qib g‘oyalari bo‘lishi mumkin.",
+    "Ishonchsizlik boshqalar bilan munosabatlarning uzilishiga olib keladigan darajada kuchli. Munosabat va xulqni biroz o‘zgartiruvchi shakllangan ta’qib g‘oyalari bo‘lishi mumkin.",
+    "Kengayish va tizimlashishga moyil, munosabatlarni sezilarli buzuvchi shakllangan ta’qib vasvasasi.",
+    "Tizimlashgan ta’qib g‘oyalarining tarmoqlangan majmuasi fikrlash tarzi, ijtimoiy munosabatlar va xulqni deyarli to‘liq belgilaydi."]},
+{c:"P7",s:"P",n:"Dushmanlik",
+ d:"G‘azab va yoqtirmaslikning verbal yoki boshqa ko‘rinishlari: kinoya (sarkazm), passiv-agressiv xulq, tahdidlar va ochiq hujum.",
+ b:"Suhbat davomidagi xulq hamda tibbiyot xodimlari va qarindoshlar ma’lumotlari bo‘yicha.",
+ a:["G‘azabning bilvosita yoki yashirin ko‘rinishlari: kinoya, hurmatsizlik, dushmanona gaplar, ta’sirchanlik epizodlari.",
+    "Ochiq dushmanona kayfiyat, tez jahl chiqishi, g‘azab yoki norozilikning to‘g‘ridan-to‘g‘ri namoyon bo‘lishi.",
+    "Bemor o‘ta ta’sirchan, ba’zan so‘z bilan haqorat qiladi va tahdid qiladi.",
+    "Haqorat va tahdidlar tufayli muloqot qiyin, munosabatlar jiddiy buzilgan. Jangovar kayfiyat va buzg‘unchi xulqqa moyillik bo‘lishi mumkin, lekin odamlarga jismoniy hujum qilmaydi.",
+    "Shifokor va boshqalar bilan aloqaning deyarli to‘liq yo‘qligi bilan kechuvchi kuchli g‘azab yoki odamlarga hujum epizodlari."]},
+
+/* ---------- NEGATIV ---------- */
+{c:"N1",s:"N",n:"Affektning o‘tmaslashuvi",
+ d:"Mimika ifodaliligining kamayishi, his-tuyg‘u va kommunikativ imo-ishoralarni ifodalay olmaslik bilan namoyon bo‘luvchi emotsionallikning pasayishi.",
+ b:"Suhbat davomida affektiv ifodalilik va emotsionallikning jismoniy namoyon bo‘lishini kuzatish bo‘yicha.",
+ a:["Mimika va kommunikativ imo-ishoralar dabdabali, zo‘rma-zo‘raki, sun’iy yoki kambag‘allashgan tuyuladi.",
+    "Yuz va imo-ishoralar ifodaliligi diapazonining torayishi o‘ziga xos «zerikkan» (ifodasiz) qiyofani belgilaydi.",
+    "Affekt odatda o‘tmaslashgan (yassilangan), mimika kambag‘al, imo-ishoralar siyrak.",
+    "Affektning sezilarli o‘tmaslashuvi va emotsional reaksiyalar yetishmasligi ko‘p vaqt kuzatiladi. Ba’zan qo‘zg‘alish, g‘azab portlashi yoki sababsiz kulgi ko‘rinishidagi kuchli, nazoratsiz affektiv razryadlar bo‘lishi mumkin.",
+    "Mimik modulyatsiyalar va kommunikativ imo-ishoralar deyarli yo‘q. Yuz ifodasi doimo befarq yoki qotib qolgan («yog‘ochdek»)."]},
+{c:"N2",s:"N",n:"Emotsional ajralganlik",sm:"emotsional begonalashuv",def_sup:1,
+ d:"Hayot voqealariga qiziqish, ularda ishtirok etish va ularga emotsional bog‘lanishning yetishmasligi.",
+ b:"Tibbiyot xodimlari yoki oila a’zolarining bemor faoliyati haqidagi ma’lumotlari va suhbatdagi shaxslararo xulqni kuzatish bo‘yicha.",
+ a:["Bemor muloqotda yetarlicha tashabbuskor emas, ba’zan atrofdagi voqealarga qiziqish yetishmasligini ko‘rsatadi.",
+    "Bemor odatda atrof-muhitdan emotsional uzoqlashgan, lekin rag‘batlantirilganda muloqot va faoliyatga jalb qilinadi.",
+    "Bemor atrofdagi odamlar va voqealardan emotsional jihatdan aniq ajralgan, muloqot va mehnat faoliyatiga jalb qilishga berilmaydi; qisqa muloqotga kirishishi va ba’zan yordam bilan o‘z ehtiyojlarini qondirishi mumkin.",
+    "Atrofdagilarga yaqqol befarqlik, o‘z ehtiyojlariga e’tiborsizlik; parvarish va nazoratga muhtoj.",
+    "Bemor deyarli to‘liq ajralgan, muloqotga kirishmaydi, o‘z ehtiyojlariga e’tibor bermaydi."]},
+{c:"N3",s:"N",n:"Muloqotdagi qiyinchiliklar",sm:"rapport yetishmasligi, kirishimsizlik",
+ d:"Suhbatda hamdardlik, ochiqlik, samimiylik, suhbatdoshga qiziqish yoki ishtirokning yo‘qligi; shaxslararo aloqa o‘rnatishdagi qiyinchilik, verbal va noverbal muloqot hajmining kamayishi.",
+ b:"Suhbat jarayonida bemorning xulqi va shifokorga munosabati bo‘yicha.",
+ a:["Muloqotda biroz sun’iylik, taranglik, dabdabalilik seziladi. Nutqida emotsional chuqurlik yetishmaydi, ko‘pincha shaxssiz tusga ega.",
+    "Bemor odatda begona ko‘rinadi, masofa saqlaydi, savollarga mexanik javob beradi; xulqi zerikish yoki suhbatga qiziqmaslikni ifodalaydi.",
+    "Yaqqol begonalik va suhbatga qiziqmaslik samarali aloqani qiyinlashtiradi. Suhbatdoshning ko‘ziga qarashdan qochadi.",
+    "Bemor atrofga o‘ta befarq, masofa saqlaydi, ko‘zga qarashdan qochadi va nigohga bardosh bermaydi. Javoblari qisqa, yuzaki. Noverbal aloqaga urinishlar deyarli javobsiz qoladi.",
+    "Bemorni suhbatga jalb qilib bo‘lmaydi, mutlaqo befarq ko‘rinadi, verbal va noverbal aloqadan qat’iyan qochadi."]},
+{c:"N4",s:"N",n:"Passiv-apatik ijtimoiy ajralganlik",
+ d:"Passivlik, apatiya, energiya va irodaviy mayllarning yo‘qolishi oqibatida ijtimoiy munosabatlarda qiziqish va tashabbusning pasayishi; kirishimlilik kamayadi, kundalik faoliyatga e’tiborsizlik paydo bo‘ladi.",
+ b:"Tibbiyot xodimlari va qarindoshlardan olingan bemorning ijtimoiy xulqi haqidagi ma’lumotlar bo‘yicha.",
+ a:["Vaqti-vaqti bilan ijtimoiy muloqotga qiziqish bildiradi, lekin tashabbusi kam; aloqaga faqat boshqalarning tashabbusi bilan kirishadi.",
+    "Ijtimoiy faollikning aksariyat turlarida passiv, mexanik, qiziqishsiz ishtirok etadi, soyada qolishga harakat qiladi.",
+    "Juda tor doiradagi tadbirlarda passiv ishtirok etadi, qiziqish yoki tashabbus deyarli yo‘q. Muloqotga kam vaqt sarflaydi.",
+    "Ko‘p vaqt apatik, o‘zini izolyatsiya qilishga intiladi, juda kam ijtimoiy faollik ko‘rsatadi, ba’zan o‘z ehtiyojlariga e’tiborsiz. Ijtimoiy aloqaga o‘zi kamdan-kam kirishadi.",
+    "Chuqur apatik, ijtimoiy izolyatsiyada, o‘z ehtiyojlariga e’tibor bermaydi."]},
+{c:"N5",s:"N",n:"Abstrakt tafakkurning buzilishi",
+ d:"Tasniflash va umumlashtirishdagi qiyinchilik, masalalarni yechishning konkret yoki egosentrik usullaridan chiqa olmaslik bilan namoyon bo‘luvchi abstrakt-ramziy tafakkur buzilishi.",
+ b:"Narsa va tushunchalarning umumiyligi haqidagi savollarga javoblar, maqollarni sharhlash va suhbatda konkret tafakkurning ustunligi bo‘yicha.",
+ a:["Murakkab maqollarni so‘zma-so‘z yoki shaxsiy tusda sharhlashga moyillik; abstrakt tushunchalarni izohlashda qiyinchilik bo‘lishi mumkin.",
+    "Ko‘pincha konkret tafakkurga murojaat qiladi, ko‘pchilik maqollar va ayrim abstrakt tushunchalarni sharhlashda qiynaladi; funksional jihatlar va eng yaqqol belgilarga chalg‘iydi.",
+    "Tafakkur asosan konkret; ko‘pchilik maqol va tushunchalarni sharhlashda qiynaladi.",
+    "Hech bir maqol yoki obrazli iboraning abstrakt ma’nosini tushunmaydi, faqat eng oddiy narsalarni funksional o‘xshashligi bo‘yicha tasniflaydi. Tafakkur mazmunsizlangan yoki funksional jihatlar, yaqqol belgilar, idiosinkratik (bema’ni) talqinlar bilan cheklangan.",
+    "Faqat konkret tafakkur saqlangan: maqol, metafora, o‘xshatish va oddiy tushunchalarni tushunish yo‘q, eng yaqqol belgilar bo‘yicha ham tasniflay olmaydi. Bu ball yaqqol kognitiv buzilishlar sababli suhbat deyarli imkonsiz bo‘lgan bemorlarga ham qo‘yiladi."]},
+{c:"N6",s:"N",n:"Muloqot spontanligi va ravonligining buzilishi",
+ d:"Apatiya, irodaviy mayllarning pasayishi, himoyaviy pozitsiya yoki kognitiv defitsit tufayli normal muloqotning qiyinlashuvi; verbal-kommunikativ jarayonning ravonligi va samaradorligi buziladi.",
+ b:"Suhbat jarayonida kognitiv-verbal funksiyalar buzilishi bo‘yicha.",
+ a:["Suhbatda kam tashabbuskor, javoblari qisqa va tafsilotsiz; ma’lumot olish uchun to‘g‘ridan-to‘g‘ri va yo‘naltiruvchi savollar kerak.",
+    "Muloqot ravon emas, notekis yoki chalkash. Adekvat javob olish va suhbatni davom ettirish uchun tez-tez yo‘naltiruvchi savollar kerak.",
+    "Spontanlik va ochiqlik yaqqol yetishmaydi, javoblar bir-ikkita qisqa gap bilan cheklanadi.",
+    "Javoblar suhbatni to‘xtatish yoki qisqartirishga qaratilgan bir necha so‘z yoki qisqa iboradan iborat (masalan, «bilmayman», «bu haqda gapira olmayman»); suhbat juda qiyin va samarasiz.",
+    "Verbal muloqot o‘ta cheklangan, asosan tasodifiy gaplardan iborat; suhbat imkonsiz."]},
+{c:"N7",s:"N",n:"Stereotip tafakkur",
+ d:"Tafakkur ravonligi, spontanligi va moslashuvchanligining buzilishi; fikrlarning rigidligi, takrorlanuvchanligi yoki mazmunsizligi.",
+ b:"Suhbat davomida kognitiv-verbal jarayon xarakteri bo‘yicha.",
+ a:["Ustanovka va tasavvurlarda biroz rigidlik. Muqobil fikrlarni ko‘rib chiqishdan bosh tortishi yoki bir fikrdan boshqasiga o‘tishda qiynalishi mumkin.",
+    "Suhbat doimo bir mavzuga qaytadi, boshqa mavzuga qiyinchilik bilan o‘tadi.",
+    "Rigidlik va stereotiplik shunchalik kuchliki, shifokor qarshiligiga qaramay suhbat ikki-uchta ustun mavzu bilan cheklanadi.",
+    "Talablar, bayonotlar, alohida fikrlar yoki savollarning nazoratsiz takrorlanishi suhbatni sezilarli qiyinlashtiradi.",
+    "Tafakkur, xulq va nutqda doimiy takrorlanuvchi g‘oyalar yoki iboralar ustun; yaqqol rigidlik, noadekvatlik va muloqotning keskin cheklanishi."]},
+
+/* ---------- UMUMIY PSIXOPATOLOGIYA ---------- */
+{c:"G1",s:"G",n:"Somatik bandlik",sm:"sog‘liq haqida xavotirlanish",
+ d:"Jismoniy sog‘liq haqida shikoyatlar yoki somatik kasallik borligiga ishonch; noaniq og‘riqli sezgilardan halokatli (o‘limga olib keluvchi) kasallik haqidagi aniq vasvasagacha.",
+ b:"Intervyu jarayonidagi bemor fikrlari asosida.",
+ a:["Sog‘lig‘i yoki jismoniy holati haqida sezilarli xavotir: vaqti-vaqti bilan savollar beradi, shifokor ko‘magini istaydi.",
+    "Sog‘liqning yomonligi yoki ayrim funksiyalar buzilishi haqida shikoyatlar, lekin vasvasaviy ishonch yo‘q; tinchlantirish va ishontirish bilan bartaraf etiladi.",
+    "Tez-tez yoki doimo jismoniy kasallikdan shikoyat qiladi. Bu mavzuda fikr va xulqni to‘liq belgilamaydigan bir-ikkita vasvasa g‘oyasi bo‘lishi mumkin.",
+    "Jismoniy kasallik yoki organik shikastlanish haqidagi bir yoki bir nechta aniq vasvasa g‘oyasi bilan ancha band, lekin shaxs (jumladan affektiv soha) to‘liq qamrab olinmagan; bemorni bu fikrlardan qiyinchilik bilan chalg‘itish mumkin.",
+    "Somatik kasallik haqidagi ko‘p sonli, tez-tez aytiladigan vasvasa g‘oyalari yoki halokatli oqibat haqidagi g‘oyalar bemorning fikr va hislarini to‘liq egallaydi."]},
+{c:"G2",s:"G",n:"Xavotir",
+ d:"Asabiylik, bezovtalik, xavotir va noxushlikni oldindan sezishning sub’ektiv kechinmasi; hozirgi yoki kelajak haqida haddan tashqari tashvishlanishdan vahima reaksiyalarigacha.",
+ b:"Suhbatda olingan ma’lumotlar va tegishli jismoniy namoyon bo‘lishlar asosida.",
+ a:["Biroz hayajon, tashvish yoki sub’ektiv bezovtalik haqida xabar beradi, lekin somatik yoki xulqiy reaksiyalar yo‘q.",
+    "Kuchaygan asabiylik va bezovtalik qo‘llarning mayda titrashi, terlash kabi yengil jismoniy belgilar bilan kechadi.",
+    "Xavotir sezilarli taranglik, diqqatning susayishi, yurak urishi yoki uyqu buzilishi kabi somatik va xulqiy reaksiyalar bilan kechadi.",
+    "Fobiyalar, yaqqol bezovtalik va xilma-xil somatik namoyon bo‘lishlar bilan kechuvchi deyarli doimiy qo‘rquv kechinmasi.",
+    "Deyarli doimiy xavotir hayotni sezilarli buzadi, ba’zan vahima xurujlariga o‘tadi."]},
+{c:"G3",s:"G",n:"Aybdorlik hissi",
+ d:"O‘tmishdagi real yoki xayoliy xatolar uchun pushaymonlik yoki o‘zini ayblash hissi.",
+ b:"Suhbatda aybdorlik hissi haqidagi xabarlar va uning hayotiy ustanovkalar hamda tafakkurga ta’siri asosida.",
+ a:["So‘rab-surishtirishda ahamiyatsiz xato yuzasidan noaniq aybdorlik hissi va o‘zini ayblash g‘oyalari aniqlanadi, lekin bemorni unchalik band qilmaydi.",
+    "Hayotidagi qandaydir real xato yuzasidan aniq tashvish bildiradi, lekin bu xulqda aks etmaydi va diqqatini to‘liq egallamaydi.",
+    "O‘zini kamsitish yoki jazolash g‘oyalari bilan kuchli aybdorlik hissi. U vasvasa bilan bog‘liq bo‘lishi, spontan paydo bo‘lishi, tashvish va/yoki tushkun kayfiyat manbai bo‘lishi mumkin va suhbatdan keyin susaymaydi.",
+    "Turg‘un aybdorlik g‘oyalari vasvasa darajasiga yetadi, umidsizlik va o‘zini keraksiz his qilish bilan kechadi. Tez orada jazolanishiga ishonadi, voqealarni shunday jazo deb talqin qilishi mumkin.",
+    "Butun hayoti o‘z aybi haqidagi inkor etib bo‘lmas g‘oyaga bo‘ysungan; umrbod qamoq, qiynoq yoki o‘limgacha bo‘lgan jazoga loyiq deb hisoblaydi. O‘z joniga qasd qilish fikrlari yoki boshqalarning muammolarini o‘z xatolari bilan izohlash paydo bo‘lishi mumkin."]},
+{c:"G4",s:"G",n:"Taranglik",sup:1,
+ d:"Qo‘rquv, xavotir va bezovtalikning yaqqol jismoniy ko‘rinishlari: qotib qolish, titroq, ko‘p terlash, notinchlik.",
+ b:"Suhbat davomida kuzatilgan jismoniy ko‘rinishlar asosida.",
+ a:["Gavda holati va harakatlar yengil xavotirni ko‘rsatadi: kichik rigidlik, ba’zan notinchlik, holatni o‘zgartirish yoki qo‘llarning mayda, tez titrashi.",
+    "Aniq asabiy qiyofa: tinmay qimirlash, qo‘llarning yaqqol titrashi, haddan tashqari terlash yoki asabiy manernlik.",
+    "Ko‘plab ko‘rinishlar (asabiy titrash, ko‘p terlash, notinchlik) yaqqol taranglikdan dalolat beradi, lekin suhbatdagi xulqqa sezilarli ta’sir qilmaydi.",
+    "Taranglik shaxslararo muloqotni buzadigan darajada: bemor doimo qimirlaydi, uzoq o‘tira olmaydi yoki giperventilyatsiya kuzatiladi.",
+    "Vahima belgilari yoki harakatning keskin tezlashuvi: betinim u yoqdan-bu yoqqa yurish, bir daqiqadan ortiq o‘tira olmaslik; davomli suhbat imkonsiz."]},
+{c:"G5",s:"G",n:"Manernlik va g‘ayritabiiy pozalar",
+ d:"G‘ayritabiiy harakatlar va/yoki gavda holatlari bemor xulqiga beso‘naqay, dabdabali, displastik (tartibsiz) yoki ekssentrik (bema’ni) tus beradi.",
+ b:"Suhbatda buzilishning jismoniy ko‘rinishlarini kuzatish, shuningdek qarindoshlar va tibbiyot xodimlari ma’lumotlari asosida.",
+ a:["Harakatlarda biroz beso‘naqaylik yoki gavda holatida kichik taranglik (rigidlik).",
+    "Harakatlarda sezilarli beso‘naqaylik yoki koordinatsiyasizlik; qisqa vaqt g‘ayritabiiy holatlarni egallashi mumkin.",
+    "Vaqti-vaqti bilan g‘alati, ritualga o‘xshash harakatlar qiladi yoki g‘ayritabiiy, buzilgan holatlarda uzoqroq qotib qoladi.",
+    "Bema’ni «ritual» harakatlarning tez-tez takrorlanishi, manernlik yoki stereotip harakatlar; g‘ayritabiiy (vichur) holatlarda uzoq vaqt qotib qolish.",
+    "Deyarli doimiy ritual va stereotip harakatlar, yaqqol manernlik yoki g‘ayritabiiy holatlarda uzoq qotib qolish tufayli normal faoliyat jiddiy buzilgan."]},
+{c:"G6",s:"G",n:"Depressiya",
+ d:"G‘am, tushkunlik, ojizlik va pessimizm kechinmasi.",
+ b:"Suhbatda bemorning kayfiyati haqidagi xabarlari hamda munosabatlar va xulqdagi tegishli o‘zgarishlar asosida.",
+ a:["G‘amginlik va tushkun kayfiyat faqat maqsadli so‘rab-surishtirishda aniqlanadi; tashqi ko‘rinish va xulq o‘zgarmagan.",
+    "Bemor o‘zi gapira oladigan aniq g‘amginlik yoki umidsizlik kechinmalari, lekin ular xulq va ijtimoiy faollikka sezilarli ta’sir qilmaydi. Odatda ruhlantirish mumkin.",
+    "Yaqqol tushkun kayfiyat: g‘amginlik, pessimizm, hayotiy qiziqishlarning yo‘qolishi, psixomotor tormozlanish, uyqu va ishtahaning ayrim buzilishlari. Ruhlantirish qiyin.",
+    "Umidsizlik, keraksizlik, o‘zini arzimas his qilishning turg‘un kechinmalari bilan keskin tushkun kayfiyat; vaqti-vaqti bilan yig‘laydi. Uyqu va ishtaha sezilarli yomonlashgan, harakat faolligi pasaygan, ijtimoiy funksiyalar buzilgan, o‘ziga qarashda kamchiliklar bo‘lishi mumkin.",
+    "Depressiya hayot faoliyatini sezilarli buzadi: yaqqol somatik buzilishlar, psixomotor tormozlanish, barcha ijtimoiy qiziqishlarning yo‘qolishi, o‘ziga qaramaslik, diqqat buzilishi. Tez-tez yig‘laydi; depressiv yoki nigilistik vasvasa, suitsidal fikr va harakatlar bo‘lishi mumkin."]},
+{c:"G7",s:"G",n:"Motor tormozlanish",
+ d:"Harakat va nutq sur’atining sekinlashuvi, qo‘zg‘atuvchilarga sust reaksiya va jismoniy tonusning kamayishi bilan namoyon bo‘luvchi harakat faolligining pasayishi.",
+ b:"Suhbat davomidagi xulq, shuningdek tibbiyot xodimlari va qarindoshlar ma’lumotlari bo‘yicha.",
+ a:["Harakat va nutqning yengil, ammo sezilarli sekinlashuvi; suhbat va imo-ishoralarda samaradorlik biroz pasayishi mumkin.",
+    "Harakatlar aniq sekinlashgan, nutq kam samarali bo‘lishi mumkin; javob berishdan oldin uzoq o‘ylanadi, suhbatda uzoq pauzalar va sekin sur’at.",
+    "Harakat faolligi keskin pasaygan; muloqot samarasiz, ijtimoiy va kasbiy majburiyatlarni bajarish qiyin. Uzoq vaqt yotadi yoki o‘tiradi.",
+    "Harakatlar o‘ta sekin, harakat va nutq faolligi minimal. Kun bo‘yi maqsadsiz o‘tiradi yoki to‘shakda yotadi.",
+    "Deyarli to‘liq harakatsiz va tashqi qo‘zg‘atuvchilarga kam reaksiya beradi."]},
+{c:"G8",s:"G",n:"Hamkorlikdan bosh tortish",
+ d:"Shifokor, tibbiyot xodimlari yoki qarindoshlar ko‘rsatmalarini bajarish va hamkorlikdan faol bosh tortish; ishonchsizlik, himoyaviy reaksiyalar, o‘jarlik, negativizm, obro‘ni inkor etish, dushmanlik yoki jangovarlik bilan bog‘liq bo‘lishi mumkin.",
+ b:"Suhbatdagi xulq, shuningdek tibbiyot xodimlari va qarindoshlar ma’lumotlari asosida.",
+ a:["Talablarga bo‘ysunadi, lekin norozilik, sabrsizlik yoki kinoya bilan; istalmagan mavzulardan qochadi.",
+    "Ba’zan yotoqni yig‘ishtirish, kun tartibiga rioya qilish kabi elementar bo‘lim talablarini ochiq rad etadi; dushmanona yoki negativistik himoyaviy reaksiyalar bo‘lishi mumkin, lekin ko‘p hollarda u bilan kelishish mumkin.",
+    "Ko‘pincha bo‘lim qoidalarini bajarmaydi; atrofdagilar uni «yakkalangan» yoki muloqot qobiliyati kuchli buzilgan deb tavsiflaydi. Suhbatda ta’sirchan yoki odamovi, ko‘p savollarga javob bermaydi.",
+    "Hamkorlik va aloqaga har tomonlama qarshilik, faol negativizm, ba’zan dushmanlik. Ko‘pchilik qoidalarga rioya qilmaydi, ko‘pincha suhbatni boshlash yoki tugatishni xohlamaydi.",
+    "Faol qarshilik deyarli barcha muhim ijtimoiy funksiyalarga to‘sqinlik qiladi; shaxsiy gigiyena, qarindoshlar yoki xodimlar bilan suhbatdan ham bosh tortishi mumkin; hatto qisqa muloqot ham qiyin."]},
+{c:"G9",s:"G",n:"G‘ayrioddiy fikr mazmuni",
+ d:"G‘alati, fantastik yoki ekssentrik g‘oyalar bilan tavsiflanuvchi tafakkur; mazmuni noodatiy yoki hayotdan uzilgandan tabiatga zid yoki yaqqol bema’nigacha.",
+ b:"Suhbatda bemor aytgan fikrlar mazmuni bo‘yicha.",
+ a:["Fikrlarning biroz g‘alati yoki idiosinkratik mazmuni yoki ma’lum g‘oyalarning g‘ayrioddiy kontekstda qo‘llanishi.",
+    "Fikrlarning tez-tez buzilishi, ba’zan ekssentrik darajaga yetadi.",
+    "Ko‘plab g‘alati va fantastik fikrlar (masalan, o‘zini qirolning asrab olingan o‘g‘li deb hisoblaydi yoki hozirgina o‘limdan qutulib qolganini aytadi), ba’zan yaqqol bema’ni fikrlar (yuzlab farzandi borligi, tish plombasi orqali koinotdan signal qabul qilishi).",
+    "Ko‘plab mantiqsiz, absurd yoki o‘ta ekssentrik g‘oyalar (masalan, uchta boshi borligi, boshqa sayyoradan kelgani).",
+    "Tafakkur bema’ni, ekssentrik va fantastik g‘oyalar bilan to‘lib-toshgan."]},
+{c:"G10",s:"G",n:"Dezoriyentatsiya",
+ d:"Ong chalkashligi yoki reallikdan ajralganlik tufayli joy, vaqt va atrofdagi odamlar bilan munosabat haqidagi tasavvurlarning yo‘qolishi.",
+ b:"Bemorni maqsadli so‘rab-surishtirish asosida.",
+ a:["Umumiy mo‘ljal saqlangan, xususiy masalalarda qiynaladi: yashash joyini biladi, lekin aniq manzilni chalkashtiradi; xodimlarni yuzidan taniydi, lekin vazifasini bilmaydi; oyni biladi, lekin hafta kunini chalkashtiradi yoki sanada ≥ 2 kun xato qiladi. Xabardorlik doirasi torayishi mumkin: yaqin atrofni biladi, lekin hokim yoki Prezident kabi rahbarlarning ismini bilmaydi.",
+    "Odamlarni, joy yoki vaqtni har doim ham to‘g‘ri aniqlay olmaydi: kasalxonada ekanini biladi, lekin nomini bilmaydi; shaharni biladi, lekin viloyat, tuman yoki ko‘chani bilmaydi; davolovchi shifokorni biladi, lekin boshqa ko‘plab xodimlarni bilmaydi; yil va faslni aytadi, oyni chalkashtiradi.",
+    "Odamlarni katta qiyinchilik bilan taniydi, qayerdaligi haqida juda kuchsiz tasavvurga ega, ko‘pchilik notanish tuyuladi. Yilni taxminan aytadi, lekin oy, hafta kuni yoki hatto faslni bilmaydi.",
+    "Odamlarni deyarli tanimaydi, vaqt va joyni bilmaydi: qayerdaligini tasavvur qilmaydi, sanada bir yildan ortiq xato qiladi, atrofidagi bir-ikki odamning ismini qiyinchilik bilan aytadi.",
+    "Shaxs, joy va vaqtga nisbatan mo‘ljal to‘liq yo‘qolgan; qayerdaligi va joriy yilni bilmaydi yoki noto‘g‘ri tasavvur qiladi; ota-onasi, turmush o‘rtog‘i, do‘stlari va davolovchi shifokorni tanimaydi."]},
+{c:"G11",s:"G",n:"Diqqat buzilishi",
+ d:"Konsentratsiya yetishmasligi, ichki va tashqi stimullarga chalg‘uvchanlik, diqqatni jamlash, saqlash va yangi obyektlarga ko‘chirishdagi qiyinchiliklar bilan namoyon bo‘luvchi maqsadli diqqat buzilishi.",
+ b:"Suhbat davomida bemorni kuzatish asosida.",
+ a:["Diqqatni jamlash qobiliyati cheklangan: biroz chalg‘uvchanlik yoki suhbat oxirida diqqatning susayishi.",
+    "Chalg‘uvchanlik, diqqatni mavzuda uzoq ushlay olmaslik yoki yangi mavzuga tez o‘ta olmaslik tufayli suhbat qiyinlashgan.",
+    "Sust konsentratsiya, tez-tez chalg‘ish va/yoki mavzular orasida yomon o‘tish tufayli muloqot jiddiy buzilgan.",
+    "Ichki kechinmalar yoki begona tashqi qo‘zg‘atuvchilarga chalg‘ishi tufayli diqqatni faqat qisqa vaqtga yoki katta qiyinchilik bilan jalb qilish mumkin.",
+    "Diqqat shunchalik buzilganki, hatto qisqa suhbat ham imkonsiz."]},
+{c:"G12",s:"G",n:"Tanqidning pasayishi va kasallikni anglamaslik",
+ d:"O‘z ruhiy holati va hayotiy vaziyatni yetarli bilmaslik yoki tushunmaslik: o‘tmish va hozirda kasallik yoki simptomlarni tan olmaslik, gospitalizatsiya yoki davolash zarurligini inkor etish, oqibatlarini hisobga olmay qaror qabul qilish, noreal rejalar tuzish.",
+ b:"Suhbatda bemor aytgan fikrlar mazmuni bo‘yicha.",
+ a:["Ruhiy kasallikni tan oladi, lekin uning og‘irligi, davolash yoki profilaktika zarurligini past baholaydi; kelajakni adekvat rejalashtirish buzilishi mumkin.",
+    "Kasalligi haqida noaniq yoki formal (yuzaki) tasavvurga ega; ba’zan uni inkor etadi yoki vasvasa, tafakkur buzilishi, shubhalanish, ijtimoiy ajralganlik kabi asosiy simptomlarni tushunmaydi. Davolanishni faqat xavotir, taranglik, uyqu buzilishi yuzasidan tan olishi mumkin.",
+    "O‘tmishda kasal bo‘lganini tan oladi, hozir emas. Ahamiyatsiz yoki aloqasiz simptomlarni ko‘rsatib, ularni noto‘g‘ri yoki vasvasaviy talqin qilishi mumkin; psixiatrik davolash zarurligini inkor etadi.",
+    "O‘zini ruhiy kasal deb hisoblamaydi; o‘tmishda ham, hozir ham psixopatologik simptomlarni inkor etadi; gospitalizatsiya va davolanishga formal rozi bo‘lsa-da, ma’nosi va zarurligini tushunmaydi.",
+    "O‘tmish va hozirda ruhiy kasallikni qat’iyan inkor etadi; gospitalizatsiya va davolashni vasvasaviy talqin qiladi (jazo, ta’qibchilar harakati va h.k.). Shu sababli odatda hamkorlikdan bosh tortadi, dori qabul qilish va rejimga rioya qilishdan qochadi."]},
+{c:"G13",s:"G",n:"Iroda buzilishi",
+ d:"Irodaviy tashabbus, maqsadga erishish hamda o‘z fikrlari, xulqi, harakatlari va nutqini nazorat qilish qobiliyatining buzilishi.",
+ b:"Suhbat davomida bemorning fikrlari va xulqi asosida.",
+ note:"Protokol ilovasida bu band xato bilan ikkinchi marta «O12» deb raqamlangan; asl PANSS bo‘yicha G13.",
+ a:["Nutq va fikrlarda biroz qat’iyatsizlik; verbal va kognitiv jarayonlarda kam aks etadi.",
+    "Ko‘pincha ambivalent, qaror qabul qilishda qiynaladi. Fikrlarning tarqoqligi tufayli suhbat biroz qiyinlashgan, verbal va kognitiv funksiyalar buzilgan.",
+    "Irodaviy buzilishlar tafakkur va xulqda aks etadi; spontan harakat va ijtimoiy faollikni qiyinlashtiruvchi yaqqol qat’iyatsizlik, nutqda tutilishlar bo‘lishi mumkin.",
+    "Irodaviy buzilishlar kiyinish, o‘zini parvarish qilish kabi eng oddiy, avtomatik harakatlarga ham to‘sqinlik qiladi; nutqning aniq buzilishlari bor.",
+    "Irodaviy aktlarning deyarli to‘liq yo‘qligi: nutq va motor funksiyalar to‘liq harakatsizlik va/yoki mutizmgacha susaygan."]},
+{c:"G14",s:"G",n:"Impuls nazoratining susayishi",sm:"agressivlik",
+ d:"Ichki mayllarni boshqarish va nazorat qilishning buzilishi; oqibatlarni hisobga olmagan holda taranglik va emotsiyalarning kutilmagan, modulyatsiyasiz, maqsadsiz razryadi.",
+ b:"Suhbat davomidagi xulq, shuningdek tibbiyot xodimlari va qarindoshlar ma’lumotlari bo‘yicha.",
+ a:["Stress yoki istak qondirilmaganda (mukofot kechiktirilganda) osongina ta’sirlanadi yoki xafa bo‘ladi, lekin kamdan-kam impulsiv harakat qiladi.",
+    "Arzimagan sabab bilan g‘azablanadi, so‘zli hujum qiladi, ba’zan tahdid qiladi. Bir-ikki marta jismoniy qarshilik, janjal yoki kichik buzg‘unchi harakatlar bo‘lishi mumkin.",
+    "Vaqti-vaqti bilan haqorat, mulkka zarar yoki jismoniy tahdid bilan kechuvchi impulsiv razryadlar. Izolyatsiya, cheklash choralari yoki sedativ preparatlarni parenteral yuborishni talab qiluvchi bir-ikki marta hujum (mushtlashuv) bo‘lishi mumkin.",
+    "Tez-tez nazoratsiz agressiya portlashlari; oqibatini tasavvur qilmay doimo tahdid qiladi yoki talab qiladi, mulkni buzadi. Mushtlashuv va boshqa zo‘ravonlik harakatlariga, jumladan jinsiy mayl asosidagi hujumga aniq moyillik. Xulq imperativ gallyutsinatsiyalar bilan bog‘liq bo‘lishi mumkin.",
+    "Odamlarga o‘ldirish yoki zo‘rlash maqsadida takroriy hujumlar yoki o‘ziga shikast yetkazish aktlari, alohida shafqatsizlik bilan. Xavfli impulslarni nazorat qila olmagani uchun doimiy nazorat, izolyatsiya yoki fiksatsiya talab etiladi."]},
+{c:"G15",s:"G",n:"Ichki kechinmalar bilan bandlik",sm:"reallikdan uzilish",
+ d:"Ichki kechinmalar (fikrlar, hislar yoki autistik fantaziyalar) bilan band bo‘lish; atrofdagi vaziyatga moslashuv va mo‘ljal olish buziladi.",
+ b:"Suhbat davomida bemorning javoblari va xulqi asosida.",
+ a:["O‘z ehtiyoj va muammolari bilan haddan tashqari band: boshqalarning ehtiyojlariga qiziqmay, suhbatni o‘zini qiziqtirgan mavzularga buradi.",
+    "Ba’zan o‘ziga cho‘mgan, xayol yoki kechinmalari bilan band ko‘rinadi; bu suhbatni biroz qiyinlashtiradi.",
+    "Autistik fantaziyalar yoki ichki kechinmalarga cho‘mgan; xulqda aks etadi, ijtimoiy va kommunikativ faollikni sezilarli buzadi. Ba’zan ma’nosiz nigoh bilan o‘tiradi, pichirlaydi, o‘zi bilan gaplashadi, stereotip harakatlar qiladi.",
+    "Deyarli to‘liq ichki kechinmalar bilan band; diqqat, suhbatda ishtirok va mo‘ljal olish sezilarli qiyinlashgan. Tez-tez nimagadir jilmayadi, kuladi, pichirlaydi, o‘zi bilan gaplashadi.",
+    "Moslashuvning keskin pasayishi bilan kechuvchi to‘liq bandlik. Xulq to‘liq gallyutsinatsiyalarga bo‘ysungan, atrofdagi odamlar va vaziyatga kam e’tibor beradi."]},
+{c:"G16",s:"G",n:"Faol ijtimoiy chetlanish",
+ d:"Asossiz qo‘rquv, dushmanlik yoki shubhalanish sababli ijtimoiy faollikning pasayishi.",
+ b:"Tibbiyot xodimlari va qarindoshlardan olingan bemorning ijtimoiy faolligi haqidagi ma’lumotlar asosida.",
+ a:["Boshqalar oldida o‘zini noqulay his qiladi, yolg‘izlikni afzal ko‘radi, lekin zarurat bo‘lsa ijtimoiy faollik ko‘rsatadi.",
+    "Barcha (yoki ko‘pchilik) ijtimoiy tadbirlarda istamay ishtirok etadi, doimiy rag‘batlantirish va ko‘ndirish kerak; xavotir, shubha yoki dushmanlik paydo bo‘lsa kutilmaganda chetlanishi mumkin.",
+    "Jalb qilishga urinishlarga qaramay qo‘rquv yoki g‘azab bilan ko‘pchilik ijtimoiy aloqalardan voz kechadi; ko‘p vaqtini maqsadsiz yolg‘izlikda o‘tkazadi.",
+    "Kuchli qo‘rquv, dushmanlik yoki shubha tufayli faqat eng zarur ijtimoiy faollik ko‘rsatadi; tashabbusga javoban aloqadan qochadi va odamlardan chetda turadi.",
+    "Kuchli qo‘rquv, dushmanlik yoki ta’qib vasvasasi tufayli ijtimoiy munosabatlarga jalb qilib bo‘lmaydi; aloqalardan bor kuchi bilan qochadi."]}
+];
+
+var SECTIONS = [
+  {s:"P",t:"Pozitiv sindromlar shkalasi",r:"7 band · 7–49 ball"},
+  {s:"N",t:"Negativ sindromlar shkalasi",r:"7 band · 7–49 ball"},
+  {s:"G",t:"Umumiy psixopatologiya shkalasi",r:"16 band · 16–112 ball"}
+];
+var REMISSION = ["P1","P2","P3","N1","N4","N6","G5","G9"];
+var KEY = "panss_uz_draft_v1";
+
+var state = {scores:{}, meta:{patient:"",date:"",rater:""}, baseline:""};
+var openCode = null;
+
+function $(id){return document.getElementById(id);}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+
+/* storage */
+function load(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){var d = JSON.parse(raw); if(d && typeof d==="object"){state.scores=d.scores||{};state.meta=d.meta||state.meta;state.baseline=d.baseline||"";}}
+  }catch(e){}
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+/* build */
+function build(){
+  var ov = $("ovGrid"), secs = $("sections"), html = "", ovh = "";
+  ITEMS.forEach(function(it){
+    ovh += '<button class="ov-cell" data-s="'+it.s+'" data-go="'+it.c+'" aria-label="'+it.c+' '+esc(it.n)+'"><div class="c">'+it.c+'</div><div class="v" id="ov-'+it.c+'">·</div></button>';
+  });
+  ov.innerHTML = ovh;
+
+  SECTIONS.forEach(function(sec){
+    html += '<section class="section" data-s="'+sec.s+'"><div class="sec-head"><span class="sec-tag">'+sec.s+'</span><h2>'+sec.t+'</h2><span class="range">'+sec.r+'</span><span class="sub" id="sub-'+sec.s+'">—</span></div>';
+    ITEMS.filter(function(i){return i.s===sec.s;}).forEach(function(it){
+      var anchors = [A1,A2].concat(it.a);
+      html += '<article class="item" id="it-'+it.c+'" data-s="'+it.s+'" data-c="'+it.c+'">'+
+        '<button class="item-h" aria-expanded="false" aria-controls="b-'+it.c+'" data-toggle="'+it.c+'">'+
+          '<span class="code">'+it.c+'</span>'+
+          '<span class="iname">'+esc(it.n)+(it.sup?'<span class="sup">to‘ldirildi</span>':'')+(it.sm?'<small>'+esc(it.sm)+'</small>':'')+'</span>'+
+          '<span class="pill" id="pill-'+it.c+'">–</span>'+
+          '<svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg>'+
+        '</button>'+
+        '<div class="item-b" id="b-'+it.c+'">'+
+          (it.sup?'<p class="note">'+SUPNOTE+'</p>':'')+
+          (it.def_sup?'<p class="note">Protokol ilovasida bu bandning ta’rifi va baholash asosi berilmagan; asl PANSS bo‘yicha to‘ldirildi. Ball tavsiflari protokol matni asosida, asl shkala bilan to‘ldirilgan.</p>':'')+
+          (it.note?'<p class="note">'+esc(it.note)+'</p>':'')+
+          '<p class="def">'+esc(it.d)+'</p>'+
+          '<p class="basis"><b>Baholash asosi:</b> '+esc(it.b)+'</p>'+
+          '<div class="opts" role="radiogroup" aria-label="'+it.c+' bali">';
+      anchors.forEach(function(t,i){
+        var v=i+1;
+        html += '<button class="opt" role="radio" aria-checked="false" data-c="'+it.c+'" data-v="'+v+'"><span class="n">'+v+'</span><span class="t"><b>'+LV[i]+'</b>'+esc(t)+'</span></button>';
+      });
+      html += '</div><div class="item-f"><button class="lnk" data-clear="'+it.c+'">Balni o‘chirish</button><button class="lnk" data-next="'+it.c+'">Keyingi band →</button></div></div></article>';
+    });
+    html += '</section>';
+  });
+  secs.innerHTML = html;
+
+  var rl = "";
+  REMISSION.forEach(function(c){ rl += '<span id="rm-'+c+'">'+c+'</span>'; });
+  $("remList").innerHTML = rl;
+}
+
+/* open/close */
+function setOpen(code, scroll){
+  if(openCode){
+    var prev = $("it-"+openCode);
+    if(prev){prev.classList.remove("open");prev.querySelector(".item-h").setAttribute("aria-expanded","false");}
+  }
+  if(code === openCode && !scroll){ openCode = null; return; }
+  openCode = code;
+  var el = $("it-"+code);
+  if(!el) return;
+  el.classList.add("open");
+  el.querySelector(".item-h").setAttribute("aria-expanded","true");
+  if(scroll){ requestAnimationFrame(function(){ el.scrollIntoView({behavior:"smooth",block:"start"}); }); }
+}
+function nextUnscored(after){
+  var idx = ITEMS.findIndex(function(i){return i.c===after;});
+  for(var k=1;k<=ITEMS.length;k++){
+    var it = ITEMS[(idx+k)%ITEMS.length];
+    if(!state.scores[it.c]) return it.c;
+  }
+  return null;
+}
+function nextItem(after){
+  var idx = ITEMS.findIndex(function(i){return i.c===after;});
+  return idx < ITEMS.length-1 ? ITEMS[idx+1].c : null;
+}
+
+/* scoring */
+function sums(){
+  var r = {P:0,N:0,G:0,nP:0,nN:0,nG:0};
+  ITEMS.forEach(function(it){ var v=state.scores[it.c]; if(v){ r[it.s]+=v; r["n"+it.s]++; } });
+  r.n = r.nP+r.nN+r.nG; r.T = r.P+r.N+r.G;
+  return r;
+}
+function severity(t){
+  if(t<=49) return {k:"v-ok",h:"Minimal yoki chegaraviy simptomatika",d:"CGI-S ≈ 1–2"};
+  if(t<=66) return {k:"v-warn",h:"Yengil kasallik darajasi",d:"CGI-S ≈ 3 (o‘rtacha ≈ 58 ball)"};
+  if(t<=84) return {k:"v-warn",h:"O‘rtacha kasallik darajasi",d:"CGI-S ≈ 4 (o‘rtacha ≈ 75 ball)"};
+  if(t<=105) return {k:"v-bad",h:"Yaqqol kasallik darajasi",d:"CGI-S ≈ 5 (o‘rtacha ≈ 95 ball)"};
+  return {k:"v-bad",h:"Og‘ir kasallik darajasi",d:"CGI-S ≈ 6–7 (o‘rtacha ≈ 116 ball)"};
+}
+function pct(x,max,min){ return Math.max(0,Math.min(100,((x-min)/(max-min))*100)); }
+
+function render(){
+  var s = sums(), complete = s.n===30;
+  ITEMS.forEach(function(it){
+    var v = state.scores[it.c], el=$("it-"+it.c);
+    el.classList.toggle("scored",!!v);
+    $("pill-"+it.c).textContent = v||"–";
+    var ov = $("ov-"+it.c); ov.textContent = v||"·"; ov.parentNode.classList.toggle("done",!!v);
+    el.querySelectorAll(".opt").forEach(function(o){ o.setAttribute("aria-checked", String(+o.dataset.v===v)); });
+  });
+  ["P","N","G"].forEach(function(k){
+    var n=s["n"+k], tot = k==="G"?16:7;
+    $("sub-"+k).textContent = n? s[k]+(n<tot?" ("+n+"/"+tot+")":"") : "—";
+    $("s"+k).textContent = n? s[k] : "—";
+    $("m"+k).textContent = n? s[k] : "—";
+    $("b"+k).style.width = n? pct(s[k], tot*7, tot)+"%" : "0";
+  });
+  $("sT").textContent = s.n? s.T : "—";
+  $("mT").textContent = s.n? s.T : "—";
+  $("bT").style.width = s.n? pct(s.T,210,30)+"%" : "0";
+  $("sC").textContent = (s.nP===7 && s.nN===7) ? ((s.P-s.N>0?"+":"")+(s.P-s.N)) : "—";
+  $("ovCount").textContent = s.n+" / 30 baholandi";
+  $("prog").textContent = complete ? "Barcha 30 band baholandi." : s.n+" / 30 band baholandi"+(s.n?" — jami ball hali to‘liq emas.":"");
+
+  if(complete){
+    var sv = severity(s.T);
+    $("sev").innerHTML = '<div class="verdict '+sv.k+'"><b>'+sv.h+'</b>'+sv.d+'. Taxminiy mo‘ljal; klinik qaror o‘rnini bosmaydi.</div>';
+  } else $("sev").innerHTML = "";
+
+  /* remission */
+  var allR = true, anyMissing=false;
+  REMISSION.forEach(function(c){
+    var v=state.scores[c], e=$("rm-"+c);
+    e.className = v ? (v<=3?"y":"x") : "";
+    e.textContent = c+(v?" · "+v:"");
+    if(!v) anyMissing=true; else if(v>3) allR=false;
+  });
+  if(anyMissing && allR) $("remV").innerHTML = '<div class="verdict v-neu">8 ta bandning barchasi baholangach natija chiqadi.</div>';
+  else if(allR) $("remV").innerHTML = '<div class="verdict v-ok"><b>Og‘irlik mezoni bajarildi</b>Barcha 8 band ≤ 3. Remissiya uchun bu holat kamida 6 oy saqlanishi kerak.</div>';
+  else $("remV").innerHTML = '<div class="verdict v-bad"><b>Og‘irlik mezoni bajarilmadi</b>Kamida bitta asosiy band ≥ 4 ball.</div>';
+
+  /* response */
+  var b = parseInt(state.baseline,10), rv=$("respV");
+  if(!state.baseline){ rv.innerHTML = '<div class="verdict v-neu" style="margin-top:8px">Taqqoslash uchun boshlang‘ich balni kiriting.</div>'; }
+  else if(isNaN(b)||b<30||b>210){ rv.innerHTML = '<div class="verdict v-bad" style="margin-top:8px"><b>Noto‘g‘ri qiymat</b>PANSS jami bali 30 dan 210 gacha bo‘ladi.</div>'; }
+  else if(!complete){ rv.innerHTML = '<div class="verdict v-neu" style="margin-top:8px">Joriy natijani hisoblash uchun 30 bandning barchasini baholang.</div>'; }
+  else if(b===30){ rv.innerHTML = '<div class="verdict v-neu" style="margin-top:8px">Boshlang‘ich ball 30 bo‘lsa, kamayish foizini hisoblab bo‘lmaydi.</div>'; }
+  else{
+    var corr = (b - s.T)/(b-30)*100, raw = (b - s.T)/b*100, k, h;
+    if(corr>50){k="v-ok";h="Davolash samarali, effekt chuqur";}
+    else if(corr>=20){k="v-warn";h="Davolash samarali, effekt qisman";}
+    else {k="v-bad";h="Davolash samarasiz";}
+    rv.innerHTML = '<div class="verdict '+k+'" style="margin-top:8px"><b>'+h+'</b>'+
+      'Kamayish: <span class="mono">'+corr.toFixed(1)+'%</span> (−30 tuzatmasi bilan) · <span class="mono">'+raw.toFixed(1)+'%</span> (tuzatmasiz)<br>'+b+' → '+s.T+' ball</div>';
+  }
+  renderPrint(s);
+}
+
+function reportText(){
+  var s=sums(), L=[];
+  L.push("PANSS — Pozitiv va negativ sindromlar shkalasi");
+  if(state.meta.patient) L.push("Bemor: "+state.meta.patient);
+  if(state.meta.date) L.push("Sana: "+state.meta.date);
+  if(state.meta.rater) L.push("Baholovchi: "+state.meta.rater);
+  L.push("");
+  SECTIONS.forEach(function(sec){
+    var row = ITEMS.filter(function(i){return i.s===sec.s;}).map(function(i){return i.c+"="+(state.scores[i.c]||"–");}).join(", ");
+    L.push(sec.t+": "+(s["n"+sec.s]?s[sec.s]:"—")+"  ["+row+"]");
+  });
+  L.push("PANSS jami: "+(s.n?s.T:"—")+(s.n<30?" (to‘liq emas: "+s.n+"/30)":""));
+  if(s.nP===7&&s.nN===7) L.push("Kompozit indeks (P−N): "+(s.P-s.N));
+  if(s.n===30){
+    L.push("Og‘irlik (taxminiy): "+severity(s.T).h);
+    var rem = REMISSION.every(function(c){return state.scores[c]<=3;});
+    L.push("Remissiya og‘irlik mezoni (Andreasen, 2005): "+(rem?"bajarildi":"bajarilmadi"));
+    var b=parseInt(state.baseline,10);
+    if(b>30&&b<=210){ var c=(b-s.T)/(b-30)*100; L.push("Boshlang‘ich "+b+" → "+s.T+"; kamayish "+c.toFixed(1)+"% (−30 tuzatmasi bilan)"); }
+  }
+  return L.join("\n");
+}
+
+function renderPrint(s){
+  var h = '<h2>PANSS — Pozitiv va negativ sindromlar shkalasi</h2>';
+  h += '<div>Bemor: <b>'+esc(state.meta.patient||"________")+'</b> &nbsp; Sana: <b>'+esc(state.meta.date||"________")+'</b> &nbsp; Baholovchi: <b>'+esc(state.meta.rater||"________")+'</b></div>';
+  h += '<table><tr><th>P</th><th>N</th><th>G</th><th>Jami</th><th>P−N</th></tr><tr><td class="s">'+(s.nP?s.P:"")+'</td><td class="s">'+(s.nN?s.N:"")+'</td><td class="s">'+(s.nG?s.G:"")+'</td><td class="s">'+(s.n?s.T:"")+'</td><td class="s">'+((s.nP===7&&s.nN===7)?(s.P-s.N):"")+'</td></tr></table>';
+  h += '<div class="pcols">';
+  SECTIONS.forEach(function(sec){
+    h += '<table><tr><th colspan="2">'+sec.t+'</th><th>Ball</th></tr>';
+    ITEMS.filter(function(i){return i.s===sec.s;}).forEach(function(i){ h += '<tr><td style="width:34pt">'+i.c+'</td><td>'+esc(i.n)+'</td><td class="s">'+(state.scores[i.c]||"")+'</td></tr>'; });
+    h += '</table>';
+  });
+  h += '</div><p style="font-size:9pt;margin-top:8pt">Manba: O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022); Kay, Fiszbein, Opler (1987).</p>';
+  $("printSheet").innerHTML = h;
+}
+
+function toast(t){ var e=$("toast"); e.textContent=t; e.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(function(){e.classList.remove("show");},1800); }
+
+/* events */
+function bind(){
+  document.addEventListener("click", function(e){
+    var t = e.target.closest("[data-toggle],[data-go],.opt,[data-clear],[data-next]");
+    if(!t) return;
+    if(t.dataset.toggle){ setOpen(t.dataset.toggle,false); return; }
+    if(t.dataset.go){ if(openCode!==t.dataset.go) setOpen(t.dataset.go,true); else $("it-"+t.dataset.go).scrollIntoView({behavior:"smooth",block:"start"}); return; }
+    if(t.classList.contains("opt")){
+      var c=t.dataset.c, v=+t.dataset.v;
+      state.scores[c]=v; save(); render();
+      var nx = nextUnscored(c);
+      setTimeout(function(){ if(nx) setOpen(nx,true); else { setOpen(c,false); toast("Barcha 30 band baholandi"); if(window.innerWidth<980) $("summary").scrollIntoView({behavior:"smooth"}); } }, 160);
+      return;
+    }
+    if(t.dataset.clear){ delete state.scores[t.dataset.clear]; save(); render(); return; }
+    if(t.dataset.next){ var n=nextItem(t.dataset.next); if(n) setOpen(n,true); else $("summary").scrollIntoView({behavior:"smooth"}); return; }
+  });
+  document.addEventListener("keydown", function(e){
+    var o = e.target.closest && e.target.closest(".opt");
+    if(!o) return;
+    if(e.key==="ArrowDown"||e.key==="ArrowUp"){
+      e.preventDefault();
+      var sib = e.key==="ArrowDown"? o.nextElementSibling : o.previousElementSibling;
+      if(sib) sib.focus();
+    }
+  });
+  [["mPatient","patient"],["mDate","date"],["mRater","rater"]].forEach(function(p){
+    var el=$(p[0]); el.value = state.meta[p[1]]||"";
+    el.addEventListener("input",function(){ state.meta[p[1]]=el.value; save(); renderPrint(sums()); });
+  });
+  var bl=$("baseline"); bl.value=state.baseline||"";
+  bl.addEventListener("input",function(){ state.baseline=bl.value.trim(); save(); render(); });
+  $("btnCopy").addEventListener("click",function(){
+    var txt=reportText();
+    function fallback(){ var ta=document.createElement("textarea"); ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy");toast("Nusxalandi");}catch(err){toast("Nusxalab bo‘lmadi");} document.body.removeChild(ta); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(function(){toast("Nusxalandi");},fallback); } else fallback();
+  });
+  $("btnPrint").addEventListener("click",function(){ renderPrint(sums()); window.print(); });
+  $("btnReset").addEventListener("click",function(){
+    if(!confirm("Barcha ballar va bemor ma’lumotlari o‘chiriladi. Davom etasizmi?")) return;
+    state={scores:{},meta:{patient:"",date:"",rater:""},baseline:""}; save();
+    $("mPatient").value="";$("mDate").value="";$("mRater").value="";$("baseline").value="";
+    if(openCode) setOpen(openCode,false);
+    render(); setOpen("P1",true);
+  });
+  $("btnToSum").addEventListener("click",function(){ $("summary").scrollIntoView({behavior:"smooth"}); });
+}
+
+load(); build(); bind(); render();
+var first = nextUnscored(ITEMS[ITEMS.length-1].c);
+if(first) setOpen(first,false);
+})();
+</script>
+</body>
+</html>

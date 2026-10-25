@@ -22,9 +22,11 @@ ilmiy platforma:
 - 🔢 Digit Span, 🟢 Corsi bloklari (xotira)
 - 🎭 Leonhard-Shmishek xarakter aksentuatsiyasi (88 savol, 10 shkala)
 - 😰 GAD-7, 🌧️ PHQ-9, 📋 Spilberger-Xanin STAI, 🩺 HADS (klinik skrining testlari)
-- 📋 Shizofreniya klinik baholash shkalalari — PANSS, BNSS, CDSS, PSP, C-SSRS
-  (shifokor tomonidan to'ldiriladi, o'z-o'zini baholash emas; `shkalalar-uz.html`
-  hozircha faqat kirish sahifasi — 5 ta shkalaning o'zi keyinroq qo'shiladi)
+- 📋 Klinik baholash shkalalari (shifokor tomonidan to'ldiriladi, o'z-o'zini
+  baholash emas) — `shkalalar-uz.html` orqali:
+  - Shizofreniya: PANSS, BNSS, CDSS, PSP, C-SSRS
+  - Bolalar va o'smirlarda aqliy zaiflik: WISC (Veksler testi), Raven matritsalari
+- 🧠 MoCA / MMSE — kognitiv skrining kalkulyatori (`moca-mmse-test.html`)
 
 **📖 Fanga doir testlar — ob'ektiv bilim savollari, psixologik test emas:**
 - 🧠 Bosh miya nervlari (I, II, III, IV, VI juftlar) — 50 savol
@@ -73,6 +75,11 @@ frontend/
   fanga-doir-testlar.html      # Fanga doir testlar — tibbiy bilim testlari
   xkt-10.html, xkt-11.html      # ICD-10 / ICD-11 kod qulfi vositalari
   demensiya-test.html            # Demensiya bilim testi (o'z mustaqil dvigatelida)
+  shkalalar-uz.html              # Klinik baholash shkalalari — kirish sahifasi
+  panss-uz.html, bnss-uz.html, cdss-uz.html, psp-uz.html, cssrs-uz.html
+                                  # Shizofreniya klinik shkalalari (o'z mustaqil dvigatelida)
+  wisc-uz.html, raven-uz.html     # Bolalarda aqliy zaiflik — intellekt testlari
+  moca-mmse-test.html             # MoCA/MMSE kognitiv skrining kalkulyatori
   tuzuvchilar.html                # Tuzuvchilar — muallif, kontakt, yordam
   maxfiylik.html                   # Maxfiylik siyosati
   eq.html, eq-tarhan.html, stress.html, intelligence-types.html,

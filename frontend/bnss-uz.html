@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BNSS shkalasi — Ruhshunos</title>
+<meta name="description" content="BNSS — Negativ simptomlarni qisqa baholash shkalasi (13 band). O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022) asosida o‘zbek tilida.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>:root{
+  --bg:#f5f3ee; --surface:#ffffff; --surface-2:#faf8f4; --ink:#1d2421; --ink-2:#4b5551; --ink-3:#7a837f;
+  --line:#e2ddd3; --line-2:#cfc8bb; --accent:#1f5e57; --accent-ink:#ffffff; --accent-soft:#e3efec;
+  --p:#b4532a; --p-soft:#f6e6dd; --n:#3d5a8a; --n-soft:#e2e9f4; --g:#7a6a1e; --g-soft:#f1ecd6;
+  --ok:#2e7d4f; --ok-soft:#e1f1e7; --bad:#a83a32; --bad-soft:#f6e1df; --warn:#9a6a00; --warn-soft:#f7ecd2;
+  --shadow:0 1px 2px rgba(30,30,20,.05),0 4px 14px rgba(30,30,20,.05);
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+    --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+    --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+    --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+  --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+  --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+  --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header.top{padding:28px 0 18px;border-bottom:1px solid var(--line);background:var(--surface)}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+h1{font-size:clamp(24px,4vw,34px);line-height:1.15;margin:6px 0 8px;font-weight:700;letter-spacing:-.01em}
+.lead{color:var(--ink-2);max-width:780px;margin:0}
+.meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px;max-width:780px}
+.meta-row label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-3);font-weight:500}
+.meta-row input{font:inherit;font-size:15px;padding:9px 11px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink);min-width:0}
+.meta-row input:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Info */
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:20px 0 6px}
+.info details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:0}
+.info summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px}
+.info summary::-webkit-details-marker{display:none}
+.info summary::after{content:"+";color:var(--ink-3);font-weight:500}
+.info details[open] summary::after{content:"−"}
+.info .body{padding:0 16px 14px;color:var(--ink-2);font-size:14.5px}
+.info .body ul,.info .body ol{padding-left:18px;margin:6px 0}
+.info .body li{margin:3px 0}
+.warnbox{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);color:var(--ink);border-radius:var(--radius);padding:12px 16px;font-size:14.5px;margin:14px 0 0}
+.warnbox b{color:var(--warn)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding:18px 0 110px}
+@media (min-width:980px){.layout{grid-template-columns:minmax(0,1fr) 350px;padding-bottom:48px}}
+
+/* Overview grid */
+.overview{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.ov-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.ov-head h2{font-size:15px;margin:0}
+.ov-head .muted{font-size:13px;color:var(--ink-3)}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.ov-cell{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:5px 2px 4px;text-align:center;cursor:pointer;line-height:1.1}
+.ov-cell .c{font-size:11px;color:var(--ink-3);font-weight:600}
+.ov-cell .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:16px;margin-top:2px;color:var(--ink-3)}
+.ov-cell.done .v{color:var(--ink)}
+.ov-cell[data-s="P"].done{background:var(--p-soft);border-color:color-mix(in srgb,var(--p) 40%,transparent)}
+.ov-cell[data-s="N"].done{background:var(--n-soft);border-color:color-mix(in srgb,var(--n) 40%,transparent)}
+.ov-cell[data-s="G"].done{background:var(--g-soft);border-color:color-mix(in srgb,var(--g) 40%,transparent)}
+.ov-cell:hover{border-color:var(--line-2)}
+.ov-cell:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Sections */
+.section{margin-top:26px}
+.sec-head{display:flex;align-items:center;gap:12px;margin:0 0 10px;flex-wrap:wrap}
+.sec-tag{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;padding:3px 9px;border-radius:999px;color:#fff}
+.sec-head h2{margin:0;font-size:20px;font-weight:700}
+.sec-head .range{color:var(--ink-3);font-size:13.5px}
+.sec-head .sub{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px}
+[data-s="P"] .sec-tag{background:var(--p)} [data-s="N"] .sec-tag{background:var(--n)} [data-s="G"] .sec-tag{background:var(--g)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sec-tag{color:#141816}}
+:root[data-theme="dark"] .sec-tag{color:#141816}
+
+/* Item card */
+.item{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;scroll-margin-top:14px}
+.item.open{box-shadow:var(--shadow);border-color:var(--line-2)}
+.item-h{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;background:none;border:0;text-align:left;cursor:pointer}
+.item-h:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.code{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;min-width:42px;text-align:center;padding:4px 0;border-radius:7px}
+.item[data-s="P"] .code{background:var(--p-soft);color:var(--p)}
+.item[data-s="N"] .code{background:var(--n-soft);color:var(--n)}
+.item[data-s="G"] .code{background:var(--g-soft);color:var(--g)}
+.iname{flex:1;min-width:0;font-weight:600;font-size:15.5px;line-height:1.3}
+.iname small{display:block;font-weight:400;color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.sup{display:inline-block;font-size:11px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.pill{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px;min-width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1.5px dashed var(--line-2);color:var(--ink-3)}
+.item.scored .pill{border:0;background:var(--accent);color:var(--accent-ink)}
+.chev{flex:none;width:18px;height:18px;color:var(--ink-3);transition:transform .18s}
+.item.open .chev{transform:rotate(180deg)}
+.item-b{display:none;padding:0 14px 14px}
+.item.open .item-b{display:block}
+.def{margin:0 0 6px;color:var(--ink)}
+.basis{margin:0 0 12px;font-size:13.5px;color:var(--ink-2);padding-left:10px;border-left:3px solid var(--line-2)}
+.basis b{color:var(--ink-2);font-weight:600}
+.note{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:8px 10px;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--line-2)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.opt .n{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:17px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+.opt .t{font-size:14.5px;color:var(--ink-2)}
+.opt .t b{display:block;color:var(--ink);font-weight:600;font-size:14px;margin-bottom:1px}
+.opt[aria-checked="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.opt[aria-checked="true"] .n{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opt[aria-checked="true"] .t{color:var(--ink)}
+.item-f{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+.lnk{background:none;border:0;color:var(--accent);cursor:pointer;font-size:14px;padding:4px 0;font-weight:500}
+.lnk:disabled{color:var(--ink-3);cursor:default}
+
+/* Summary */
+aside.summary{align-self:start}
+@media (min-width:980px){aside.summary{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow:auto}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.card h3{margin:0 0 10px;font-size:15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--surface-2)}
+.stat .l{font-size:12px;color:var(--ink-3);font-weight:600;display:flex;justify-content:space-between}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:24px;line-height:1.15;margin-top:2px}
+.stat .bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.stat .bar i{display:block;height:100%;width:0;border-radius:2px;transition:width .2s}
+.stat.P .bar i{background:var(--p)} .stat.N .bar i{background:var(--n)} .stat.G .bar i{background:var(--g)} .stat.T .bar i{background:var(--accent)}
+.stat.T{grid-column:1/-1;background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.stat.T .v{font-size:30px}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0;border-top:1px dashed var(--line)}
+.kv:first-of-type{border-top:0}
+.kv span:last-child{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.progress{font-size:13px;color:var(--ink-3);margin-top:10px}
+.verdict{border-radius:10px;padding:10px 12px;font-size:14px;margin-top:8px}
+.verdict b{display:block;font-size:15px;margin-bottom:2px}
+.v-ok{background:var(--ok-soft);color:var(--ink)} .v-ok b{color:var(--ok)}
+.v-bad{background:var(--bad-soft);color:var(--ink)} .v-bad b{color:var(--bad)}
+.v-warn{background:var(--warn-soft);color:var(--ink)} .v-warn b{color:var(--warn)}
+.v-neu{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--line-2)}
+.rem-list{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px}
+.rem-list span{font-family:"IBM Plex Mono",monospace;font-size:12px;text-align:center;padding:5px 0;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-3)}
+.rem-list span.y{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.rem-list span.x{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.field{display:flex;gap:8px;align-items:center;margin-top:6px}
+.field input{width:100%;font:inherit;font-family:"IBM Plex Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink)}
+.small{font-size:12.5px;color:var(--ink-3);margin:6px 0 0}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{border:1px solid var(--line-2);background:var(--surface);border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.full{grid-column:1/-1}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Mobile bar */
+.mbar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.08);padding:9px 16px calc(9px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;z-index:20}
+.mbar .m{flex:1;display:flex;gap:12px;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;overflow:hidden}
+.mbar .m span{white-space:nowrap}
+.mbar .m em{font-style:normal;color:var(--ink-3);font-weight:500;margin-right:3px}
+.mbar .btn{padding:8px 12px}
+@media (min-width:980px){.mbar{display:none}}
+
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--ink-3);font-size:13px;background:var(--surface)}
+footer p{margin:4px 0;max-width:900px}
+
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.toast.show{opacity:1}
+
+/* Print */
+#printSheet{display:none}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  header.top,.layout,.mbar,footer,.info,.warnbox,.toast{display:none!important}
+  #printSheet{display:block;padding:0}
+  #printSheet h2{font-size:16pt;margin:0 0 4pt}
+  #printSheet table{width:100%;border-collapse:collapse;margin-top:8pt;font-size:10pt}
+  #printSheet th,#printSheet td{border:1px solid #999;padding:3pt 5pt;text-align:left}
+  #printSheet td.s{text-align:center;font-weight:700;width:36pt}
+  .pcols{columns:2;column-gap:16pt}
+  .pcols table{break-inside:avoid}
+}
+
+/* ---- shared extras for scale pages ---- */
+:root{
+  --c1:#b4532a; --c1s:#f6e6dd; --c2:#3d5a8a; --c2s:#e2e9f4; --c3:#7a6a1e; --c3s:#f1ecd6;
+  --c4:#6b4a8a; --c4s:#ece4f4; --c5:#2f7a66; --c5s:#dff0ea; --c6:#8a3d5e; --c6s:#f4e1ea;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+    --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+  }
+}
+:root[data-theme="dark"]{
+  --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+  --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+}
+.back{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:500;text-decoration:none;margin-bottom:12px}
+.back:hover{text-decoration:underline}
+.site-nav{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:16px 0}
+.site-nav a{flex:1;text-align:center;padding:10px 8px;font-size:12.5px;font-weight:600;color:var(--ink);text-decoration:none;border-right:1px solid var(--line);white-space:nowrap}
+.site-nav a:last-child{border-right:none}
+.site-nav a:hover{background:var(--surface-2)}
+.site-nav a.active{background:var(--accent);color:var(--accent-ink)}
+.item .code.k{background:var(--ks);color:var(--k)}
+.ov-cell.k.done{background:var(--ks);border-color:color-mix(in srgb,var(--k) 40%,transparent)}
+.sec-tag.k{background:var(--k)}
+.qs{margin:0 0 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.qs summary{cursor:pointer;padding:9px 12px;font-weight:600;font-size:14px;color:var(--accent);list-style:none}
+.qs summary::-webkit-details-marker{display:none}
+.qs summary::before{content:"▸ ";}
+.qs[open] summary::before{content:"▾ ";}
+.qs .qb{padding:0 12px 10px;font-size:14.5px;color:var(--ink-2)}
+.qs .qb p{margin:6px 0}
+.qs .qb b{color:var(--ink);font-weight:600}
+.alert{border-radius:var(--radius);padding:12px 14px;font-size:14.5px;margin-top:10px;background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent)}
+.alert b{color:var(--bad);display:block;margin-bottom:3px;font-size:15px}
+.alert a{font-weight:600}
+.alert ul{margin:6px 0 0;padding-left:18px}
+.sub-list .kv span:first-child{color:var(--ink-2)}
+.dom{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.lvl-legend{font-size:12.5px;color:var(--ink-3);margin:4px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="ruhiyatga-doir-testlar.html" class="active">Ruhiyatga doir testlar</a>
+    <a href="fanga-doir-testlar.html">Fanga doir testlar</a>
+    <a href="xkt-10.html">XKT-10</a>
+    <a href="xkt-11.html">XKT-11</a>
+    <a href="tuzuvchilar.html">Tuzuvchilar</a>
+  </nav>
+</div>
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="shkalalar-uz.html">← Barcha shkalalar</a>
+    <div class="eyebrow">Klinik shkala · Psixiatriya · XKT-10 F20</div>
+    <h1>BNSS — Negativ simptomlarni qisqa baholash shkalasi</h1>
+    <p class="lead">Shizofreniya spektri buzilishlarida negativ simptomlarni baholovchi 13 bandli shkala: 6 ta subshkala va 2 ta domen (motivatsiya-zavq hamda ekspressiv defitsit). Milliy protokolga ko‘ra negativ simptomatikani tashxislash (2B) va davolashning antinegativ effektini 10–15-haftada tekshirish uchun qo‘llanadi.</p>
+    <div class="meta-row">
+      <label>Bemor (kod yoki initsiallar)<input id="mPatient" autocomplete="off" placeholder="masalan, A.B.-024"></label>
+      <label>Baholash sanasi<input id="mDate" type="date"></label>
+      <label>Baholovchi shifokor<input id="mRater" autocomplete="off" placeholder="F.I.Sh."></label>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="warnbox"><b>Faqat mutaxassislar uchun.</b> BNSS yarim tuzilmali klinik intervyu (≈ 15–20 daqiqa) asosida psixiatr tomonidan to‘ldiriladi. Kiritilgan ma’lumotlar faqat shu brauzerda saqlanadi va hech qayerga yuborilmaydi.</div>
+
+  <div class="info">
+    <details>
+      <summary>Qanday baholanadi</summary>
+      <div class="body"><ul>
+        <li>Baholash davri — <b>o‘tgan 1 hafta</b>.</li>
+        <li>Har bir band <b>0 dan 6 gacha</b> baholanadi: 0 — norma, 6 — o‘ta og‘ir buzilish.</li>
+        <li>1–8-bandlar bemor javoblariga (tavsiya etilgan savollar har bir band ichida), 9–13-bandlar suhbat davomidagi kuzatuvga asoslanadi.</li>
+        <li>Negativ simptomlarni psixotik simptomlar, depressiya (Kalgari shkalasi) va ekstrapiramidal nojo‘ya ta’sirlardan (akineziya) farqlang — protokol talabi.</li>
+      </ul></div>
+    </details>
+    <details>
+      <summary>Ballar va domenlar</summary>
+      <div class="body"><ul>
+        <li><b>Jami:</b> 13 band yig‘indisi, 0–78.</li>
+        <li><b>Motivatsiya va zavq (apato-abulik) domeni:</b> angedoniya + asotsiallik + avolitsiya (1–3, 5–8-bandlar), 0–42.</li>
+        <li><b>Ekspressiv defitsit domeni:</b> affekt to‘mtoqlashuvi + alogiya (9–13-bandlar), 0–30.</li>
+        <li>Distress (4-band) jami ballga kiradi, domenlarga kirmaydi.</li>
+      </ul></div>
+    </details>
+    <details>
+      <summary>Protokol matnidagi tuzatishlar</summary>
+      <div class="body"><ul>
+        <li>Ilovada 1, 4–8 va 12-bandlar 1–7, qolganlari 0–6 shkalada yozilgan. Protokolning o‘zi aytgan 0–78 jami ball faqat 0–6 shkalada to‘g‘ri chiqadi, shuning uchun barcha bandlar 0–6 ga keltirildi.</li>
+        <li>5-bandda «3», 7-bandda «5» ballari ikki martadan takrorlangan; tavsiflar ketma-ketligi bo‘yicha qayta raqamlandi.</li>
+        <li>«Умеренная степень нарушений» deb yozilgan 2-ball darajalari asl shkala bo‘yicha «yengil» deb berildi.</li>
+      </ul></div>
+    </details>
+  </div>
+
+  <div class="layout">
+    <main>
+      <div class="overview"><div class="ov-head"><h2>Barcha bandlar</h2><span class="muted" id="ovCount">0 / 13 baholandi</span></div><div class="ov-grid" id="ovGrid"></div></div>
+      <div id="sections"></div>
+    </main>
+    <aside class="summary" id="summary">
+      <div class="card">
+        <h3>Natija</h3>
+        <div class="stats">
+          <div class="stat T"><div class="l"><span>BNSS jami</span><span>0–78</span></div><div class="v" id="sT">—</div><div class="bar"><i id="bT"></i></div></div>
+          <div class="stat P"><div class="l"><span>Motivatsiya-zavq</span><span>0–42</span></div><div class="v" id="sMAP">—</div><div class="bar"><i id="bMAP"></i></div></div>
+          <div class="stat N"><div class="l"><span>Ekspressiv defitsit</span><span>0–30</span></div><div class="v" id="sEXP">—</div><div class="bar"><i id="bEXP"></i></div></div>
+        </div>
+        <div class="sub-list" style="margin-top:10px" id="subList"></div>
+        <div class="progress" id="prog"></div>
+      </div>
+      <div class="card">
+        <h3>Antinegativ effekt</h3>
+        <label class="small" for="baseline" style="display:block;margin:0">Boshlang‘ich BNSS jami bali</label>
+        <div class="field"><input id="baseline" type="number" inputmode="numeric" min="0" max="78" placeholder="masalan, 42"></div>
+        <div id="respV"></div>
+        <p class="small">Protokolga ko‘ra antinegativ effekt davolashning 10–15-haftasida BNSS bo‘yicha tekshiriladi. Protokolda foiz chegarasi berilmagan, shuning uchun o‘zgarish faqat ball va foizda ko‘rsatiladi.</p>
+      </div>
+      <div class="card"><div class="btns">
+        <button class="btn primary" id="btnCopy">Natijani nusxalash</button>
+        <button class="btn" id="btnPrint">Chop etish</button>
+        <button class="btn full" id="btnReset">Yangi bemor (tozalash)</button>
+      </div></div>
+    </aside>
+  </div>
+</div>
+
+<div class="mbar"><div class="m"><span><em>Jami</em><b id="mT">—</b></span><span><em>MZ</em><b id="mMAP">—</b></span><span><em>ED</em><b id="mEXP">—</b></span></div><button class="btn primary" id="btnToSum">Natija</button></div>
+
+<footer><div class="wrap">
+  <p><b>Manba:</b> O‘zR SSV. Shizofreniya bilan og‘rigan bemorlarni olib borish bo‘yicha milliy klinik protokol. Toshkent, 2022 — ilova «Шкала краткой оценки негативных симптомов».</p>
+  <p><b>Asl shkala:</b> Kirkpatrick B., Strauss G.P., Nguyen L. va b. The Brief Negative Symptom Scale: psychometric properties. <i>Schizophr Bull.</i> 2011;37(2):300–305. To‘liq qo‘llanma va o‘quv materiallari mualliflarda.</p>
+</div></footer>
+<div id="printSheet"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>/* Itemli klinik shkalalar uchun umumiy dvigatel (Ruhshunos) */
+function ScaleEngine(cfg){
+  "use strict";
+  var state = {scores:{}, meta:{patient:"",date:"",rater:""}, extra:{}};
+  var openCode = null;
+  var ITEMS = cfg.items, GROUPS = cfg.groups;
+  function $(id){return document.getElementById(id);}
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  function has(c){return Object.prototype.hasOwnProperty.call(state.scores,c);}
+  function grp(g){for(var i=0;i<GROUPS.length;i++){if(GROUPS[i].g===g)return GROUPS[i];}return null;}
+  function kstyle(g){var k=grp(g).k;return 'style="--k:var(--c'+k+');--ks:var(--c'+k+'s)"';}
+
+  function load(){try{var r=localStorage.getItem(cfg.key);if(r){var d=JSON.parse(r);if(d&&typeof d==="object"){state.scores=d.scores||{};state.meta=d.meta||state.meta;state.extra=d.extra||{};}}}catch(e){}}
+  function save(){try{localStorage.setItem(cfg.key,JSON.stringify(state));}catch(e){}}
+
+  var api = {
+    state:state, $:$, esc:esc, has:has, items:ITEMS,
+    sum:function(codes){var s=0;codes.forEach(function(c){if(has(c))s+=state.scores[c];});return s;},
+    count:function(codes){var n=0;codes.forEach(function(c){if(has(c))n++;});return n;},
+    codes:function(g){return ITEMS.filter(function(i){return i.g===g;}).map(function(i){return i.c;});},
+    all:function(){return ITEMS.map(function(i){return i.c;});},
+    complete:function(){return ITEMS.every(function(i){return has(i.c);});},
+    save:save, render:null
+  };
+
+  function build(){
+    var ov="",html="";
+    ITEMS.forEach(function(it){
+      ov+='<button class="ov-cell k" '+kstyle(it.g)+' data-go="'+it.c+'" aria-label="'+esc(it.c+" "+it.n)+'"><div class="c">'+it.c+'</div><div class="v" id="ov-'+it.c+'">·</div></button>';
+    });
+    $("ovGrid").innerHTML=ov;
+    GROUPS.forEach(function(g){
+      var its=ITEMS.filter(function(i){return i.g===g.g;});
+      html+='<section class="section"><div class="sec-head"><span class="sec-tag k" '+kstyle(g.g)+'>'+esc(g.tag||g.g)+'</span><h2>'+esc(g.t)+'</h2><span class="range">'+esc(g.r||"")+'</span><span class="sub" id="sub-'+g.g+'">—</span></div>';
+      its.forEach(function(it){
+        html+='<article class="item" id="it-'+it.c+'">'+
+          '<button class="item-h" aria-expanded="false" aria-controls="b-'+it.c+'" data-toggle="'+it.c+'">'+
+          '<span class="code k" '+kstyle(it.g)+'>'+it.c+'</span>'+
+          '<span class="iname">'+esc(it.n)+(it.sm?'<small>'+esc(it.sm)+'</small>':'')+'</span>'+
+          '<span class="pill" id="pill-'+it.c+'">–</span>'+
+          '<svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg>'+
+          '</button><div class="item-b" id="b-'+it.c+'">'+
+          (it.note?'<p class="note">'+it.note+'</p>':'')+
+          (it.d?'<p class="def">'+esc(it.d)+'</p>':'')+
+          (it.q?'<details class="qs"'+(cfg.qOpen?' open':'')+'><summary>'+(it.qt||"Bemorga savollar")+'</summary><div class="qb">'+it.q+'</div></details>':'')+
+          (it.b?'<p class="basis"><b>Baholash asosi:</b> '+esc(it.b)+'</p>':'')+
+          '<div class="opts" role="radiogroup" aria-label="'+esc(it.c)+' bali">';
+        it.a.forEach(function(t,i){
+          var v=cfg.min+i;
+          html+='<button class="opt" role="radio" aria-checked="false" data-c="'+it.c+'" data-v="'+v+'"><span class="n">'+v+'</span><span class="t"><b>'+esc((it.labels||cfg.labels)[i])+'</b>'+esc(t)+'</span></button>';
+        });
+        html+='</div><div class="item-f"><button class="lnk" data-clear="'+it.c+'">Balni o‘chirish</button><button class="lnk" data-next="'+it.c+'">Keyingi band →</button></div></div></article>';
+      });
+      html+='</section>';
+    });
+    $("sections").innerHTML=html;
+  }
+
+  function setOpen(code,scroll){
+    if(openCode){var p=$("it-"+openCode);if(p){p.classList.remove("open");p.querySelector(".item-h").setAttribute("aria-expanded","false");}}
+    if(code===openCode&&!scroll){openCode=null;return;}
+    openCode=code;var el=$("it-"+code);if(!el)return;
+    el.classList.add("open");el.querySelector(".item-h").setAttribute("aria-expanded","true");
+    if(scroll)requestAnimationFrame(function(){el.scrollIntoView({behavior:"smooth",block:"start"});});
+  }
+  function idx(c){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].c===c)return i;return -1;}
+  function nextUnscored(after){var i=idx(after);for(var k=1;k<=ITEMS.length;k++){var it=ITEMS[(i+k)%ITEMS.length];if(!has(it.c))return it.c;}return null;}
+
+  function render(){
+    ITEMS.forEach(function(it){
+      var h=has(it.c),v=state.scores[it.c],el=$("it-"+it.c);
+      el.classList.toggle("scored",h);
+      $("pill-"+it.c).textContent=h?v:"–";
+      var o=$("ov-"+it.c);o.textContent=h?v:"·";o.parentNode.classList.toggle("done",h);
+      el.querySelectorAll(".opt").forEach(function(b){b.setAttribute("aria-checked",String(h&&+b.dataset.v===v));});
+    });
+    GROUPS.forEach(function(g){
+      var cs=api.codes(g.g),n=api.count(cs);
+      $("sub-"+g.g).textContent=n?api.sum(cs)+(n<cs.length?" ("+n+"/"+cs.length+")":""):"—";
+    });
+    var n=api.count(api.all());
+    $("ovCount").textContent=n+" / "+ITEMS.length+" baholandi";
+    cfg.update(api);
+    renderPrint();
+  }
+  api.render=render;
+
+  function report(){
+    var L=[cfg.title];
+    if(state.meta.patient)L.push("Bemor: "+state.meta.patient);
+    if(state.meta.date)L.push("Sana: "+state.meta.date);
+    if(state.meta.rater)L.push("Baholovchi: "+state.meta.rater);
+    L.push("");
+    GROUPS.forEach(function(g){
+      var cs=api.codes(g.g);
+      L.push(g.t+": "+(api.count(cs)?api.sum(cs):"—")+"  ["+cs.map(function(c){return c+"="+(has(c)?state.scores[c]:"–");}).join(", ")+"]");
+    });
+    return L.concat(cfg.report(api)).join("\n");
+  }
+  function renderPrint(){
+    var h='<h2>'+esc(cfg.title)+'</h2><div>Bemor: <b>'+esc(state.meta.patient||"________")+'</b> &nbsp; Sana: <b>'+esc(state.meta.date||"________")+'</b> &nbsp; Baholovchi: <b>'+esc(state.meta.rater||"________")+'</b></div>';
+    h+=cfg.printSummary(api);
+    h+='<table><tr><th>Band</th><th>Nomi</th><th>Ball</th></tr>';
+    ITEMS.forEach(function(i){h+='<tr><td style="width:40pt">'+i.c+'</td><td>'+esc(i.n)+'</td><td class="s">'+(has(i.c)?state.scores[i.c]:"")+'</td></tr>';});
+    h+='</table><p style="font-size:9pt;margin-top:8pt">'+esc(cfg.source)+'</p>';
+    $("printSheet").innerHTML=h;
+  }
+  function toast(t){var e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){e.classList.remove("show");},1800);}
+  api.toast=toast;
+
+  function bind(){
+    document.addEventListener("click",function(e){
+      var t=e.target.closest("[data-toggle],[data-go],.opt,[data-clear],[data-next]");
+      if(!t)return;
+      if(t.dataset.toggle){setOpen(t.dataset.toggle,false);return;}
+      if(t.dataset.go){if(openCode!==t.dataset.go)setOpen(t.dataset.go,true);else $("it-"+t.dataset.go).scrollIntoView({behavior:"smooth",block:"start"});return;}
+      if(t.classList.contains("opt")){
+        var c=t.dataset.c;state.scores[c]=+t.dataset.v;save();render();
+        var nx=nextUnscored(c);
+        setTimeout(function(){if(nx)setOpen(nx,true);else{setOpen(c,false);toast("Barcha bandlar baholandi");if(window.innerWidth<980)$("summary").scrollIntoView({behavior:"smooth"});}},160);
+        return;
+      }
+      if(t.dataset.clear){delete state.scores[t.dataset.clear];save();render();return;}
+      if(t.dataset.next){var i=idx(t.dataset.next);if(i<ITEMS.length-1)setOpen(ITEMS[i+1].c,true);else $("summary").scrollIntoView({behavior:"smooth"});return;}
+    });
+    document.addEventListener("keydown",function(e){
+      var o=e.target.closest&&e.target.closest(".opt");if(!o)return;
+      if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();var s=e.key==="ArrowDown"?o.nextElementSibling:o.previousElementSibling;if(s)s.focus();}
+    });
+    [["mPatient","patient"],["mDate","date"],["mRater","rater"]].forEach(function(p){
+      var el=$(p[0]);el.value=state.meta[p[1]]||"";
+      el.addEventListener("input",function(){state.meta[p[1]]=el.value;save();renderPrint();});
+    });
+    $("btnCopy").addEventListener("click",function(){
+      var txt=report();
+      function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Nusxalandi");}catch(err){toast("Nusxalab bo‘lmadi");}document.body.removeChild(ta);}
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(function(){toast("Nusxalandi");},fb);else fb();
+    });
+    $("btnPrint").addEventListener("click",function(){renderPrint();window.print();});
+    $("btnReset").addEventListener("click",function(){
+      if(!confirm("Barcha ballar va bemor ma’lumotlari o‘chiriladi. Davom etasizmi?"))return;
+      state.scores={};state.meta={patient:"",date:"",rater:""};state.extra={};save();
+      ["mPatient","mDate","mRater"].forEach(function(id){$(id).value="";});
+      if(cfg.onReset)cfg.onReset(api);
+      if(openCode)setOpen(openCode,false);
+      render();setOpen(ITEMS[0].c,true);
+    });
+    var tb=$("btnToSum");if(tb)tb.addEventListener("click",function(){$("summary").scrollIntoView({behavior:"smooth"});});
+  }
+
+  load();build();bind();
+  if(cfg.bind)cfg.bind(api);
+  render();
+  var f=nextUnscored(ITEMS[ITEMS.length-1].c);if(f)setOpen(f,false);
+  return api;
+}
+</script>
+<script>
+(function(){
+var Q12 = "<p><b>Ijtimoiy faollik:</b> O‘tgan hafta kim bilan vaqt o‘tkazdingiz? Nima qildingiz? U odam bilan muloqot qilganingizda nimani his qildingiz? U bilan qanchalik tez-tez vaqt o‘tkazdingiz?</p><p><b>Jismoniy sezgilar:</b> O‘tgan hafta sizga yoqimli jismoniy sezgi bergan biror narsa bo‘ldimi — hid, ta’m, his? Agar ha: O‘shanda nimani his qildingiz? Buni qanchalik tez-tez qildingiz?</p><p><b>Dam olish va ko‘ngilochar mashg‘ulotlar:</b> O‘tgan hafta dam olish yoki ko‘ngil ochish uchun nima qildingiz? Bu bilan shug‘ullanganda nimani his qildingiz? Bundan qanchalik tez-tez zavq oldingiz?</p><p><b>Ish va o‘qish:</b> Ishlash (o‘qish) sizga yoqadimi? Agar ha: Qanchalik yoqadi? Ish yoki o‘qish jarayonida qanchalik tez-tez zavq olasiz?</p>";
+var OBS = "Suhbat davomida, ayniqsa bemor emotsional kechinmalari haqida gapirganda kuzatuv asosida.";
+var ITEMS = [
+{c:"1",g:"A",n:"Faoliyatdan olinadigan zavq intensivligi",q:Q12,qt:"Bemorga savollar (1–2-bandlar uchun umumiy)",
+ a:["Turli faoliyatlarda to‘liq zavq ola oladi; to‘liq me’yor doirasida.",
+    "Faoliyatdan zavq oladi, lekin ko‘pchilik odamlarga nisbatan kamroq; me’yor doirasida.",
+    "Faoliyatdan olinadigan zavq intensivligining biroz yo‘qolishi.",
+    "Ko‘pchilik faoliyatda zavq intensivligining biroz yo‘qolishi yoki ayrim faoliyatlarda o‘rtacha yo‘qolishi.",
+    "Ko‘pchilik faoliyatda kamida o‘rtacha darajada zavq intensivligining yo‘qolishi; bitta faoliyatda chuqur yo‘qolish bo‘lishi mumkin.",
+    "Ko‘pchilik faoliyatda zavq intensivligining chuqur yo‘qolishi; zavq olish qobiliyati qisman saqlangan, lekin kuchli zavq kutilgan holatda ham faqat o‘rtacha zavq oladi.",
+    "Hech qanday sharoitda zavq olmaydi."]},
+{c:"2",g:"A",n:"Zavq keltiruvchi faoliyat chastotasi",q:Q12,qt:"Bemorga savollar (1–2-bandlar uchun umumiy)",
+ a:["Zavq keltiruvchi faoliyatda tez-tez ishtirok etadi; zavq chastotasida buzilish yo‘q.",
+    "Zavq keltiruvchi faoliyatda ko‘pchilikka nisbatan kamroq ishtirok etadi, ammo me’yor doirasida bo‘lishi mumkin.",
+    "Zavq keltiruvchi faoliyat chastotasining me’yordan tashqariga chiquvchi biroz kamayishi.",
+    "Ko‘pchilik faoliyatda zavq chastotasining biroz yo‘qolishi yoki ayrim faoliyatlarda o‘rtacha yo‘qolishi.",
+    "Ko‘pchilik faoliyatda zavq chastotasining kamida o‘rtacha yo‘qolishi; bitta faoliyatda chuqur yo‘qolish bo‘lishi mumkin.",
+    "Ko‘pchilik faoliyatda zavq chastotasining chuqur yo‘qolishi; zavq olish qobiliyati qisman saqlangan, lekin kuchli zavq kutilgan hollarda ham kam uchraydi.",
+    "Butun o‘tgan hafta davomida hech qanday zavq olmagan."]},
+{c:"3",g:"A",n:"Kelajakdagi faoliyatdan kutiladigan zavq",
+ q:"<p><b>O‘tgan hafta ayrim faoliyatdan zavq olgan bo‘lsa:</b> Siz (faoliyatlarni sanang) dan zavq olganingizni aytdingiz. Yaqin orada yana shu bilan shug‘ullanmoqchimisiz? Agar ha: Shu bilan shug‘ullanganda nimani his qilasiz deb o‘ylaysiz? Buni intiqlik bilan kutyapsizmi? Agar yo‘q: Yana qilishni xohlaysizmi? Zavq bilan qiladigan yana biror narsa bormi?</p><p><b>O‘tgan hafta hech narsadan zavq olmagan bo‘lsa:</b> Intiqlik bilan kutayotgan biror faoliyat bormi? Yana kutayotgan biror narsa bormi?</p>",
+ a:["Kelajakdagi turli faoliyatlarni o‘ylab zavqlana oladi; to‘liq me’yorda.",
+    "Kelajakdagi faoliyatni o‘ylab zavqlanadi, lekin ko‘pchilikka nisbatan kamroq; me’yor doirasida.",
+    "Kelajakdagi faoliyatni o‘ylab zavqlanadi, lekin me’yorda kutilganidan biroz kamroq.",
+    "Kelajakdagi faoliyatni o‘ylab zavqlanadi, lekin me’yordan ancha kamroq; ma’lum darajada zavq saqlangan.",
+    "Ayrim kelajakdagi faoliyatlarni o‘ylab sezilarli zavqlanishi mumkin, lekin odatda bu kuzatilmaydi.",
+    "Kelajakdagi faoliyatni o‘ylab kamdan-kam zavqlanadi, hatto odatda katta zavq beradigan faoliyat haqida ham.",
+    "Qaysi faoliyat bo‘lishidan qat’i nazar, kelajakdagi faoliyatni o‘ylab zavqlanmaydi."]},
+{c:"4",g:"B",n:"Normal distress kechinmasining yetishmasligi",
+ q:"<p>O‘tgan hafta sizni noxush his qildirgan biror narsa bo‘ldimi? Sizga yoqmagan biror narsa yuz berdimi? Sizni xafa qilgan, tushkunlikka solgan narsa bo‘ldimi? Tashvishga solgan yoki bezovta qilgan? Jahlingizni chiqargan yoki asabiylashtirgan?</p><p><b>Noxush narsa bo‘lmagan bo‘lsa:</b> O‘tmishdagi qaysi voqealar sizda noxush his uyg‘otgan? Hozir ularni qanday qabul qilasiz?</p>",
+ a:["Distress yoki noxush emotsiyalarni his qilish qobiliyati me’yorda.",
+    "Noxush voqealar tufayli distress his qiladi, lekin ko‘pchilikka nisbatan kamroq; me’yor doirasida.",
+    "Noxush voqealar tufayli distress me’yordan biroz kamroq.",
+    "Noxush voqealar tufayli me’yordagidan aniq ancha kam xafa bo‘ladi, ammo ma’lum darajada distress his qiladi.",
+    "Sezilarli distress his qilishi mumkin, lekin odatda buning uchun jiddiy muammo bo‘lishi kerak.",
+    "Jiddiy muammo bo‘lsa ham faqat o‘rtacha distress his qiladi.",
+    "Qanday muammoga duch kelmasin, distress his qilmaydi."]},
+{c:"5",g:"C",n:"Asotsiallik: xulq-atvor",sm:"ijtimoiy ajralganlikning tashqi ko‘rinishi",
+ q:"<p>(1–3-bandlarda tilga olingan odamlar haqida so‘raladi.) Birga vaqt o‘tkazganingizda siz ular bilan bog‘landingizmi yoki ular siz bilan — aloqaga kim tashabbus ko‘rsatdi? Ular bilan shaxsiy, sirli narsalar haqida qanchalik tez-tez gaplashdingiz? Yana kimdir bilan aloqa qilishga urindingizmi?</p>",
+ a:["Boshqalar bilan tez-tez o‘zaro aloqada, shaxsiy masalalarni bir yoki bir necha kishi bilan ochiq muhokama qiladi; to‘liq me’yor.",
+    "Bir kishi bilan yaqin munosabat bor, unda ko‘pchilik shaxsiy masalalar muhokama qilinadi; boshqalar bilan faol aloqada, ayrim shaxsiy masalalarni ular bilan ham muhokama qiladi.",
+    "Ijtimoiy aloqalar kam emas, lekin ko‘pchilik odamlar kabi faol emas; faqat ayrim shaxsiy masalalar muhokama qilinadi; munosabatlar yaqin va chuqur emas.",
+    "Boshqalar bilan yaqin, chuqur munosabatlari yo‘q; tadbirlardagi muloqot yuzaki, lekin odatda odamlardan qochmaydi.",
+    "Aloqa va muloqot ko‘proq kam va yuzaki; odamlardan qochishga moyil; odatda shaxsiy masalalarni muhokama qilmaydi.",
+    "Boshqalar bilan o‘zaro aloqa deyarli doim yuzaki; o‘z xohishi bilan odamlar bilan kam vaqt o‘tkazadi.",
+    "Boshqalar bilan kamdan-kam aloqada; ko‘p vaqt odamlardan faol qochishi mumkin."]},
+{c:"6",g:"C",n:"Asotsiallik: ichki kechinmalar",
+ q:"<p><b>Ijtimoiy faol bo‘lsa:</b> Kimdir yolg‘iz qolishni, kimdir odamlar orasida bo‘lishni yoqtiradi. Siz nimani afzal ko‘rasiz? Yuqorida aytilgan odamlarni o‘zingizga yaqin his qilasizmi? Ular haqida ko‘p o‘ylaysizmi? Yaqinroq munosabatlar bo‘lishini xohlarmidingiz? Ba’zan o‘zingizni yolg‘iz his qilasizmi?</p><p><b>Ijtimoiy faol bo‘lmasa:</b> Odamlar bilan ko‘proq muloqot qilishni xohlarmidingiz? Bu haqda ko‘p o‘ylaysizmi? Ko‘p vaqt yolg‘iz bo‘lishingizga qanday qaraysiz? Bu munosabatlar siz uchun muhimmi?</p>",
+ a:["Munosabatlarga juda qiziqadi, ularni hayotining eng muhim qismlaridan biri deb biladi; yolg‘iz qolganda ko‘pincha yolg‘izlik his qiladi va yonida kimdir bo‘lishini xohlaydi.",
+    "Munosabatlarni muhim deb hisoblaydi, boshqalarga qiziqadi; yolg‘iz qolganda ba’zan yolg‘izlik his qiladi.",
+    "Oila a’zolari bilan yaqin munosabatlarni ma’lum darajada muhim deb hisoblaydi, boshqalarga o‘rtacha qiziqadi; yaqin va chuqur munosabatlari yo‘q; ba’zan munosabatlar haqida o‘ylaydi.",
+    "Yaqin munosabatlarni kam ahamiyatli deb hisoblaydi; boshqalarga yaqinroq bo‘lish istagi kamdan-kam paydo bo‘ladi.",
+    "Yaqin munosabat o‘rnatishga befarq bo‘lishi mumkin; odatda shaxsiy masalalarni muhokama qilishni istamaydi, yaqin munosabatlar yetishmasligini kamdan-kam his qiladi.",
+    "Munosabatlarni deyarli ahamiyatsiz deb hisoblaydi; yaqin munosabatlarga juda past qiziqish; o‘zini yolg‘iz his qilmaydi.",
+    "Munosabatlar uni qiziqtirmaydi, hech qanday yaqin munosabatga ehtiyoj sezmaydi, qat’iyan yolg‘iz qolishni afzal ko‘radi."]},
+{c:"7",g:"D",n:"Avolitsiya: xulq-atvor",sm:"faoliyatni boshlash va davom ettirish",
+ q:"<p><b>Umumiy:</b> Vaqtingizni qanday o‘tkazishingizni aytib bering. Hech narsa qilmay o‘tirib ko‘p vaqt o‘tkazasizmi?</p><p><b>Ish va o‘qish (ishlasa/o‘qisa):</b> Bu hafta ishda (o‘qishda) qancha vaqt o‘tkazdingiz? U yerga o‘zingiz borasizmi? Boshqalar nima qilishni aytishini kutasizmi yoki ishga o‘zingiz kirishasizmi? (Davolanayotgan bo‘lsa) Guruh mashg‘ulotlarida qatnashdingizmi? Kimdir taklif qildimi yoki o‘zingizmi?</p><p><b>Ishlamasa/o‘qimasa:</b> O‘tgan hafta ish yoki o‘qish joyi qidirdingizmi? Kimdir taklif qildimi yoki o‘zingizmi? Maqsadlaringiz qanday? Agar yo‘q: Nega? (Gap imkoniyatdami yoki motivatsiyadami — aniqlang.)</p><p><b>Dam olish va hobbi:</b> (1–3-bandlardagi ma’lumotni hisobga oling.) Televizor oldida ko‘p vaqt o‘tkazasizmi? Ko‘rayotganingiz sizni qiziqtiradimi yoki shunchaki vaqt o‘tkazasizmi?</p><p><b>O‘zini parvarish qilish:</b> O‘tgan hafta necha marta yuvindingiz? Xonangizni (uyingizni) necha marta yig‘ishtirdingiz? Kimdir eslatishiga to‘g‘ri keldimi?</p>",
+ a:["Ish yoki o‘qish, dam olish/hobbi va o‘zini parvarish qilishni boshlaydi va davom ettiradi; to‘liq me’yor.",
+    "Faoliyatni boshlash va davom ettirishda ko‘pchilikka nisbatan biroz kamroq izchil; klinik ahamiyati shubhali.",
+    "Yengil buzilishlar: masalan, faoliyatni lozim darajada boshlagan, lekin o‘rtacha qat’iyat bilan davom ettiradi; yoki tashabbus boshqalardan ham, o‘zidan ham bir xil chiqadi.",
+    "Faoliyatni boshlash yoki davom ettirishda sezilarli buzilishlar; yetarlicha tez-tez boshlamasligi yoki uzoq davom ettirmasligi mumkin; ko‘pincha boshqalar turtki beradi.",
+    "Boshlashda jiddiy buzilishlar; bir nechta faoliyatni boshlashi, lekin uzoq davom ettirmasligi mumkin. Odatda har qanday faoliyatga boshqalar turtki beradi.",
+    "Faoliyatni boshlash va davom ettirishning yaqqol jiddiy pasayishi; ba’zan boshlaydi, lekin deyarli davom ettirmaydi. Deyarli doim boshqalar turtki beradi.",
+    "Faoliyatni boshlashning deyarli to‘liq yo‘qligi."]},
+{c:"8",g:"D",n:"Avolitsiya: ichki kechinmalar",sm:"motivatsiya va qiziqish",
+ q:"<p><b>Ish va o‘qish (ishlasa/o‘qisa):</b> Ishingiz (o‘qishingiz) siz uchun muhimmi? U haqida ko‘p o‘ylaysizmi? Unga qiziqish, motivatsiya his qilasizmi?</p><p><b>Ishlamasa/o‘qimasa:</b> Ish topish yoki o‘qishga kirish haqida o‘ylaysizmi? Ish (o‘qish) yetishmayaptimi? Agar ha: Nima qildingiz? Agar yo‘q: Nega? (Imkoniyat yoki motivatsiya — aniqlang.)</p><p><b>Dam olish va hobbi:</b> Bo‘sh vaqtingizda nima qilasiz? Qanday hobbilaringiz bor? Bu hafta ular haqida o‘yladingizmi?</p><p><b>O‘zini parvarish qilish:</b> Bu hafta o‘zingizga qarashga — yuvinish, uyni yig‘ishtirish, sog‘lig‘ingizga e’tibor berishga motivatsiya his qildingizmi? Agar ha: Nega buni qilgingiz keldi?</p>",
+ a:["Yuqori motivatsiyaga ega; ish/o‘qish, dam olish va o‘zini parvarish qilish qiziqtiradi; ular haqida tez-tez o‘ylaydi va befarq emasligini aytadi.",
+    "Ko‘pchilikka nisbatan biroz kamroq motivatsiya va qiziqish; klinik ahamiyati shubhali.",
+    "Odatda motivatsiyalangan, lekin ayrim hollarda yetarli qiziqish yoki motivatsiya ko‘rsatmaydi; bu haqda o‘ylaydi, lekin me’yordan biroz kamroq.",
+    "Ma’lum darajada motivatsiyalangan, lekin motivatsiya va qiziqishda aniq buzilishlar bor; masalan, ishi bor, lekin yuqoriroq natijaga qiziqmaydi yoki munosabatlar va bo‘sh vaqti haqida kam o‘ylaydi.",
+    "Bu faoliyatlarga faqat zaif motivatsiya; faqat ayrim hollarda ular haqida o‘ylaydi.",
+    "Qiziqish yoki motivatsiyaning yaqqol yetishmasligi; ular haqida juda kam o‘ylaydi va deyarli befarq.",
+    "Bu faoliyatlarga qiziqish amalda yo‘q; ular haqida o‘ylamaydi va mutlaqo befarq."]},
+{c:"9",g:"E",n:"Yuz ifodasi",b:OBS,
+ a:["To‘liq me’yor; emotsional kechinmalari haqida jonli gapiradi, yuz ifodasi tegishlicha ko‘p marta o‘zgaradi.",
+    "Yuz ifodasi o‘zgarishi va mimika ifodaliligining juda kichik pasayishi; klinik ahamiyati shubhali.",
+    "Yengil pasayish; har bir emotsional kechinma haqida gapirganda yuz ifodasi kamida ikki marta o‘zgaradi.",
+    "Sezilarli pasayish; masalan, har bir savolga javobda yuz ifodasi faqat bir marta o‘zgaradi.",
+    "Kuchli pasayish: yuz ifodasi faqat bir-ikki savolga javobda o‘zgaradi; butun suhbatda 3–4 marta.",
+    "Ijobiy va salbiy emotsiyalarni aks ettiruvchi mimikaning barcha savollarda yaqqol chuqur pasayishi; butun suhbatda yuz ifodasi 1–2 marta biroz o‘zgaradi.",
+    "Butun suhbat davomida yuz ifodasi o‘zgarishining to‘liq yoki deyarli to‘liq yo‘qligi."]},
+{c:"10",g:"E",n:"Nutqning emotsional ifodaliligi",sm:"ovoz tezligi, balandligi va toni",b:OBS,
+ note:"Protokol matnida 2 va 3-ball tavsiflari qisman ustma-ust tushadi («bir parametr bo‘yicha o‘rtacha pasayish»). Ikkilanganda asl BNSS qo‘llanmasiga murojaat qiling.",
+ a:["Nutqda uchala parametr — tezlik, balandlik va ovoz toni — me’yorda o‘zgarib turadi.",
+    "Bitta parametr bo‘yicha yengil pasayish.",
+    "Ikki parametr bo‘yicha yengil pasayish yoki bitta parametr bo‘yicha o‘rtacha pasayish.",
+    "Bitta parametr bo‘yicha o‘rtacha pasayish.",
+    "Ikki yoki undan ortiq parametr bo‘yicha o‘rtacha pasayish yoki bitta parametr bo‘yicha chuqur pasayish.",
+    "Kamida bitta parametr bo‘yicha chuqur va yana kamida bittasi bo‘yicha o‘rtacha pasayish.",
+    "Ikki yoki undan ortiq parametr bo‘yicha chuqur pasayish."]},
+{c:"11",g:"E",n:"Ekspressiv imo-ishoralar",b:OBS,
+ a:["Imo-ishoralar me’yorda; emotsional kechinmalar haqida gapirganda qo‘l, kaft, yelka, bosh va/yoki tana bilan ko‘p imo-ishora qiladi.",
+    "Ekspressiv imo-ishoralar chastotasining juda yengil pasayishi; klinik ahamiyati shubhali.",
+    "Yengil pasayish; har bir emotsional kechinma haqida gapirganda kamida ikkita ekspressiv imo-ishora qiladi.",
+    "Sezilarli pasayish; har bir savolga javobda bitta zo‘rg‘a sezilarli imo-ishora qilishi mumkin.",
+    "Kuchli buzilish: faqat bir-ikki savolga javobda bittadan imo-ishora; butun suhbatda 3–4 ta.",
+    "Yaqqol buzilish: barcha savollarda imo-ishoralar kamaygan; butun suhbatda faqat 1–2 ta zo‘rg‘a sezilarli imo-ishora.",
+    "Ekspressiv imo-ishoralarning deyarli to‘liq yo‘qligi; qo‘l, bosh va tana harakatlari amalda yo‘q."]},
+{c:"12",g:"F",n:"Nutq miqdori",b:"Butun suhbat davomidagi javoblar hajmi bo‘yicha.",
+ a:["Nutq miqdori me’yorda yoki bemor juda ko‘p gapiradi.",
+    "Nutq miqdorining shubhali kamayishi; javoblar ko‘pincha lo‘nda.",
+    "Javoblar odatda qisqa.",
+    "Ko‘p javoblar bir-ikki so‘zdan iborat.",
+    "Javoblarning kamida yarmi bir-ikki so‘zdan iborat.",
+    "Ko‘pchilik javoblar bir-ikki so‘zdan iborat.",
+    "Barcha yoki deyarli barcha javoblar bir-ikki so‘zdan iborat."]},
+{c:"13",g:"F",n:"Qo‘shimcha ma’lumotni spontan bayon qilish",b:"Butun suhbat davomida bemor javoblarining to‘liqligi bo‘yicha.",
+ a:["Odatda savolga javob uchun keraklidan ko‘proq ma’lumot beradi (o‘rinli yoki o‘rinsiz); hatto ortiqcha gapiruvchan yoki nutq bosimi bo‘lishi mumkin.",
+    "Ko‘pincha keraklidan ko‘proq ma’lumot beradi, garchi ba’zan yanada ko‘proq ma’lumot o‘rinli bo‘lsa-da.",
+    "Bir necha marta qo‘shimcha ma’lumot beradi, lekin javoblar odatda so‘ralgan ma’lumot bilan cheklanadi.",
+    "Ayrim hollarda qo‘shimcha ma’lumot beradi; intervyuer ba’zan tafsilot so‘rashi kerak.",
+    "Keraklidan ko‘proq ma’lumotni kamdan-kam beradi; intervyuer bir necha marta batafsil so‘rashi kerak.",
+    "Deyarli barcha javoblar faqat zarur yoki undan kam ma’lumotdan iborat; intervyuer qayta-qayta qo‘shimcha so‘raydi.",
+    "Intervyuning hech bir bosqichida spontan nutq yo‘q."]}
+];
+var GROUPS = [
+  {g:"A",tag:"I",t:"Angedoniya",r:"1–3-bandlar · 0–18",k:1},
+  {g:"B",tag:"II",t:"Distress",r:"4-band · 0–6",k:6},
+  {g:"C",tag:"III",t:"Asotsiallik",r:"5–6-bandlar · 0–12",k:4},
+  {g:"D",tag:"IV",t:"Avolitsiya",r:"7–8-bandlar · 0–12",k:3},
+  {g:"E",tag:"V",t:"Affektning to‘mtoqlashuvi",r:"9–11-bandlar · 0–18",k:2},
+  {g:"F",tag:"VI",t:"Alogiya",r:"12–13-bandlar · 0–12",k:5}
+];
+var MAP=["1","2","3","5","6","7","8"], EXP=["9","10","11","12","13"];
+function pct(x,max){return Math.max(0,Math.min(100,x/max*100));}
+
+ScaleEngine({
+  key:"bnss_uz_draft_v1", title:"BNSS — Negativ simptomlarni qisqa baholash shkalasi",
+  source:"Manba: O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022); Kirkpatrick va b. (2011).",
+  items:ITEMS, groups:GROUPS, min:0,
+  labels:["Norma","Shubhali","Yengil","O‘rtacha","O‘rtacha-og‘ir","Og‘ir","O‘ta og‘ir"],
+  update:function(api){
+    var all=api.all(),n=api.count(all),T=api.sum(all),cm=api.count(MAP),ce=api.count(EXP),m=api.sum(MAP),e=api.sum(EXP),$=api.$;
+    $("sT").textContent=n?T:"—";$("mT").textContent=n?T:"—";$("bT").style.width=n?pct(T,78)+"%":"0";
+    $("sMAP").textContent=cm?m:"—";$("mMAP").textContent=cm?m:"—";$("bMAP").style.width=cm?pct(m,42)+"%":"0";
+    $("sEXP").textContent=ce?e:"—";$("mEXP").textContent=ce?e:"—";$("bEXP").style.width=ce?pct(e,30)+"%":"0";
+    var h="";
+    GROUPS.forEach(function(g){var cs=api.codes(g.g),c=api.count(cs);h+='<div class="kv"><span>'+g.t+'</span><span>'+(c?api.sum(cs)+" / "+cs.length*6:"—")+'</span></div>';});
+    $("subList").innerHTML=h;
+    $("prog").textContent=api.complete()?"Barcha 13 band baholandi.":n+" / 13 band baholandi"+(n?" — jami ball hali to‘liq emas.":"");
+    var b=api.state.extra.baseline, bi=parseInt(b,10), rv=$("respV");
+    if(!b) rv.innerHTML='<div class="verdict v-neu" style="margin-top:8px">Taqqoslash uchun boshlang‘ich balni kiriting.</div>';
+    else if(isNaN(bi)||bi<0||bi>78) rv.innerHTML='<div class="verdict v-bad" style="margin-top:8px"><b>Noto‘g‘ri qiymat</b>BNSS jami bali 0 dan 78 gacha.</div>';
+    else if(!api.complete()) rv.innerHTML='<div class="verdict v-neu" style="margin-top:8px">Joriy natija uchun 13 bandning barchasini baholang.</div>';
+    else{
+      var d=bi-T, p=bi>0?(d/bi*100):0, k=d>0?"v-ok":(d<0?"v-bad":"v-neu");
+      rv.innerHTML='<div class="verdict '+k+'" style="margin-top:8px"><b>'+(d>0?"Negativ simptomlar kamaygan":(d<0?"Negativ simptomlar kuchaygan":"O‘zgarish yo‘q"))+'</b>'+bi+' → '+T+' ball · o‘zgarish <span class="mono">'+(d>0?"−":(d<0?"+":""))+Math.abs(d)+'</span> ball'+(bi>0?' (<span class="mono">'+Math.abs(p).toFixed(1)+'%</span>)':'')+'</div>';
+    }
+  },
+  bind:function(api){
+    var el=api.$("baseline");el.value=api.state.extra.baseline||"";
+    el.addEventListener("input",function(){api.state.extra.baseline=el.value.trim();api.save();api.render();});
+  },
+  onReset:function(api){api.$("baseline").value="";},
+  report:function(api){
+    var L=["BNSS jami: "+(api.count(api.all())?api.sum(api.all()):"—")+(api.complete()?"":" (to‘liq emas)"),
+      "Motivatsiya-zavq domeni: "+api.sum(MAP)+" / 42","Ekspressiv defitsit domeni: "+api.sum(EXP)+" / 30"];
+    var b=parseInt(api.state.extra.baseline,10);
+    if(!isNaN(b)&&api.complete())L.push("Boshlang‘ich "+b+" → "+api.sum(api.all()));
+    return L;
+  },
+  printSummary:function(api){
+    return '<table><tr><th>Jami (0–78)</th><th>Motivatsiya-zavq (0–42)</th><th>Ekspressiv defitsit (0–30)</th></tr><tr><td class="s">'+api.sum(api.all())+'</td><td class="s">'+api.sum(MAP)+'</td><td class="s">'+api.sum(EXP)+'</td></tr></table>';
+  }
+});
+})();
+</script>
+</body>
+</html>

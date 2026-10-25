@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C-SSRS shkalasi — Ruhshunos</title>
+<meta name="description" content="C-SSRS — Suitsid xavfi og‘irligini baholovchi Kolumbiya shkalasi. O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022) asosida o‘zbek tilida.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>:root{
+  --bg:#f5f3ee; --surface:#ffffff; --surface-2:#faf8f4; --ink:#1d2421; --ink-2:#4b5551; --ink-3:#7a837f;
+  --line:#e2ddd3; --line-2:#cfc8bb; --accent:#1f5e57; --accent-ink:#ffffff; --accent-soft:#e3efec;
+  --p:#b4532a; --p-soft:#f6e6dd; --n:#3d5a8a; --n-soft:#e2e9f4; --g:#7a6a1e; --g-soft:#f1ecd6;
+  --ok:#2e7d4f; --ok-soft:#e1f1e7; --bad:#a83a32; --bad-soft:#f6e1df; --warn:#9a6a00; --warn-soft:#f7ecd2;
+  --shadow:0 1px 2px rgba(30,30,20,.05),0 4px 14px rgba(30,30,20,.05);
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+    --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+    --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+    --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+  --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+  --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+  --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header.top{padding:28px 0 18px;border-bottom:1px solid var(--line);background:var(--surface)}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+h1{font-size:clamp(24px,4vw,34px);line-height:1.15;margin:6px 0 8px;font-weight:700;letter-spacing:-.01em}
+.lead{color:var(--ink-2);max-width:780px;margin:0}
+.meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px;max-width:780px}
+.meta-row label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-3);font-weight:500}
+.meta-row input{font:inherit;font-size:15px;padding:9px 11px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink);min-width:0}
+.meta-row input:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Info */
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:20px 0 6px}
+.info details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:0}
+.info summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px}
+.info summary::-webkit-details-marker{display:none}
+.info summary::after{content:"+";color:var(--ink-3);font-weight:500}
+.info details[open] summary::after{content:"−"}
+.info .body{padding:0 16px 14px;color:var(--ink-2);font-size:14.5px}
+.info .body ul,.info .body ol{padding-left:18px;margin:6px 0}
+.info .body li{margin:3px 0}
+.warnbox{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);color:var(--ink);border-radius:var(--radius);padding:12px 16px;font-size:14.5px;margin:14px 0 0}
+.warnbox b{color:var(--warn)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding:18px 0 110px}
+@media (min-width:980px){.layout{grid-template-columns:minmax(0,1fr) 350px;padding-bottom:48px}}
+
+/* Overview grid */
+.overview{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.ov-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.ov-head h2{font-size:15px;margin:0}
+.ov-head .muted{font-size:13px;color:var(--ink-3)}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.ov-cell{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:5px 2px 4px;text-align:center;cursor:pointer;line-height:1.1}
+.ov-cell .c{font-size:11px;color:var(--ink-3);font-weight:600}
+.ov-cell .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:16px;margin-top:2px;color:var(--ink-3)}
+.ov-cell.done .v{color:var(--ink)}
+.ov-cell[data-s="P"].done{background:var(--p-soft);border-color:color-mix(in srgb,var(--p) 40%,transparent)}
+.ov-cell[data-s="N"].done{background:var(--n-soft);border-color:color-mix(in srgb,var(--n) 40%,transparent)}
+.ov-cell[data-s="G"].done{background:var(--g-soft);border-color:color-mix(in srgb,var(--g) 40%,transparent)}
+.ov-cell:hover{border-color:var(--line-2)}
+.ov-cell:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Sections */
+.section{margin-top:26px}
+.sec-head{display:flex;align-items:center;gap:12px;margin:0 0 10px;flex-wrap:wrap}
+.sec-tag{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;padding:3px 9px;border-radius:999px;color:#fff}
+.sec-head h2{margin:0;font-size:20px;font-weight:700}
+.sec-head .range{color:var(--ink-3);font-size:13.5px}
+.sec-head .sub{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px}
+[data-s="P"] .sec-tag{background:var(--p)} [data-s="N"] .sec-tag{background:var(--n)} [data-s="G"] .sec-tag{background:var(--g)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sec-tag{color:#141816}}
+:root[data-theme="dark"] .sec-tag{color:#141816}
+
+/* Item card */
+.item{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;scroll-margin-top:14px}
+.item.open{box-shadow:var(--shadow);border-color:var(--line-2)}
+.item-h{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;background:none;border:0;text-align:left;cursor:pointer}
+.item-h:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.code{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;min-width:42px;text-align:center;padding:4px 0;border-radius:7px}
+.item[data-s="P"] .code{background:var(--p-soft);color:var(--p)}
+.item[data-s="N"] .code{background:var(--n-soft);color:var(--n)}
+.item[data-s="G"] .code{background:var(--g-soft);color:var(--g)}
+.iname{flex:1;min-width:0;font-weight:600;font-size:15.5px;line-height:1.3}
+.iname small{display:block;font-weight:400;color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.sup{display:inline-block;font-size:11px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.pill{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px;min-width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1.5px dashed var(--line-2);color:var(--ink-3)}
+.item.scored .pill{border:0;background:var(--accent);color:var(--accent-ink)}
+.chev{flex:none;width:18px;height:18px;color:var(--ink-3);transition:transform .18s}
+.item.open .chev{transform:rotate(180deg)}
+.item-b{display:none;padding:0 14px 14px}
+.item.open .item-b{display:block}
+.def{margin:0 0 6px;color:var(--ink)}
+.basis{margin:0 0 12px;font-size:13.5px;color:var(--ink-2);padding-left:10px;border-left:3px solid var(--line-2)}
+.basis b{color:var(--ink-2);font-weight:600}
+.note{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:8px 10px;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--line-2)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.opt .n{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:17px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+.opt .t{font-size:14.5px;color:var(--ink-2)}
+.opt .t b{display:block;color:var(--ink);font-weight:600;font-size:14px;margin-bottom:1px}
+.opt[aria-checked="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.opt[aria-checked="true"] .n{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opt[aria-checked="true"] .t{color:var(--ink)}
+.item-f{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+.lnk{background:none;border:0;color:var(--accent);cursor:pointer;font-size:14px;padding:4px 0;font-weight:500}
+.lnk:disabled{color:var(--ink-3);cursor:default}
+
+/* Summary */
+aside.summary{align-self:start}
+@media (min-width:980px){aside.summary{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow:auto}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.card h3{margin:0 0 10px;font-size:15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--surface-2)}
+.stat .l{font-size:12px;color:var(--ink-3);font-weight:600;display:flex;justify-content:space-between}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:24px;line-height:1.15;margin-top:2px}
+.stat .bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.stat .bar i{display:block;height:100%;width:0;border-radius:2px;transition:width .2s}
+.stat.P .bar i{background:var(--p)} .stat.N .bar i{background:var(--n)} .stat.G .bar i{background:var(--g)} .stat.T .bar i{background:var(--accent)}
+.stat.T{grid-column:1/-1;background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.stat.T .v{font-size:30px}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0;border-top:1px dashed var(--line)}
+.kv:first-of-type{border-top:0}
+.kv span:last-child{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.progress{font-size:13px;color:var(--ink-3);margin-top:10px}
+.verdict{border-radius:10px;padding:10px 12px;font-size:14px;margin-top:8px}
+.verdict b{display:block;font-size:15px;margin-bottom:2px}
+.v-ok{background:var(--ok-soft);color:var(--ink)} .v-ok b{color:var(--ok)}
+.v-bad{background:var(--bad-soft);color:var(--ink)} .v-bad b{color:var(--bad)}
+.v-warn{background:var(--warn-soft);color:var(--ink)} .v-warn b{color:var(--warn)}
+.v-neu{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--line-2)}
+.rem-list{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px}
+.rem-list span{font-family:"IBM Plex Mono",monospace;font-size:12px;text-align:center;padding:5px 0;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-3)}
+.rem-list span.y{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.rem-list span.x{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.field{display:flex;gap:8px;align-items:center;margin-top:6px}
+.field input{width:100%;font:inherit;font-family:"IBM Plex Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink)}
+.small{font-size:12.5px;color:var(--ink-3);margin:6px 0 0}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{border:1px solid var(--line-2);background:var(--surface);border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.full{grid-column:1/-1}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Mobile bar */
+.mbar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.08);padding:9px 16px calc(9px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;z-index:20}
+.mbar .m{flex:1;display:flex;gap:12px;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;overflow:hidden}
+.mbar .m span{white-space:nowrap}
+.mbar .m em{font-style:normal;color:var(--ink-3);font-weight:500;margin-right:3px}
+.mbar .btn{padding:8px 12px}
+@media (min-width:980px){.mbar{display:none}}
+
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--ink-3);font-size:13px;background:var(--surface)}
+footer p{margin:4px 0;max-width:900px}
+
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.toast.show{opacity:1}
+
+/* Print */
+#printSheet{display:none}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  header.top,.layout,.mbar,footer,.info,.warnbox,.toast{display:none!important}
+  #printSheet{display:block;padding:0}
+  #printSheet h2{font-size:16pt;margin:0 0 4pt}
+  #printSheet table{width:100%;border-collapse:collapse;margin-top:8pt;font-size:10pt}
+  #printSheet th,#printSheet td{border:1px solid #999;padding:3pt 5pt;text-align:left}
+  #printSheet td.s{text-align:center;font-weight:700;width:36pt}
+  .pcols{columns:2;column-gap:16pt}
+  .pcols table{break-inside:avoid}
+}
+
+/* ---- shared extras for scale pages ---- */
+:root{
+  --c1:#b4532a; --c1s:#f6e6dd; --c2:#3d5a8a; --c2s:#e2e9f4; --c3:#7a6a1e; --c3s:#f1ecd6;
+  --c4:#6b4a8a; --c4s:#ece4f4; --c5:#2f7a66; --c5s:#dff0ea; --c6:#8a3d5e; --c6s:#f4e1ea;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+    --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+  }
+}
+:root[data-theme="dark"]{
+  --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+  --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+}
+.back{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:500;text-decoration:none;margin-bottom:12px}
+.back:hover{text-decoration:underline}
+.site-nav{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:16px 0}
+.site-nav a{flex:1;text-align:center;padding:10px 8px;font-size:12.5px;font-weight:600;color:var(--ink);text-decoration:none;border-right:1px solid var(--line);white-space:nowrap}
+.site-nav a:last-child{border-right:none}
+.site-nav a:hover{background:var(--surface-2)}
+.site-nav a.active{background:var(--accent);color:var(--accent-ink)}
+.item .code.k{background:var(--ks);color:var(--k)}
+.ov-cell.k.done{background:var(--ks);border-color:color-mix(in srgb,var(--k) 40%,transparent)}
+.sec-tag.k{background:var(--k)}
+.qs{margin:0 0 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.qs summary{cursor:pointer;padding:9px 12px;font-weight:600;font-size:14px;color:var(--accent);list-style:none}
+.qs summary::-webkit-details-marker{display:none}
+.qs summary::before{content:"▸ ";}
+.qs[open] summary::before{content:"▾ ";}
+.qs .qb{padding:0 12px 10px;font-size:14.5px;color:var(--ink-2)}
+.qs .qb p{margin:6px 0}
+.qs .qb b{color:var(--ink);font-weight:600}
+.alert{border-radius:var(--radius);padding:12px 14px;font-size:14.5px;margin-top:10px;background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent)}
+.alert b{color:var(--bad);display:block;margin-bottom:3px;font-size:15px}
+.alert a{font-weight:600}
+.alert ul{margin:6px 0 0;padding-left:18px}
+.sub-list .kv span:first-child{color:var(--ink-2)}
+.dom{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.lvl-legend{font-size:12.5px;color:var(--ink-3);margin:4px 0 0}
+
+.step-h{display:flex;align-items:baseline;gap:10px;margin:26px 0 10px;flex-wrap:wrap}
+.step-h .num{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:2px 9px}
+.step-h h2{margin:0;font-size:20px}
+.step-h .muted{font-size:13.5px;color:var(--ink-3)}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.q.off{opacity:.55}
+.q h3{margin:0 0 6px;font-size:15.5px;display:flex;gap:10px;align-items:flex-start}
+.q h3 .code{flex:none;font-family:"IBM Plex Mono",monospace;font-size:13px;background:var(--accent-soft);color:var(--accent);border-radius:7px;padding:3px 9px}
+.q .def{font-size:14px;color:var(--ink-2);margin:0 0 8px}
+.q .ask{font-size:14.5px;margin:0 0 10px;padding:8px 10px;border-left:3px solid var(--accent);background:var(--surface-2);border-radius:0 8px 8px 0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.col{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--surface-2)}
+.col .lab{font-size:12px;font-weight:600;color:var(--ink-3);margin-bottom:6px;display:flex;justify-content:space-between;gap:6px}
+.seg{display:inline-flex;border:1px solid var(--line-2);border-radius:9px;overflow:hidden}
+.seg button{border:0;background:var(--surface);padding:7px 16px;cursor:pointer;font-weight:600;font-size:14px}
+.seg button+button{border-left:1px solid var(--line-2)}
+.seg button[aria-pressed="true"][data-v="1"]{background:var(--bad);color:#fff}
+.seg button[aria-pressed="true"][data-v="0"]{background:var(--accent);color:var(--accent-ink)}
+.seg button:disabled{cursor:not-allowed;opacity:.5}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.cnt{display:inline-flex;align-items:center;gap:6px;margin-left:10px;font-size:13px;color:var(--ink-3)}
+.cnt input{width:64px;font:inherit;font-family:"IBM Plex Mono",monospace;padding:6px 8px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink)}
+.skip{font-size:12.5px;color:var(--ink-3);margin-top:6px}
+select,textarea,input[type=date].f{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink);width:100%;min-width:0}
+textarea{min-height:52px;resize:vertical;margin-top:8px}
+.per{display:flex;gap:12px;flex-wrap:wrap;margin:6px 0 4px}
+.per label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--ink-3);font-weight:500;min-width:200px;flex:1}
+.int-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:8px;align-items:center}
+.int-grid .h{font-size:12px;font-weight:600;color:var(--ink-3)}
+.int-grid .lbl{font-size:14px}
+.int-grid .lbl small{display:block;color:var(--ink-3);font-size:12.5px}
+@media (max-width:620px){.int-grid{grid-template-columns:1fr 1fr}.int-grid .lbl{grid-column:1/-1;margin-top:8px}.int-grid .h.first{display:none}}
+.leth{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.leth .col label{display:block;font-size:12.5px;color:var(--ink-3);margin:8px 0 4px}
+.risk{border-radius:var(--radius);padding:12px 14px;margin-top:8px;font-size:14px}
+.risk b{display:block;font-size:16px;margin-bottom:4px}
+.risk ul{margin:6px 0 0;padding-left:18px}
+.risk.hi{background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 45%,transparent)} .risk.hi b{color:var(--bad)}
+.risk.mo{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 45%,transparent)} .risk.mo b{color:var(--warn)}
+.risk.lo{background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)} .risk.lo b{color:var(--accent)}
+.risk.no{background:var(--ok-soft)} .risk.no b{color:var(--ok)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="ruhiyatga-doir-testlar.html" class="active">Ruhiyatga doir testlar</a>
+    <a href="fanga-doir-testlar.html">Fanga doir testlar</a>
+    <a href="xkt-10.html">XKT-10</a>
+    <a href="xkt-11.html">XKT-11</a>
+    <a href="tuzuvchilar.html">Tuzuvchilar</a>
+  </nav>
+</div>
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="shkalalar-uz.html">← Barcha shkalalar</a>
+    <div class="eyebrow">Klinik shkala · Psixiatriya · Suitsid xavfi</div>
+    <h1>C-SSRS — Suitsid xavfi og‘irligini baholovchi Kolumbiya shkalasi</h1>
+    <p class="lead">Suitsidal fikrlar (5 daraja va intensivlik) hamda suitsidal xulqni butun hayot davomida va so‘nggi davrda baholovchi yarim tuzilmali intervyu. Milliy protokolda depressiv simptomlarni davolashda suitsid xavfini baholash uchun keltirilgan.</p>
+    <div class="meta-row">
+      <label>Bemor (kod yoki initsiallar)<input id="mPatient" autocomplete="off" placeholder="masalan, A.B.-024"></label>
+      <label>Baholash sanasi<input id="mDate" type="date"></label>
+      <label>Baholovchi shifokor<input id="mRater" autocomplete="off" placeholder="F.I.Sh."></label>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="warnbox"><b>Faqat mutaxassislar uchun.</b> Shkala klinik intervyu davomida shifokor tomonidan to‘ldiriladi. Avtomatik xavf darajasi yordamchi mo‘ljal bo‘lib, klinik baholash va muassasa protokoli o‘rnini bosmaydi. Ma’lumotlar faqat shu brauzerda saqlanadi.</div>
+  <div class="info">
+    <details>
+      <summary>Intervyu tartibi</summary>
+      <div class="body"><ol>
+        <li>1 va 2-savollarni bering. Ikkalasiga ham «Yo‘q» bo‘lsa, «Suitsidal xulq» bo‘limiga o‘ting.</li>
+        <li>2-savolga «Ha» bo‘lsa, 3, 4 va 5-savollarni bering.</li>
+        <li>1 va/yoki 2-savolga «Ha» bo‘lsa, «Fikrlash intensivligi» bo‘limini eng xavfli fikrlash turi bo‘yicha to‘ldiring.</li>
+        <li>Suitsidal xulqning barcha turlari haqida alohida so‘rang.</li>
+      </ol></div>
+    </details>
+    <details>
+      <summary>Baholash davrlari</summary>
+      <div class="body">
+        <div class="per">
+          <label>So‘nggi davr — fikrlar uchun<select id="perId"><option value="1">So‘nggi 1 oy</option><option value="3">So‘nggi 3 oy</option><option value="6">So‘nggi 6 oy</option><option value="12">So‘nggi 12 oy</option></select></label>
+          <label>So‘nggi davr — xulq uchun<select id="perBeh"><option value="3">So‘nggi 3 oy</option><option value="1">So‘nggi 1 oy</option><option value="6">So‘nggi 6 oy</option><option value="12">So‘nggi 12 oy</option></select></label>
+        </div>
+        <p style="margin:6px 0 0">Protokol shaklida davr «X oy» deb ochiq qoldirilgan. Kolumbiya skriningida odatda fikrlar uchun 1 oy, xulq uchun 3 oy olinadi.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="layout">
+    <main>
+      <div class="step-h"><span class="num">1</span><h2>Suitsidal fikrlash</h2></div>
+      <div id="ideation"></div>
+
+      <div class="step-h"><span class="num">2</span><h2>Suitsidal fikrlash intensivligi</h2><span class="muted" id="intHint"></span></div>
+      <div class="q" id="intensity"></div>
+
+      <div class="step-h"><span class="num">3</span><h2>Suitsidal xulq</h2><span class="muted">barcha holatlarni belgilang</span></div>
+      <div id="behavior"></div>
+
+      <div class="step-h"><span class="num">4</span><h2>Haqiqiy urinishlar letalligi</h2><span class="muted" id="lethHint"></span></div>
+      <div class="q" id="lethality"></div>
+    </main>
+
+    <aside class="summary" id="summary">
+      <div class="card">
+        <h3>Xulosa</h3>
+        <div id="riskBox"></div>
+        <div class="sub-list" style="margin-top:10px" id="sumList"></div>
+      </div>
+      <div class="card"><div class="btns">
+        <button class="btn primary" id="btnCopy">Natijani nusxalash</button>
+        <button class="btn" id="btnPrint">Chop etish</button>
+        <button class="btn full" id="btnReset">Yangi bemor (tozalash)</button>
+      </div></div>
+    </aside>
+  </div>
+</div>
+
+<div class="mbar"><div class="m"><span id="mRisk" style="font-family:'IBM Plex Sans',sans-serif">Xavf: —</span></div><button class="btn primary" id="btnToSum">Xulosa</button></div>
+
+<footer><div class="wrap">
+  <p><b>Manba:</b> O‘zR SSV. Shizofreniya bilan og‘rigan bemorlarni olib borish bo‘yicha milliy klinik protokol. Toshkent, 2022 — ilova «Колумбийская шкала оценки тяжести суицида».</p>
+  <p><b>Asl shkala:</b> Posner K., Brown G.K., Stanley B. va b. The Columbia–Suicide Severity Rating Scale. <i>Am J Psychiatry.</i> 2011;168(12):1266–1277. © The Research Foundation for Mental Hygiene, Inc. Klinik va notijorat foydalanish uchun ochiq.</p>
+  <p><b>Xavf darajasi</b> Kolumbiya skrining versiyasining triaj qoidalari asosida hisoblanadi: so‘nggi davrda 4 yoki 5-turdagi fikr yoki har qanday suitsidal xulq — yuqori; 3-turdagi fikr yoki faqat o‘tmishdagi xulq — o‘rtacha; faqat 1–2-turdagi fikr — past xavf.</p>
+</div></footer>
+<div id="printSheet"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var ID=[
+ {n:"O‘lish istagi",d:"Bemor o‘lish, yashashni to‘xtatish yoki uxlab qolib uyg‘onmaslik istagi haqidagi fikrlar borligini tasdiqlaydi.",q:"O‘lishni yoki uxlab qolib, boshqa uyg‘onmaslikni xohlagan paytlaringiz bo‘lganmi?"},
+ {n:"Faol nospetsifik suitsidal fikrlar",d:"O‘z joniga qasd qilish haqidagi umumiy fikrlar (masalan, «O‘zimni o‘ldirish haqida o‘yladim»), baholanayotgan davrda usul, niyat yoki reja haqida o‘ylamagan holda.",q:"Haqiqatan ham o‘z joningizga qasd qilish haqida o‘ylaganmisiz?"},
+ {n:"Usul haqida o‘ylash bilan faol suitsidal fikrlar (rejasiz, harakat niyatisiz)",d:"Bemor suitsid haqida va baholanayotgan davrda kamida bitta usul haqida o‘ylaganini tasdiqlaydi. Bu aniq reja (vaqt, joy, usul tafsilotlari) ishlab chiqilgan holatdan farq qiladi. Masalan: «Dorini ko‘p ichish haqida o‘ylaganman, lekin qachon, qayerda, qanday qilishni rejalashtirmaganman va buni hech qachon oxiriga yetkazmasdim».",q:"Buni qanday qilishingiz mumkinligi haqida o‘ylaganmisiz?"},
+ {n:"Muayyan harakat niyati bilan, aniq rejasiz faol fikrlar",d:"Suitsidal fikrlar bilan birga ularga muvofiq harakat qilish niyati bor («Bunday fikrlar keladi, lekin men aniq hech narsa qilmayman» degan holatdan farqli).",q:"Shunday fikrlar bo‘lganmi va ularga muvofiq harakat qilish niyatingiz bo‘lganmi?"},
+ {n:"Aniq reja va niyat bilan faol suitsidal fikrlar",d:"To‘liq yoki qisman ishlab chiqilgan reja va uni amalga oshirish niyati bilan kechuvchi suitsidal fikrlar.",q:"O‘z joningizga qasd qilishning batafsil rejasini ishlab chiqishni boshlaganmisiz yoki ishlab chiqqanmisiz? Bu rejani amalga oshirish niyatingiz bormi?"}
+];
+var INT=[
+ {k:"freq",n:"Chastota",q:"Bunday fikrlar necha marta bo‘lgan?",o:[[1,"Haftasiga bir martadan kam"],[2,"Haftasiga bir marta"],[3,"Haftasiga 2–5 marta"],[4,"Har kuni yoki deyarli har kuni"],[5,"Har kuni ko‘p marta"]]},
+ {k:"dur",n:"Davomiylik",q:"Bunday fikrlar kelganda qancha davom etadi?",o:[[1,"O‘tkinchi — bir necha soniya yoki daqiqa"],[2,"1 soatdan kam / qisqa"],[3,"1–4 soat / uzoq"],[4,"4–8 soat / kunning ko‘p qismi"],[5,"8 soatdan ortiq / turg‘un yoki doimiy"]]},
+ {k:"ctrl",n:"Nazorat qilinuvchanlik",q:"Xohlasangiz, suitsid yoki o‘lish istagi haqida o‘ylashni to‘xtata olardingizmi (olasizmi)?",o:[[1,"Osongina nazorat qila oladi"],[2,"Ozgina qiyinchilik bilan nazorat qiladi"],[3,"Ma’lum qiyinchilik bilan nazorat qiladi"],[4,"Katta qiyinchilik bilan nazorat qiladi"],[5,"Nazorat qila olmaydi"],[0,"Nazorat qilishga urinmaydi"]]},
+ {k:"det",n:"To‘xtatuvchi omillar",q:"Sizni o‘lim istagidan yoki suitsidal fikrlarni amalga oshirishdan to‘xtatib qolgan biror kimsa yoki narsa (oila, din, og‘riqdan qo‘rqish) bormi?",o:[[1,"Aniq to‘xtatib qolgan"],[2,"Ehtimol to‘xtatgan"],[3,"To‘xtatganiga ishonchi komil emas"],[4,"Ehtimol to‘xtatmagan"],[5,"Aniq to‘xtatmagan"],[0,"Qo‘llanilmaydi"]]},
+ {k:"rea",n:"Suitsidal fikrlar sabablari",q:"O‘lish yoki suitsid haqida o‘ylashingizga qanday sabablar bor edi? Og‘riqni to‘xtatish yoki his qilayotganingizni his qilmaslik uchunmi, yoki maqsad e’tibor jalb qilish, qasos olish yoki boshqalarning javobini olish edimi? Yoki ikkalasimi?",o:[[1,"Faqat e’tibor, qasos yoki boshqalar javobi uchun"],[2,"Ko‘proq e’tibor, qasos yoki boshqalar javobi uchun"],[3,"Teng darajada ikkalasi uchun"],[4,"Ko‘proq og‘riqni to‘xtatish uchun"],[5,"Faqat og‘riqni to‘xtatish uchun"],[0,"Qo‘llanilmaydi"]]}
+];
+var BEH=[
+ {k:"att",n:"Haqiqiy suitsidal urinish",cnt:1,
+  d:"Kamida qisman o‘lish istagi bilan qilingan, o‘ziga zarar yetkazishi mumkin bo‘lgan harakat. Niyat 100% bo‘lishi shart emas: harakat bilan har qanday o‘lim niyati yoki istagi bog‘liq bo‘lsa, bu urinish hisoblanadi. Haqiqiy shikast shart emas — shikast ehtimoli yetarli. Bemor niyatni inkor etsa ham, harakatning o‘ta xavfli xususiyati yoki bemor uni o‘limga olib kelishi mumkin deb bilganiga qarab klinik xulosa chiqariladi.",
+  q:"Suitsidal urinish qilganmisiz? O‘zingizga zarar yetkazish maqsadida biror narsa qilganmisiz? O‘limga olib kelishi mumkin bo‘lgan xavfli harakatlar qilganmisiz? Nima qildingiz? Buni o‘z joningizga qasd qilish uchun qildingizmi? O‘shanda (hech bo‘lmasa ozgina) o‘lishni xohlaganmidingiz? Yoki buni butunlay boshqa sabab bilan — o‘lim niyatisiz (zo‘riqishni yengillatish, o‘zini yaxshi his qilish, achinish uyg‘otish uchun) qildingizmi?"},
+ {k:"nssi",n:"Suitsidal bo‘lmagan o‘zini shikastlash",
+  d:"O‘lim niyatisiz o‘ziga shikast yetkazuvchi xulq (zo‘riqishni yengillatish, o‘zini yaxshi his qilish va h.k.). Suitsidal xulqqa kirmaydi, lekin xavf omili sifatida qayd etiladi.",
+  q:"Bemorda suitsidal bo‘lmagan o‘zini shikastlovchi xulq kuzatilganmi?"},
+ {k:"intr",n:"Uzilgan urinish",cnt:1,
+  d:"Tashqi holatlar (kimdir yoki nimadir to‘xtatgani) sababli bemor o‘ziga zarar yetkazuvchi harakatni boshlay olmagan; aks holda haqiqiy urinish sodir bo‘lardi. Masalan, dori ichish arafasida to‘xtatilgan. Biror miqdorda yutib yuborilgan bo‘lsa — bu uzilgan emas, haqiqiy urinish.",
+  q:"O‘z joningizga qasd qilish uchun biror harakatni boshlaganingizda, haqiqatda biror narsa qilishingizdan oldin kimdir yoki nimadir sizni to‘xtatgan paytlar bo‘lganmi?"},
+ {k:"abort",n:"O‘zi to‘xtatgan urinish",cnt:1,
+  d:"Bemor suitsidal urinish sari qadam qo‘ya boshlagan, lekin o‘zini shikastlovchi harakatni boshlashdan oldin o‘zini o‘zi to‘xtatgan.",
+  q:"O‘z joningizga qasd qilish uchun biror harakatni boshlab, lekin biror narsa qilishdan oldin o‘zingizni to‘xtatgan paytlar bo‘lganmi?"},
+ {k:"prep",n:"Tayyorgarlik harakatlari yoki xulqi",
+  d:"So‘z yoki fikrdan tashqariga chiqadigan har qanday tayyorgarlik: muayyan usul uchun vosita olish (dori, qurol) yoki o‘limga tayyorlanish (narsalarni tarqatib berish, xayrlashuv xati yozish).",
+  q:"Suitsidal urinishga yoki o‘z joningizga qasd qilishga tayyorlanish uchun biror qadam qo‘yganmisiz (dori yoki qurol olish, qimmatbaho narsalarni tarqatib berish, xat yozish)?"}
+];
+var ACT=[[0,"0 — Tan jarohati yo‘q yoki juda yengil (yuzaki tirnalishlar)"],[1,"1 — Yengil jarohat (sust nutq, I darajali kuyish, yengil qon ketish, pay cho‘zilishi)"],[2,"2 — O‘rtacha jarohat, tibbiy yordam kerak (hushida, lekin karaxt; II darajali kuyish; yirik tomirdan qon ketish)"],[3,"3 — O‘rtacha-og‘ir jarohat, gospitalizatsiya va ehtimol intensiv terapiya (reflekslar saqlangan koma; tananing <20% III darajali kuyishi; katta qon yo‘qotish; jiddiy sinishlar)"],[4,"4 — Og‘ir jarohat, gospitalizatsiya va intensiv terapiya (reflekssiz koma; tananing >20% III darajali kuyishi; beqaror gemodinamika; hayotiy a’zolar shikasti)"],[5,"5 — O‘lim"]];
+var POT=[[0,"0 — Jarohatga olib kelishi ehtimoldan yiroq"],[1,"1 — Jarohatga olib kelishi mumkin, lekin o‘limga olib kelishi ehtimoldan yiroq"],[2,"2 — Tibbiy yordamga qaramay o‘limga olib kelishi mumkin"]];
+var LCOL=[["rec","Eng so‘nggi urinish"],["max","Eng letal urinish"],["first","Birinchi urinish"]];
+var KEY="cssrs_uz_draft_v1";
+function blank(){return {per:{id:"1",beh:"3"},id:{},note:{},int:{L:{},R:{}},beh:{},leth:{rec:{},max:{},first:{}},meta:{patient:"",date:"",rater:""}};}
+var st=blank();
+function $(id){return document.getElementById(id);}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&typeof d==="object"){var b=blank();for(var k in b){if(d[k]!==undefined)b[k]=d[k];}st=b;}}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+function get(path){var p=path.split("."),o=st;for(var i=0;i<p.length;i++){if(o==null)return undefined;o=o[p[i]];}return o;}
+function set(path,v){var p=path.split("."),o=st;for(var i=0;i<p.length-1;i++){if(o[p[i]]==null||typeof o[p[i]]!=="object")o[p[i]]={};o=o[p[i]];}o[p[p.length-1]]=v;}
+function perLab(t){var v=t==="id"?st.per.id:st.per.beh;return "So‘nggi "+v+" oy";}
+
+function seg(path){return '<div class="seg" data-seg="'+path+'"><button type="button" data-p="'+path+'" data-v="1" aria-pressed="false">Ha</button><button type="button" data-p="'+path+'" data-v="0" aria-pressed="false">Yo‘q</button></div>';}
+
+function build(){
+  var h="";
+  ID.forEach(function(x,i){
+    var n=i+1;
+    h+='<div class="q" id="q'+n+'"><h3><span class="code">'+n+'</span>'+esc(x.n)+'</h3><p class="def">'+esc(x.d)+'</p><p class="ask">'+esc(x.q)+'</p><div class="cols">'+
+      '<div class="col"><div class="lab"><span>Butun hayot davomida</span></div>'+seg("id."+n+".L")+'<div class="skip" id="sk'+n+'L"></div></div>'+
+      '<div class="col"><div class="lab"><span class="perId">'+perLab("id")+'</span></div>'+seg("id."+n+".R")+'<div class="skip" id="sk'+n+'R"></div></div>'+
+      '</div><textarea data-note="'+n+'" placeholder="«Ha» bo‘lsa, tavsiflang…" hidden></textarea></div>';
+  });
+  $("ideation").innerHTML=h;
+
+  var g='<div class="int-grid"><div class="h first">Ko‘rsatkich</div><div class="h">Butun hayot — eng xavfli</div><div class="h perId2">'+perLab("id")+' — eng xavfli</div>';
+  g+='<div class="lbl">Eng xavfli fikrlash turi<small>1–5-savollardan avtomatik</small></div><div class="mono" id="mtL">—</div><div class="mono" id="mtR">—</div>';
+  INT.forEach(function(x){
+    g+='<div class="lbl">'+esc(x.n)+'<small>'+esc(x.q)+'</small></div>';
+    ["L","R"].forEach(function(c){
+      g+='<div><select data-sel="int.'+c+'.'+x.k+'" aria-label="'+esc(x.n)+'"><option value="">—</option>';
+      x.o.forEach(function(o){g+='<option value="'+o[0]+'">('+o[0]+') '+esc(o[1])+'</option>';});
+      g+='</select></div>';
+    });
+  });
+  g+='<div class="lbl"><b>Intensivlik bali</b><small>5 ko‘rsatkich yig‘indisi, 0–25</small></div><div class="mono" id="isL" style="font-size:20px;font-weight:600">—</div><div class="mono" id="isR" style="font-size:20px;font-weight:600">—</div></div>';
+  $("intensity").innerHTML=g;
+
+  var b="";
+  BEH.forEach(function(x){
+    b+='<div class="q" id="b-'+x.k+'"><h3><span class="code">'+(x.k==="nssi"?"—":"X")+'</span>'+esc(x.n)+'</h3><p class="def">'+esc(x.d)+'</p><p class="ask">'+esc(x.q)+'</p><div class="cols">';
+    [["L","Butun hayot davomida"],["R",null]].forEach(function(c){
+      b+='<div class="col"><div class="lab"><span class="'+(c[1]?"":"perBeh")+'">'+(c[1]||perLab("beh"))+'</span></div>'+seg("beh."+x.k+"."+c[0])+(x.cnt?'<span class="cnt">soni <input type="number" min="0" inputmode="numeric" data-num="beh.'+x.k+'.n'+c[0]+'"></span>':'')+'</div>';
+    });
+    b+='</div></div>';
+  });
+  b+='<div class="q"><h3><span class="code">Σ</span>Suitsidal xulq</h3><p class="def">Baholanayotgan davrda suitsidal xulq aniqlanganmi? Haqiqiy, uzilgan, o‘zi to‘xtatgan urinish yoki tayyorgarlik harakatlaridan biri bo‘lsa avtomatik «Ha» bo‘ladi.</p><div class="cols"><div class="col"><div class="lab">Butun hayot davomida</div><b id="sbL">—</b></div><div class="col"><div class="lab perBeh">'+perLab("beh")+'</div><b id="sbR">—</b></div></div></div>';
+  $("behavior").innerHTML=b;
+
+  var l='<div class="leth">';
+  LCOL.forEach(function(c){
+    l+='<div class="col"><div class="lab">'+c[1]+'</div><label>Sana</label><input class="f" type="date" data-txt="leth.'+c[0]+'.date"><label>Haqiqiy letallik / sog‘liqqa zarar</label><select data-sel="leth.'+c[0]+'.act"><option value="">—</option>';
+    ACT.forEach(function(o){l+='<option value="'+o[0]+'">'+esc(o[1])+'</option>';});
+    l+='</select><label>Potensial letallik (faqat haqiqiy letallik = 0 bo‘lsa)</label><select data-sel="leth.'+c[0]+'.pot"><option value="">—</option>';
+    POT.forEach(function(o){l+='<option value="'+o[0]+'">'+esc(o[1])+'</option>';});
+    l+='</select></div>';
+  });
+  l+='</div>';
+  $("lethality").innerHTML=l;
+}
+
+function yes(path){return get(path)===1;}
+function maxType(c){var m=0;for(var n=1;n<=5;n++){if(yes("id."+n+"."+c))m=n;}return m;}
+function anyIde(c){return yes("id.1."+c)||yes("id.2."+c);}
+function behAny(c){return ["att","intr","abort","prep"].some(function(k){return yes("beh."+k+"."+c);});}
+function intScore(c){var o=st.int[c]||{},s=0,n=0;INT.forEach(function(x){if(o[x.k]!==undefined&&o[x.k]!==""){s+=+o[x.k];n++;}});return n?{s:s,n:n}:null;}
+function risk(){
+  var tR=maxType("R"),bR=behAny("R"),bL=behAny("L"),answered=Object.keys(st.id).length>0||Object.keys(st.beh).length>0;
+  if(!answered)return null;
+  if(tR>=4||bR)return {c:"hi",h:"Yuqori xavf",why:(tR>=4?"So‘nggi davrda "+tR+"-turdagi suitsidal fikr (niyat"+(tR===5?" va reja":"")+" bilan). ":"")+(bR?"So‘nggi davrda suitsidal xulq.":""),
+    a:["Bemorni nazoratsiz qoldirmang.","Zudlik bilan psixiatrik baholash va gospitalizatsiya masalasini hal qiling.","Xavfli vositalarni (dorilar, o‘tkir buyumlar) bemordan uzoqlashtiring.","Yaqinlarini xabardor qiling; xavfsizlik rejasini tuzing."]};
+  if(tR===3||bL)return {c:"mo",h:"O‘rtacha xavf",why:(tR===3?"So‘nggi davrda usul haqida o‘ylash bilan suitsidal fikrlar. ":"")+(bL&&!bR?"O‘tmishda suitsidal xulq bo‘lgan.":""),
+    a:["Shu kunning o‘zida psixiatr ko‘rigi.","Xavfsizlik rejasini tuzing va vositalarga kirishni cheklang.","Kuzatuvni kuchaytiring, qayta baholash muddatini belgilang."]};
+  if(tR>=1)return {c:"lo",h:"Past xavf",why:"So‘nggi davrda faqat o‘lish istagi yoki nospetsifik suitsidal fikrlar.",
+    a:["Xavfsizlik rejasini muhokama qiling.","Keyingi tashrifda qayta baholang.","Yordam manbalari va ishonch telefonlari haqida ma’lumot bering."]};
+  return {c:"no",h:"Hozirgi xavf aniqlanmadi",why:"So‘nggi davrda suitsidal fikr va xulq qayd etilmagan"+(maxType("L")?"; hayot davomida fikrlar bo‘lgan.":"."),a:["Davolash davomida muntazam qayta baholang."]};
+}
+
+function render(){
+  document.querySelectorAll(".perId").forEach(function(e){e.textContent=perLab("id");});
+  document.querySelectorAll(".perId2").forEach(function(e){e.textContent=perLab("id")+" — eng xavfli";});
+  document.querySelectorAll(".perBeh").forEach(function(e){e.textContent=perLab("beh");});
+  $("perId").value=st.per.id;$("perBeh").value=st.per.beh;
+  /* oqim qoidalari: 3–5 faqat 2-savol «Ha» bo‘lganda */
+  ["L","R"].forEach(function(c){
+    var q2=yes("id.2."+c),q1=get("id.1."+c),q2v=get("id.2."+c);
+    for(var n=3;n<=5;n++){
+      var off=!q2;
+      document.querySelectorAll('[data-seg="id.'+n+'.'+c+'"] button').forEach(function(b){b.disabled=off;});
+      $("sk"+n+c).textContent=off?(q1===0&&q2v===0?"1 va 2-savolga «Yo‘q» — o‘tkazib yuboriladi":"2-savolga «Ha» bo‘lgandagina so‘raladi"):"";
+    }
+  });
+  for(var n=3;n<=5;n++){$("q"+n).classList.toggle("off",!yes("id.2.L")&&!yes("id.2.R"));}
+  document.querySelectorAll(".seg button").forEach(function(b){b.setAttribute("aria-pressed",String(get(b.dataset.p)===+b.dataset.v));});
+  document.querySelectorAll("textarea[data-note]").forEach(function(t){var n=t.dataset.note;t.hidden=!(yes("id."+n+".L")||yes("id."+n+".R"));});
+  /* intensivlik */
+  var iL=anyIde("L"),iR=anyIde("R");
+  $("intensity").classList.toggle("off",!iL&&!iR);
+  $("intHint").textContent=(!iL&&!iR)?"1 yoki 2-savolga «Ha» bo‘lsa to‘ldiriladi":"";
+  ["L","R"].forEach(function(c){
+    var on=c==="L"?iL:iR;
+    document.querySelectorAll('[data-sel^="int.'+c+'."]').forEach(function(s){s.disabled=!on;});
+    var t=maxType(c);$("mt"+c).textContent=t?t+"-tur":"—";
+    var sc=intScore(c);$("is"+c).textContent=(on&&sc)?sc.s+(sc.n<5?" ("+sc.n+"/5)":""):"—";
+  });
+  /* xulq */
+  ["L","R"].forEach(function(c){var a=behAny(c),any=["att","intr","abort","prep"].some(function(k){return get("beh."+k+"."+c)!==undefined;});$("sb"+c).textContent=a?"Ha":(any?"Yo‘q":"—");$("sb"+c).style.color=a?"var(--bad)":"";});
+  /* letallik */
+  var att=yes("beh.att.L");
+  $("lethality").classList.toggle("off",!att);
+  $("lethHint").textContent=att?"":"faqat haqiqiy urinish bo‘lsa to‘ldiriladi";
+  document.querySelectorAll("#lethality select,#lethality input").forEach(function(e){e.disabled=!att;});
+  LCOL.forEach(function(c){var a=get("leth."+c[0]+".act");var p=document.querySelector('[data-sel="leth.'+c[0]+'.pot"]');if(String(a)!=="0"){p.disabled=true;}});
+  /* qiymatlarni joylash */
+  document.querySelectorAll("[data-sel]").forEach(function(s){var v=get(s.dataset.sel);s.value=(v===undefined||v===null)?"":String(v);});
+  document.querySelectorAll("[data-num],[data-txt]").forEach(function(s){var v=get(s.dataset.num||s.dataset.txt);if(document.activeElement!==s)s.value=(v===undefined||v===null)?"":v;});
+  document.querySelectorAll("textarea[data-note]").forEach(function(t){if(document.activeElement!==t)t.value=st.note[t.dataset.note]||"";});
+  /* xulosa */
+  var r=risk();
+  $("riskBox").innerHTML=r?'<div class="risk '+r.c+'"><b>'+r.h+'</b>'+esc(r.why)+'<ul>'+r.a.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+'</ul></div>':'<div class="verdict v-neu">Savollarga javob berilgach xulosa chiqadi.</div>';
+  $("mRisk").innerHTML=r?'Xavf: <b style="color:var(--'+(r.c==="hi"?"bad":r.c==="mo"?"warn":r.c==="lo"?"accent":"ok")+')">'+r.h+'</b>':"Xavf: —";
+  var tl=maxType("L"),tr=maxType("R"),sL=intScore("L"),sR=intScore("R");
+  var rows=[["Eng og‘ir fikr — hayot davomida",tl?tl+" / 5":"0"],["Eng og‘ir fikr — "+perLab("id").toLowerCase(),tr?tr+" / 5":"0"],
+    ["Intensivlik — hayot davomida",iL&&sL?sL.s+" / 25":"—"],["Intensivlik — "+perLab("id").toLowerCase(),iR&&sR?sR.s+" / 25":"—"],
+    ["Suitsidal xulq — hayot davomida",behAny("L")?"Ha":"Yo‘q"],["Suitsidal xulq — "+perLab("beh").toLowerCase(),behAny("R")?"Ha":"Yo‘q"]];
+  var na=get("beh.att.nL");if(na)rows.push(["Haqiqiy urinishlar soni (hayot)",na]);
+  if(yes("beh.nssi.L")||yes("beh.nssi.R"))rows.push(["Suitsidal bo‘lmagan o‘zini shikastlash","Ha"]);
+  $("sumList").innerHTML=rows.map(function(x){return '<div class="kv"><span>'+esc(x[0])+'</span><span>'+esc(x[1])+'</span></div>';}).join("");
+  renderPrint(rows,r);
+}
+function report(){
+  var r=risk(),L=["C-SSRS — Suitsid xavfi og‘irligini baholovchi Kolumbiya shkalasi"];
+  if(st.meta.patient)L.push("Bemor: "+st.meta.patient);if(st.meta.date)L.push("Sana: "+st.meta.date);if(st.meta.rater)L.push("Baholovchi: "+st.meta.rater);
+  L.push("");
+  ID.forEach(function(x,i){var n=i+1;function f(c){var v=get("id."+n+"."+c);return v===1?"Ha":v===0?"Yo‘q":"–";}L.push(n+". "+x.n+": hayot — "+f("L")+"; "+perLab("id").toLowerCase()+" — "+f("R")+(st.note[n]?" ("+st.note[n]+")":""));});
+  ["L","R"].forEach(function(c){var s=intScore(c);if(anyIde(c)&&s)L.push("Intensivlik ("+(c==="L"?"hayot":perLab("id").toLowerCase())+"): "+s.s+"/25");});
+  BEH.forEach(function(x){function f(c){var v=get("beh."+x.k+"."+c),n=get("beh."+x.k+".n"+c);return (v===1?"Ha":v===0?"Yo‘q":"–")+(n?" ("+n+" marta)":"");}L.push(x.n+": hayot — "+f("L")+"; "+perLab("beh").toLowerCase()+" — "+f("R"));});
+  if(yes("beh.att.L"))LCOL.forEach(function(c){var a=get("leth."+c[0]+".act"),p=get("leth."+c[0]+".pot"),d=get("leth."+c[0]+".date");if(a!==undefined&&a!=="")L.push(c[1]+": "+(d?d+", ":"")+"haqiqiy letallik "+a+(String(a)==="0"&&p!==undefined&&p!==""?", potensial "+p:""));});
+  if(r)L.push("","Xavf darajasi: "+r.h+" — "+r.why);
+  return L.join("\n");
+}
+function renderPrint(rows,r){
+  var h='<h2>C-SSRS — Suitsid xavfi og‘irligini baholovchi Kolumbiya shkalasi</h2><div>Bemor: <b>'+esc(st.meta.patient||"________")+'</b> &nbsp; Sana: <b>'+esc(st.meta.date||"________")+'</b> &nbsp; Baholovchi: <b>'+esc(st.meta.rater||"________")+'</b></div>';
+  h+='<table><tr><th>Suitsidal fikrlash</th><th>Butun hayot</th><th>'+perLab("id")+'</th></tr>';
+  ID.forEach(function(x,i){var n=i+1;function f(c){var v=get("id."+n+"."+c);return v===1?"Ha":v===0?"Yo‘q":"";}h+='<tr><td>'+n+'. '+esc(x.n)+'</td><td class="s">'+f("L")+'</td><td class="s">'+f("R")+'</td></tr>';});
+  h+='</table><table><tr><th>Suitsidal xulq</th><th>Butun hayot</th><th>'+perLab("beh")+'</th></tr>';
+  BEH.forEach(function(x){function f(c){var v=get("beh."+x.k+"."+c),n=get("beh."+x.k+".n"+c);return (v===1?"Ha":v===0?"Yo‘q":"")+(n?" ("+n+")":"");}h+='<tr><td>'+esc(x.n)+'</td><td class="s">'+f("L")+'</td><td class="s">'+f("R")+'</td></tr>';});
+  h+='</table><table>'+rows.map(function(x){return '<tr><td>'+esc(x[0])+'</td><td class="s">'+esc(x[1])+'</td></tr>';}).join("")+(r?'<tr><td><b>Xavf darajasi</b></td><td><b>'+esc(r.h)+'</b></td></tr>':'')+'</table><p style="font-size:9pt;margin-top:8pt">Manba: O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022); Posner va b. (2011).</p>';
+  $("printSheet").innerHTML=h;
+}
+function toast(t){var e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){e.classList.remove("show");},1800);}
+
+function bind(){
+  document.addEventListener("click",function(e){
+    var b=e.target.closest(".seg button");if(!b||b.disabled)return;
+    var p=b.dataset.p,v=+b.dataset.v;
+    if(get(p)===v)set(p,undefined);else set(p,v);
+    var m=p.match(/^(id\.\d|beh\.\w+)\.(L|R)$/);
+    if(m){ if(m[2]==="R"&&get(p)===1)set(m[1]+".L",1); if(m[2]==="L"&&get(p)===0&&get(m[1]+".R")===1)set(m[1]+".R",0); }
+    /* 2-savol «Ha» emas bo‘lsa 3–5 tozalanadi */
+    ["L","R"].forEach(function(c){if(!yes("id.2."+c))for(var n=3;n<=5;n++){if(st.id[n])delete st.id[n][c];}});
+    save();render();
+  });
+  document.addEventListener("change",function(e){
+    var s=e.target;
+    if(s.dataset.sel){set(s.dataset.sel,s.value===""?undefined:+s.value);if(/\.act$/.test(s.dataset.sel)&&s.value!=="0")set(s.dataset.sel.replace(/act$/,"pot"),undefined);save();render();}
+    if(s.id==="perId"||s.id==="perBeh"){st.per[s.id==="perId"?"id":"beh"]=s.value;save();render();}
+  });
+  document.addEventListener("input",function(e){
+    var s=e.target;
+    if(s.dataset.num){set(s.dataset.num,s.value===""?undefined:Math.max(0,parseInt(s.value,10)||0));save();render();}
+    if(s.dataset.txt){set(s.dataset.txt,s.value);save();}
+    if(s.dataset.note){st.note[s.dataset.note]=s.value;save();}
+  });
+  [["mPatient","patient"],["mDate","date"],["mRater","rater"]].forEach(function(p){var el=$(p[0]);el.value=st.meta[p[1]]||"";el.addEventListener("input",function(){st.meta[p[1]]=el.value;save();render();});});
+  $("btnCopy").addEventListener("click",function(){
+    var txt=report();
+    function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Nusxalandi");}catch(err){toast("Nusxalab bo‘lmadi");}document.body.removeChild(ta);}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(function(){toast("Nusxalandi");},fb);else fb();
+  });
+  $("btnPrint").addEventListener("click",function(){render();window.print();});
+  $("btnReset").addEventListener("click",function(){if(!confirm("Barcha ma’lumotlar o‘chiriladi. Davom etasizmi?"))return;st=blank();save();["mPatient","mDate","mRater"].forEach(function(id){$(id).value="";});document.querySelectorAll("textarea,input[data-num],input[data-txt]").forEach(function(t){t.value="";});render();window.scrollTo({top:0,behavior:"smooth"});});
+  $("btnToSum").addEventListener("click",function(){$("summary").scrollIntoView({behavior:"smooth"});});
+}
+load();build();bind();render();
+})();
+</script>
+</body>
+</html>

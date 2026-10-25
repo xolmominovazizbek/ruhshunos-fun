@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoCA va MMSE Kognitiv Baholash Shkalalari — Ruhshunos</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --border: #cbd5e1;
+            --success: #16a34a;
+            --warning: #ca8a04;
+            --danger: #dc2626;
+            --bg: #f8fafc;
+        }
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg);
+            color: #1e293b;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #e2e8f0;
+            border-bottom: 2px solid var(--primary);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: var(--secondary);
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .tab-content {
+            display: none;
+            padding: 25px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        /* Header & Patient Info */
+        .header-title {
+            text-align: center;
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 22px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        .patient-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            background: var(--primary-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #bfdbfe;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .form-group input, .form-group select {
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        /* Sections */
+        .section-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 18px;
+            overflow: hidden;
+        }
+        .section-header {
+            background: #f1f5f9;
+            padding: 10px 15px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-score-badge {
+            background: var(--primary);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .section-body {
+            padding: 15px;
+        }
+        .row-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .row-item:last-child {
+            border-bottom: none;
+        }
+        .item-desc {
+            flex: 1;
+            min-width: 240px;
+        }
+        .item-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        label.check-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            user-select: none;
+            transition: 0.15s;
+        }
+        label.check-label:hover {
+            background: #e2e8f0;
+        }
+        label.check-label input[type="checkbox"] {
+            width: 17px;
+            height: 17px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 8px 10px;
+            text-align: center;
+        }
+        th {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+        /* Total Footer */
+        .result-panel {
+            background: #1e293b;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .total-score-box {
+            font-size: 28px;
+            font-weight: 800;
+        }
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        .status-normal { background: var(--success); color: #fff; }
+        .status-mild { background: var(--warning); color: #fff; }
+        .status-severe { background: var(--danger); color: #fff; }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: flex-end;
+        }
+        .btn {
+            padding: 10px 18px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-print { background: var(--primary); color: #fff; }
+        .btn-reset { background: #e2e8f0; color: #1e293b; }
+        .svg-box {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .note-text {
+            font-size: 12px;
+            color: #64748b;
+            font-style: italic;
+        }
+        .number-input {
+            width: 70px;
+            padding: 6px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; max-width: 100%; }
+            .tabs, .btn-group { display: none; }
+        }
+        .site-nav{display:flex;flex-wrap:wrap;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;margin:0 auto 16px;max-width:1000px}
+        .site-nav a{flex:1;text-align:center;padding:10px 8px;font-size:12.5px;font-weight:600;color:var(--secondary);text-decoration:none;border-right:1px solid var(--border);white-space:nowrap}
+        .site-nav a:last-child{border-right:none}
+        .site-nav a:hover{background:var(--primary-light)}
+        .site-nav a.active{background:var(--primary);color:#fff}
+        @media print { .site-nav{display:none} }
+    </style>
+</head>
+<body>
+
+<nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="ruhiyatga-doir-testlar.html" class="active">Ruhiyatga doir testlar</a>
+    <a href="fanga-doir-testlar.html">Fanga doir testlar</a>
+    <a href="xkt-10.html">XKT-10</a>
+    <a href="xkt-11.html">XKT-11</a>
+    <a href="tuzuvchilar.html">Tuzuvchilar</a>
+</nav>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('moca')">1. MoCA (Monreal Kognitiv Baholash Shkalasi)</button>
+        <button class="tab-btn" onclick="switchTab('mmse')">2. MMSE (Mini-Mental Holat Tekshiruvi)</button>
+    </div>
+
+    <!-- ==================== MOCA TAB ==================== -->
+    <div id="moca" class="tab-content active">
+        <h2 class="header-title">Monreal Kognitiv Baholash Shkalasi (MoCA)</h2>
+
+        <div class="patient-info">
+            <div class="form-group">
+                <label>F.I.Sh.:</label>
+                <input type="text" placeholder="Bemor F.I.Sh.">
+            </div>
+            <div class="form-group">
+                <label>Tug'ilgan sana:</label>
+                <input type="date">
+            </div>
+            <div class="form-group">
+                <label>Jinsi:</label>
+                <select>
+                    <option value="">Tanlang</option>
+                    <option value="Erkak">Erkak</option>
+                    <option value="Ayol">Ayol</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Ma'lumoti:</label>
+                <input type="text" placeholder="Masalan: O'rta / Oliy">
+            </div>
+            <div class="form-group">
+                <label>Tekshiruv sanasi:</label>
+                <input type="date" id="moca_date">
+            </div>
+        </div>
+
+        <!-- 1. VIZUAL-FAZOVIY / IJROIYA -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>1. VIZUAL-FAZOVIY / IJROIYA</span>
+                <span class="section-score-badge"><span id="moca_vis_score">0</span> / 5</span>
+            </div>
+            <div class="section-body">
+                <div class="row-item">
+                    <div class="item-desc">
+                        <strong>Izchil chiziq chizish (1-A-2-B-3-C-4-D-5-E):</strong><br>
+                        <span class="note-text">Boshidan (1) oxirigacha (E) ketma-ketlikda to'g'ri tutashtirish</span>
+                    </div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-vis" value="1" onchange="calcMoca()"> To'g'ri (1 ball)</label>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="item-desc">
+                        <strong>Kubdan nusxa oling:</strong><br>
+                        <span class="note-text">Uch o'lchamli kub shaklini to'g'ri ko'chirib chizish</span>
+                    </div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-vis" value="1" onchange="calcMoca()"> To'g'ri (1 ball)</label>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="item-desc">
+                        <strong>Soatni chizing (o'n birdan o'n daqiqa o'tgan - 11:10):</strong> (3 ball)
+                    </div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-vis" value="1" onchange="calcMoca()"> Kontur (1)</label>
+                        <label class="check-label"><input type="checkbox" class="moca-vis" value="1" onchange="calcMoca()"> Raqamlar (1)</label>
+                        <label class="check-label"><input type="checkbox" class="moca-vis" value="1" onchange="calcMoca()"> Millar (1)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. NOMLASH -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>2. NOMLASH</span>
+                <span class="section-score-badge"><span id="moca_name_score">0</span> / 3</span>
+            </div>
+            <div class="section-body">
+                <div class="row-item">
+                    <div class="item-desc">Hayvonlar rasmini nomlash (Sher, Karkidon, Tuya):</div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-name" value="1" onchange="calcMoca()"> 1. Sher (1)</label>
+                        <label class="check-label"><input type="checkbox" class="moca-name" value="1" onchange="calcMoca()"> 2. Karkidon (1)</label>
+                        <label class="check-label"><input type="checkbox" class="moca-name" value="1" onchange="calcMoca()"> 3. Tuya (1)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. XOTIRA -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>3. XOTIRA (Ball berilmaydi)</span>
+                <span class="section-score-badge">Ball berilmaydi</span>
+            </div>
+            <div class="section-body">
+                <p style="margin-top:0; font-size:14px;">So'zlar ro'yxatini o'qing, tekshiriluvchi ularni takrorlashi kerak. 2 marta bajaring. 5 daqiqadan so'ng eslashni so'rang.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Uriniishlar</th>
+                            <th>YUZ</th>
+                            <th>BAXMAL</th>
+                            <th>CHERKOV</th>
+                            <th>MOYCHECHAK</th>
+                            <th>QIZIL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1-urinish</strong></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2-urinish</strong></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. DIQQAT -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>4. DIQQAT</span>
+                <span class="section-score-badge"><span id="moca_att_score">0</span> / 6</span>
+            </div>
+            <div class="section-body">
+                <div class="row-item">
+                    <div class="item-desc">
+                        <strong>Raqamlarni o'qing (1 raqam/sek.):</strong><br>
+                        • Tekshiriluvchi ularni to'g'ri tartibda takrorlashi kerak: <strong>[ 2  1  8  5  4 ]</strong><br>
+                        • Tekshiriluvchi ularni teskari tartibda takrorlashi kerak: <strong>[ 7  4  2 ]</strong>
+                    </div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-att" value="1" onchange="calcMoca()"> To'g'ri tartib (1)</label>
+                        <label class="check-label"><input type="checkbox" class="moca-att" value="1" onchange="calcMoca()"> Teskari tartib (1)</label>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="item-desc">
+                        <strong>Harflar ro'yxatini o'qing:</strong><br>
+                        Tekshiriluvchi har bir <strong>A</strong> harfida qo'li bilan urib qo'yishi kerak. (≥ 2 xato bo'lsa, ball berilmaydi)<br>
+                        <code style="font-size:15px; background:#f1f5f9; padding:4px 8px; border-radius:4px; display:inline-block; margin-top:4px;">F B A C M N A A J K L B A F A K D E A A A J A M O F A A B</code>
+                    </div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-att" value="1" onchange="calcMoca()"> ≤ 1 xato (1 ball)</label>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="item-desc">
+                        <strong>100 dan boshlab 7 ni ketma-ket ayirish:</strong><br>
+                        <span class="note-text">4 yoki 5 ta to'g'ri ayirish: 3 ball | 2 yoki 3 ta to'g'ri: 2 ball | 1 ta to'g'ri: 1 ball | 0 ta to'g'ri: 0 ball</span>
+                    </div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-sub7" onchange="calcMoca()"> 93</label>
+                        <label class="check-label"><input type="checkbox" class="moca-sub7" onchange="calcMoca()"> 86</label>
+                        <label class="check-label"><input type="checkbox" class="moca-sub7" onchange="calcMoca()"> 79</label>
+                        <label class="check-label"><input type="checkbox" class="moca-sub7" onchange="calcMoca()"> 72</label>
+                        <label class="check-label"><input type="checkbox" class="moca-sub7" onchange="calcMoca()"> 65</label>
+                        <span style="font-weight:bold; color:var(--primary);">(Ball: <span id="moca_sub7_val">0</span>/3)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. NUTQ -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>5. NUTQ</span>
+                <span class="section-score-badge"><span id="moca_lang_score">0</span> / 3</span>
+            </div>
+            <div class="section-body">
+                <div class="row-item">
+                    <div class="item-desc">
+                        <strong>Takrorlang:</strong><br>
+                        1. "Men faqat shuni bilaman: bugun yordam beradigan odam - Jon."<br>
+                        2. "Itlar xonada bo'lganida mushuk doim divan ostiga yashirinardi."
+                    </div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-lang" value="1" onchange="calcMoca()"> 1-gap (1)</label>
+                        <label class="check-label"><input type="checkbox" class="moca-lang" value="1" onchange="calcMoca()"> 2-gap (1)</label>
+                    </div>
+                </div>
+                <div class="row-item">
+                    <div class="item-desc">
+                        <strong>Ravonlik:</strong> Bir daqiqada <strong>F</strong> harfi bilan boshlanadigan iloji boricha ko'p so'z aytish (N ≥ 11 so'z)
+                    </div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-lang" value="1" onchange="calcMoca()"> ≥ 11 ta so'z (1 ball)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. ABSTRAKSIYA -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>6. ABSTRAKSIYA</span>
+                <span class="section-score-badge"><span id="moca_abs_score">0</span> / 2</span>
+            </div>
+            <div class="section-body">
+                <div class="row-item">
+                    <div class="item-desc">
+                        O'xshashlik, masalan: <em>banan - apelsin = meva</em>
+                    </div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-abs" value="1" onchange="calcMoca()"> poyezd - velosiped (1)</label>
+                        <label class="check-label"><input type="checkbox" class="moca-abs" value="1" onchange="calcMoca()"> soat - chizg'ich (1)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. KECHIKTIRILGAN ESLASH -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>7. KECHIKTIRILGAN ESLASH</span>
+                <span class="section-score-badge"><span id="moca_rec_score">0</span> / 5</span>
+            </div>
+            <div class="section-body">
+                <p style="margin-top:0; font-size:13px; color:var(--secondary);">Ball faqat <strong>ISHORASIZ</strong> eslash uchun beriladi.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ko'rsatkich</th>
+                            <th>YUZ</th>
+                            <th>BAXMAL</th>
+                            <th>CHERKOV</th>
+                            <th>MOYCHECHAK</th>
+                            <th>QIZIL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ishorasiz eslash (1 balldan)</strong></td>
+                            <td><input type="checkbox" class="moca-rec" value="1" onchange="calcMoca()"></td>
+                            <td><input type="checkbox" class="moca-rec" value="1" onchange="calcMoca()"></td>
+                            <td><input type="checkbox" class="moca-rec" value="1" onchange="calcMoca()"></td>
+                            <td><input type="checkbox" class="moca-rec" value="1" onchange="calcMoca()"></td>
+                            <td><input type="checkbox" class="moca-rec" value="1" onchange="calcMoca()"></td>
+                        </tr>
+                        <tr>
+                            <td><em>Kategoriya ishorasi (ixtiyoriy, 0 ball)</em></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td><em>Ko'p tanlovli ishora (ixtiyoriy, 0 ball)</em></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 8. ORIYENTATSIYA -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>8. ORIYENTATSIYA</span>
+                <span class="section-score-badge"><span id="moca_ori_score">0</span> / 6</span>
+            </div>
+            <div class="section-body">
+                <div class="row-item">
+                    <div class="item-desc">Vaqt va joyni to'g'ri aytish:</div>
+                    <div class="item-controls">
+                        <label class="check-label"><input type="checkbox" class="moca-ori" value="1" onchange="calcMoca()"> Sana</label>
+                        <label class="check-label"><input type="checkbox" class="moca-ori" value="1" onchange="calcMoca()"> Oy</label>
+                        <label class="check-label"><input type="checkbox" class="moca-ori" value="1" onchange="calcMoca()"> Yil</label>
+                        <label class="check-label"><input type="checkbox" class="moca-ori" value="1" onchange="calcMoca()"> Hafta kuni</label>
+                        <label class="check-label"><input type="checkbox" class="moca-ori" value="1" onchange="calcMoca()"> Joy</label>
+                        <label class="check-label"><input type="checkbox" class="moca-ori" value="1" onchange="calcMoca()"> Shahar</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TA'LIM QO'SHIMCHA BALL -->
+        <div class="section-card" style="background:#f8fafc;">
+            <div class="section-body" style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <strong>Qo'shimcha ball (Ta'lim darajasi):</strong><br>
+                    <span class="note-text">Agar bemorning ta'lim olgan muddati ≤ 12 yil bo'lsa, 1 ball qo'shiladi (maksimal 30 balldan oshmaydi).</span>
+                </div>
+                <label class="check-label" style="background:#fff;">
+                    <input type="checkbox" id="moca_edu" onchange="calcMoca()"> Ta'lim ≤ 12 yil (+1 ball)
+                </label>
+            </div>
+        </div>
+
+        <!-- MOCA NATIJA -->
+        <div class="result-panel">
+            <div>
+                <div style="font-size:14px; opacity:0.85;">JAMI TO'PLANGAN BALL (MoCA):</div>
+                <div class="total-score-box"><span id="moca_total">0</span> / 30</div>
+                <div style="font-size:13px; opacity:0.8;">Norma: ≥ 26 / 30</div>
+            </div>
+            <div>
+                <span id="moca_status" class="status-badge status-severe">Kognitiv pasayish (&lt; 26)</span>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-reset" onclick="resetMoca()">Tozalash</button>
+            <button class="btn btn-print" onclick="window.print()">Chop etish / PDF saqlash</button>
+        </div>
+    </div>
+
+    <!-- ==================== MMSE TAB ==================== -->
+    <div id="mmse" class="tab-content">
+        <h2 class="header-title">Mini-Mental Holat Tekshiruvi (MMSE)</h2>
+
+        <div class="patient-info">
+            <div class="form-group">
+                <label>F.I.Sh.:</label>
+                <input type="text" placeholder="Bemor F.I.Sh.">
+            </div>
+            <div class="form-group">
+                <label>Tug'ilgan sana:</label>
+                <input type="date">
+            </div>
+            <div class="form-group">
+                <label>Kasallik tarixi raqami:</label>
+                <input type="text" placeholder="№">
+            </div>
+        </div>
+
+        <p style="font-size:14px; color:var(--secondary); margin-bottom:10px;">
+            <em>Har bir to'g'ri javob uchun 1 ball. Ustunlar bo'yicha dinamikada (1, 2, 3-tekshiruv) ballarni kiritishingiz mumkin — jami ball avtomatik hisoblanadi.</em>
+        </p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 55%; text-align:left;">Bo'lim va Topshiriqlar</th>
+                    <th style="width: 15%;">1-tekshiruv<br><input type="date" style="margin-top:4px; font-size:12px;"></th>
+                    <th style="width: 15%;">2-tekshiruv<br><input type="date" style="margin-top:4px; font-size:12px;"></th>
+                    <th style="width: 15%;">3-tekshiruv<br><input type="date" style="margin-top:4px; font-size:12px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ORIYENTATSIYA -->
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>ORIYENTATSIYA (Vaqt bo'yicha):</strong><br>
+                        Fasl, Oy, Yil, Vaqt, Sana <em>(0 dan 5 ballgacha)</em>
+                    </td>
+                    <td><input type="number" min="0" max="5" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 5)"> / 5</td>
+                    <td><input type="number" min="0" max="5" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 5)"> / 5</td>
+                    <td><input type="number" min="0" max="5" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 5)"> / 5</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>ORIYENTATSIYA (Joy bo'yicha):</strong><br>
+                        Bo'lim/Qavat, Shifoxona, Mamlakat, Shahar, Tuman <em>(0 dan 5 ballgacha)</em>
+                    </td>
+                    <td><input type="number" min="0" max="5" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 5)"> / 5</td>
+                    <td><input type="number" min="0" max="5" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 5)"> / 5</td>
+                    <td><input type="number" min="0" max="5" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 5)"> / 5</td>
+                </tr>
+                <!-- QAYD ETISH -->
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>QAYD ETISH:</strong><br>
+                        Tekshiruvchi uchta predmetni aytadi (masalan, olma, stol, tanga) va bemordan takrorlashni so'raydi (har bir to'g'ri javob uchun 1 ball).
+                    </td>
+                    <td><input type="number" min="0" max="3" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 3)"> / 3</td>
+                    <td><input type="number" min="0" max="3" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 3)"> / 3</td>
+                    <td><input type="number" min="0" max="3" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 3)"> / 3</td>
+                </tr>
+                <!-- DIQQAT VA HISOB -->
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>DIQQAT VA HISOB:</strong><br>
+                        100 dan 7 ni ayiring, natijadan yana 7 ni ayiring. Besh marta davom ettiring: 93, 86, 79, 72, 65. (Muqobil: "DUNYO" so'zini teskari aytish: OYNUD).
+                    </td>
+                    <td><input type="number" min="0" max="5" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 5)"> / 5</td>
+                    <td><input type="number" min="0" max="5" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 5)"> / 5</td>
+                    <td><input type="number" min="0" max="5" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 5)"> / 5</td>
+                </tr>
+                <!-- ESLASH -->
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>ESLASH:</strong><br>
+                        Avval yodlangan uchta predmetning nomini so'rang.
+                    </td>
+                    <td><input type="number" min="0" max="3" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 3)"> / 3</td>
+                    <td><input type="number" min="0" max="3" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 3)"> / 3</td>
+                    <td><input type="number" min="0" max="3" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 3)"> / 3</td>
+                </tr>
+                <!-- NUTQ -->
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>NUTQ — Nomlash:</strong><br>
+                        Ikkita predmetni nomlash (masalan, ruchka, soat).
+                    </td>
+                    <td><input type="number" min="0" max="2" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 2)"> / 2</td>
+                    <td><input type="number" min="0" max="2" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 2)"> / 2</td>
+                    <td><input type="number" min="0" max="2" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 2)"> / 2</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>NUTQ — Takrorlash:</strong><br>
+                        Takrorlang: "Hech qanday 'agar', 'va' yoki 'lekin' yo'q".
+                    </td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>NUTQ — Uch bosqichli buyruq:</strong><br>
+                        Har bir bosqich uchun 1 ball (masalan: "O'ng qo'l ko'rsatkich barmog'ini burningizga, so'ng chap qulog'ingizga qo'ying").
+                    </td>
+                    <td><input type="number" min="0" max="3" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 3)"> / 3</td>
+                    <td><input type="number" min="0" max="3" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 3)"> / 3</td>
+                    <td><input type="number" min="0" max="3" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 3)"> / 3</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>NUTQ — O'qish va bajarish:</strong><br>
+                        Bemordan qog'ozdagi yozma buyruqni o'qib, uni bajarishni so'rang. Yozma ko'rsatma: <strong>"Ko'zingizni yuming"</strong>.
+                    </td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                </tr>
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>NUTQ — Gap yozish:</strong><br>
+                        Bemordan bitta gap yozishni so'rang. Gap mazmunli bo'lsa hamda ega va kesimdan iborat bo'lsa, 1 ball qo'yiladi.
+                    </td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                </tr>
+                <!-- NUSXA KO'CHIRISH -->
+                <tr>
+                    <td style="text-align:left;">
+                        <strong>NUSXA KO'CHIRISH:</strong><br>
+                        Bemorga kesishgan ikki beshburchakni ko'chirtiring:
+                        <div style="margin-top:6px;">
+                            <svg width="120" height="65" viewBox="0 0 160 90">
+                                <polygon points="10,25 55,5 85,45 55,85 10,65" fill="none" stroke="#000" stroke-width="2.5"/>
+                                <polygon points="150,25 105,5 75,45 105,85 150,65" fill="none" stroke="#000" stroke-width="2.5"/>
+                            </svg>
+                        </div>
+                    </td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c1" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c2" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                    <td><input type="number" min="0" max="1" value="0" class="number-input mmse-c3" oninput="clampAndCalcMmse(this, 1)"> / 1</td>
+                </tr>
+                <!-- JAMI QATOR -->
+                <tr style="background:#e2e8f0; font-weight:bold; font-size:16px;">
+                    <td style="text-align:right;">JAMI BALL:</td>
+                    <td><span id="mmse_tot_1">0</span> / 30<br><span id="mmse_stat_1" style="font-size:12px;"></span></td>
+                    <td><span id="mmse_tot_2">0</span> / 30<br><span id="mmse_stat_2" style="font-size:12px;"></span></td>
+                    <td><span id="mmse_tot_3">0</span> / 30<br><span id="mmse_stat_3" style="font-size:12px;"></span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- MMSE mezonlari -->
+        <div class="section-card" style="margin-top:20px; background:#f8fafc;">
+            <div class="section-body">
+                <strong>MMSE bo'yicha baholash mezonlari:</strong>
+                <ul style="margin: 8px 0 0 20px; font-size:14px;">
+                    <li><strong style="color:var(--success);">24–30 ball:</strong> Kognitiv buzilish yo'q</li>
+                    <li><strong style="color:var(--warning);">18–23 ball:</strong> Yengil kognitiv buzilish</li>
+                    <li><strong style="color:var(--danger);">0–17 ball:</strong> Og'ir kognitiv buzilish</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-reset" onclick="resetMmse()">Tozalash</button>
+            <button class="btn btn-print" onclick="window.print()">Chop etish / PDF saqlash</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set default date
+    document.getElementById('moca_date').valueAsDate = new Date();
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function sumChecked(selector) {
+        let sum = 0;
+        document.querySelectorAll(selector + ':checked').forEach(cb => {
+            sum += parseInt(cb.value || 1);
+        });
+        return sum;
+    }
+
+    function calcMoca() {
+        const vis = sumChecked('.moca-vis');
+        const name = sumChecked('.moca-name');
+        
+        // Attention
+        const attBasic = sumChecked('.moca-att');
+        const sub7Count = document.querySelectorAll('.moca-sub7:checked').length;
+        let sub7Score = 0;
+        if (sub7Count >= 4) sub7Score = 3;
+        else if (sub7Count >= 2) sub7Score = 2;
+        else if (sub7Count === 1) sub7Score = 1;
+        document.getElementById('moca_sub7_val').innerText = sub7Score;
+        const att = attBasic + sub7Score;
+
+        const lang = sumChecked('.moca-lang');
+        const abs = sumChecked('.moca-abs');
+        const rec = sumChecked('.moca-rec');
+        const ori = sumChecked('.moca-ori');
+
+        document.getElementById('moca_vis_score').innerText = vis;
+        document.getElementById('moca_name_score').innerText = name;
+        document.getElementById('moca_att_score').innerText = att;
+        document.getElementById('moca_lang_score').innerText = lang;
+        document.getElementById('moca_abs_score').innerText = abs;
+        document.getElementById('moca_rec_score').innerText = rec;
+        document.getElementById('moca_ori_score').innerText = ori;
+
+        let total = vis + name + att + lang + abs + rec + ori;
+        const eduBonus = document.getElementById('moca_edu').checked ? 1 : 0;
+        if (total + eduBonus <= 30) {
+            total += eduBonus;
+        } else if (total < 30 && eduBonus === 1) {
+            total = 30;
+        }
+
+        document.getElementById('moca_total').innerText = total;
+        const statusEl = document.getElementById('moca_status');
+        if (total >= 26) {
+            statusEl.innerText = "Norma (≥ 26)";
+            statusEl.className = "status-badge status-normal";
+        } else {
+            statusEl.innerText = "Kognitiv pasayish (< 26)";
+            statusEl.className = "status-badge status-severe";
+        }
+    }
+
+    function resetMoca() {
+        document.querySelectorAll('#moca input[type="checkbox"]').forEach(cb => cb.checked = false);
+        calcMoca();
+    }
+
+    function clampAndCalcMmse(input, maxVal) {
+        let val = parseInt(input.value);
+        if (isNaN(val) || val < 0) input.value = 0;
+        else if (val > maxVal) input.value = maxVal;
+        calcMmse();
+    }
+
+    function getMmseInterpretation(score) {
+        if (score >= 24) return '<span style="color:var(--success)">Kognitiv buzilish yo\'q</span>';
+        if (score >= 18) return '<span style="color:var(--warning)">Yengil kognitiv buzilish</span>';
+        return '<span style="color:var(--danger)">Og\'ir kognitiv buzilish</span>';
+    }
+
+    function calcMmse() {
+        [1, 2, 3].forEach(col => {
+            let sum = 0;
+            document.querySelectorAll('.mmse-c' + col).forEach(inp => {
+                sum += parseInt(inp.value) || 0;
+            });
+            document.getElementById('mmse_tot_' + col).innerText = sum;
+            document.getElementById('mmse_stat_' + col).innerHTML = getMmseInterpretation(sum);
+        });
+    }
+
+    function resetMmse() {
+        document.querySelectorAll('#mmse .number-input').forEach(inp => inp.value = 0);
+        calcMmse();
+    }
+
+    // Initialize
+    calcMoca();
+    calcMmse();
+</script>
+
+</body>
+</html>

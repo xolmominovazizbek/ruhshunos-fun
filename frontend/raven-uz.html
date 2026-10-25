@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raven matritsalari — Ruhshunos</title>
+<meta name="description" content="Ravenning progressiv matritsalari — javoblar varag‘ini avtomatik tekshirish, seriyalar bo‘yicha ball va yoshga ko‘ra IQ. O‘zR SSV bolalar va o‘smirlarda aqliy zaiflik bo‘yicha milliy klinik protokoli (2022) asosida.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>:root{
+  --bg:#f5f3ee; --surface:#ffffff; --surface-2:#faf8f4; --ink:#1d2421; --ink-2:#4b5551; --ink-3:#7a837f;
+  --line:#e2ddd3; --line-2:#cfc8bb; --accent:#1f5e57; --accent-ink:#ffffff; --accent-soft:#e3efec;
+  --p:#b4532a; --p-soft:#f6e6dd; --n:#3d5a8a; --n-soft:#e2e9f4; --g:#7a6a1e; --g-soft:#f1ecd6;
+  --ok:#2e7d4f; --ok-soft:#e1f1e7; --bad:#a83a32; --bad-soft:#f6e1df; --warn:#9a6a00; --warn-soft:#f7ecd2;
+  --shadow:0 1px 2px rgba(30,30,20,.05),0 4px 14px rgba(30,30,20,.05);
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+    --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+    --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+    --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+  --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+  --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+  --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header.top{padding:28px 0 18px;border-bottom:1px solid var(--line);background:var(--surface)}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+h1{font-size:clamp(24px,4vw,34px);line-height:1.15;margin:6px 0 8px;font-weight:700;letter-spacing:-.01em}
+.lead{color:var(--ink-2);max-width:780px;margin:0}
+.meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px;max-width:780px}
+.meta-row label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-3);font-weight:500}
+.meta-row input{font:inherit;font-size:15px;padding:9px 11px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink);min-width:0}
+.meta-row input:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Info */
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:20px 0 6px}
+.info details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:0}
+.info summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px}
+.info summary::-webkit-details-marker{display:none}
+.info summary::after{content:"+";color:var(--ink-3);font-weight:500}
+.info details[open] summary::after{content:"−"}
+.info .body{padding:0 16px 14px;color:var(--ink-2);font-size:14.5px}
+.info .body ul,.info .body ol{padding-left:18px;margin:6px 0}
+.info .body li{margin:3px 0}
+.warnbox{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);color:var(--ink);border-radius:var(--radius);padding:12px 16px;font-size:14.5px;margin:14px 0 0}
+.warnbox b{color:var(--warn)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding:18px 0 110px}
+@media (min-width:980px){.layout{grid-template-columns:minmax(0,1fr) 350px;padding-bottom:48px}}
+
+/* Overview grid */
+.overview{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.ov-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.ov-head h2{font-size:15px;margin:0}
+.ov-head .muted{font-size:13px;color:var(--ink-3)}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.ov-cell{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:5px 2px 4px;text-align:center;cursor:pointer;line-height:1.1}
+.ov-cell .c{font-size:11px;color:var(--ink-3);font-weight:600}
+.ov-cell .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:16px;margin-top:2px;color:var(--ink-3)}
+.ov-cell.done .v{color:var(--ink)}
+.ov-cell[data-s="P"].done{background:var(--p-soft);border-color:color-mix(in srgb,var(--p) 40%,transparent)}
+.ov-cell[data-s="N"].done{background:var(--n-soft);border-color:color-mix(in srgb,var(--n) 40%,transparent)}
+.ov-cell[data-s="G"].done{background:var(--g-soft);border-color:color-mix(in srgb,var(--g) 40%,transparent)}
+.ov-cell:hover{border-color:var(--line-2)}
+.ov-cell:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Sections */
+.section{margin-top:26px}
+.sec-head{display:flex;align-items:center;gap:12px;margin:0 0 10px;flex-wrap:wrap}
+.sec-tag{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;padding:3px 9px;border-radius:999px;color:#fff}
+.sec-head h2{margin:0;font-size:20px;font-weight:700}
+.sec-head .range{color:var(--ink-3);font-size:13.5px}
+.sec-head .sub{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px}
+[data-s="P"] .sec-tag{background:var(--p)} [data-s="N"] .sec-tag{background:var(--n)} [data-s="G"] .sec-tag{background:var(--g)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sec-tag{color:#141816}}
+:root[data-theme="dark"] .sec-tag{color:#141816}
+
+/* Item card */
+.item{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;scroll-margin-top:14px}
+.item.open{box-shadow:var(--shadow);border-color:var(--line-2)}
+.item-h{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;background:none;border:0;text-align:left;cursor:pointer}
+.item-h:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.code{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;min-width:42px;text-align:center;padding:4px 0;border-radius:7px}
+.item[data-s="P"] .code{background:var(--p-soft);color:var(--p)}
+.item[data-s="N"] .code{background:var(--n-soft);color:var(--n)}
+.item[data-s="G"] .code{background:var(--g-soft);color:var(--g)}
+.iname{flex:1;min-width:0;font-weight:600;font-size:15.5px;line-height:1.3}
+.iname small{display:block;font-weight:400;color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.sup{display:inline-block;font-size:11px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.pill{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px;min-width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1.5px dashed var(--line-2);color:var(--ink-3)}
+.item.scored .pill{border:0;background:var(--accent);color:var(--accent-ink)}
+.chev{flex:none;width:18px;height:18px;color:var(--ink-3);transition:transform .18s}
+.item.open .chev{transform:rotate(180deg)}
+.item-b{display:none;padding:0 14px 14px}
+.item.open .item-b{display:block}
+.def{margin:0 0 6px;color:var(--ink)}
+.basis{margin:0 0 12px;font-size:13.5px;color:var(--ink-2);padding-left:10px;border-left:3px solid var(--line-2)}
+.basis b{color:var(--ink-2);font-weight:600}
+.note{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:8px 10px;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--line-2)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.opt .n{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:17px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+.opt .t{font-size:14.5px;color:var(--ink-2)}
+.opt .t b{display:block;color:var(--ink);font-weight:600;font-size:14px;margin-bottom:1px}
+.opt[aria-checked="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.opt[aria-checked="true"] .n{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opt[aria-checked="true"] .t{color:var(--ink)}
+.item-f{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+.lnk{background:none;border:0;color:var(--accent);cursor:pointer;font-size:14px;padding:4px 0;font-weight:500}
+.lnk:disabled{color:var(--ink-3);cursor:default}
+
+/* Summary */
+aside.summary{align-self:start}
+@media (min-width:980px){aside.summary{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow:auto}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.card h3{margin:0 0 10px;font-size:15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--surface-2)}
+.stat .l{font-size:12px;color:var(--ink-3);font-weight:600;display:flex;justify-content:space-between}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:24px;line-height:1.15;margin-top:2px}
+.stat .bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.stat .bar i{display:block;height:100%;width:0;border-radius:2px;transition:width .2s}
+.stat.P .bar i{background:var(--p)} .stat.N .bar i{background:var(--n)} .stat.G .bar i{background:var(--g)} .stat.T .bar i{background:var(--accent)}
+.stat.T{grid-column:1/-1;background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.stat.T .v{font-size:30px}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0;border-top:1px dashed var(--line)}
+.kv:first-of-type{border-top:0}
+.kv span:last-child{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.progress{font-size:13px;color:var(--ink-3);margin-top:10px}
+.verdict{border-radius:10px;padding:10px 12px;font-size:14px;margin-top:8px}
+.verdict b{display:block;font-size:15px;margin-bottom:2px}
+.v-ok{background:var(--ok-soft);color:var(--ink)} .v-ok b{color:var(--ok)}
+.v-bad{background:var(--bad-soft);color:var(--ink)} .v-bad b{color:var(--bad)}
+.v-warn{background:var(--warn-soft);color:var(--ink)} .v-warn b{color:var(--warn)}
+.v-neu{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--line-2)}
+.rem-list{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px}
+.rem-list span{font-family:"IBM Plex Mono",monospace;font-size:12px;text-align:center;padding:5px 0;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-3)}
+.rem-list span.y{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.rem-list span.x{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.field{display:flex;gap:8px;align-items:center;margin-top:6px}
+.field input{width:100%;font:inherit;font-family:"IBM Plex Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink)}
+.small{font-size:12.5px;color:var(--ink-3);margin:6px 0 0}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{border:1px solid var(--line-2);background:var(--surface);border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.full{grid-column:1/-1}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Mobile bar */
+.mbar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.08);padding:9px 16px calc(9px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;z-index:20}
+.mbar .m{flex:1;display:flex;gap:12px;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;overflow:hidden}
+.mbar .m span{white-space:nowrap}
+.mbar .m em{font-style:normal;color:var(--ink-3);font-weight:500;margin-right:3px}
+.mbar .btn{padding:8px 12px}
+@media (min-width:980px){.mbar{display:none}}
+
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--ink-3);font-size:13px;background:var(--surface)}
+footer p{margin:4px 0;max-width:900px}
+
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.toast.show{opacity:1}
+
+/* Print */
+#printSheet{display:none}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  header.top,.layout,.mbar,footer,.info,.warnbox,.toast{display:none!important}
+  #printSheet{display:block;padding:0}
+  #printSheet h2{font-size:16pt;margin:0 0 4pt}
+  #printSheet table{width:100%;border-collapse:collapse;margin-top:8pt;font-size:10pt}
+  #printSheet th,#printSheet td{border:1px solid #999;padding:3pt 5pt;text-align:left}
+  #printSheet td.s{text-align:center;font-weight:700;width:36pt}
+  .pcols{columns:2;column-gap:16pt}
+  .pcols table{break-inside:avoid}
+}
+
+/* ---- shared extras for scale pages ---- */
+:root{
+  --c1:#b4532a; --c1s:#f6e6dd; --c2:#3d5a8a; --c2s:#e2e9f4; --c3:#7a6a1e; --c3s:#f1ecd6;
+  --c4:#6b4a8a; --c4s:#ece4f4; --c5:#2f7a66; --c5s:#dff0ea; --c6:#8a3d5e; --c6s:#f4e1ea;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+    --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+  }
+}
+:root[data-theme="dark"]{
+  --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+  --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+}
+.back{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:500;text-decoration:none;margin-bottom:12px}
+.back:hover{text-decoration:underline}
+.site-nav{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:16px 0}
+.site-nav a{flex:1;text-align:center;padding:10px 8px;font-size:12.5px;font-weight:600;color:var(--ink);text-decoration:none;border-right:1px solid var(--line);white-space:nowrap}
+.site-nav a:last-child{border-right:none}
+.site-nav a:hover{background:var(--surface-2)}
+.site-nav a.active{background:var(--accent);color:var(--accent-ink)}
+.item .code.k{background:var(--ks);color:var(--k)}
+.ov-cell.k.done{background:var(--ks);border-color:color-mix(in srgb,var(--k) 40%,transparent)}
+.sec-tag.k{background:var(--k)}
+.qs{margin:0 0 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.qs summary{cursor:pointer;padding:9px 12px;font-weight:600;font-size:14px;color:var(--accent);list-style:none}
+.qs summary::-webkit-details-marker{display:none}
+.qs summary::before{content:"▸ ";}
+.qs[open] summary::before{content:"▾ ";}
+.qs .qb{padding:0 12px 10px;font-size:14.5px;color:var(--ink-2)}
+.qs .qb p{margin:6px 0}
+.qs .qb b{color:var(--ink);font-weight:600}
+.alert{border-radius:var(--radius);padding:12px 14px;font-size:14.5px;margin-top:10px;background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent)}
+.alert b{color:var(--bad);display:block;margin-bottom:3px;font-size:15px}
+.alert a{font-weight:600}
+.alert ul{margin:6px 0 0;padding-left:18px}
+.sub-list .kv span:first-child{color:var(--ink-2)}
+.dom{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.lvl-legend{font-size:12.5px;color:var(--ink-3);margin:4px 0 0}
+
+.step-h{display:flex;align-items:baseline;gap:10px;margin:26px 0 10px;flex-wrap:wrap}
+.step-h .num{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:2px 9px}
+.step-h h2{margin:0;font-size:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.row2 label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--ink-3);font-weight:500}
+select,input.f{font:inherit;font-size:15px;padding:9px 11px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink);min-width:0}
+.sheet{display:grid;grid-template-columns:44px repeat(5,minmax(0,1fr));gap:4px;align-items:center}
+.sheet .hd{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;text-align:center;color:var(--ink-2);padding:4px 0}
+.sheet .rn{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-3);text-align:center}
+.cell{position:relative}
+.cell input{width:100%;font:inherit;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:16px;text-align:center;padding:7px 0;border:1px solid var(--line-2);border-radius:7px;background:var(--surface-2);color:var(--ink)}
+.cell input:focus{outline:2px solid var(--accent);outline-offset:0}
+.show .cell.ok input{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 50%,transparent)}
+.show .cell.no input{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 50%,transparent)}
+.cell.fx::after{content:"";position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--warn)}
+.sheet .sum{font-family:"IBM Plex Mono",monospace;font-weight:600;text-align:center;font-size:15px;padding-top:4px;border-top:1px solid var(--line)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-2)}
+.timer{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:22px;min-width:76px}
+.keyt{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.keyt th,.keyt td{border:1px solid var(--line);padding:4px 2px;text-align:center;font-family:"IBM Plex Mono",monospace}
+.keyt td.d{background:var(--warn-soft);color:var(--warn);font-weight:600}
+.legend{font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warn);margin-right:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="ruhiyatga-doir-testlar.html" class="active">Ruhiyatga doir testlar</a>
+    <a href="fanga-doir-testlar.html">Fanga doir testlar</a>
+    <a href="xkt-10.html">XKT-10</a>
+    <a href="xkt-11.html">XKT-11</a>
+    <a href="tuzuvchilar.html">Tuzuvchilar</a>
+  </nav>
+</div>
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="shkalalar-uz.html">← Barcha shkalalar</a>
+    <div class="eyebrow">Psixodiagnostika · Bolalar psixiatriyasi · XKT-10 F70–F79</div>
+    <h1>Ravenning progressiv matritsalari</h1>
+    <p class="lead">Mantiqiy tafakkur va noverbal intellektni baholovchi test: 60 ta topshiriq, 5 ta seriya (A–E). Bu sahifa qog‘ozda o‘tkazilgan test javoblarini tekshiradi, seriyalar bo‘yicha ballarni chiqaradi va protokol jadvali asosida IQ ni hisoblaydi.</p>
+    <div class="meta-row">
+      <label>Tekshiriluvchi (kod yoki initsiallar)<input id="mPatient" autocomplete="off" placeholder="masalan, A.B.-024"></label>
+      <label>Tekshiruv sanasi<input id="mDate" type="date"></label>
+      <label>Tekshiruvchi<input id="mRater" autocomplete="off" placeholder="F.I.Sh."></label>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="warnbox"><b>Faqat mutaxassislar uchun.</b> Test standart stimul materiali (kitob yoki kartalar) bilan qog‘ozda o‘tkaziladi; sahifa faqat natijani hisoblaydi. Protokolga ko‘ra aqliy zaiflik tashxisi faqat IQ ga asoslanib qo‘yilmaydi: psixiatr klinik ma’lumotlar va adaptiv funksionallikni hisobga oladi. Intellektni tekshirish yiliga 1 martadan ko‘p o‘tkazilmaydi.</div>
+  <div class="info">
+    <details>
+      <summary>O‘tkazish tartibi</summary>
+      <div class="body"><ul>
+        <li>Vaqt qat’iy cheklangan: <b>20 daqiqa</b>. «Boshlang» buyrug‘igacha hech kim jadvallarni ochmaydi.</li>
+        <li>Ko‘rsatma: «Rasmda bitta figura yetishmaydi. Pastda 6–8 ta raqamlangan figura berilgan, ulardan biri kerakli figura. Rasmdagi figuralarni bog‘lovchi qonuniyatni toping va kerakli figura raqamini javoblar varag‘iga yozing». Bitta namunada ko‘rsatish mumkin.</li>
+        <li>Guruhda o‘tkazilganda tekshiriluvchilar bir-biridan ko‘chirmasligini nazorat qiling. 20 daqiqadan so‘ng: «Hamma jadvallarni yopsin!»</li>
+        <li>Seriyalar: A — tuzilmadagi bog‘liqlik; B — figuralar juftlari o‘rtasidagi o‘xshashlik; C — figuralarning progressiv o‘zgarishi; D — figuralarni qayta guruhlash; E — figuralarni elementlarga ajratish.</li>
+      </ul></div>
+    </details>
+    <details>
+      <summary>Hisoblash va talqin</summary>
+      <div class="body"><ul>
+        <li>Har bir to‘g‘ri javob 1 ball; jami 0–60.</li>
+        <li>IQ protokoldagi jadval bo‘yicha yoshga qarab aniqlanadi (8–13,5 yosh va 16–30 yosh). 31–60 yoshda 16–30 yosh IQ si yosh koeffitsienti bilan tuzatiladi.</li>
+        <li>Persentil protokolda jadval sifatida berilmagan; IQ dan normal taqsimot bo‘yicha (M = 100, SD = 15) taxminan hisoblanadi.</li>
+      </ul></div>
+    </details>
+    <details>
+      <summary>Protokol matnidagi tuzatishlar</summary>
+      <div class="body">
+        <p style="margin:0 0 6px"><b>Kalit:</b> 5 ta javob protokolning o‘zidagi stimul rasmlariga mos kelmaydi (pastdagi kalit jadvalida sariq bilan belgilangan). B12 = 8 bo‘lishi mumkin emas, chunki B seriyasida faqat 6 ta variant bor. Sahifada sukut bo‘yicha tuzatilgan kalit ishlatiladi, protokol kalitini ham tanlash mumkin.</p>
+        <p style="margin:0 0 6px"><b>IQ jadvali:</b> 20 ta katakda bosma xatosi bor. Ular ball oshgani sari IQ kamayishi, «200» kabi qiymatlar yoki «14!» kabi belgilar ko‘rinishida uchraydi. Bunday kataklar qo‘shni qiymatlar o‘rtachasi bilan almashtirildi. Tuzatilgan katak ishlatilsa, natijada protokoldagi asl qiymat ham ko‘rsatiladi. Jadvalda 18 va 50-qatorlar raqami ham xato yozilgan («13», «59»).</p>
+        <p style="margin:0"><b>Talqin jadvali:</b> protokoldagi Raven talqin jadvali eskirgan atamalarni ishlatadi va 70–80 ni «yengil aqli zaiflik» deydi. Bu protokolning diagnostika bo‘limi va Veksler jadvaliga zid: ularda IQ &lt; 70 aqliy zaiflik, 70–79 chegaraviy daraja deb berilgan. Shuning uchun asosiy talqin XKT-10 va Veksler jadvali bo‘yicha beriladi, Raven jadvalidagi matn esa qo‘shimcha ko‘rsatiladi.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="layout">
+    <main>
+      <div class="step-h"><span class="num">1</span><h2>Yosh guruhi va kalit</h2></div>
+      <div class="panel">
+        <div class="row2">
+          <label>Yosh guruhi (IQ jadvali ustuni)
+            <select id="age">
+              <option value="">— tanlang —</option>
+              <option value="0">8 yosh</option><option value="1">8,5 yosh</option><option value="2">9 yosh</option><option value="3">9,5 yosh</option>
+              <option value="4">10 yosh</option><option value="5">10,5 yosh</option><option value="6">11 yosh</option><option value="7">11,5 yosh</option>
+              <option value="8">12 yosh</option><option value="9">12,5 yosh</option><option value="10">13 yosh</option><option value="11">13,5 yosh</option>
+              <option value="g">14–15 yosh (jadvalda yo‘q)</option>
+              <option value="12">16–30 yosh</option>
+              <option value="a35">31–35 yosh</option><option value="a40">36–40 yosh</option><option value="a45">41–45 yosh</option>
+              <option value="a50">46–50 yosh</option><option value="a55">51–55 yosh</option><option value="a60">56–60 yosh</option>
+            </select>
+          </label>
+          <label>Javoblar kaliti
+            <select id="keyMode"><option value="fix">Tuzatilgan kalit (tavsiya)</option><option value="prot">Protokoldagi kalit</option></select>
+          </label>
+        </div>
+        <p class="small">Yoshni eng yaqin ustunga yaxlitlang. 31–60 yoshda protokoldagi koeffitsient (35 yosh — 97%, 40 — 93%, 45 — 88%, 50 — 82%, 55 — 76%, 60 — 70%) bilan IQ = IQ(16–30) × 100 / % formulasi qo‘llanadi.</p>
+      </div>
+
+      <div class="step-h"><span class="num">2</span><h2>Javoblar varag‘i</h2></div>
+      <div class="panel">
+        <div class="tools">
+          <button class="btn" id="tBtn" type="button">20 daqiqa taymer</button>
+          <span class="timer" id="tOut">20:00</span>
+          <label class="chk"><input type="checkbox" id="showOk" checked> To‘g‘ri/noto‘g‘ri ko‘rsatish</label>
+          <button class="btn" id="clrSheet" type="button">Varaqni tozalash</button>
+        </div>
+        <div id="sheetWrap" class="show"><div class="sheet" id="sheet"></div></div>
+        <p class="small">Raqamni kiriting — kursor keyingi katakka o‘tadi (ustun bo‘yicha A1→A12→B1…). A va B seriyalarida variantlar 1–6, C–E da 1–8.</p>
+        <div class="row2" style="margin-top:10px">
+          <label>Yoki to‘g‘ri javoblar sonini qo‘lda kiriting (0–60)<input class="f" id="manual" type="number" min="0" max="60" inputmode="numeric" placeholder="javoblar varag‘i o‘rniga"></label>
+        </div>
+      </div>
+
+      <div class="step-h"><span class="num">3</span><h2>Kalit</h2></div>
+      <div class="panel">
+        <table class="keyt" id="keyt"></table>
+        <p class="legend"><i></i>Protokol kaliti protokoldagi stimul rasmlariga mos kelmaydigan javoblar (yuqorida tuzatilgan, katakda protokol qiymati qavsda).</p>
+      </div>
+    </main>
+
+    <aside class="summary" id="summary">
+      <div class="card">
+        <h3>Natija</h3>
+        <div class="stats">
+          <div class="stat T"><div class="l"><span>Jami to‘g‘ri javob</span><span>0–60</span></div><div class="v" id="sRaw">—</div><div class="bar"><i id="bRaw"></i></div></div>
+          <div class="stat P"><div class="l"><span>IQ</span><span>yoshga ko‘ra</span></div><div class="v" id="sIQ">—</div></div>
+          <div class="stat N"><div class="l"><span>Persentil</span><span>taxminiy</span></div><div class="v" id="sPct">—</div></div>
+        </div>
+        <div class="sub-list" style="margin-top:10px" id="serList"></div>
+        <div id="verd"></div>
+      </div>
+      <div class="card"><div class="btns">
+        <button class="btn primary" id="btnCopy">Natijani nusxalash</button>
+        <button class="btn" id="btnPrint">Chop etish</button>
+        <button class="btn full" id="btnReset">Yangi tekshiriluvchi</button>
+      </div></div>
+    </aside>
+  </div>
+</div>
+
+<div class="mbar"><div class="m"><span><em>Ball</em><b id="mRaw">—</b></span><span><em>IQ</em><b id="mIQ">—</b></span></div><button class="btn primary" id="btnToSum">Natija</button></div>
+
+<footer><div class="wrap">
+  <p><b>Manba:</b> O‘zR SSV. Bolalar va o‘smirlarda aqliy zaiflikni olib borish bo‘yicha milliy klinik protokol. Toshkent, 2022 — ilova «Прогрессивные матрицы Равена».</p>
+  <p><b>Asl test:</b> Raven J.C. Standard Progressive Matrices (1938; keyingi nashrlar). Stimul materiali mualliflik huquqi bilan himoyalangan va test xavfsizligi uchun ochiq saytga joylashtirilmaydi.</p>
+  <p><b>XKT-10 bo‘yicha IQ oraliqlari:</b> F70 yengil — 50–69; F71 o‘rtacha — 35–49; F72 og‘ir — 20–34; F73 chuqur — 20 dan past.</p>
+</div></footer>
+<div id="printSheet"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+var NORM={"ages": ["8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "12.5", "13", "13.5", "16-30"], "N": [[73, 68, 65, 59, 57, 53, 53, 50, 48, 46, 46, 46, null], [74, 70, 67, 61, 59, 56, 54, 51, 49, 49, 48, 47, null], [76, 72, 68, 62, 60, 57, 55, 53, 51, 50, 49, 49, null], [77, 73, 70, 64, 61, 59, 57, 54, 52, 51, 50, 50, null], [79, 75, 71, 65, 63, 60, 58, 56, 53, 52, 52, 51, null], [81, 76, 73, 67, 64, 61, 59, 57, 55, 54, 53, 52, null], [82, 78, 74, 68, 66, 63, 61, 58, 56, 55, 54, 54, null], [84, 79, 76, 70, 67, 64, 62, 60, 57, 57, 55, 55, null], [85, 81, 77, 71, 69, 66, 64, 61, 59, 58, 57, 56, null], [87, 83, 79, 73, 70, 67, 65, 62, 60, 59, 59, 57, 55], [89, 84, 80, 74, 72, 69, 66, 64, 61, 61, 60, 59, 57], [90, 86, 82, 76, 73, 70, 68, 65, 64, 62, 60, 60, 58], [92, 87, 83, 77, 75, 71, 69, 67, 64, 63, 62, 61, 59], [93, 89, 85, 79, 77, 71, 69, 68, 65, 65, 63, 62, 61], [95, 90, 86, 80, 78, 74, 72, 69, 67, 66, 64, 64, 62], [97, 92, 88, 82, 79, 76, 73, 72, 68, 67, 66, 65, 65], [98, 95, 89, 83, 81, 77, 75, 72, 69, 69, 67, 66, 65], [100, 95, 91, 85, 82, 79, 76, 74, 71, 70, 68, 67, 66], [101, 97, 92, 86, 84, 80, 78, 75, 72, 71, 69, 69, 67], [103, 98, 94, 88, 85, 81, 79, 76, 73, 72, 71, 70, 69], [104, 100, 95, 89, 87, 83, 80, 78, 75, 74, 72, 71, 70], [105, 101, 97, 91, 88, 84, 82, 79, 76, 75, 73, 72, 71], [107, 103, 98, 92, 90, 86, 83, 81, 77, 76, 74, 74, 72], [108, 104, 100, 94, 91, 87, 85, 82, 79, 78, 76, 75, 74], [109, 106, 101, 95, 93, 89, 86, 83, 80, 79, 77, 76, 75], [110, 107, 103, 97, 94, 90, 87, 85, 81, 80, 78, 77, 76], [112, 108, 104, 98, 96, 91, 89, 86, 83, 82, 80, 79, 78], [113, 110, 106, 100, 97, 93, 90, 88, 83, 83, 81, 80, 79], [114, 111, 107, 102, 99, 94, 92, 89, 85, 84, 82, 81, 80], [116, 113, 109, 103, 100, 96, 93, 90, 87, 86, 83, 82, 82], [117, 114, 110, 105, 102, 97, 94, 92, 88, 86, 85, 84, 83], [118, 115, 112, 106, 103, 99, 96, 94, 90, 86, 86, 85, 84], [120, 117, 113, 108, 104, 100, 97, 95, 91, 90, 87, 86, 86], [121, 118, 115, 110, 105, 102, 99, 96, 92, 91, 88, 87, 87], [122, 120, 116, 111, 107, 103, 100, 97, 93, 92, 90, 89, 89], [123, 121, 118, 112, 109, 105, 102, 99, 95, 93, 91, 90, 90], [125, 122, 119, 114, 110, 107, 104, 100, 96, 95, 92, 91, 91], [126, 124, 121, 115, 112, 108, 105, 102, 97, 96, 94, 92, 92], [127, 125, 122, 117, 115, 110, 107, 104, 99, 97, 95, 94, 94], [129, 127, 124, 118, 115, 112, 109, 106, 100, 99, 96, 95, 95], [130, 128, 125, 120, 117, 113, 111, 108, 102, 100, 98, 96, 96], [131, 129, 127, 121, 118, 115, 112, 109, 104, 102, 99, 97, 97], [132, 131, 128, 123, 120, 117, 114, 111, 106, 104, 100, 99, 99], [134, 132, 130, 125, 121, 118, 116, 113, 108, 106, 102, 100, 100], [135, 134, 131, 126, 123, 120, 118, 115, 110, 109, 105, 102, 102], [136, 135, 133, 127, 125, 122, 120, 117, 112, 111, 107, 105, 104], [138, 136, 134, 129, 126, 123, 121, 119, 114, 113, 109, 107, 106], [139, 138, 136, 130, 128, 125, 123, 121, 116, 115, 110, 110, 108], [140, 139, 137, 132, 129, 127, 125, 123, 118, 117, 114, 112, 110], [142, 141, 139, 133, 131, 128, 127, 124, 120, 119, 116, 115, 112], [143, 142, 140, 135, 133, 130, 128, 127, 122, 121, 118, 117, 114], [144, 143, 142, 136, 134, 132, 130, 128, 124, 123, 121, 120, 116], [146, 144, 143, 138, 136, 133, 132, 130, 126, 126, 123, 122, 118], [147, 146, 145, 139, 137, 135, 134, 132, 128, 128, 125, 123, 120], [148, 148, 146, 141, 139, 137, 136, 134, 130, 130, 127, 127, 122], [149, 149, 148, 142, 142, 138, 137, 136, 132, 132, 130, 130, 124], [151, 150, 148, 144, 142, 140, 139, 138, 134, 134, 132, 132, 126], [152, 152, 151, 145, 144, 141, 141, 139, 136, 136, 134, 134, 128], [153, 153, 152, 147, 145, 145, 143, 141, 138, 138, 137, 137, 130], [155, 155, 154, 148, 147, 147, 144, 143, 140, 139, 139, 139, 130]], "corr": {"2_4": "56", "5_4": "60", "5_5": "58", "5_6": "55", "5_7": "53", "11_10": "61", "14_2": "79", "14_3": "75", "14_4": "73", "24_2": "200", "27_12": "75", "31_8": "85", "31_9": "85", "32_7": "96", "32_8": "93", "34_3": "113", "35_12": "83", "41_10": "91", "42_0": "133", "50_1": "14!"}};
+var SER=["A","B","C","D","E"];
+var KP={A:[4,5,1,2,6,3,6,2,1,3,4,2],B:[5,6,1,2,1,3,5,6,4,3,4,8],C:[5,3,2,7,8,4,5,1,7,1,6,2],D:[3,4,3,8,7,6,5,4,1,2,5,6],E:[7,6,8,2,1,5,1,3,6,2,4,5]};
+var KF=JSON.parse(JSON.stringify(KP)); KF.A[11]=5; KF.B[0]=2; KF.B[11]=5; KF.C[0]=8; KF.C[7]=7;
+var AGEPCT={a35:97,a40:93,a45:88,a50:82,a55:76,a60:70};
+var AGELAB={"0":"8 yosh","1":"8,5 yosh","2":"9 yosh","3":"9,5 yosh","4":"10 yosh","5":"10,5 yosh","6":"11 yosh","7":"11,5 yosh","8":"12 yosh","9":"12,5 yosh","10":"13 yosh","11":"13,5 yosh","12":"16–30 yosh",g:"14–15 yosh",a35:"31–35 yosh",a40:"36–40 yosh",a45:"41–45 yosh",a50:"46–50 yosh",a55:"51–55 yosh",a60:"56–60 yosh"};
+var KEY="raven_uz_draft_v1";
+function blank(){return {ans:{},age:"",keyMode:"fix",manual:"",showOk:true,meta:{patient:"",date:"",rater:""}};}
+var st=blank();
+function $(id){return document.getElementById(id);}
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&typeof d==="object"){var b=blank();for(var k in b){if(d[k]!==undefined)b[k]=d[k];}st=b;}}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+function key(){return st.keyMode==="prot"?KP:KF;}
+function maxOpt(s){return (s==="A"||s==="B")?6:8;}
+
+function build(){
+  var h='<div class="hd">№</div>';
+  SER.forEach(function(s){h+='<div class="hd">'+s+'</div>';});
+  for(var i=1;i<=12;i++){
+    h+='<div class="rn">'+i+'</div>';
+    SER.forEach(function(s){h+='<div class="cell" id="c-'+s+i+'"><input inputmode="numeric" maxlength="1" aria-label="'+s+i+'" data-k="'+s+i+'"></div>';});
+  }
+  h+='<div class="rn">Σ</div>';
+  SER.forEach(function(s){h+='<div class="sum" id="sum-'+s+'">—</div>';});
+  $("sheet").innerHTML=h;
+}
+function order(){var o=[];SER.forEach(function(s){for(var i=1;i<=12;i++)o.push(s+i);});return o;}
+var ORD=order();
+
+function scores(){
+  var K=key(),ser={},tot=0,n=0;
+  SER.forEach(function(s){ser[s]=0;for(var i=1;i<=12;i++){var a=st.ans[s+i];if(a){n++;if(+a===K[s][i-1]){ser[s]++;}}}tot+=ser[s];});
+  var man=st.manual!==""&&!isNaN(parseInt(st.manual,10));
+  return {ser:ser,raw:man?Math.max(0,Math.min(60,parseInt(st.manual,10))):tot,n:n,manual:man};
+}
+function iqFor(raw){
+  var a=st.age;if(a===""||raw<1)return null;
+  if(a==="g")return {err:"Protokol jadvalida 14–15 yosh uchun ustun yo‘q; IQ hisoblanmaydi. Xom ball va seriyalar bo‘yicha sifat tahlilidan foydalaning."};
+  var col,pct=null;
+  if(a.charAt(0)==="a"){col=12;pct=AGEPCT[a];}else col=+a;
+  var v=NORM.N[raw-1][col];
+  if(v===null||v===undefined)return {err:"16–30 yosh ustunida 1–9 ball uchun qiymat berilmagan."};
+  var c=NORM.corr[raw+"_"+col];
+  var iq=pct?Math.round(v*100/pct):v;
+  return {iq:iq,base:v,pct:pct,corr:c};
+}
+function phi(z){var t=1/(1+0.2316419*Math.abs(z)),d=0.3989423*Math.exp(-z*z/2),p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>0?1-p:p;}
+function cat(iq){
+  if(iq<20)return {k:"v-bad",h:"Chuqur darajadagi aqliy zaiflik diapazoni",x:"XKT-10 F73 (IQ < 20)"};
+  if(iq<35)return {k:"v-bad",h:"Og‘ir darajadagi aqliy zaiflik diapazoni",x:"XKT-10 F72 (IQ 20–34)"};
+  if(iq<50)return {k:"v-bad",h:"O‘rtacha darajadagi aqliy zaiflik diapazoni",x:"XKT-10 F71 (IQ 35–49)"};
+  if(iq<70)return {k:"v-bad",h:"Yengil darajadagi aqliy zaiflik diapazoni",x:"XKT-10 F70 (IQ 50–69)"};
+  if(iq<80)return {k:"v-warn",h:"Chegaraviy daraja",x:"IQ 70–79 (protokoldagi Veksler jadvali)"};
+  if(iq<90)return {k:"v-warn",h:"Pasaygan norma",x:"IQ 80–89"};
+  if(iq<110)return {k:"v-ok",h:"O‘rtacha daraja (norma)",x:"IQ 90–109"};
+  if(iq<120)return {k:"v-ok",h:"Yaxshi norma",x:"IQ 110–119"};
+  if(iq<130)return {k:"v-ok",h:"Yuqori intellekt",x:"IQ 120–129"};
+  return {k:"v-ok",h:"Juda yuqori intellekt",x:"IQ ≥ 130"};
+}
+function ravenText(iq){
+  if(iq>140)return "juda yuqori, ajoyib intellekt";
+  if(iq>120)return "yuqori, nodir intellekt";
+  if(iq>=110)return "nodir, yaxshi intellekt";
+  if(iq>=100)return "normal, o‘rtachadan yuqori intellekt";
+  if(iq>=90)return "o‘rtacha intellekt";
+  if(iq>=80)return "kuchsiz, o‘rtachadan past intellekt";
+  if(iq>=70)return "«yengil darajadagi aqli zaiflik» (eskirgan atama; XKT-10 bo‘yicha chegaraviy daraja)";
+  if(iq>=50)return "«debillik» (eskirgan atama; XKT-10 F70)";
+  if(iq>=20)return "«imbetsillik» (eskirgan atama; XKT-10 F71–F72)";
+  return "«idiotiya» (eskirgan atama; XKT-10 F73)";
+}
+function degree(p){
+  if(p>=95)return "I daraja — yosh guruhi uchun o‘ta yuqori rivojlangan intellekt";
+  if(p>=75)return "II daraja — yosh guruhi uchun nodir intellekt";
+  if(p>=25)return "III daraja — yosh guruhi uchun o‘rtacha intellekt";
+  if(p>5)return "IV daraja — o‘rtachadan past intellekt";
+  return "V daraja — defektli intellektual qobiliyat";
+}
+
+function render(){
+  var K=key();
+  $("age").value=st.age;$("keyMode").value=st.keyMode;$("showOk").checked=st.showOk;$("sheetWrap").classList.toggle("show",st.showOk);
+  if(document.activeElement!==$("manual"))$("manual").value=st.manual;
+  ORD.forEach(function(k){
+    var s=k.charAt(0),i=+k.slice(1),c=$("c-"+k),inp=c.querySelector("input"),a=st.ans[k];
+    if(document.activeElement!==inp)inp.value=a||"";
+    c.classList.toggle("ok",!!a&&+a===K[s][i-1]);c.classList.toggle("no",!!a&&+a!==K[s][i-1]);
+    c.classList.toggle("fx",KP[s][i-1]!==KF[s][i-1]);
+  });
+  var S=scores();
+  SER.forEach(function(s){$("sum-"+s).textContent=S.n?S.ser[s]:"—";});
+  /* kalit jadvali */
+  var kt='<tr><th></th>';for(var i=1;i<=12;i++)kt+='<th>'+i+'</th>';kt+='</tr>';
+  SER.forEach(function(s){kt+='<tr><th>'+s+'</th>';for(var i=0;i<12;i++){var d=KP[s][i]!==KF[s][i];kt+='<td'+(d?' class="d"':'')+'>'+K[s][i]+(d?' <small>('+(st.keyMode==="prot"?KF[s][i]:KP[s][i])+')</small>':'')+'</td>';}kt+='</tr>';});
+  $("keyt").innerHTML=kt;
+  /* natija */
+  var has=S.n>0||S.manual,raw=S.raw;
+  $("sRaw").textContent=has?raw:"—";$("mRaw").textContent=has?raw:"—";$("bRaw").style.width=has?(raw/60*100)+"%":"0";
+  var sl="";
+  if(S.manual)sl+='<div class="kv"><span>Ball qo‘lda kiritilgan</span><span>'+raw+'</span></div>';
+  else SER.forEach(function(s){sl+='<div class="kv"><span>'+s+' seriya</span><span>'+(S.n?S.ser[s]+" / 12":"—")+'</span></div>';});
+  if(!S.manual&&S.n&&S.n<60)sl+='<div class="kv"><span>Javob berilgan</span><span>'+S.n+" / 60"+'</span></div>';
+  $("serList").innerHTML=sl;
+  var R=has?iqFor(raw):null,v="";
+  if(!has){$("sIQ").textContent="—";$("sPct").textContent="—";$("mIQ").textContent="—";v='<div class="verdict v-neu">Javoblarni kiriting.</div>';}
+  else if(st.age===""){$("sIQ").textContent="—";$("sPct").textContent="—";$("mIQ").textContent="—";v='<div class="verdict v-neu">IQ uchun yosh guruhini tanlang.</div>';}
+  else if(!R){$("sIQ").textContent="—";$("sPct").textContent="—";$("mIQ").textContent="—";v='<div class="verdict v-neu">Ball 0 — IQ jadvalda yo‘q.</div>';}
+  else if(R.err){$("sIQ").textContent="—";$("sPct").textContent="—";$("mIQ").textContent="—";v='<div class="verdict v-warn"><b>IQ hisoblanmadi</b>'+esc(R.err)+'</div>';}
+  else{
+    var p=phi((R.iq-100)/15)*100,C=cat(R.iq);
+    $("sIQ").textContent=R.iq;$("mIQ").textContent=R.iq;$("sPct").textContent=(p<1?"<1":p>99?">99":Math.round(p));
+    v='<div class="verdict '+C.k+'"><b>'+C.h+'</b>'+C.x+'.</div>';
+    v+='<p class="small">Protokoldagi Raven jadvali bo‘yicha: '+esc(ravenText(R.iq))+'.<br>Persentil bo‘yicha: '+degree(p)+'.'+(R.pct?'<br>Yosh tuzatmasi: '+R.base+' × 100 / '+R.pct+'% = '+R.iq+'.':'')+(R.corr?'<br><span style="color:var(--warn)">Jadval katagi tuzatilgan: protokolda «'+esc(R.corr)+'» yozilgan.</span>':'')+'</p>';
+    if(R.iq<80)v+='<p class="small">Tashxis faqat IQ asosida qo‘yilmaydi: adaptiv funksionallik, klinik ko‘rik va Veksler testi natijasi bilan birga baholang.</p>';
+  }
+  if(st.keyMode==="prot")v+='<p class="small" style="color:var(--warn)">Protokol kaliti tanlangan: A12, B1, B12, C1, C8 javoblari stimul rasmlariga mos kelmaydi.</p>';
+  $("verd").innerHTML=v;
+  renderPrint(S,R);
+}
+function report(){
+  var S=scores(),R=iqFor(S.raw),L=["Ravenning progressiv matritsalari"];
+  if(st.meta.patient)L.push("Tekshiriluvchi: "+st.meta.patient);if(st.meta.date)L.push("Sana: "+st.meta.date);if(st.meta.rater)L.push("Tekshiruvchi: "+st.meta.rater);
+  if(st.age!=="")L.push("Yosh guruhi: "+AGELAB[st.age]);
+  L.push("Kalit: "+(st.keyMode==="prot"?"protokoldagi":"tuzatilgan"),"");
+  if(!S.manual)L.push("Seriyalar: "+SER.map(function(s){return s+"="+S.ser[s];}).join(", "));
+  L.push("Jami to‘g‘ri javob: "+S.raw+" / 60");
+  if(R&&!R.err){var p=phi((R.iq-100)/15)*100;L.push("IQ: "+R.iq+" — "+cat(R.iq).h+" ("+cat(R.iq).x+")","Taxminiy persentil: "+Math.round(p)+" — "+degree(p));}
+  else if(R&&R.err)L.push("IQ: hisoblanmadi — "+R.err);
+  return L.join("\n");
+}
+function renderPrint(S,R){
+  var K=key(),h='<h2>Ravenning progressiv matritsalari</h2><div>Tekshiriluvchi: <b>'+esc(st.meta.patient||"________")+'</b> &nbsp; Sana: <b>'+esc(st.meta.date||"________")+'</b> &nbsp; Tekshiruvchi: <b>'+esc(st.meta.rater||"________")+'</b> &nbsp; Yosh: <b>'+(st.age!==""?AGELAB[st.age]:"____")+'</b></div>';
+  h+='<table><tr><th>№</th>';SER.forEach(function(s){h+='<th>'+s+'</th>';});h+='</tr>';
+  for(var i=1;i<=12;i++){h+='<tr><td>'+i+'</td>';SER.forEach(function(s){var a=st.ans[s+i];h+='<td class="s">'+(a?a+(+a===K[s][i-1]?" ✓":" ✗"):"")+'</td>';});h+='</tr>';}
+  h+='<tr><td>Σ</td>';SER.forEach(function(s){h+='<td class="s">'+(S.manual?"":S.ser[s])+'</td>';});h+='</tr></table>';
+  h+='<table><tr><th>Jami (0–60)</th><th>IQ</th><th>Talqin</th></tr><tr><td class="s">'+S.raw+'</td><td class="s">'+(R&&!R.err?R.iq:"")+'</td><td>'+(R&&!R.err?cat(R.iq).h+" ("+cat(R.iq).x+")":"")+'</td></tr></table><p style="font-size:9pt;margin-top:8pt">Manba: O‘zR SSV Bolalar va o‘smirlarda aqliy zaiflik bo‘yicha milliy klinik protokoli (2022).</p>';
+  $("printSheet").innerHTML=h;
+}
+function toast(t){var e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){e.classList.remove("show");},1800);}
+
+var tEnd=null,tInt=null;
+function tick(){var left=Math.max(0,Math.round((tEnd-Date.now())/1000));$("tOut").textContent=String(Math.floor(left/60)).padStart(2,"0")+":"+String(left%60).padStart(2,"0");if(left===0){clearInterval(tInt);tInt=null;$("tBtn").textContent="20 daqiqa taymer";toast("Vaqt tugadi — «Hamma jadvallarni yopsin!»");}}
+
+function bind(){
+  $("sheet").addEventListener("input",function(e){
+    var t=e.target;if(!t.dataset.k)return;
+    var k=t.dataset.k,s=k.charAt(0),v=t.value.replace(/[^0-9]/g,"").slice(-1);
+    if(v!==""&&(+v<1||+v>maxOpt(s))){t.value="";toast(s+" seriyasida variantlar 1–"+maxOpt(s));return;}
+    t.value=v;if(v)st.ans[k]=+v;else delete st.ans[k];
+    if(st.manual!==""){st.manual="";}
+    save();render();
+    if(v){var i=ORD.indexOf(k);if(i<ORD.length-1){var n=document.querySelector('[data-k="'+ORD[i+1]+'"]');n.focus();n.select();}}
+  });
+  $("sheet").addEventListener("keydown",function(e){
+    var t=e.target;if(!t.dataset.k)return;var i=ORD.indexOf(t.dataset.k),j=null;
+    if(e.key==="ArrowDown")j=i+1;else if(e.key==="ArrowUp")j=i-1;else if(e.key==="ArrowRight")j=i+12;else if(e.key==="ArrowLeft")j=i-12;
+    else if(e.key==="Backspace"&&!t.value)j=i-1;
+    if(j!==null&&j>=0&&j<60){e.preventDefault();var n=document.querySelector('[data-k="'+ORD[j]+'"]');n.focus();n.select();}
+  });
+  $("age").addEventListener("change",function(){st.age=this.value;save();render();});
+  $("keyMode").addEventListener("change",function(){st.keyMode=this.value;save();render();});
+  $("showOk").addEventListener("change",function(){st.showOk=this.checked;save();render();});
+  $("manual").addEventListener("input",function(){st.manual=this.value.trim();save();render();});
+  $("clrSheet").addEventListener("click",function(){if(!confirm("Javoblar varag‘i tozalansinmi?"))return;st.ans={};save();render();});
+  $("tBtn").addEventListener("click",function(){
+    if(tInt){clearInterval(tInt);tInt=null;this.textContent="20 daqiqa taymer";$("tOut").textContent="20:00";return;}
+    tEnd=Date.now()+20*60*1000;tInt=setInterval(tick,500);tick();this.textContent="To‘xtatish";
+  });
+  [["mPatient","patient"],["mDate","date"],["mRater","rater"]].forEach(function(p){var el=$(p[0]);el.value=st.meta[p[1]]||"";el.addEventListener("input",function(){st.meta[p[1]]=el.value;save();render();});});
+  $("btnCopy").addEventListener("click",function(){
+    var txt=report();
+    function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Nusxalandi");}catch(err){toast("Nusxalab bo‘lmadi");}document.body.removeChild(ta);}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(function(){toast("Nusxalandi");},fb);else fb();
+  });
+  $("btnPrint").addEventListener("click",function(){render();window.print();});
+  $("btnReset").addEventListener("click",function(){if(!confirm("Barcha ma’lumotlar o‘chiriladi. Davom etasizmi?"))return;var km=st.keyMode;st=blank();st.keyMode=km;save();["mPatient","mDate","mRater"].forEach(function(id){$(id).value="";});document.querySelectorAll("#sheet input").forEach(function(i){i.value="";});render();window.scrollTo({top:0,behavior:"smooth"});});
+  $("btnToSum").addEventListener("click",function(){$("summary").scrollIntoView({behavior:"smooth"});});
+}
+load();build();bind();render();
+})();
+</script>
+</body>
+</html>

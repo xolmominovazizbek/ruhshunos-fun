@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shizofreniya klinik shkalalari — Ruhshunos</title>
+<title>Klinik baholash shkalalari — Ruhshunos</title>
 <meta name="description" content="O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022) ilovalaridagi 5 ta klinik shkala: PANSS, BNSS, CDSS, PSP, C-SSRS — o‘zbek tilida, avtomatik hisoblash bilan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,13 +39,6 @@ body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "IBM Plex
 a{color:var(--accent)}
 button{font:inherit;color:inherit}
 .wrap{max-width:1200px;margin:0 auto;padding:0 16px}
-
-/* Ruhshunos sayt navigatsiyasi — shu sahifaning o'z rang tokenlariga moslangan */
-.site-nav{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:16px 0}
-.site-nav a{flex:1;text-align:center;padding:10px 8px;font-size:12.5px;font-weight:600;color:var(--ink);text-decoration:none;border-right:1px solid var(--line);white-space:nowrap}
-.site-nav a:last-child{border-right:none}
-.site-nav a:hover{background:var(--surface-2)}
-.site-nav a.active{background:var(--accent);color:var(--accent-ink)}
 
 /* Header */
 header.top{padding:28px 0 18px;border-bottom:1px solid var(--line);background:var(--surface)}
@@ -254,6 +247,13 @@ footer p{margin:4px 0;max-width:900px}
 .flow h2{font-size:16px;margin:0 0 8px}
 .flow ol{margin:0;padding-left:20px;color:var(--ink-2);font-size:14.5px}
 .flow li{margin:4px 0}
+.grp{font-size:22px;margin:30px 0 0;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.grp span{font-size:13.5px;font-weight:500;color:var(--ink-3)}
+.site-nav{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:16px 0}
+.site-nav a{flex:1;text-align:center;padding:10px 8px;font-size:12.5px;font-weight:600;color:var(--ink);text-decoration:none;border-right:1px solid var(--line);white-space:nowrap}
+.site-nav a:last-child{border-right:none}
+.site-nav a:hover{background:var(--surface-2)}
+.site-nav a.active{background:var(--accent);color:var(--accent-ink)}
 </style>
 </head>
 <body>
@@ -269,12 +269,13 @@ footer p{margin:4px 0;max-width:900px}
 </div>
 <header class="top">
   <div class="wrap">
-    <div class="eyebrow">Ruhshunos · Klinik shkalalar · XKT-10 F20</div>
-    <h1>Shizofreniya: klinik baholash shkalalari</h1>
-    <p class="lead">O‘zR SSV «Shizofreniya bilan og‘rigan bemorlarni olib borish bo‘yicha milliy klinik protokoli» (2022) ilovalaridagi 5 ta shkala. Hammasi o‘zbek tilida, ballar avtomatik hisoblanadi. Ular psixiatrlar uchun mo‘ljallangan, o‘z-o‘zini baholash testi emas.</p>
+    <div class="eyebrow">Ruhshunos · Klinik shkalalar va psixodiagnostika</div>
+    <h1>Psixiatriyada klinik baholash shkalalari</h1>
+    <p class="lead">O‘zR SSV milliy klinik protokollari (2022) ilovalaridagi shkala va testlar o‘zbek tilida, ballar avtomatik hisoblanadi. Ular mutaxassislar uchun mo‘ljallangan, o‘z-o‘zini baholash testi emas.</p>
   </div>
 </header>
 <div class="wrap">
+  <h2 class="grp">Shizofreniya <span>XKT-10 F20 · milliy klinik protokol, 2022</span></h2>
   <div class="flow">
     <h2>Protokolda shkalalar qachon qo‘llanadi</h2>
     <ol>
@@ -317,9 +318,32 @@ footer p{margin:4px 0;max-width:900px}
       <div class="role"><b>Natija:</b> fikr turi 0–5, intensivlik 0–25, xavf darajasi</div>
     </a>
   </div>
+  <h2 class="grp">Bolalar va o‘smirlarda aqliy zaiflik <span>XKT-10 F70–F79 · milliy klinik protokol, 2022</span></h2>
+  <div class="flow">
+    <h2>Protokol talablari</h2>
+    <ol>
+      <li>Intellektni tekshirish yiliga 1 martadan ko‘p o‘tkazilmaydi.</li>
+      <li>Diagnostika Veksler testi (bolalar varianti) va Raven testining sifat baholari hamda adaptiv funksionallik asosida olib boriladi.</li>
+      <li>Tashxisni faqat IQ raqami asosida qo‘yish xato — uni psixiatr klinik ma’lumotlar asosida qo‘yadi.</li>
+    </ol>
+  </div>
+  <div class="grid">
+    <a class="sc-card" href="wisc-uz.html" style="--k:var(--c3);--ks:var(--c3s)">
+      <div class="top"><span class="abbr">WISC</span><span class="meta">12 subtest · 5–16 yosh</span></div>
+      <h2>Veksler testi — bolalar varianti</h2>
+      <p>Subtestlar profili, kuchli va zaif tomonlar, verbal-noverbal farq va umumiy IQ talqini.</p>
+      <div class="role"><b>Natija:</b> IQ toifasi, XKT-10 F70–F73 diapazoni</div>
+    </a>
+    <a class="sc-card" href="raven-uz.html" style="--k:var(--c2);--ks:var(--c2s)">
+      <div class="top"><span class="abbr">RAVEN</span><span class="meta">60 topshiriq · 20 daq</span></div>
+      <h2>Ravenning progressiv matritsalari</h2>
+      <p>Javoblar varag‘ini avtomatik tekshirish, A–E seriyalari, yoshga ko‘ra IQ va persentil; 20 daqiqalik taymer.</p>
+      <div class="role"><b>Natija:</b> 0–60 ball, IQ, I–V daraja</div>
+    </a>
+  </div>
 </div>
 <footer><div class="wrap">
-  <p><b>Manba:</b> O‘zbekiston Respublikasi Sog‘liqni saqlash vazirligi. Shizofreniya bilan og‘rigan bemorlarni olib borish bo‘yicha milliy klinik protokol. Toshkent, 2022.</p>
+  <p><b>Manbalar:</b> O‘zR SSV. Shizofreniya bilan og‘rigan bemorlarni olib borish bo‘yicha milliy klinik protokol. Toshkent, 2022; Bolalar va o‘smirlarda aqliy zaiflikni olib borish bo‘yicha milliy klinik protokol. Toshkent, 2022.</p>
   <p>Kiritilgan ma’lumotlar faqat foydalanuvchi brauzerida saqlanadi va serverga yuborilmaydi. Shkalalarning mualliflik huquqi asl mualliflarga tegishli (har bir sahifa pastida ko‘rsatilgan).</p>
 </div></footer>
 </body>

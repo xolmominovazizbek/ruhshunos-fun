@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalgari depressiya shkalasi — Ruhshunos</title>
+<meta name="description" content="CDSS — Shizofreniyada depressiyani baholovchi Kalgari shkalasi (9 band). O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022) asosida o‘zbek tilida.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>:root{
+  --bg:#f5f3ee; --surface:#ffffff; --surface-2:#faf8f4; --ink:#1d2421; --ink-2:#4b5551; --ink-3:#7a837f;
+  --line:#e2ddd3; --line-2:#cfc8bb; --accent:#1f5e57; --accent-ink:#ffffff; --accent-soft:#e3efec;
+  --p:#b4532a; --p-soft:#f6e6dd; --n:#3d5a8a; --n-soft:#e2e9f4; --g:#7a6a1e; --g-soft:#f1ecd6;
+  --ok:#2e7d4f; --ok-soft:#e1f1e7; --bad:#a83a32; --bad-soft:#f6e1df; --warn:#9a6a00; --warn-soft:#f7ecd2;
+  --shadow:0 1px 2px rgba(30,30,20,.05),0 4px 14px rgba(30,30,20,.05);
+  --radius:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+    --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+    --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+    --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141816; --surface:#1c211f; --surface-2:#202624; --ink:#e8ebe9; --ink-2:#b4bcb8; --ink-3:#88918d;
+  --line:#2c3330; --line-2:#3a423f; --accent:#5fb3a7; --accent-ink:#0f1513; --accent-soft:#1f3532;
+  --p:#e08a63; --p-soft:#3a2720; --n:#89a6d6; --n-soft:#222c3c; --g:#cdb85a; --g-soft:#332f1c;
+  --ok:#6cc391; --ok-soft:#1d3226; --bad:#e8857c; --bad-soft:#3a2321; --warn:#e2b450; --warn-soft:#352c17;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header.top{padding:28px 0 18px;border-bottom:1px solid var(--line);background:var(--surface)}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+h1{font-size:clamp(24px,4vw,34px);line-height:1.15;margin:6px 0 8px;font-weight:700;letter-spacing:-.01em}
+.lead{color:var(--ink-2);max-width:780px;margin:0}
+.meta-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:18px;max-width:780px}
+.meta-row label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink-3);font-weight:500}
+.meta-row input{font:inherit;font-size:15px;padding:9px 11px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink);min-width:0}
+.meta-row input:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Info */
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:20px 0 6px}
+.info details{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:0}
+.info summary{cursor:pointer;padding:13px 16px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px}
+.info summary::-webkit-details-marker{display:none}
+.info summary::after{content:"+";color:var(--ink-3);font-weight:500}
+.info details[open] summary::after{content:"−"}
+.info .body{padding:0 16px 14px;color:var(--ink-2);font-size:14.5px}
+.info .body ul,.info .body ol{padding-left:18px;margin:6px 0}
+.info .body li{margin:3px 0}
+.warnbox{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);color:var(--ink);border-radius:var(--radius);padding:12px 16px;font-size:14.5px;margin:14px 0 0}
+.warnbox b{color:var(--warn)}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding:18px 0 110px}
+@media (min-width:980px){.layout{grid-template-columns:minmax(0,1fr) 350px;padding-bottom:48px}}
+
+/* Overview grid */
+.overview{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.ov-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.ov-head h2{font-size:15px;margin:0}
+.ov-head .muted{font-size:13px;color:var(--ink-3)}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.ov-cell{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:5px 2px 4px;text-align:center;cursor:pointer;line-height:1.1}
+.ov-cell .c{font-size:11px;color:var(--ink-3);font-weight:600}
+.ov-cell .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:16px;margin-top:2px;color:var(--ink-3)}
+.ov-cell.done .v{color:var(--ink)}
+.ov-cell[data-s="P"].done{background:var(--p-soft);border-color:color-mix(in srgb,var(--p) 40%,transparent)}
+.ov-cell[data-s="N"].done{background:var(--n-soft);border-color:color-mix(in srgb,var(--n) 40%,transparent)}
+.ov-cell[data-s="G"].done{background:var(--g-soft);border-color:color-mix(in srgb,var(--g) 40%,transparent)}
+.ov-cell:hover{border-color:var(--line-2)}
+.ov-cell:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* Sections */
+.section{margin-top:26px}
+.sec-head{display:flex;align-items:center;gap:12px;margin:0 0 10px;flex-wrap:wrap}
+.sec-tag{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;padding:3px 9px;border-radius:999px;color:#fff}
+.sec-head h2{margin:0;font-size:20px;font-weight:700}
+.sec-head .range{color:var(--ink-3);font-size:13.5px}
+.sec-head .sub{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px}
+[data-s="P"] .sec-tag{background:var(--p)} [data-s="N"] .sec-tag{background:var(--n)} [data-s="G"] .sec-tag{background:var(--g)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sec-tag{color:#141816}}
+:root[data-theme="dark"] .sec-tag{color:#141816}
+
+/* Item card */
+.item{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;scroll-margin-top:14px}
+.item.open{box-shadow:var(--shadow);border-color:var(--line-2)}
+.item-h{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;background:none;border:0;text-align:left;cursor:pointer}
+.item-h:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.code{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:13px;min-width:42px;text-align:center;padding:4px 0;border-radius:7px}
+.item[data-s="P"] .code{background:var(--p-soft);color:var(--p)}
+.item[data-s="N"] .code{background:var(--n-soft);color:var(--n)}
+.item[data-s="G"] .code{background:var(--g-soft);color:var(--g)}
+.iname{flex:1;min-width:0;font-weight:600;font-size:15.5px;line-height:1.3}
+.iname small{display:block;font-weight:400;color:var(--ink-3);font-size:12.5px;margin-top:2px}
+.sup{display:inline-block;font-size:11px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+.pill{flex:none;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:15px;min-width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1.5px dashed var(--line-2);color:var(--ink-3)}
+.item.scored .pill{border:0;background:var(--accent);color:var(--accent-ink)}
+.chev{flex:none;width:18px;height:18px;color:var(--ink-3);transition:transform .18s}
+.item.open .chev{transform:rotate(180deg)}
+.item-b{display:none;padding:0 14px 14px}
+.item.open .item-b{display:block}
+.def{margin:0 0 6px;color:var(--ink)}
+.basis{margin:0 0 12px;font-size:13.5px;color:var(--ink-2);padding-left:10px;border-left:3px solid var(--line-2)}
+.basis b{color:var(--ink-2);font-weight:600}
+.note{font-size:13px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:8px 10px;margin:0 0 12px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;text-align:left;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--line-2)}
+.opt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.opt .n{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:17px;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line)}
+.opt .t{font-size:14.5px;color:var(--ink-2)}
+.opt .t b{display:block;color:var(--ink);font-weight:600;font-size:14px;margin-bottom:1px}
+.opt[aria-checked="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.opt[aria-checked="true"] .n{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.opt[aria-checked="true"] .t{color:var(--ink)}
+.item-f{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+.lnk{background:none;border:0;color:var(--accent);cursor:pointer;font-size:14px;padding:4px 0;font-weight:500}
+.lnk:disabled{color:var(--ink-3);cursor:default}
+
+/* Summary */
+aside.summary{align-self:start}
+@media (min-width:980px){aside.summary{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow:auto}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.card h3{margin:0 0 10px;font-size:15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:var(--surface-2)}
+.stat .l{font-size:12px;color:var(--ink-3);font-weight:600;display:flex;justify-content:space-between}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:24px;line-height:1.15;margin-top:2px}
+.stat .bar{height:4px;border-radius:2px;background:var(--line);margin-top:6px;overflow:hidden}
+.stat .bar i{display:block;height:100%;width:0;border-radius:2px;transition:width .2s}
+.stat.P .bar i{background:var(--p)} .stat.N .bar i{background:var(--n)} .stat.G .bar i{background:var(--g)} .stat.T .bar i{background:var(--accent)}
+.stat.T{grid-column:1/-1;background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
+.stat.T .v{font-size:30px}
+.kv{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0;border-top:1px dashed var(--line)}
+.kv:first-of-type{border-top:0}
+.kv span:last-child{font-family:"IBM Plex Mono",monospace;font-weight:600}
+.progress{font-size:13px;color:var(--ink-3);margin-top:10px}
+.verdict{border-radius:10px;padding:10px 12px;font-size:14px;margin-top:8px}
+.verdict b{display:block;font-size:15px;margin-bottom:2px}
+.v-ok{background:var(--ok-soft);color:var(--ink)} .v-ok b{color:var(--ok)}
+.v-bad{background:var(--bad-soft);color:var(--ink)} .v-bad b{color:var(--bad)}
+.v-warn{background:var(--warn-soft);color:var(--ink)} .v-warn b{color:var(--warn)}
+.v-neu{background:var(--surface-2);color:var(--ink-2);border:1px dashed var(--line-2)}
+.rem-list{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px}
+.rem-list span{font-family:"IBM Plex Mono",monospace;font-size:12px;text-align:center;padding:5px 0;border-radius:6px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-3)}
+.rem-list span.y{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.rem-list span.x{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.field{display:flex;gap:8px;align-items:center;margin-top:6px}
+.field input{width:100%;font:inherit;font-family:"IBM Plex Mono",monospace;font-size:16px;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface-2);color:var(--ink)}
+.small{font-size:12.5px;color:var(--ink-3);margin:6px 0 0}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{border:1px solid var(--line-2);background:var(--surface);border-radius:9px;padding:10px 12px;cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--ink-3)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.full{grid-column:1/-1}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Mobile bar */
+.mbar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(0,0,0,.08);padding:9px 16px calc(9px + env(safe-area-inset-bottom));display:flex;gap:10px;align-items:center;z-index:20}
+.mbar .m{flex:1;display:flex;gap:12px;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;overflow:hidden}
+.mbar .m span{white-space:nowrap}
+.mbar .m em{font-style:normal;color:var(--ink-3);font-weight:500;margin-right:3px}
+.mbar .btn{padding:8px 12px}
+@media (min-width:980px){.mbar{display:none}}
+
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--ink-3);font-size:13px;background:var(--surface)}
+footer p{margin:4px 0;max-width:900px}
+
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+.toast.show{opacity:1}
+
+/* Print */
+#printSheet{display:none}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  header.top,.layout,.mbar,footer,.info,.warnbox,.toast{display:none!important}
+  #printSheet{display:block;padding:0}
+  #printSheet h2{font-size:16pt;margin:0 0 4pt}
+  #printSheet table{width:100%;border-collapse:collapse;margin-top:8pt;font-size:10pt}
+  #printSheet th,#printSheet td{border:1px solid #999;padding:3pt 5pt;text-align:left}
+  #printSheet td.s{text-align:center;font-weight:700;width:36pt}
+  .pcols{columns:2;column-gap:16pt}
+  .pcols table{break-inside:avoid}
+}
+
+/* ---- shared extras for scale pages ---- */
+:root{
+  --c1:#b4532a; --c1s:#f6e6dd; --c2:#3d5a8a; --c2s:#e2e9f4; --c3:#7a6a1e; --c3s:#f1ecd6;
+  --c4:#6b4a8a; --c4s:#ece4f4; --c5:#2f7a66; --c5s:#dff0ea; --c6:#8a3d5e; --c6s:#f4e1ea;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+    --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+  }
+}
+:root[data-theme="dark"]{
+  --c1:#e08a63; --c1s:#3a2720; --c2:#89a6d6; --c2s:#222c3c; --c3:#cdb85a; --c3s:#332f1c;
+  --c4:#b49ad6; --c4s:#2c2438; --c5:#6cc3a9; --c5s:#1b322b; --c6:#d68aaa; --c6s:#382330;
+}
+.back{display:inline-flex;align-items:center;gap:4px;font-size:13.5px;font-weight:500;text-decoration:none;margin-bottom:12px}
+.back:hover{text-decoration:underline}
+.site-nav{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:16px 0}
+.site-nav a{flex:1;text-align:center;padding:10px 8px;font-size:12.5px;font-weight:600;color:var(--ink);text-decoration:none;border-right:1px solid var(--line);white-space:nowrap}
+.site-nav a:last-child{border-right:none}
+.site-nav a:hover{background:var(--surface-2)}
+.site-nav a.active{background:var(--accent);color:var(--accent-ink)}
+.item .code.k{background:var(--ks);color:var(--k)}
+.ov-cell.k.done{background:var(--ks);border-color:color-mix(in srgb,var(--k) 40%,transparent)}
+.sec-tag.k{background:var(--k)}
+.qs{margin:0 0 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2)}
+.qs summary{cursor:pointer;padding:9px 12px;font-weight:600;font-size:14px;color:var(--accent);list-style:none}
+.qs summary::-webkit-details-marker{display:none}
+.qs summary::before{content:"▸ ";}
+.qs[open] summary::before{content:"▾ ";}
+.qs .qb{padding:0 12px 10px;font-size:14.5px;color:var(--ink-2)}
+.qs .qb p{margin:6px 0}
+.qs .qb b{color:var(--ink);font-weight:600}
+.alert{border-radius:var(--radius);padding:12px 14px;font-size:14.5px;margin-top:10px;background:var(--bad-soft);border:1px solid color-mix(in srgb,var(--bad) 40%,transparent)}
+.alert b{color:var(--bad);display:block;margin-bottom:3px;font-size:15px}
+.alert a{font-weight:600}
+.alert ul{margin:6px 0 0;padding-left:18px}
+.sub-list .kv span:first-child{color:var(--ink-2)}
+.dom{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.lvl-legend{font-size:12.5px;color:var(--ink-3);margin:4px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="site-nav">
+    <a href="index.html">Home</a>
+    <a href="ruhiyatga-doir-testlar.html" class="active">Ruhiyatga doir testlar</a>
+    <a href="fanga-doir-testlar.html">Fanga doir testlar</a>
+    <a href="xkt-10.html">XKT-10</a>
+    <a href="xkt-11.html">XKT-11</a>
+    <a href="tuzuvchilar.html">Tuzuvchilar</a>
+  </nav>
+</div>
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="shkalalar-uz.html">← Barcha shkalalar</a>
+    <div class="eyebrow">Klinik shkala · Psixiatriya · XKT-10 F20</div>
+    <h1>CDSS — Shizofreniyada depressiyani baholovchi Kalgari shkalasi</h1>
+    <p class="lead">Shizofreniya bilan og‘rigan bemorlarda depressiyani negativ simptomlar va ekstrapiramidal nojo‘ya ta’sirlardan ajratib baholash uchun yaratilgan 9 bandli shkala. Har bir band 0–3 ballda baholanadi.</p>
+    <div class="meta-row">
+      <label>Bemor (kod yoki initsiallar)<input id="mPatient" autocomplete="off" placeholder="masalan, A.B.-024"></label>
+      <label>Baholash sanasi<input id="mDate" type="date"></label>
+      <label>Baholovchi shifokor<input id="mRater" autocomplete="off" placeholder="F.I.Sh."></label>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="warnbox"><b>Faqat mutaxassislar uchun.</b> Shkala klinik intervyu asosida shifokor tomonidan to‘ldiriladi. Kiritilgan ma’lumotlar faqat shu brauzerda saqlanadi.</div>
+  <div class="info">
+    <details>
+      <summary>Qanday baholanadi</summary>
+      <div class="body"><ul>
+        <li>Baholash davri — <b>so‘nggi 2 hafta</b> (agar bandda boshqacha ko‘rsatilmagan bo‘lsa).</li>
+        <li>Har bir bo‘limdagi birinchi savol yozilganidek beriladi; keyingi aniqlashtiruvchi savollar shifokor ixtiyorida.</li>
+        <li>9-band («Kuzatilgan depressiya») butun intervyu davomidagi kuzatuvga asoslanadi.</li>
+      </ul></div>
+    </details>
+    <details>
+      <summary>Talqin</summary>
+      <div class="body"><ul>
+        <li>Jami ball: 0–27.</li>
+        <li><b>≥ 6</b> — depressiya mavjud (protokol mezoni).</li>
+        <li><b>≥ 11</b> — og‘ir depressiya.</li>
+        <li>8-band (suitsid) ≥ 1 bo‘lsa, jami balldan qat’i nazar suitsid xavfini C-SSRS bilan batafsil baholang.</li>
+      </ul></div>
+    </details>
+  </div>
+
+  <div class="layout">
+    <main>
+      <div class="overview"><div class="ov-head"><h2>Barcha bandlar</h2><span class="muted" id="ovCount">0 / 9 baholandi</span></div><div class="ov-grid" id="ovGrid"></div></div>
+      <div id="sections"></div>
+    </main>
+    <aside class="summary" id="summary">
+      <div class="card">
+        <h3>Natija</h3>
+        <div class="stats">
+          <div class="stat T"><div class="l"><span>CDSS jami</span><span>0–27</span></div><div class="v" id="sT">—</div><div class="bar"><i id="bT"></i></div></div>
+        </div>
+        <div class="progress" id="prog"></div>
+        <div id="verd"></div>
+        <div id="suic"></div>
+      </div>
+      <div class="card"><div class="btns">
+        <button class="btn primary" id="btnCopy">Natijani nusxalash</button>
+        <button class="btn" id="btnPrint">Chop etish</button>
+        <button class="btn full" id="btnReset">Yangi bemor (tozalash)</button>
+      </div></div>
+    </aside>
+  </div>
+</div>
+
+<div class="mbar"><div class="m"><span><em>Jami</em><b id="mT">—</b></span><span id="mV" style="font-family:'IBM Plex Sans',sans-serif;font-weight:500;color:var(--ink-2)"></span></div><button class="btn primary" id="btnToSum">Natija</button></div>
+
+<footer><div class="wrap">
+  <p><b>Manba:</b> O‘zR SSV. Shizofreniya bilan og‘rigan bemorlarni olib borish bo‘yicha milliy klinik protokol. Toshkent, 2022 — ilova «Шкала депрессии Калгари у пациентов шизофрении».</p>
+  <p><b>Asl shkala:</b> Addington D., Addington J., Schissel B. A depression rating scale for schizophrenics. <i>Schizophr Res.</i> 1990;3(4):247–251. Mualliflik huquqi — D. Addington, Kalgari universiteti.</p>
+  <p><b>Izoh:</b> asl tadqiqotlarda depressiya chegarasi ko‘pincha «6 dan yuqori» (≥ 7) deb olinadi; bu sahifada protokolda ko‘rsatilgan «≥ 6» ishlatilgan.</p>
+</div></footer>
+<div id="printSheet"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>/* Itemli klinik shkalalar uchun umumiy dvigatel (Ruhshunos) */
+function ScaleEngine(cfg){
+  "use strict";
+  var state = {scores:{}, meta:{patient:"",date:"",rater:""}, extra:{}};
+  var openCode = null;
+  var ITEMS = cfg.items, GROUPS = cfg.groups;
+  function $(id){return document.getElementById(id);}
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  function has(c){return Object.prototype.hasOwnProperty.call(state.scores,c);}
+  function grp(g){for(var i=0;i<GROUPS.length;i++){if(GROUPS[i].g===g)return GROUPS[i];}return null;}
+  function kstyle(g){var k=grp(g).k;return 'style="--k:var(--c'+k+');--ks:var(--c'+k+'s)"';}
+
+  function load(){try{var r=localStorage.getItem(cfg.key);if(r){var d=JSON.parse(r);if(d&&typeof d==="object"){state.scores=d.scores||{};state.meta=d.meta||state.meta;state.extra=d.extra||{};}}}catch(e){}}
+  function save(){try{localStorage.setItem(cfg.key,JSON.stringify(state));}catch(e){}}
+
+  var api = {
+    state:state, $:$, esc:esc, has:has, items:ITEMS,
+    sum:function(codes){var s=0;codes.forEach(function(c){if(has(c))s+=state.scores[c];});return s;},
+    count:function(codes){var n=0;codes.forEach(function(c){if(has(c))n++;});return n;},
+    codes:function(g){return ITEMS.filter(function(i){return i.g===g;}).map(function(i){return i.c;});},
+    all:function(){return ITEMS.map(function(i){return i.c;});},
+    complete:function(){return ITEMS.every(function(i){return has(i.c);});},
+    save:save, render:null
+  };
+
+  function build(){
+    var ov="",html="";
+    ITEMS.forEach(function(it){
+      ov+='<button class="ov-cell k" '+kstyle(it.g)+' data-go="'+it.c+'" aria-label="'+esc(it.c+" "+it.n)+'"><div class="c">'+it.c+'</div><div class="v" id="ov-'+it.c+'">·</div></button>';
+    });
+    $("ovGrid").innerHTML=ov;
+    GROUPS.forEach(function(g){
+      var its=ITEMS.filter(function(i){return i.g===g.g;});
+      html+='<section class="section"><div class="sec-head"><span class="sec-tag k" '+kstyle(g.g)+'>'+esc(g.tag||g.g)+'</span><h2>'+esc(g.t)+'</h2><span class="range">'+esc(g.r||"")+'</span><span class="sub" id="sub-'+g.g+'">—</span></div>';
+      its.forEach(function(it){
+        html+='<article class="item" id="it-'+it.c+'">'+
+          '<button class="item-h" aria-expanded="false" aria-controls="b-'+it.c+'" data-toggle="'+it.c+'">'+
+          '<span class="code k" '+kstyle(it.g)+'>'+it.c+'</span>'+
+          '<span class="iname">'+esc(it.n)+(it.sm?'<small>'+esc(it.sm)+'</small>':'')+'</span>'+
+          '<span class="pill" id="pill-'+it.c+'">–</span>'+
+          '<svg class="chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg>'+
+          '</button><div class="item-b" id="b-'+it.c+'">'+
+          (it.note?'<p class="note">'+it.note+'</p>':'')+
+          (it.d?'<p class="def">'+esc(it.d)+'</p>':'')+
+          (it.q?'<details class="qs"'+(cfg.qOpen?' open':'')+'><summary>'+(it.qt||"Bemorga savollar")+'</summary><div class="qb">'+it.q+'</div></details>':'')+
+          (it.b?'<p class="basis"><b>Baholash asosi:</b> '+esc(it.b)+'</p>':'')+
+          '<div class="opts" role="radiogroup" aria-label="'+esc(it.c)+' bali">';
+        it.a.forEach(function(t,i){
+          var v=cfg.min+i;
+          html+='<button class="opt" role="radio" aria-checked="false" data-c="'+it.c+'" data-v="'+v+'"><span class="n">'+v+'</span><span class="t"><b>'+esc((it.labels||cfg.labels)[i])+'</b>'+esc(t)+'</span></button>';
+        });
+        html+='</div><div class="item-f"><button class="lnk" data-clear="'+it.c+'">Balni o‘chirish</button><button class="lnk" data-next="'+it.c+'">Keyingi band →</button></div></div></article>';
+      });
+      html+='</section>';
+    });
+    $("sections").innerHTML=html;
+  }
+
+  function setOpen(code,scroll){
+    if(openCode){var p=$("it-"+openCode);if(p){p.classList.remove("open");p.querySelector(".item-h").setAttribute("aria-expanded","false");}}
+    if(code===openCode&&!scroll){openCode=null;return;}
+    openCode=code;var el=$("it-"+code);if(!el)return;
+    el.classList.add("open");el.querySelector(".item-h").setAttribute("aria-expanded","true");
+    if(scroll)requestAnimationFrame(function(){el.scrollIntoView({behavior:"smooth",block:"start"});});
+  }
+  function idx(c){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].c===c)return i;return -1;}
+  function nextUnscored(after){var i=idx(after);for(var k=1;k<=ITEMS.length;k++){var it=ITEMS[(i+k)%ITEMS.length];if(!has(it.c))return it.c;}return null;}
+
+  function render(){
+    ITEMS.forEach(function(it){
+      var h=has(it.c),v=state.scores[it.c],el=$("it-"+it.c);
+      el.classList.toggle("scored",h);
+      $("pill-"+it.c).textContent=h?v:"–";
+      var o=$("ov-"+it.c);o.textContent=h?v:"·";o.parentNode.classList.toggle("done",h);
+      el.querySelectorAll(".opt").forEach(function(b){b.setAttribute("aria-checked",String(h&&+b.dataset.v===v));});
+    });
+    GROUPS.forEach(function(g){
+      var cs=api.codes(g.g),n=api.count(cs);
+      $("sub-"+g.g).textContent=n?api.sum(cs)+(n<cs.length?" ("+n+"/"+cs.length+")":""):"—";
+    });
+    var n=api.count(api.all());
+    $("ovCount").textContent=n+" / "+ITEMS.length+" baholandi";
+    cfg.update(api);
+    renderPrint();
+  }
+  api.render=render;
+
+  function report(){
+    var L=[cfg.title];
+    if(state.meta.patient)L.push("Bemor: "+state.meta.patient);
+    if(state.meta.date)L.push("Sana: "+state.meta.date);
+    if(state.meta.rater)L.push("Baholovchi: "+state.meta.rater);
+    L.push("");
+    GROUPS.forEach(function(g){
+      var cs=api.codes(g.g);
+      L.push(g.t+": "+(api.count(cs)?api.sum(cs):"—")+"  ["+cs.map(function(c){return c+"="+(has(c)?state.scores[c]:"–");}).join(", ")+"]");
+    });
+    return L.concat(cfg.report(api)).join("\n");
+  }
+  function renderPrint(){
+    var h='<h2>'+esc(cfg.title)+'</h2><div>Bemor: <b>'+esc(state.meta.patient||"________")+'</b> &nbsp; Sana: <b>'+esc(state.meta.date||"________")+'</b> &nbsp; Baholovchi: <b>'+esc(state.meta.rater||"________")+'</b></div>';
+    h+=cfg.printSummary(api);
+    h+='<table><tr><th>Band</th><th>Nomi</th><th>Ball</th></tr>';
+    ITEMS.forEach(function(i){h+='<tr><td style="width:40pt">'+i.c+'</td><td>'+esc(i.n)+'</td><td class="s">'+(has(i.c)?state.scores[i.c]:"")+'</td></tr>';});
+    h+='</table><p style="font-size:9pt;margin-top:8pt">'+esc(cfg.source)+'</p>';
+    $("printSheet").innerHTML=h;
+  }
+  function toast(t){var e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){e.classList.remove("show");},1800);}
+  api.toast=toast;
+
+  function bind(){
+    document.addEventListener("click",function(e){
+      var t=e.target.closest("[data-toggle],[data-go],.opt,[data-clear],[data-next]");
+      if(!t)return;
+      if(t.dataset.toggle){setOpen(t.dataset.toggle,false);return;}
+      if(t.dataset.go){if(openCode!==t.dataset.go)setOpen(t.dataset.go,true);else $("it-"+t.dataset.go).scrollIntoView({behavior:"smooth",block:"start"});return;}
+      if(t.classList.contains("opt")){
+        var c=t.dataset.c;state.scores[c]=+t.dataset.v;save();render();
+        var nx=nextUnscored(c);
+        setTimeout(function(){if(nx)setOpen(nx,true);else{setOpen(c,false);toast("Barcha bandlar baholandi");if(window.innerWidth<980)$("summary").scrollIntoView({behavior:"smooth"});}},160);
+        return;
+      }
+      if(t.dataset.clear){delete state.scores[t.dataset.clear];save();render();return;}
+      if(t.dataset.next){var i=idx(t.dataset.next);if(i<ITEMS.length-1)setOpen(ITEMS[i+1].c,true);else $("summary").scrollIntoView({behavior:"smooth"});return;}
+    });
+    document.addEventListener("keydown",function(e){
+      var o=e.target.closest&&e.target.closest(".opt");if(!o)return;
+      if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();var s=e.key==="ArrowDown"?o.nextElementSibling:o.previousElementSibling;if(s)s.focus();}
+    });
+    [["mPatient","patient"],["mDate","date"],["mRater","rater"]].forEach(function(p){
+      var el=$(p[0]);el.value=state.meta[p[1]]||"";
+      el.addEventListener("input",function(){state.meta[p[1]]=el.value;save();renderPrint();});
+    });
+    $("btnCopy").addEventListener("click",function(){
+      var txt=report();
+      function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Nusxalandi");}catch(err){toast("Nusxalab bo‘lmadi");}document.body.removeChild(ta);}
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(function(){toast("Nusxalandi");},fb);else fb();
+    });
+    $("btnPrint").addEventListener("click",function(){renderPrint();window.print();});
+    $("btnReset").addEventListener("click",function(){
+      if(!confirm("Barcha ballar va bemor ma’lumotlari o‘chiriladi. Davom etasizmi?"))return;
+      state.scores={};state.meta={patient:"",date:"",rater:""};state.extra={};save();
+      ["mPatient","mDate","mRater"].forEach(function(id){$(id).value="";});
+      if(cfg.onReset)cfg.onReset(api);
+      if(openCode)setOpen(openCode,false);
+      render();setOpen(ITEMS[0].c,true);
+    });
+    var tb=$("btnToSum");if(tb)tb.addEventListener("click",function(){$("summary").scrollIntoView({behavior:"smooth"});});
+  }
+
+  load();build();bind();
+  if(cfg.bind)cfg.bind(api);
+  render();
+  var f=nextUnscored(ITEMS[ITEMS.length-1].c);if(f)setOpen(f,false);
+  return api;
+}
+</script>
+<script>
+(function(){
+var ITEMS=[
+{c:"1",g:"A",n:"Depressiya",
+ q:"<p>So‘nggi 2 hafta kayfiyatingizni qanday tasvirlagan bo‘lardingiz: yetarlicha tetik bo‘ldingizmi yoki so‘nggi paytda qattiq tushkunlik yoki yomon kayfiyatda bo‘ldingizmi?</p><p>So‘nggi 2 haftada qanchalik tez-tez (bemor so‘zlari bilan) bo‘ldingiz? Har kunmi? Kun bo‘yimi?</p>",
+ a:["Yo‘q.","Biroz g‘amginlik va ruhiy tushkunlik bildiradi.","So‘nggi 2 haftaning yarmigacha vaqtida aniq depressiv kayfiyat; har kuni mavjud.","Yaqqol depressiv kayfiyat vaqtning yarmidan ko‘pida har kuni mavjud, normal jismoniy va ijtimoiy faollikka xalal beradi."]},
+{c:"2",g:"A",n:"Umidsizlik",
+ q:"<p>Kelajagingizni qanday ko‘rasiz? Biror kelajakni tasavvur qila olasizmi yoki hayot juda umidsiz tuyuladimi?</p><p>Taslim bo‘ldingizmi yoki nimadir qilishga urinishga asos bor deb o‘ylaysizmi?</p>",
+ a:["Yo‘q.","So‘nggi hafta umidsizlik vaqti-vaqti bilan sezilgan, lekin kelajakka biroz umid bor.","So‘nggi hafta davomida doimiy o‘rtacha umidsizlik. Bemorni ishlar yaxshilanishi mumkinligiga ishontirish mumkin.","Doimiy va azob beruvchi umidsizlik hissi."]},
+{c:"3",g:"A",n:"O‘zini kamsitish",
+ q:"<p>O‘zingizni boshqalarga nisbatan qanday baholaysiz? O‘zingizni ko‘pchilikdan yaxshiroq, yomonroq yoki ular bilan bir xil deb hisoblaysizmi? O‘zingizni nuqsonli yoki hatto keraksiz odam deb his qilasizmi?</p>",
+ a:["Yo‘q.","O‘zini biroz nuqsonli his qiladi, lekin keraksiz darajada emas.","O‘zini keraksiz his qiladi, lekin vaqtning 50% dan kamida.","O‘zini vaqtning 50% dan ko‘pida keraksiz his qiladi. Bunga qarshi dalil keltirilsa, boshqacha fikrni tan olishi mumkin."]},
+{c:"4",g:"A",n:"Ayblov g‘oyalari",
+ q:"<p>Sizni nimadir uchun koyishyapti yoki hatto nohaq ayblashyapti degan his bormi? Nima uchun?</p><p><i>(Asosli ta’na yoki ayblovlar, shuningdek aybdorlik vasvasasi bu yerda baholanmaydi.)</i></p>",
+ a:["Yo‘q.","Uni koyishayotganini his qiladi, lekin ayblashmayapti; vaqtning 50% dan kamida.","Doimo koyishayotganini his qiladi va/yoki ba’zan ayblashayotganini his qiladi.","Doimo ayblashayotganini his qiladi. Ishontirilsa, bunday emasligini tan oladi."]},
+{c:"5",g:"A",n:"Patologik aybdorlik hissi",
+ q:"<p>O‘tmishda qilgan mayda xatolaringiz uchun o‘zingizni koyishga moyilligingiz bormi? Bu tashvishlanishga arziydigan sabab deb hisoblaysizmi?</p>",
+ a:["Yo‘q.","Qandaydir mayda xato uchun ortiqcha aybdorlik his qiladi, lekin vaqtning 50% dan kamida.","Odatda (vaqtning 50% dan ko‘pida) o‘tmishdagi harakatlari uchun aybdorlik his qiladi va ularning ahamiyatini bo‘rttiradi.","Odatda noto‘g‘ri bo‘lgan hamma narsa uchun, hatto o‘zi aybdor bo‘lmasa ham, o‘zini koyiydi."]},
+{c:"6",g:"A",n:"Ertalabki depressiya",
+ q:"<p>So‘nggi 2 haftada tushkunlik his qilganingizda, depressiya kunning ma’lum bir vaqtida kuchliroq bo‘lishini sezdingizmi?</p>",
+ a:["Depressiya yo‘q.","Depressiya bor, lekin kun davomida o‘zgarmaydi.","Yo‘naltiruvchi savolsiz bemorning o‘zi depressiya ertalab kuchliroq ekanini aytadi.","Depressiya ertalab ancha kuchli, faoliyat buzilishi bilan kechadi; kunning ikkinchi yarmida holat yaxshilanadi."]},
+{c:"7",g:"A",n:"Erta uyg‘onish",
+ q:"<p>Ertalab o‘zingiz uchun odatiy vaqtdan erta uyg‘onasizmi? Bu haftasiga necha marta bo‘ladi?</p>",
+ a:["Erta uyg‘onish yo‘q.","Ba’zan (haftasiga 2 martagacha) odatiy uyg‘onish vaqti yoki budilnikdan 1 soat va undan ko‘proq oldin uyg‘onadi.","Tez-tez (haftasiga 5 martagacha) odatiy vaqt yoki budilnikdan 1 soat va undan ko‘proq oldin uyg‘onadi.","Har kuni odatiy vaqtdan 1 soat va undan ko‘proq oldin uyg‘onadi."]},
+{c:"8",g:"A",n:"Suitsid",
+ q:"<p>Yashashga arzimaydi degan his bo‘lganmi?</p><p>Qachondir o‘z joningizga qasd qilishni xohlaganmisiz? Buni qanday qilmoqchi edingiz?</p><p>Qachondir urinib ko‘rganmisiz?</p>",
+ a:["Yo‘q.","Ko‘pincha o‘lgani yaxshiroq degan fikr yoki ba’zan suitsid haqida o‘ylagan.","Suitsid haqida jiddiy o‘ylagan va rejasi bo‘lgan, lekin urinish bo‘lmagan.","O‘limga olib kelishi kerak bo‘lgan tarzda tashkil etilgan urinish bo‘lgan, lekin tasodifan aniqlangan yoki samarasiz vosita ishlatilgan."]},
+{c:"9",g:"A",n:"Kuzatilgan depressiya",
+ b:"Butun intervyu davomidagi intervyuer kuzatuvlari asosida. Tegishli joylarda berilgan «Yig‘lagingiz keladimi?» savoli foydali ma’lumot berishi mumkin.",
+ a:["Yo‘q.","Emotsional neytral mavzularni muhokama qilganda ham bemor g‘amgin va ma’yus ko‘rinadi.","Butun suhbat davomida g‘amgin va ma’yus ko‘rinadi, zerikarli monoton ovozda gapiradi, ba’zan yig‘laydi yoki yig‘lashga tayyor.","Xafa qiluvchi mavzularda jim bo‘lib qoladi, tez-tez og‘ir xo‘rsinadi va ochiq yig‘laydi yoki g‘amgin karaxtlik holatida."]}
+];
+var GROUPS=[{g:"A",tag:"CDSS",t:"Shkala bandlari",r:"9 band · 0–27",k:2}];
+function verdict(T){
+  if(T>=11)return {k:"v-bad",h:"Og‘ir depressiya",d:"Jami ball ≥ 11."};
+  if(T>=6)return {k:"v-warn",h:"Depressiya mavjud",d:"Jami ball ≥ 6 (protokol mezoni)."};
+  return {k:"v-ok",h:"Klinik ahamiyatli depressiya yo‘q",d:"Jami ball < 6."};
+}
+ScaleEngine({
+  key:"cdss_uz_draft_v1", title:"CDSS — Shizofreniyada depressiyani baholovchi Kalgari shkalasi",
+  source:"Manba: O‘zR SSV Shizofreniya bo‘yicha milliy klinik protokoli (2022); Addington va b. (1990).",
+  items:ITEMS, groups:GROUPS, min:0, qOpen:true,
+  labels:["Yo‘q","Yengil","O‘rtacha","Og‘ir"],
+  update:function(api){
+    var all=api.all(),n=api.count(all),T=api.sum(all),$=api.$;
+    $("sT").textContent=n?T:"—";$("mT").textContent=n?T:"—";$("bT").style.width=n?(T/27*100)+"%":"0";
+    $("prog").textContent=api.complete()?"Barcha 9 band baholandi.":n+" / 9 band baholandi";
+    if(api.complete()){var v=verdict(T);$("verd").innerHTML='<div class="verdict '+v.k+'"><b>'+v.h+'</b>'+v.d+'</div>';$("mV").textContent=v.h;}
+    else{$("verd").innerHTML="";$("mV").textContent="";}
+    var s=api.state.scores["8"];
+    $("suic").innerHTML=(s>=1)?'<div class="alert"><b>Suitsid xavfi belgilari (8-band = '+s+')</b>Jami balldan qat’i nazar suitsid xavfini batafsil baholang: <a href="cssrs-uz.html">C-SSRS shkalasi →</a>'+(s>=2?'<ul><li>Bemorni nazoratsiz qoldirmang.</li><li>Shoshilinch psixiatrik baholash va xavfsizlik choralarini ko‘ring.</li></ul>':'')+'</div>':"";
+  },
+  report:function(api){
+    var T=api.sum(api.all()),L=["CDSS jami: "+(api.count(api.all())?T:"—")+(api.complete()?"":" (to‘liq emas)")];
+    if(api.complete())L.push("Xulosa: "+verdict(T).h);
+    if(api.state.scores["8"]>=1)L.push("DIQQAT: 8-band (suitsid) = "+api.state.scores["8"]+" — C-SSRS bilan baholash tavsiya etiladi.");
+    return L;
+  },
+  printSummary:function(api){
+    var T=api.sum(api.all());
+    return '<table><tr><th>CDSS jami (0–27)</th><th>Xulosa</th></tr><tr><td class="s">'+T+'</td><td>'+(api.complete()?verdict(T).h:"to‘liq emas")+'</td></tr></table>';
+  }
+});
+})();
+</script>
+</body>
+</html>
